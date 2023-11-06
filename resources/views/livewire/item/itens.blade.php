@@ -1,6 +1,6 @@
 <div>
 
-    <div class="flex justify-between mb-4 m-7">
+    <div class="flex justify-between flex-wrap mb-4 m-7">
         <div class="">
             <label for="table-search" class="sr-only">Pesquisa</label>
             <div class="relative mt-1">
