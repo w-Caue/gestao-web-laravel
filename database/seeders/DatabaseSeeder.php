@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call(UnidadeMedidaSeeder::class);
+        $this->call(FormaPagamentoSeeder::class);
     }
 }

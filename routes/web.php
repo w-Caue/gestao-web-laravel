@@ -22,6 +22,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
@@ -33,4 +34,9 @@ Route::middleware([
     Route::get('/clientes', function () {
         return view('pages.cliente.index');
     })->name('clientes');
+    
+    Route::get('/pedidos', function () {
+        return view('pages.pedido.index');
+    })->name('pedidos');
+
 });
