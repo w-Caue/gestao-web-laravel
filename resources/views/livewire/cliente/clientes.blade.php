@@ -84,7 +84,7 @@
 
     @if ($newCliente)
         <div class="flex justify-center">
-            <div class="fixed top-11 bg-white border shadow-2xl rounded-lg sm:top-28 sm:w-3/4">
+            <div class="fixed top-11 bg-gray-50 border shadow-2xl rounded-lg sm:top-28 sm:w-1/2">
 
                 <div>
                     <button wire:click="fecharCliente()"
@@ -101,14 +101,14 @@
 
                 <div class="flex justify-center m-2">
                     <form wire:submit.prevent="{{ $form->clienteId ? 'update()' : 'save()' }}" class="w-1/2">
-                        <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="flex flex-wrap -mx-3 mb-4">
                             <div class="w-full  px-3 mb-6 md:mb-0">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                                     for="grid-first-name">
                                     Nome
                                 </label>
                                 <input wire:model="form.nome"
-                                    class="appearance-none block w-full bg-white text-gray-700 border border-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                                    class="appearance-none block w-full bg-white text-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                                     id="grid-first-name" type="text" placeholder="">
 
                             </div>
@@ -120,14 +120,14 @@
                             </div>
 
                         </div>
-                        <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="flex flex-wrap -mx-3 mb-4">
                             <div class="w-full  px-3 mb-6 md:mb-0">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                                     for="grid-first-name">
                                     Email
                                 </label>
                                 <input wire:model="form.email"
-                                    class="appearance-none block w-full bg-white text-gray-700 border border-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                                    class="appearance-none block w-full bg-white text-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                                     id="grid-first-name" type="email" placeholder="">
 
                             </div>
@@ -138,14 +138,14 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="flex flex-wrap -mx-3 m-7">
-                            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                        <div class="flex flex-wrap -mx-3 m-4">
+                            <div class="w-full px-3 mb-6 md:mb-0">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                                     for="grid-city">
                                     Whatsapp
                                 </label>
                                 <input wire:model="form.whatsapp"
-                                    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    class="appearance-none block w-44 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-city" type="text" placeholder="">
                             </div>
 

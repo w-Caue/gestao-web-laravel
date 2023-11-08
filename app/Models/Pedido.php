@@ -14,6 +14,10 @@ class Pedido extends Model
         return $this->belongsTo('App\Models\Cliente' , 'cliente_id');
     }
 
+    // public function itens(){
+    //     return $this->belongsTo('App\Models\Item', 'item_id');
+    // }
+
     public function formaPagamento(){
         return $this->belongsTo('App\Models\FormaPagamento', 'forma_pagamento_id');
     }

@@ -81,7 +81,7 @@ class Pedidos extends Component
     public function adicionarItem($item)
     {
         $pedidoItem = PedidoItem::where('pedido_id', $this->telaPedido->id)
-                                ->where('item_id', $item)->get()->count();
+            ->where('item_id', $item)->get()->count();
 
         if ($pedidoItem > 0) {
             $this->alert('info', 'Item Já Adicionado!', [
@@ -139,7 +139,20 @@ class Pedidos extends Component
         ]);
     }
 
+    public function finalizarPeidido()
+    {
+        Pedido::findOrFail($this->telaPedido->id)->update([
+            'forma_pagamento_id' => $this->formaDePagamento,
+            'descricao' => $this->descricao,
+            'status' => 'Finalizado'
+        ]);
 
+        $this->alert('success', 'Pedido Finalizado!', [
+            'position' => 'center',
+            'timer' => '1000',
+            'toast' => false,
+        ]);
+    }
 
     public function render()
     {

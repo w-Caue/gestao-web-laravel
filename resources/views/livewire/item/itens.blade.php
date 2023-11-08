@@ -93,7 +93,7 @@
 
     @if ($newItem)
         <div class="flex justify-center">
-            <div class="fixed top-11 bg-white border shadow-2xl rounded-lg sm:top-28 sm:w-3/4">
+            <div class="fixed top-11 bg-gray-50 border shadow-2xl rounded-lg sm:top-14 sm:w-3/4">
 
                 <div>
                     <button wire:click="fecharItem()"
@@ -180,7 +180,7 @@
 
                         @if ($precoItem)
                             <div class="flex justify-center">
-                                <div class="fixed top-20 bg-white  border shadow-2xl rounded-lg sm:top-28 w-3/4">
+                                <div class="fixed top-20 bg-white border shadow-2xl rounded-lg sm:top-28 w-1/2">
                                     <div class="">
                                         <button wire:click.prevent="precificacao()"
                                             class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500">

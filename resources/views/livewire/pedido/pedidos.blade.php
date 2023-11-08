@@ -11,7 +11,7 @@
                     </svg>
                 </div>
                 <input wire:model.live="search" type="text" id="table-search"
-                    class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                    class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg md:w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Pesquisar Pedido">
             </div>
         </div>
@@ -73,10 +73,19 @@
                             {{ $pedido->status }}
                         </td>
                         <td class="px-6 py-4 text-center">
-                            <button wire:click="visualizarPedido({{ $pedido->id }})"
-                                class="font-semibold text-blue-500 hover:underline">
-                                Adicionar Itens
-                            </button>
+                            @if ($pedido->status == 'Aberto')
+                                <button wire:click="visualizarPedido({{ $pedido->id }})"
+                                    class="font-semibold text-blue-500 hover:underline">
+                                    Adicionar Itens
+                                </button>
+                            @endif
+
+                            @if ($pedido->status == 'Finalizado')
+                                <button wire:click="visualizarPedido({{ $pedido->id }})"
+                                    class="font-semibold text-blue-500 hover:underline">
+                                    visualizar Pedido
+                                </button>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
@@ -202,14 +211,14 @@
 
                 <h1 class="text-xl font-semibold text-center m-3">Pedido</h1>
 
-                <form wire:submit.prevent="">
+                <form wire:submit.prevent="finalizarPeidido()">
 
                     <div class="m-3 flex justify-between items-center">
-                        <div>
+                        <div >
                             <label for="pagamento" class="block mb-2 text-xl font-semibold text-gray-900 ">Forma de
                                 Pagamento</label>
-                            <select wire:model="formaDePagamento" id="pagamento"
-                                class="bg-gray-50 border border-gray-300 text-gray-600 text-md font-semibold rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-44 p-1 ">
+                            <select wire:model="formaDePagamento"  id="pagamento" @if ($telaPedido->status == 'Finalizado') @disabled(true) @endif
+                                class=" bg-gray-50 border border-gray-300 text-gray-600 text-md font-semibold rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-44 p-1 ">
                                 <option selected></option>
 
                                 @foreach ($formasPagamentos as $formaPagamento)
@@ -221,12 +230,15 @@
                             </select>
                         </div>
 
-                        <div class="">
-                            <button wire:click="telaItens()"
-                                class="p-1 border rounded font-semibold text-gray-600 hover:bg-blue-500 hover:text-white">
-                                Adicionar Itens
-                            </button>
-                        </div>
+                        @if ($telaPedido->status == 'Aberto')
+                            <div class="">
+                                <button wire:click.prevent="telaItens()"
+                                    class="p-1 border rounded-md font-semibold text-gray-600 hover:bg-blue-500 hover:text-white">
+                                    Adicionar Itens
+                                </button>
+                            </div>
+                        @endif
+
                     </div>
 
                     <div class="m-3">
@@ -271,15 +283,18 @@
                     </div>
 
                     <div class="m-3">
-                        <textarea wire:model="descricao" id="message" rows="3"
+                        <textarea wire:model="descricao" id="message" rows="3" @if ($telaPedido->status == 'Finalizado') @disabled(true) @endif
                             class="block p-2.5 w-full font-semibold text-md text-gray-600 bg-gray-50 rounded-lg border border-gray-300 focus:border-blue-500 "
                             placeholder="Adicione uma descrição..."></textarea>
                     </div>
 
                     <div class="flex justify-center m-4">
-                        <button type="submit"
-                            class="p-2 border rounded text-md font-semibold bg-white hover:shadow-xl hover:text-white hover:bg-blue-500">Finalizar
-                            Pedido</button>
+                        @if ($telaPedido->status == 'Aberto')
+                            <button type="submit"
+                                class="p-2 border rounded text-md font-semibold bg-white hover:shadow-xl hover:text-white hover:bg-blue-500">
+                                Finalizar Pedido
+                            </button>
+                        @endif
                     </div>
                 </form>
             </div>
@@ -288,7 +303,7 @@
 
     @if ($showItem)
         <div class="flex justify-center">
-            <div class="fixed top-11 bg-gray-50 border shadow-2xl rounded-lg sm:top-28 sm:w-1/2">
+            <div class="fixed top-11 bg-white border shadow-2xl rounded-lg sm:top-28 sm:w-1/2">
                 <div>
                     <button wire:click="fecharTelaItens()"
                         class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500">
@@ -300,13 +315,27 @@
                     </button>
                 </div>
 
-                <h1 class="text-xl font-semibold text-center m-3">Itens</h1>
+                <h1 class="text-xl font-semibold text-center m-3">Adicione os Itens ao Pedido</h1>
+
+                <div class="flex justify-center items-center m-4 gap-1">
+                    <input wire:model.live="search" type="text" id="table-search"
+                        class="p-2 text-sm text-gray-900 border border-gray-200 rounded w-80 focus:ring-gray-100 focus:border-gray-100"
+                        placeholder="Pesquisar Item">
+
+                    <button class="p-2 bg-blue-500 rounded">
+                        <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                        </svg>
+                    </button>
+                </div>
 
                 <div class="flex justify-center flex-wrap gap-3 m-3">
                     @foreach ($itens as $item)
                         <div wire:click="adicionarItem({{ $item->id }})"
                             class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:w-1/3 hover:bg-gray-100 cursor-pointer">
-                            
+
                             <div class="flex flex-col justify-between p-4 leading-normal">
                                 <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">{{ $item->nome }}
                                 </h5>
