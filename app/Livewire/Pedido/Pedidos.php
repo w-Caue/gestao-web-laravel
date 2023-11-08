@@ -80,7 +80,8 @@ class Pedidos extends Component
 
     public function adicionarItem($item)
     {
-        $pedidoItem = PedidoItem::where('item_id', $item)->get()->count();
+        $pedidoItem = PedidoItem::where('pedido_id', $this->telaPedido->id)
+                                ->where('item_id', $item)->get()->count();
 
         if ($pedidoItem > 0) {
             $this->alert('info', 'Item Já Adicionado!', [
