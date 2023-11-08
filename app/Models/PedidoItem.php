@@ -9,4 +9,5 @@ class PedidoItem extends Model
 {
     use HasFactory;
     protected $table = 'pedidos_itens';
+    protected $fillable = ['pedido_id', 'item_id'];
 }

@@ -17,4 +17,8 @@ class Pedido extends Model
     public function formaPagamento(){
         return $this->belongsTo('App\Models\FormaPagamento', 'forma_pagamento_id');
     }
+
+    public function pedidoItem(){
+        return $this->belongsToMany('App\Models\PedidoItem', 'pedido_id' ,'item_id');
+    }
 }

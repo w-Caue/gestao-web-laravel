@@ -48,7 +48,7 @@
                     </th>
 
                     <th scope="col" class="px-6 py-3 text-center">
-                        
+
                     </th>
 
                 </tr>
@@ -73,9 +73,10 @@
                             {{ $pedido->status }}
                         </td>
                         <td class="px-6 py-4 text-center">
-                           <button class="font-semibold text-blue-500 hover:underline">
-                            Adicionar Itens
-                           </button>
+                            <button wire:click="visualizarPedido({{ $pedido->id }})"
+                                class="font-semibold text-blue-500 hover:underline">
+                                Adicionar Itens
+                            </button>
                         </td>
                     </tr>
                 @endforeach
@@ -146,8 +147,8 @@
                         class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500">
                         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                         </svg>
                     </button>
                 </div>
@@ -181,6 +182,141 @@
                     </div>
                 @endif
 
+            </div>
+        </div>
+    @endif
+
+    @if ($showPedido)
+        <div class="flex justify-center">
+            <div class="fixed top-11 bg-gray-50 border shadow-2xl rounded-lg sm:top-28 sm:w-1/2">
+                <div>
+                    <button wire:click="fecharPedido()"
+                        class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500">
+                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                    </button>
+                </div>
+
+                <h1 class="text-xl font-semibold text-center m-3">Pedido</h1>
+
+                <form wire:submit.prevent="">
+
+                    <div class="m-3 flex justify-between items-center">
+                        <div>
+                            <label for="pagamento" class="block mb-2 text-xl font-semibold text-gray-900 ">Forma de
+                                Pagamento</label>
+                            <select wire:model="formaDePagamento" id="pagamento"
+                                class="bg-gray-50 border border-gray-300 text-gray-600 text-md font-semibold rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-44 p-1 ">
+                                <option selected></option>
+
+                                @foreach ($formasPagamentos as $formaPagamento)
+                                    <option value="{{ $formaPagamento->id }}"
+                                        class="font-semibold text-md text-gray-600">
+                                        {{ $formaPagamento->nome }}</option>
+                                @endforeach
+
+                            </select>
+                        </div>
+
+                        <div class="">
+                            <button wire:click="telaItens()"
+                                class="p-1 border rounded font-semibold text-gray-600 hover:bg-blue-500 hover:text-white">
+                                Adicionar Itens
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="m-3">
+                        <div class="relative overflow-x-auto shadow-md sm:rounded-lg border">
+                            <table class="w-full text-sm text-left text-gray-500">
+                                <thead class="text-xs font-semibold text-gray-700 uppercase bg-gray-100">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3">
+                                            Nome Item
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Descrição
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Marca
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Preço
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-gray-200 font-semibold">
+                                        <th scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50">
+
+                                        </th>
+                                        <td class="px-6 py-4 bg-white">
+                                            Black
+                                        </td>
+                                        <td class="px-6 py-4 bg-gray-50">
+                                            Accessories
+                                        </td>
+                                        <td class="px-6 py-4 bg-white">
+                                            $99
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                    <div class="m-3">
+                        <textarea wire:model="descricao" id="message" rows="3"
+                            class="block p-2.5 w-full font-semibold text-md text-gray-600 bg-gray-50 rounded-lg border border-gray-300 focus:border-blue-500 "
+                            placeholder="Adicione uma descrição..."></textarea>
+                    </div>
+
+                    <div class="flex justify-center m-4">
+                        <button type="submit"
+                            class="p-2 border rounded text-md font-semibold bg-white hover:shadow-xl hover:text-white hover:bg-blue-500">Finalizar
+                            Pedido</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    @endif
+
+    @if ($showItem)
+        <div class="flex justify-center">
+            <div class="fixed top-11 bg-gray-50 border shadow-2xl rounded-lg sm:top-28 sm:w-1/2">
+                <div>
+                    <button wire:click="fecharTelaItens()"
+                        class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500">
+                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                    </button>
+                </div>
+
+                <h1 class="text-xl font-semibold text-center m-3">Itens</h1>
+
+                <div class="flex justify-center flex-wrap gap-3 m-3">
+                    @foreach ($itens as $item)
+                        <div wire:click="adicionarItem({{ $item->id }})"
+                            class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:w-1/3 hover:bg-gray-100 cursor-pointer">
+                            
+                            <div class="flex flex-col justify-between p-4 leading-normal">
+                                <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">{{ $item->nome }}
+                                </h5>
+                                <p class="mb-1 font-semibold text-gray-600">{{ $item->descricao }}</p>
+                                <p class="mb-1 font-semibold text-gray-900">
+                                    R${{ number_format($item->preco_1, 2, ',', '.') }}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
     @endif
