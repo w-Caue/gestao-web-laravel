@@ -7,6 +7,7 @@ use App\Models\FormaPagamento;
 use App\Models\Item;
 use App\Models\Pedido;
 use App\Models\PedidoItem;
+use App\Models\Status;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -39,6 +40,8 @@ class Pedidos extends Component
 
     public function fecharPedido()
     {
+        $this->reset();
+        $this->resetValidation();
         $this->newPedido = false;
         $this->showPedido = false;
     }
@@ -147,7 +150,23 @@ class Pedidos extends Component
             'status' => 'Finalizado'
         ]);
 
+        $this->fecharPedido();
+
         $this->alert('success', 'Pedido Finalizado!', [
+            'position' => 'center',
+            'timer' => '1000',
+            'toast' => false,
+        ]);
+    }
+
+    public function editePedido()
+    {
+
+        Pedido::findOrFail($this->telaPedido->id)->update([
+            'status' => $this->status
+        ]);
+
+        $this->alert('success', 'Pedido Salvo!', [
             'position' => 'center',
             'timer' => '1000',
             'toast' => false,
@@ -160,9 +179,12 @@ class Pedidos extends Component
 
         $formasPagamentos = FormaPagamento::all();
 
+        $statusPedido = Status::all();
+
         return view('livewire.pedido.pedidos', [
             'pedidos' => $pedidos,
-            'formasPagamentos' => $formasPagamentos
+            'formasPagamentos' => $formasPagamentos,
+            'statusPedido' => $statusPedido
         ]);
     }
 }

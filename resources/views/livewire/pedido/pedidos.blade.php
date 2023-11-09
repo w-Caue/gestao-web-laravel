@@ -80,7 +80,7 @@
                                 </button>
                             @endif
 
-                            @if ($pedido->status == 'Finalizado')
+                            @if ($pedido->status != 'Concluido')
                                 <button wire:click="visualizarPedido({{ $pedido->id }})"
                                     class="font-semibold text-blue-500 hover:underline">
                                     visualizar Pedido
@@ -211,13 +211,15 @@
 
                 <h1 class="text-xl font-semibold text-center m-3">Pedido</h1>
 
-                <form wire:submit.prevent="finalizarPeidido()">
+                <form
+                    wire:submit.prevent="{{ $telaPedido->status == 'Aberto' ? 'finalizarPeidido()' : 'editePedido()' }}">
 
                     <div class="m-3 flex justify-between items-center">
-                        <div >
+                        <div>
                             <label for="pagamento" class="block mb-2 text-xl font-semibold text-gray-900 ">Forma de
                                 Pagamento</label>
-                            <select wire:model="formaDePagamento"  id="pagamento" @if ($telaPedido->status == 'Finalizado') @disabled(true) @endif
+                            <select wire:model="formaDePagamento" id="pagamento"
+                                @if ($telaPedido->status == 'Finalizado') @disabled(true) @endif
                                 class=" bg-gray-50 border border-gray-300 text-gray-600 text-md font-semibold rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-44 p-1 ">
                                 <option selected></option>
 
@@ -236,6 +238,22 @@
                                     class="p-1 border rounded-md font-semibold text-gray-600 hover:bg-blue-500 hover:text-white">
                                     Adicionar Itens
                                 </button>
+                            </div>
+                        @else
+                            <div class="">
+                                <label for="status" class="block mb-2 text-lg font-semibold text-gray-900 ">Status
+                                    do Pedido</label>
+                                <select wire:model="status" id="status"
+                                    class=" bg-gray-50 border border-gray-300 text-gray-600 text-md font-semibold rounded focus:ring-blue-500 focus:border-blue-500 block w-44 p-1 ">
+                                    <option selected></option>
+
+                                    @foreach ($statusPedido as $pedidoStatus)
+                                        <option value="{{ $pedidoStatus->nome }}"
+                                            class="font-semibold text-md text-gray-600">
+                                            {{ $pedidoStatus->nome }}</option>
+                                    @endforeach
+
+                                </select>
                             </div>
                         @endif
 
@@ -283,7 +301,8 @@
                     </div>
 
                     <div class="m-3">
-                        <textarea wire:model="descricao" id="message" rows="3" @if ($telaPedido->status == 'Finalizado') @disabled(true) @endif
+                        <textarea wire:model="descricao" id="message" rows="3"
+                            @if ($telaPedido->status == 'Finalizado') @disabled(true) @endif
                             class="block p-2.5 w-full font-semibold text-md text-gray-600 bg-gray-50 rounded-lg border border-gray-300 focus:border-blue-500 "
                             placeholder="Adicione uma descrição..."></textarea>
                     </div>
@@ -293,6 +312,11 @@
                             <button type="submit"
                                 class="p-2 border rounded text-md font-semibold bg-white hover:shadow-xl hover:text-white hover:bg-blue-500">
                                 Finalizar Pedido
+                            </button>
+                        @else
+                            <button type="submit"
+                                class="p-2 border rounded text-md font-semibold bg-white hover:shadow-xl hover:text-white hover:bg-blue-500">
+                                Salvar Pedido
                             </button>
                         @endif
                     </div>
