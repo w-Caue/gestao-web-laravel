@@ -9,7 +9,7 @@ class Item extends Model
 {
     use HasFactory;
     protected $table = 'itens';
-    protected $fillable = ['nome', 'descricao', 'marca', 'unidade_medida_id', 'valor_custo', 'preco_1', 'preco_2', 'preco_3'];
+    protected $fillable = ['nome', 'descricao', 'marca', 'unidade_medida_id', 'valor_custo', 'preco_1', 'preco_2'];
 
     public function unidadeMedida(){
         return $this->belongsTo('App\Models\UnidadeMedida');

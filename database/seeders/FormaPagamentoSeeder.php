@@ -17,6 +17,5 @@ class FormaPagamentoSeeder extends Seeder
         FormaPagamento::create(['nome' => 'Pix']);
         FormaPagamento::create(['nome' => 'Cartão de Credito']);
         FormaPagamento::create(['nome' => 'Cartão de Debito']);
-        FormaPagamento::create(['nome' => 'Promissoria']);
     }
 }

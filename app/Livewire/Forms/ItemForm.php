@@ -26,7 +26,6 @@ class ItemForm extends Form
     public $preco1;
 
     public $preco2;
-    public $preco3;
 
     public function save()
     {
@@ -40,7 +39,6 @@ class ItemForm extends Form
             'valor_custo' => $this->vlcusto,
             'preco_1' => $this->preco1,
             'preco_2' => $this->preco2,
-            'preco_3' => $this->preco3
         ]);
     }
 
@@ -54,7 +52,6 @@ class ItemForm extends Form
         $this->vlcusto = $item->valor_custo;
         $this->preco1 = $item->preco_1;
         $this->preco2 = $item->preco_2;
-        $this->preco3 = $item->preco_3;
     }
 
     public function update()
@@ -67,7 +64,6 @@ class ItemForm extends Form
             'valor_custo' => $this->vlcusto,
             'preco_1' => $this->preco1,
             'preco_2' => $this->preco2,
-            'preco_3' => $this->preco3
         ]);
     }
 }

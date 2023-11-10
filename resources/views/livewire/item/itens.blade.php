@@ -91,6 +91,10 @@
         </table>
     </div>
 
+    <div class="mx-5 mt-2">
+        {{$itens->links('layouts.paginate')}}
+    </div>
+
     @if ($newItem)
         <div class="flex justify-center">
             <div class="fixed top-11 bg-gray-50 border shadow-2xl rounded-lg sm:top-14 sm:w-3/4">
@@ -244,17 +248,6 @@
                                                         Preço 2
                                                     </label>
                                                     <input wire:model.live="form.preco2"
-                                                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                                        id="grid-city" type="text" placeholder="">
-                                                </div>
-
-                                                <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                                                    <label
-                                                        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                                        for="grid-city">
-                                                        Preço 3
-                                                    </label>
-                                                    <input wire:model.live="form.preco3"
                                                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                                         id="grid-city" type="text" placeholder="">
                                                 </div>

@@ -19,7 +19,6 @@ return new class extends Migration
             $table->float('valor_custo', 9, 2)->nullable();
             $table->float('preco_1', 9, 2)->nullable();
             $table->float('preco_2', 9, 2)->nullable();
-            $table->float('preco_3', 9, 2)->nullable();
             $table->integer('estoque')->nullable();
             $table->timestamps();
         });

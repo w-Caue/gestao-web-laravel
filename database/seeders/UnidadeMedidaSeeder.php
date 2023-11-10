@@ -14,9 +14,9 @@ class UnidadeMedidaSeeder extends Seeder
     public function run(): void
     {
         UnidadeMedida::create(['nome' => 'Unidade']);
-        UnidadeMedida::create(['nome' => 'Kilo']);
         UnidadeMedida::create(['nome' => 'Caixa']);
-        UnidadeMedida::create(['nome' => 'Gramas']);
+        UnidadeMedida::create(['nome' => 'Kilo']);
+        UnidadeMedida::create(['nome' => 'Grama']);
         UnidadeMedida::create(['nome' => 'Saco']);
     }
 }
