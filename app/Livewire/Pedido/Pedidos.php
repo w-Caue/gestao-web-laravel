@@ -37,6 +37,7 @@ class Pedidos extends Component
 
     #visualizar pedido
     public $itemId;
+    public $totalPedido;
 
     protected $listeners = [
         'deleteItem'
@@ -140,7 +141,7 @@ class Pedidos extends Component
             'cliente_id' => $this->clientePedido->id,
             'forma_pagamento_id' => $this->formaDePagamento,
             'descricao' => $this->descricao,
-            'status' => $this->status
+            'status' => 'Aberto'
         ]);
 
         $this->fecharPedido();
@@ -152,7 +153,7 @@ class Pedidos extends Component
         ]);
     }
 
-    public function finalizarPeidido()
+    public function finalizarPedido()
     {
         Pedido::findOrFail($this->telaPedido->id)->update([
             'forma_pagamento_id' => $this->formaDePagamento,
@@ -171,10 +172,13 @@ class Pedidos extends Component
 
     public function editePedido()
     {
-
         Pedido::findOrFail($this->telaPedido->id)->update([
+            'forma_pagamento_id' => $this->formaDePagamento,
+            'descricao' => $this->descricao,
             'status' => $this->status
         ]);
+
+        $this->fecharPedido();
 
         $this->alert('success', 'Pedido Salvo!', [
             'position' => 'center',

@@ -28,7 +28,7 @@
 
     <div class="mx-7 relative overflow-x-auto shadow-md rounded-lg">
         <table class="w-full text-sm text-left text-gray-500">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <thead class="text-xs font-semibold text-gray-700 uppercase bg-gray-50">
                 <tr>
                     <th scope="col" class="px-6 py-3 ">
                         #
@@ -59,7 +59,7 @@
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                             {{ $pedido->id }}
                         </th>
-                        <th scope="row" class="px-6 py-4 text-center font-semibold text-gray-600 whitespace-nowrap">
+                        <th scope="row" class="px-6 py-4 text-center font-semibold  whitespace-nowrap">
                             {{ $pedido->cliente->nome }}
                         </th>
                         <td class="px-6 py-4 text-center font-semibold">
@@ -69,7 +69,7 @@
                             {{ $pedido->formaPagamento->nome }}
                         </td>
 
-                        <td class="px-6 py-4 text-center text-gray-400 font-semibold">
+                        <td class="px-6 py-4 text-center font-semibold {{ $pedido->status == 'Concluido' ? 'text-green-600' : '' }} {{ $pedido->status == 'Finalizado' ? 'text-blue-500' : '' }} {{ $pedido->status == 'Pendente Pagamento' ? 'text-red-400' : '' }}">
                             {{ $pedido->status }}
                         </td>
                         <td class="px-6 py-4 text-center">
@@ -216,7 +216,7 @@
                 <h1 class="text-xl font-semibold text-center m-3">Pedido</h1>
 
                 <form
-                    wire:submit.prevent="{{ $telaPedido->status == 'Aberto' ? 'finalizarPeidido()' : 'editePedido()' }}">
+                    wire:submit.prevent="{{ $telaPedido->status == 'Aberto' ? 'finalizarPedido()' : 'editePedido()' }}">
 
                     <div class="m-3 flex justify-between items-center">
                         <div>
@@ -352,7 +352,7 @@
 
     @if ($showItem)
         <div class="flex justify-center">
-            <div class="fixed top-11 bg-white border shadow-2xl rounded-lg sm:top-28 sm:w-1/2">
+            <div class="fixed top-11 bg-white border shadow-2xl rounded-lg sm:top-24 sm:w-1/2">
                 <div>
                     <button wire:click="fecharTelaItens()"
                         class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500">
