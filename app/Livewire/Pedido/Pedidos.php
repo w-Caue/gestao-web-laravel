@@ -10,10 +10,12 @@ use App\Models\PedidoItem;
 use App\Models\Status;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Pedidos extends Component
 {
     use LivewireAlert;
+    use WithPagination;
 
     public $newPedido;
 
@@ -32,6 +34,13 @@ class Pedidos extends Component
     public $telaPedido;
     public $showItem;
     public $itens;
+
+    #visualizar pedido
+    public $itemId;
+
+    protected $listeners = [
+        'deleteItem'
+    ];
 
     public function novoPedido()
     {
@@ -173,9 +182,39 @@ class Pedidos extends Component
         ]);
     }
 
+    public function removerItem(Item $item){
+        $this->itemId = $item->id;
+
+        $this->alert('info','Remover Esse Item do Pedido?', [
+            'position' => 'center',
+            'timer' => 5000,
+            'toast' => false,
+            'showConfirmButton' => true,
+            'confirmButtonColor' => '#3085d6',
+            'onConfirmed' => 'deleteItem',
+            'showCancelButton' => true,
+            'cancelButtonColor' => '#d33',
+            'onDismissed' => '',
+            'cancelButtonText' => 'Cancelar',
+            'confirmButtonText' => 'Deletar',
+           ]);
+    }
+
+    public function deleteItem(){
+
+        PedidoItem::where('pedido_id', $this->telaPedido->id)
+                    ->where('item_id', $this->itemId)->delete();
+
+        $this->alert('success', 'Item Removido!', [
+            'position' => 'center',
+            'timer' => '1000',
+            'toast' => false,
+        ]);
+    }
+
     public function render()
     {
-        $pedidos = Pedido::all();
+        $pedidos = Pedido::paginate(5);
 
         $formasPagamentos = FormaPagamento::all();
 

@@ -80,10 +80,10 @@
                                 </button>
                             @endif
 
-                            @if ($pedido->status != 'Concluido')
+                            @if ($pedido->status != 'Concluido' && $pedido->status != 'Aberto')
                                 <button wire:click="visualizarPedido({{ $pedido->id }})"
                                     class="font-semibold text-blue-500 hover:underline">
-                                    visualizar Pedido
+                                    Visualizar Pedido
                                 </button>
                             @endif
                         </td>
@@ -91,6 +91,11 @@
                 @endforeach
             </tbody>
         </table>
+    </div>
+
+    <div class="mx-7 mt-2">
+        {{ $pedidos->links('layouts.paginate') }}
+        
     </div>
 
     @if ($newPedido)
@@ -197,9 +202,9 @@
 
     @if ($showPedido)
         <div class="flex justify-center">
-            <div class="fixed top-11 bg-gray-50 border shadow-2xl rounded-lg sm:top-28 sm:w-1/2">
+            <div class="fixed top-11 bg-gray-50 border shadow-2xl rounded-lg sm:top-8 sm:w-1/2">
                 <div>
-                    <button wire:click="fecharPedido()"
+                    <button wire:click.prevent="fecharPedido()"
                         class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500">
                         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 14 14">
@@ -276,25 +281,46 @@
                                         <th scope="col" class="px-6 py-3">
                                             Preço
                                         </th>
+                                        <th scope="col" class="px-6 py-3">
+
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="border-gray-200 font-semibold">
-                                        <th scope="row"
-                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50">
-
-                                        </th>
-                                        <td class="px-6 py-4 bg-white">
-                                            Black
-                                        </td>
-                                        <td class="px-6 py-4 bg-gray-50">
-                                            Accessories
-                                        </td>
-                                        <td class="px-6 py-4 bg-white">
-                                            $99
-                                        </td>
-                                    </tr>
+                                    @foreach ($telaPedido->itens as $item)
+                                        <tr class="border-gray-200 font-semibold">
+                                            <th scope="row"
+                                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50">
+                                                {{ $item->nome }}
+                                            </th>
+                                            <td class="px-6 py-4 bg-white">
+                                                {{ $item->descricao }}
+                                            </td>
+                                            <td class="px-6 py-4 bg-gray-50">
+                                                {{ $item->marca }}
+                                            </td>
+                                            <td class="px-6 py-4 bg-white">
+                                                {{ number_format($item->preco_1, '2', ',') }}
+                                            </td>
+                                            <td class="px-6 py-4 bg-whit">
+                                                @if ($telaPedido->status == 'Aberto')
+                                                    <button wire:click.prevent="removerItem({{ $item->id }})"
+                                                        class="font-semibold text-red-500 cursor-pointer hover:underline">
+                                                        remover
+                                                    </button>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
+                                <tfoot>
+                                    <tr class="font-semibold text-gray-900">
+                                        <th scope="row" class="px-6 py-3 text-base">Total</th>
+                                        <td class="px-6 py-3"></td>
+                                        <td class="px-6 py-3"></td>
+                                        <td class="px-6 py-3">21,000</td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
 

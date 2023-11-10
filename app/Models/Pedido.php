@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Pedido extends Model
 {
@@ -14,9 +15,9 @@ class Pedido extends Model
         return $this->belongsTo('App\Models\Cliente' , 'cliente_id');
     }
 
-    // public function itens(){
-    //     return $this->belongsTo('App\Models\Item', 'item_id');
-    // }
+    public function itens(){
+        return $this->belongsToMany('App\Models\Item', 'pedidos_itens');
+    }
 
     public function formaPagamento(){
         return $this->belongsTo('App\Models\FormaPagamento', 'forma_pagamento_id');
