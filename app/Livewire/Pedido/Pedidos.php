@@ -121,7 +121,8 @@ class Pedidos extends Component
             'clientes.id',
             'clientes.nome',
             'clientes.whatsapp',
-        ])->get();
+            'clientes.status',
+        ])->where('status', 'Ativo')->get();
 
         $this->clientes = $clientes;
     }

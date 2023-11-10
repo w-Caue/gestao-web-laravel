@@ -48,7 +48,7 @@ class Itens extends Component
 
         $this->alert('success', 'Item Cadastrado!', [
             'position' => 'center',
-            'timer' => '2000',
+            'timer' => '1000',
             'toast' => false,
         ]);
     }

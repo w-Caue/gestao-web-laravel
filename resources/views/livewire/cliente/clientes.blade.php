@@ -1,5 +1,5 @@
 <div>
-    
+
     <div class="flex justify-between flex-wrap mb-4 m-7">
         <div class="">
             <label for="table-search" class="sr-only">Pesquisa</label>
@@ -71,7 +71,8 @@
                                 <span class="text-md font-semibold text-white">Editar</span>
                             </button>
 
-                            <button class="p-1 border rounded bg-red-500">
+                            <button wire:click.prevent="remover({{ $cliente->id }})"
+                                class="p-1 border rounded bg-red-500">
                                 <span class="text-md font-semibold text-white">Deletar</span>
                             </button>
                         </td>
@@ -80,6 +81,10 @@
                 @endforeach
             </tbody>
         </table>
+    </div>
+
+    <div class="mx-7 mt-2">
+        {{ $clientes->links('layouts.paginate') }}
     </div>
 
     @if ($newCliente)
@@ -158,16 +163,13 @@
                         <div class="mb-3">
                             <div class="flex justify-center">
                                 <button type="submit"
-                                    class="text-white  bg-blue-500 font-semibold p-2 border rounded">
-
-                                    {{ $form->clienteId ? 'Atualizar' : 'Salvar' }}
+                                    class="p-2 border rounded text-md font-semibold bg-white hover:shadow-xl hover:text-white hover:bg-blue-500">
+                                    Salvar
                                 </button>
                             </div>
                         </div>
-
                     </form>
                 </div>
-
             </div>
         </div>
     @endif

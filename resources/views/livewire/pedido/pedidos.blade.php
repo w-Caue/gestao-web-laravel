@@ -95,7 +95,6 @@
 
     <div class="mx-7 mt-2">
         {{ $pedidos->links('layouts.paginate') }}
-        
     </div>
 
     @if ($newPedido)
