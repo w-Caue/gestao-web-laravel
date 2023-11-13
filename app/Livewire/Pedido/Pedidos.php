@@ -24,6 +24,10 @@ class Pedidos extends Component
     public $clientes;
     public $clientePedido;
 
+    #detalhe do cliente
+    public $clienteDetalhe;
+    public $informacoesCliente;
+
     #criar pedido
     public $formaDePagamento;
     public $descricao;
@@ -192,10 +196,11 @@ class Pedidos extends Component
         ]);
     }
 
-    public function removerItem(Item $item){
+    public function removerItem(Item $item)
+    {
         $this->itemPedido = $item;
 
-        $this->alert('info','Remover Esse Item do Pedido?', [
+        $this->alert('info', 'Remover Esse Item do Pedido?', [
             'position' => 'center',
             'timer' => 5000,
             'toast' => false,
@@ -207,13 +212,14 @@ class Pedidos extends Component
             'onDismissed' => '',
             'cancelButtonText' => 'Cancelar',
             'confirmButtonText' => 'Deletar',
-           ]);
+        ]);
     }
 
-    public function deleteItem(){
+    public function deleteItem()
+    {
 
         PedidoItem::where('pedido_id', $this->telaPedido->id)
-                    ->where('item_id', $this->itemPedido->id)->delete();
+            ->where('item_id', $this->itemPedido->id)->delete();
 
         $this->totalPedido = $this->totalPedido - $this->itemPedido->preco_1;
 
@@ -222,6 +228,18 @@ class Pedidos extends Component
             'timer' => '1000',
             'toast' => false,
         ]);
+    }
+
+    public function detalheCliente(Pedido $pedido)
+    {
+        $this->clienteDetalhe = true;
+
+        $this->informacoesCliente = Pedido::where('cliente_id', $pedido->cliente_id)->get()->first();
+    }
+
+    public function fecharDetalheCliente()
+    {
+        $this->clienteDetalhe = false;
     }
 
     public function render()

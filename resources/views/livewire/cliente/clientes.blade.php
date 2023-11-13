@@ -63,7 +63,7 @@
                             {{ $cliente->email }}
                         </td>
                         <td class="px-6 py-4">
-                            <button class="flex gap-1 hover:underline">
+                            <button class="flex gap-1 hover:underline hover:text-green-600">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                     fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16">
                                     <path
