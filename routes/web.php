@@ -39,4 +39,8 @@ Route::middleware([
         return view('pages.pedido.index');
     })->name('pedidos');
 
+    Route::get('/configuracao', function () {
+        return view('pages.configuracao');
+    })->name('configuracao');
+
 });
