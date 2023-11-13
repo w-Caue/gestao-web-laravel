@@ -36,8 +36,8 @@ class Pedidos extends Component
     public $itens;
 
     #visualizar pedido
-    public $itemId;
-    public $totalPedido;
+    public $itemPedido;
+    public $totalPedido = '0';
 
     protected $listeners = [
         'deleteItem'
@@ -73,6 +73,8 @@ class Pedidos extends Component
         $this->telaPedido = Pedido::where('id', $pedido->id)->get()->first();
 
         $this->formaDePagamento = $this->telaPedido->forma_pagamento_id;
+        $this->totalPedido = $this->telaPedido->total;
+        $this->status = $this->telaPedido->status;
         $this->descricao = $this->telaPedido->descricao;
     }
 
@@ -91,10 +93,10 @@ class Pedidos extends Component
         $this->itens = $itens;
     }
 
-    public function adicionarItem($item)
+    public function adicionarItem(Item $item)
     {
         $pedidoItem = PedidoItem::where('pedido_id', $this->telaPedido->id)
-            ->where('item_id', $item)->get()->count();
+            ->where('item_id', $item->id)->get()->count();
 
         if ($pedidoItem > 0) {
             $this->alert('info', 'Item Já Adicionado!', [
@@ -105,8 +107,10 @@ class Pedidos extends Component
         } else {
             PedidoItem::create([
                 'pedido_id' => $this->telaPedido->id,
-                'item_id' => $item
+                'item_id' => $item->id
             ]);
+
+            $this->totalPedido = $item->preco_1 + $this->totalPedido;
 
             $this->alert('success', 'Item Adicionado!', [
                 'position' => 'center',
@@ -158,6 +162,7 @@ class Pedidos extends Component
         Pedido::findOrFail($this->telaPedido->id)->update([
             'forma_pagamento_id' => $this->formaDePagamento,
             'descricao' => $this->descricao,
+            'total' => $this->totalPedido,
             'status' => 'Finalizado'
         ]);
 
@@ -188,7 +193,7 @@ class Pedidos extends Component
     }
 
     public function removerItem(Item $item){
-        $this->itemId = $item->id;
+        $this->itemPedido = $item;
 
         $this->alert('info','Remover Esse Item do Pedido?', [
             'position' => 'center',
@@ -208,7 +213,9 @@ class Pedidos extends Component
     public function deleteItem(){
 
         PedidoItem::where('pedido_id', $this->telaPedido->id)
-                    ->where('item_id', $this->itemId)->delete();
+                    ->where('item_id', $this->itemPedido->id)->delete();
+
+        $this->totalPedido = $this->totalPedido - $this->itemPedido->preco_1;
 
         $this->alert('success', 'Item Removido!', [
             'position' => 'center',

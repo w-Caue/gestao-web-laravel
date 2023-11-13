@@ -46,6 +46,9 @@
                     <th scope="col" class="px-6 py-3 text-center">
                         Status
                     </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Total Pedido
+                    </th>
 
                     <th scope="col" class="px-6 py-3 text-center">
 
@@ -68,9 +71,12 @@
                         <td class="px-6 py-4 text-center font-semibold">
                             {{ $pedido->formaPagamento->nome }}
                         </td>
-
-                        <td class="px-6 py-4 text-center font-semibold {{ $pedido->status == 'Concluido' ? 'text-green-600' : '' }} {{ $pedido->status == 'Finalizado' ? 'text-blue-500' : '' }} {{ $pedido->status == 'Pendente Pagamento' ? 'text-red-400' : '' }}">
+                        <td
+                            class="px-6 py-4 text-center font-semibold {{ $pedido->status == 'Concluido' ? 'text-green-600' : '' }} {{ $pedido->status == 'Finalizado' ? 'text-blue-500' : '' }} {{ $pedido->status == 'Pendente Pagamento' ? 'text-red-400' : '' }}">
                             {{ $pedido->status }}
+                        </td>
+                        <td class="px-6 py-4 text-center font-semibold">
+                            {{ number_format($pedido->total, 2, ',') }}
                         </td>
                         <td class="px-6 py-4 text-center">
                             @if ($pedido->status == 'Aberto')
@@ -80,7 +86,7 @@
                                 </button>
                             @endif
 
-                            @if ($pedido->status != 'Concluido' && $pedido->status != 'Aberto')
+                            @if ($pedido->status != 'Aberto')
                                 <button wire:click="visualizarPedido({{ $pedido->id }})"
                                     class="font-semibold text-blue-500 hover:underline">
                                     Visualizar Pedido
@@ -223,7 +229,7 @@
                             <label for="pagamento" class="block mb-2 text-xl font-semibold text-gray-900 ">Forma de
                                 Pagamento</label>
                             <select wire:model="formaDePagamento" id="pagamento"
-                                @if ($telaPedido->status == 'Finalizado') @disabled(true) @endif
+                                @if ($telaPedido->status == 'Concluido') @disabled(true) @endif
                                 class=" bg-gray-50 border border-gray-300 text-gray-600 text-md font-semibold rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-44 p-1 ">
                                 <option selected></option>
 
@@ -248,7 +254,8 @@
                                 <label for="status" class="block mb-2 text-lg font-semibold text-gray-900 ">Status
                                     do Pedido</label>
                                 <select wire:model="status" id="status"
-                                    class=" bg-gray-50 border border-gray-300 text-gray-600 text-md font-semibold rounded focus:ring-blue-500 focus:border-blue-500 block w-44 p-1 ">
+                                    @if ($telaPedido->status == 'Concluido') @disabled(true) @endif
+                                    class=" bg-gray-50 border border-gray-300 text-gray-600 text-md font-semibold rounded focus:ring-blue-500 focus:border-blue-500 block w-48 p-1 ">
                                     <option selected></option>
 
                                     @foreach ($statusPedido as $pedidoStatus)
@@ -317,7 +324,9 @@
                                         <th scope="row" class="px-6 py-3 text-base">Total</th>
                                         <td class="px-6 py-3"></td>
                                         <td class="px-6 py-3"></td>
-                                        <td class="px-6 py-3">21,000</td>
+                                        <td class="px-6 py-3">
+                                            <h1 wire:model.live="totalPedido" >{{ number_format($totalPedido, 2, ',') }}</h1>
+                                        </td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -327,21 +336,21 @@
 
                     <div class="m-3">
                         <textarea wire:model="descricao" id="message" rows="3"
-                            @if ($telaPedido->status == 'Finalizado') @disabled(true) @endif
+                            @if ($telaPedido->status == 'Concluido') @disabled(true) @endif
                             class="block p-2.5 w-full font-semibold text-md text-gray-600 bg-gray-50 rounded-lg border border-gray-300 focus:border-blue-500 "
                             placeholder="Adicione uma descrição..."></textarea>
                     </div>
 
                     <div class="flex justify-center m-4">
-                        @if ($telaPedido->status == 'Aberto')
-                            <button type="submit"
+                        @if ($telaPedido->status == 'Concluido')
+                            {{-- <button type="submit"
                                 class="p-2 border rounded text-md font-semibold bg-white hover:shadow-xl hover:text-white hover:bg-blue-500">
                                 Finalizar Pedido
-                            </button>
+                            </button> --}}
                         @else
                             <button type="submit"
                                 class="p-2 border rounded text-md font-semibold bg-white hover:shadow-xl hover:text-white hover:bg-blue-500">
-                                Salvar Pedido
+                                {{ $telaPedido->status == 'Aberto' ? 'Finalizar Pedido' : 'Salvar Pedido' }}
                             </button>
                         @endif
                     </div>
@@ -352,7 +361,7 @@
 
     @if ($showItem)
         <div class="flex justify-center">
-            <div class="fixed top-11 bg-white border shadow-2xl rounded-lg sm:top-24 sm:w-1/2">
+            <div class="fixed top-11 bg-white border shadow-2xl rounded-lg sm:top-11 sm:w-2/3">
                 <div>
                     <button wire:click="fecharTelaItens()"
                         class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500">
@@ -380,7 +389,7 @@
                     </button>
                 </div>
 
-                <div class="flex justify-center flex-wrap gap-3 m-3">
+                <div class="flex justify-center flex-wrap gap-3 m-3 overflow-auto h-80">
                     @foreach ($itens as $item)
                         <div wire:click="adicionarItem({{ $item->id }})"
                             class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:w-1/3 hover:bg-gray-100 cursor-pointer">

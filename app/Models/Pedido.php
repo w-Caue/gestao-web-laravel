@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Pedido extends Model
 {
     use HasFactory;
-    protected $fillable = ['cliente_id', 'forma_pagamento_id', 'descricao', 'status'];
+    protected $fillable = ['cliente_id', 'forma_pagamento_id', 'descricao', 'status', 'total'];
 
     public function cliente(){
         return $this->belongsTo('App\Models\Cliente' , 'cliente_id');

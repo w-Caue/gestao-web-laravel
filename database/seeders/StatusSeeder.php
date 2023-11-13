@@ -14,7 +14,7 @@ class StatusSeeder extends Seeder
     public function run(): void
     {
         Status::create(['nome' => 'Concluido']);
-        Status::create(['nome' => 'Finalizado']);
+        Status::create(['nome' => 'Aberto']);
         Status::create(['nome' => 'Pendente Pagamento']);
     }
 }
