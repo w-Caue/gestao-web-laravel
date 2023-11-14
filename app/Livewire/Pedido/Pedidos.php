@@ -81,7 +81,7 @@ class Pedidos extends Component
         $this->telaPedido = Pedido::where('id', $pedido->id)->get()->first();
 
         $this->formaDePagamento = $this->telaPedido->forma_pagamento_id;
-        $this->totalPedido = $this->telaPedido->total;
+        $this->totalItens = $this->telaPedido->total;
         $this->status = $this->telaPedido->status;
         $this->descricao = $this->telaPedido->descricao;
     }

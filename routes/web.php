@@ -39,8 +39,12 @@ Route::middleware([
         return view('pages.pedido.index');
     })->name('pedidos');
 
-    Route::get('/configuracao', function () {
-        return view('pages.configuracao');
-    })->name('configuracao');
+    Route::get('/relatorios', function () {
+        return view('pages.relatorios');
+    })->name('relatorios');
+
+    Route::get('/relatorio-pedidos', function () {
+        return view('pages.relatorios.relatorio-pedidos');
+    })->name('relatorio-pedidos');
 
 });

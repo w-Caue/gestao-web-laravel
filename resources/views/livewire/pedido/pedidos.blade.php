@@ -42,7 +42,6 @@
                     <th scope="col" class="px-6 py-3 text-center">
                         Forma de Pagamento
                     </th>
-
                     <th scope="col" class="px-6 py-3 text-center">
                         Status
                     </th>
@@ -292,9 +291,11 @@
                                         <th scope="col" class="px-6 py-3">
                                             Total
                                         </th>
-                                        <th scope="col" class="px-6 py-3">
+                                        @if ($telaPedido->status == 'Aberto')
+                                            <th scope="col" class="px-6 py-3">
 
-                                        </th>
+                                            </th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -307,23 +308,23 @@
                                             <td class="px-6 py-4 bg-white">
                                                 {{ $item->descricao }}
                                             </td>
-                                            <td class="px-6 py-4 bg-white">
+                                            <td class="px-6 py-4 bg-gray-50">
                                                 {{ number_format($item->preco_1, '2', ',') }}
                                             </td>
-                                            <td class="px-6 py-4 bg-gray-50">
+                                            <td class="px-6 py-4 bg-white">
                                                 {{ $item->pivot->quantidade }}
                                             </td>
                                             <td class="px-6 py-4 bg-gray-50">
                                                 {{ number_format($item->pivot->total, '2', ',') }}
                                             </td>
-                                            <td class="px-6 py-4 bg-whit">
-                                                @if ($telaPedido->status == 'Aberto')
+                                            @if ($telaPedido->status == 'Aberto')
+                                                <td class="px-6 py-4 bg-white">
                                                     <button wire:click.prevent="removerItem({{ $item->id }})"
                                                         class="font-semibold text-red-500 cursor-pointer hover:underline">
                                                         remover
                                                     </button>
-                                                @endif
-                                            </td>
+                                                </td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -474,11 +475,14 @@
                 <h1 class="text-xl font-semibold text-center m-3">Quantidade</h1>
 
                 <div class="flex flex-col items-center gap-3 m-3">
-                    <input wire:model.lazy="quantidade" type="number" class="rounded-xl border border-gray-400 w-28 text-lg font-semibold text-center" value="{{ $quantidade }}">
+                    <input wire:model.lazy="quantidade" type="number"
+                        class="rounded-xl border border-gray-400 w-28 text-lg font-semibold text-center"
+                        value="{{ $quantidade }}">
 
-                    <button wire:click.prevent="quantidadeItem()" class="p-2 border rounded text-lg font-semibold w-28 hover:text-white hover:bg-blue-500">Salvar</button>
+                    <button wire:click.prevent="quantidadeItem()"
+                        class="p-2 border rounded text-lg font-semibold w-28 hover:text-white hover:bg-blue-500">Salvar</button>
                 </div>
-                
+
             </div>
         </div>
     @endif

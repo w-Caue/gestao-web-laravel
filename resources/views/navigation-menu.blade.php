@@ -28,8 +28,8 @@
                         {{ __('Pedidos') }}
                     </x-nav-link>
 
-                    <x-nav-link href="{{ route('configuracao') }}" :active="request()->routeIs('configuracao')">
-                        {{ __('Configuração') }}
+                    <x-nav-link href="{{ route('relatorios') }}" :active="request()->routeIs('relatorios')">
+                        {{ __('Relatorios') }}
                     </x-nav-link>
 
                 </div>

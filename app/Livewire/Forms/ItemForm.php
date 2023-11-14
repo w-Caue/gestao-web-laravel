@@ -24,7 +24,6 @@ class ItemForm extends Form
 
     public $vlcusto;
     public $preco1;
-
     public $preco2;
 
     public function save()
