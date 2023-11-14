@@ -191,7 +191,7 @@
                 </div>
 
                 @if ($clientes)
-                    <div class="flex justify-center flex-wrap m-3">
+                    <div class="flex justify-center flex-wrap m-3 overflow-auto h-60">
                         @foreach ($clientes as $cliente)
                             <div wire:click="selecioneCliente({{ $cliente->id }})"
                                 class="m-2 p-2 text-gray-400 shadow border rounded w-44 hover:bg-gray-100 hover:shadow-xl hover:border-2 cursor-pointer">
@@ -244,7 +244,7 @@
                             </select>
                         </div>
 
-                        @if ($telaPedido->status == 'Aberto')
+                        @if ($telaPedido->status == 'Aberto' or $telaPedido->status == 'Encomenda')
                             <div class="">
                                 <button wire:click.prevent="telaItens()"
                                     class="p-1 border rounded-md font-semibold text-gray-600 hover:bg-blue-500 hover:text-white">
@@ -284,10 +284,13 @@
                                             Descrição
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Marca
+                                            Preço
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Preço
+                                            Quantidade
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Total
                                         </th>
                                         <th scope="col" class="px-6 py-3">
 
@@ -304,11 +307,14 @@
                                             <td class="px-6 py-4 bg-white">
                                                 {{ $item->descricao }}
                                             </td>
-                                            <td class="px-6 py-4 bg-gray-50">
-                                                {{ $item->marca }}
-                                            </td>
                                             <td class="px-6 py-4 bg-white">
                                                 {{ number_format($item->preco_1, '2', ',') }}
+                                            </td>
+                                            <td class="px-6 py-4 bg-gray-50">
+                                                {{ $item->pivot->quantidade }}
+                                            </td>
+                                            <td class="px-6 py-4 bg-gray-50">
+                                                {{ number_format($item->pivot->total, '2', ',') }}
                                             </td>
                                             <td class="px-6 py-4 bg-whit">
                                                 @if ($telaPedido->status == 'Aberto')
@@ -326,9 +332,10 @@
                                         <th scope="row" class="px-6 py-3 text-base">Total</th>
                                         <td class="px-6 py-3"></td>
                                         <td class="px-6 py-3"></td>
+                                        <td class="px-6 py-3"></td>
                                         <td class="px-6 py-3">
                                             <h1 wire:model.live="totalPedido">
-                                                {{ number_format($totalPedido, 2, ',') }}</h1>
+                                                {{ number_format($totalItens, 2, ',') }}</h1>
                                         </td>
                                     </tr>
                                 </tfoot>
@@ -446,6 +453,32 @@
                         {{ $informacoesCliente->cliente->email }}
                     </h1>
                 </div>
+            </div>
+        </div>
+    @endif
+
+    @if ($detalheItem)
+        <div class="flex justify-center">
+            <div class="fixed top-11 bg-white border shadow-xl rounded-lg sm:top-40 sm:w-80">
+                <div>
+                    <button wire:click="fecharDetalheCliente()"
+                        class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500">
+                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                    </button>
+                </div>
+
+                <h1 class="text-xl font-semibold text-center m-3">Quantidade</h1>
+
+                <div class="flex flex-col items-center gap-3 m-3">
+                    <input wire:model.lazy="quantidade" type="number" class="rounded-xl border border-gray-400 w-28 text-lg font-semibold text-center" value="{{ $quantidade }}">
+
+                    <button wire:click.prevent="quantidadeItem()" class="p-2 border rounded text-lg font-semibold w-28 hover:text-white hover:bg-blue-500">Salvar</button>
+                </div>
+                
             </div>
         </div>
     @endif

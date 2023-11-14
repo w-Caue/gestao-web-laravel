@@ -38,10 +38,14 @@ class Pedidos extends Component
     public $telaPedido;
     public $showItem;
     public $itens;
+    public $detalheItem;
+    public $itemId;
+    public $quantidade = 1;
 
     #visualizar pedido
     public $itemPedido;
     public $totalPedido = '0';
+    public $totalItens = '0';
 
     protected $listeners = [
         'deleteItem'
@@ -102,16 +106,15 @@ class Pedidos extends Component
         $pedidoItem = PedidoItem::where('pedido_id', $this->telaPedido->id)
             ->where('item_id', $item->id)->get()->count();
 
+        $this->itemId = $item;
+
         if ($pedidoItem > 0) {
-            $this->alert('info', 'Item Já Adicionado!', [
-                'position' => 'center',
-                'timer' => '1000',
-                'toast' => true,
-            ]);
+            $this->detalheItem = true;
         } else {
             PedidoItem::create([
                 'pedido_id' => $this->telaPedido->id,
-                'item_id' => $item->id
+                'item_id' => $item->id,
+                'quantidade' => $this->quantidade
             ]);
 
             $this->totalPedido = $item->preco_1 + $this->totalPedido;
@@ -122,6 +125,29 @@ class Pedidos extends Component
                 'toast' => true,
             ]);
         }
+    }
+
+    public function quantidadeItem()
+    {
+        $pedido = PedidoItem::where('pedido_id', $this->telaPedido->id)->get()->first();
+
+        $total = $this->itemId->preco_1 * $this->quantidade;
+
+        $this->totalItens = $pedido->total + $total;
+
+        PedidoItem::where('pedido_id', $pedido->pedido_id)
+            ->where('item_id', $this->itemId->id)->update([
+                'quantidade' => $this->quantidade,
+                'total' => $total
+            ]);
+
+        $this->detalheItem = false;
+
+        $this->alert('info', 'Quantidade Adicionado!', [
+            'position' => 'center',
+            'timer' => '1000',
+            'toast' => true,
+        ]);
     }
 
     public function pesquisaClientes()
@@ -166,7 +192,7 @@ class Pedidos extends Component
         Pedido::findOrFail($this->telaPedido->id)->update([
             'forma_pagamento_id' => $this->formaDePagamento,
             'descricao' => $this->descricao,
-            'total' => $this->totalPedido,
+            'total' => $this->totalItens,
             'status' => 'Finalizado'
         ]);
 
