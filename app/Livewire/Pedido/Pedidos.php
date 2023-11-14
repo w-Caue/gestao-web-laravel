@@ -270,6 +270,8 @@ class Pedidos extends Component
 
     public function render()
     {
+        // $data = date('d/m/Y');
+ 
         $pedidos = Pedido::paginate(5);
 
         $formasPagamentos = FormaPagamento::all();
