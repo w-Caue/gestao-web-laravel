@@ -45,7 +45,7 @@ class Pedidos extends Component
     #visualizar pedido
     public $itemPedido;
     public $totalPedido = '0';
-    public $totalItens = '0';
+    public $totalItens = '';
 
     protected $listeners = [
         'deleteItem'
@@ -81,7 +81,7 @@ class Pedidos extends Component
         $this->telaPedido = Pedido::where('id', $pedido->id)->get()->first();
 
         $this->formaDePagamento = $this->telaPedido->forma_pagamento_id;
-        $this->totalItens = $this->telaPedido->total;
+        $this->totalPedido = $this->telaPedido->total;
         $this->status = $this->telaPedido->status;
         $this->descricao = $this->telaPedido->descricao;
     }
@@ -101,49 +101,41 @@ class Pedidos extends Component
         $this->itens = $itens;
     }
 
-    public function adicionarItem(Item $item)
+    public function quantidadeItem(Item $item)
     {
-        $pedidoItem = PedidoItem::where('pedido_id', $this->telaPedido->id)
-            ->where('item_id', $item->id)->get()->count();
+        $this->detalheItem = true;
 
         $this->itemId = $item;
 
-        if ($pedidoItem > 0) {
-            $this->detalheItem = true;
-        } else {
-            PedidoItem::create([
-                'pedido_id' => $this->telaPedido->id,
-                'item_id' => $item->id,
-                'quantidade' => $this->quantidade
-            ]);
-
-            $this->totalPedido = $item->preco_1 + $this->totalPedido;
-
-            $this->alert('success', 'Item Adicionado!', [
-                'position' => 'center',
-                'timer' => '1000',
-                'toast' => true,
-            ]);
-        }
+        $this->totalItens = $item->preco_1;
     }
 
-    public function quantidadeItem()
+    public function fecharDetalhe()
     {
-        $pedido = PedidoItem::where('pedido_id', $this->telaPedido->id)->get()->first();
-
-        $total = $this->itemId->preco_1 * $this->quantidade;
-
-        $this->totalItens = $pedido->total + $total;
-
-        PedidoItem::where('pedido_id', $pedido->pedido_id)
-            ->where('item_id', $this->itemId->id)->update([
-                'quantidade' => $this->quantidade,
-                'total' => $total
-            ]);
-
         $this->detalheItem = false;
+    }
 
-        $this->alert('info', 'Quantidade Adicionado!', [
+    public function adicionarItem()
+    {
+
+        $this->totalItens = $this->totalItens * $this->quantidade;
+
+        PedidoItem::create([
+            'pedido_id' => $this->telaPedido->id,
+            'item_id' => $this->itemId->id,
+            'quantidade' => $this->quantidade,
+            'total' => $this->totalItens
+        ]);
+
+        $this->fecharDetalhe();
+
+        $this->totalPedido = $this->totalItens + $this->totalPedido;
+
+        Pedido::findOrFail($this->telaPedido->id)->update([
+            'total' => $this->totalPedido
+        ]);
+
+        $this->alert('success', 'Item Adicionado!', [
             'position' => 'center',
             'timer' => '1000',
             'toast' => true,
@@ -192,7 +184,7 @@ class Pedidos extends Component
         Pedido::findOrFail($this->telaPedido->id)->update([
             'forma_pagamento_id' => $this->formaDePagamento,
             'descricao' => $this->descricao,
-            'total' => $this->totalItens,
+            'total' => $this->totalPedido,
             'status' => 'Finalizado'
         ]);
 
@@ -244,10 +236,15 @@ class Pedidos extends Component
     public function deleteItem()
     {
 
+        $pedido = PedidoItem::where('pedido_id', $this->telaPedido->id)
+        ->where('item_id', $this->itemPedido->id)->get()->first();
+
+        $this->totalPedido = $this->totalPedido - ($this->itemPedido->preco_1 * $pedido->quantidade);
+
+
         PedidoItem::where('pedido_id', $this->telaPedido->id)
             ->where('item_id', $this->itemPedido->id)->delete();
 
-        $this->totalPedido = $this->totalPedido - $this->itemPedido->preco_1;
 
         $this->alert('success', 'Item Removido!', [
             'position' => 'center',
@@ -271,7 +268,7 @@ class Pedidos extends Component
     public function render()
     {
         // $data = date('d/m/Y');
- 
+
         $pedidos = Pedido::paginate(5);
 
         $formasPagamentos = FormaPagamento::all();

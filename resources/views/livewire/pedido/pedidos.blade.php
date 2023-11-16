@@ -243,7 +243,7 @@
                             </select>
                         </div>
 
-                        @if ($telaPedido->status == 'Aberto' or $telaPedido->status == 'Encomenda')
+                        @if ($telaPedido->status == 'Aberto')
                             <div class="">
                                 <button wire:click.prevent="telaItens()"
                                     class="p-1 border rounded-md font-semibold text-gray-600 hover:bg-blue-500 hover:text-white">
@@ -319,7 +319,7 @@
                                             </td>
                                             @if ($telaPedido->status == 'Aberto')
                                                 <td class="px-6 py-4 bg-white">
-                                                    <button wire:click.prevent="removerItem({{ $item->id }})"
+                                                    <button wire:click.prevent="removerItem({{$item->id }})"
                                                         class="font-semibold text-red-500 cursor-pointer hover:underline">
                                                         remover
                                                     </button>
@@ -336,7 +336,7 @@
                                         <td class="px-6 py-3"></td>
                                         <td class="px-6 py-3">
                                             <h1 wire:model.live="totalPedido">
-                                                {{ number_format($totalItens, 2, ',') }}</h1>
+                                                {{ number_format($totalPedido, 2, ',') }}</h1>
                                         </td>
                                     </tr>
                                 </tfoot>
@@ -402,7 +402,7 @@
 
                 <div class="flex justify-center flex-wrap gap-3 m-3 overflow-auto h-80">
                     @foreach ($itens as $item)
-                        <div wire:click="adicionarItem({{ $item->id }})"
+                        <div wire:click="quantidadeItem({{ $item->id }})"
                             class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:w-1/3 hover:bg-gray-100 cursor-pointer">
 
                             <div class="flex flex-col justify-between p-4 leading-normal">
@@ -462,7 +462,7 @@
         <div class="flex justify-center">
             <div class="fixed top-11 bg-white border shadow-xl rounded-lg sm:top-40 sm:w-80">
                 <div>
-                    <button wire:click="fecharDetalheCliente()"
+                    <button wire:click="fecharDetalhe()"
                         class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500">
                         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 14 14">
@@ -479,7 +479,7 @@
                         class="rounded-xl border border-gray-400 w-28 text-lg font-semibold text-center"
                         value="{{ $quantidade }}">
 
-                    <button wire:click.prevent="quantidadeItem()"
+                    <button wire:click.prevent="adicionarItem()"
                         class="p-2 border rounded text-lg font-semibold w-28 hover:text-white hover:bg-blue-500">Salvar</button>
                 </div>
 
