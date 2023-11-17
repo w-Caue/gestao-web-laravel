@@ -47,6 +47,12 @@ class Pedidos extends Component
     public $totalPedido = '0';
     public $totalItens = '';
 
+    #autenticação
+    public $showAutenticacao = false;
+    public $desconto;
+    public $valorPago;
+    public $troco;
+
     protected $listeners = [
         'deleteItem'
     ];
@@ -81,7 +87,9 @@ class Pedidos extends Component
         $this->telaPedido = Pedido::where('id', $pedido->id)->get()->first();
 
         $this->formaDePagamento = $this->telaPedido->forma_pagamento_id;
-        $this->totalPedido = $this->telaPedido->total;
+        $this->totalPedido = $this->telaPedido->total_pedido;
+        $this->desconto = $this->telaPedido->desconto;
+        $this->totalItens = $this->telaPedido->total_itens;
         $this->status = $this->telaPedido->status;
         $this->descricao = $this->telaPedido->descricao;
     }
@@ -130,9 +138,11 @@ class Pedidos extends Component
         $this->fecharDetalhe();
 
         $this->totalPedido = $this->totalItens + $this->totalPedido;
+        $this->totalItens = $this->totalItens + $this->telaPedido->total_itens;
 
         Pedido::findOrFail($this->telaPedido->id)->update([
-            'total' => $this->totalPedido
+            'total_pedido' => $this->totalPedido,
+            'total_itens' => $this->totalItens
         ]);
 
         $this->alert('success', 'Item Adicionado!', [
@@ -184,13 +194,24 @@ class Pedidos extends Component
         Pedido::findOrFail($this->telaPedido->id)->update([
             'forma_pagamento_id' => $this->formaDePagamento,
             'descricao' => $this->descricao,
-            'total' => $this->totalPedido,
+            'total_itens' => $this->totalItens,
+            'total_pedido' => $this->totalPedido,
             'status' => 'Finalizado'
         ]);
 
-        $this->fecharPedido();
+        $this->showAutenticacao = true;
+    }
 
-        $this->alert('success', 'Pedido Finalizado!', [
+    public function autenticarPedido(){
+        Pedido::findOrFail($this->telaPedido->id)->update([
+            'total_pedido' => $this->totalPedido,
+            'desconto' => $this->desconto,
+            'status' => 'Autenticado'
+        ]);
+
+        $this->showAutenticacao = false;
+
+        $this->alert('success', 'Pedido Autenticado!', [
             'position' => 'center',
             'timer' => '1000',
             'toast' => false,
@@ -267,8 +288,6 @@ class Pedidos extends Component
 
     public function render()
     {
-        // $data = date('d/m/Y');
-
         $pedidos = Pedido::paginate(5);
 
         $formasPagamentos = FormaPagamento::all();

@@ -46,9 +46,14 @@
                         Status
                     </th>
                     <th scope="col" class="px-6 py-3 text-center">
+                        Total Itens
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Desconto
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
                         Total Pedido
                     </th>
-
                     <th scope="col" class="px-6 py-3 text-center">
 
                     </th>
@@ -73,11 +78,17 @@
                             {{ $pedido->formaPagamento->nome }}
                         </td>
                         <td
-                            class="px-6 py-4 text-center font-semibold {{ $pedido->status == 'Concluido' ? 'text-green-600' : '' }} {{ $pedido->status == 'Finalizado' ? 'text-blue-500' : '' }} {{ $pedido->status == 'Pendente Pagamento' ? 'text-red-400' : '' }}">
+                            class="px-6 py-4 text-center font-semibold {{ $pedido->status == 'Concluido' ? 'text-green-600' : '' }} {{ $pedido->status == 'Finalizado' ? 'text-blue-500' : '' }} {{ $pedido->status == 'Autenticado' ? 'text-yellow-500' : '' }} {{ $pedido->status == 'Pendente Pagamento' ? 'text-red-400' : '' }} {{ $pedido->status == 'Encomenda' ? 'text-purple-500' : '' }}">
                             {{ $pedido->status }}
                         </td>
                         <td class="px-6 py-4 text-center font-semibold">
-                            {{ number_format($pedido->total, 2, ',') }}
+                            {{ number_format($pedido->total_itens, 2, ',') }}
+                        </td>
+                        <td class="px-6 py-4 text-center font-semibold">
+                            {{ number_format($pedido->desconto, 2, ',') }}
+                        </td>
+                        <td class="px-6 py-4 text-center font-semibold">
+                            {{ number_format($pedido->total_pedido, 2, ',') }}
                         </td>
                         <td class="px-6 py-4 text-center">
                             @if ($pedido->status == 'Aberto')
@@ -319,7 +330,7 @@
                                             </td>
                                             @if ($telaPedido->status == 'Aberto')
                                                 <td class="px-6 py-4 bg-white">
-                                                    <button wire:click.prevent="removerItem({{$item->id }})"
+                                                    <button wire:click.prevent="removerItem({{ $item->id }})"
                                                         class="font-semibold text-red-500 cursor-pointer hover:underline">
                                                         remover
                                                     </button>
@@ -336,7 +347,7 @@
                                         <td class="px-6 py-3"></td>
                                         <td class="px-6 py-3">
                                             <h1 wire:model.live="totalPedido">
-                                                {{ number_format($totalPedido, 2, ',') }}</h1>
+                                                {{ number_format($totalItens, 2, ',') }}</h1>
                                         </td>
                                     </tr>
                                 </tfoot>
@@ -366,6 +377,79 @@
                         @endif
                     </div>
                 </form>
+            </div>
+        </div>
+    @endif
+
+    @if ($showAutenticacao)
+        <div class="flex justify-center">
+            <div class="fixed top-11 bg-white border-2 shadow-xl rounded sm:top-32 sm:w-96">
+                <h1 class="text-xl font-semibold text-center ">Autenticar</h1>
+
+                <div class="flex flex-col m-3">
+                    <div class="flex items-center flex-col mb-2">
+                        <label for="pagamento" class="block mb-2 text-xl font-semibold text-gray-900 ">Forma de
+                            Pagamento</label>
+                        <select wire:model="formaDePagamento" id="pagamento" @disabled(true)
+                            class=" bg-gray-50 border border-gray-300 text-gray-600 text-md font-semibold rounded block w-52 p-1 ">
+                            <option selected></option>
+
+                            @foreach ($formasPagamentos as $formaPagamento)
+                                <option value="{{ $formaPagamento->id }}"
+                                    class="font-semibold text-md text-gray-600">
+                                    {{ $formaPagamento->nome }}</option>
+                            @endforeach
+
+                        </select>
+                    </div>
+
+                    <div class="flex m-1 gap-2">
+                        <div class="flex items-center gap-1 mb-3">
+                            <label for="pagamento" class="block mb-2 text-xl font-semibold text-gray-900 ">Valor
+                                Pago</label>
+                            <input wire:model.lazy="valorPago" type="text"
+                                class="border-gray-300 bg-gray-50 rounded w-20 text-md font-semibold text-center"
+                                value="">
+                        </div>
+
+                        @php
+                            $this->troco = $this->totalPedido - $this->valorPago;
+                        @endphp
+
+                        <div class="flex items-center gap-4 m-1 mb-3">
+                            <label for="pagamento"
+                                class="block mb-2 text-xl font-semibold text-gray-900 ">Troco</label>
+                            <input wire:model.lazy="troco" type="number"
+                                class="border-gray-300 bg-gray-50 rounded w-16 text-md font-semibold text-center"
+                                @disabled(true)>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-end  gap-4 m-1 mb-3">
+                        <label for="pagamento"
+                            class="block mb-2 text-xl font-semibold text-gray-900 ">Desconto</label>
+                        <input wire:model.live="desconto" type="number"
+                            class="border-gray-300 bg-gray-50 rounded w-20 text-md font-semibold text-center"
+                            value="">
+                    </div>
+
+                    @php
+                        $this->totalPedido = $this->totalPedido - $desconto;
+                    @endphp
+
+                    <div class="flex justify-end items-center gap-4 m-1">
+                        <label for="pagamento" class="block mb-2 text-xl font-semibold text-gray-900 ">Total do
+                            Pedido</label>
+                        <h1 wire:model="totalPedido" 
+                            class="p-2 border-gray-300 bg-gray-50 rounded w-24 text-md font-semibold text-center"
+                            value="">{{ number_format($totalPedido, 2, ',') }}</h1>
+                    </div>
+                </div>
+
+                <div class="flex justify-center m-2">
+                    <button wire:click.prevent="autenticarPedido()"
+                        class="p-2 border rounded text-md font-semibold">Confirmar</button>
+                </div>
             </div>
         </div>
     @endif
