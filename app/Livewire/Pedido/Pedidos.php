@@ -225,6 +225,7 @@ class Pedidos extends Component
             Pedido::findOrFail($this->telaPedido->id)->update([
                 'forma_pagamento_id' => $this->formaDePagamento,
                 'total_pedido' => $this->telaPedido->total_itens,
+                'desconto' => '0',
                 'descricao' => $this->descricao,
                 'status' => $this->status
             ]);
@@ -235,13 +236,6 @@ class Pedidos extends Component
                 'status' => $this->status
             ]);
         }
-
-
-        Pedido::findOrFail($this->telaPedido->id)->update([
-            'forma_pagamento_id' => $this->formaDePagamento,
-            'descricao' => $this->descricao,
-            'status' => $this->status
-        ]);
 
         $this->fecharPedido();
 
