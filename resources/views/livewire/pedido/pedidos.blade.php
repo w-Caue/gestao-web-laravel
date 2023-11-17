@@ -428,7 +428,7 @@
                     <div class="flex items-center justify-end  gap-4 m-1 mb-3">
                         <label for="pagamento"
                             class="block mb-2 text-xl font-semibold text-gray-900 ">Desconto</label>
-                        <input wire:model.live="desconto" type="number"
+                        <input wire:model.lazy="desconto" type="number"
                             class="border-gray-300 bg-gray-50 rounded w-20 text-md font-semibold text-center"
                             value="">
                     </div>
@@ -440,7 +440,7 @@
                     <div class="flex justify-end items-center gap-4 m-1">
                         <label for="pagamento" class="block mb-2 text-xl font-semibold text-gray-900 ">Total do
                             Pedido</label>
-                        <h1 wire:model="totalPedido" 
+                        <h1 wire:model.live="totalPedido" 
                             class="p-2 border-gray-300 bg-gray-50 rounded w-24 text-md font-semibold text-center"
                             value="">{{ number_format($totalPedido, 2, ',') }}</h1>
                     </div>
