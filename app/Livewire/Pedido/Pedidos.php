@@ -202,7 +202,8 @@ class Pedidos extends Component
         $this->showAutenticacao = true;
     }
 
-    public function autenticarPedido(){
+    public function autenticarPedido()
+    {
         Pedido::findOrFail($this->telaPedido->id)->update([
             'total_pedido' => $this->totalPedido,
             'desconto' => $this->desconto,
@@ -220,6 +221,22 @@ class Pedidos extends Component
 
     public function editePedido()
     {
+        if ($this->status == 'Aberto') {
+            Pedido::findOrFail($this->telaPedido->id)->update([
+                'forma_pagamento_id' => $this->formaDePagamento,
+                'total_pedido' => $this->telaPedido->total_itens,
+                'descricao' => $this->descricao,
+                'status' => $this->status
+            ]);
+        } else {
+            Pedido::findOrFail($this->telaPedido->id)->update([
+                'forma_pagamento_id' => $this->formaDePagamento,
+                'descricao' => $this->descricao,
+                'status' => $this->status
+            ]);
+        }
+
+
         Pedido::findOrFail($this->telaPedido->id)->update([
             'forma_pagamento_id' => $this->formaDePagamento,
             'descricao' => $this->descricao,
@@ -258,7 +275,7 @@ class Pedidos extends Component
     {
 
         $pedido = PedidoItem::where('pedido_id', $this->telaPedido->id)
-        ->where('item_id', $this->itemPedido->id)->get()->first();
+            ->where('item_id', $this->itemPedido->id)->get()->first();
 
         $this->totalPedido = $this->totalPedido - ($this->itemPedido->preco_1 * $pedido->quantidade);
 

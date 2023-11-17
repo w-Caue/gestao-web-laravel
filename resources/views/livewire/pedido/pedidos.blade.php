@@ -420,7 +420,7 @@
                             <label for="pagamento"
                                 class="block mb-2 text-xl font-semibold text-gray-900 ">Troco</label>
                             <input wire:model.lazy="troco" type="number"
-                                class="border-gray-300 bg-gray-50 rounded w-16 text-md font-semibold text-center"
+                                class="border-gray-300 bg-gray-50 rounded w-20 text-md font-semibold text-center"
                                 @disabled(true)>
                         </div>
                     </div>
