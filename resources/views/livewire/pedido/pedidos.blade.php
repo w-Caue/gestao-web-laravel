@@ -363,13 +363,15 @@
                             placeholder="Adicione uma descrição..."></textarea>
                     </div>
 
-                    <div class="flex justify-center m-4">
-                        @if ($telaPedido->status == 'Concluido')
-                            {{-- <button type="submit"
-                                class="p-2 border rounded text-md font-semibold bg-white hover:shadow-xl hover:text-white hover:bg-blue-500">
-                                Finalizar Pedido
-                            </button> --}}
-                        @else
+                    <div class="flex justify-center m-4 gap-3">
+                        @if ($telaPedido->status == 'Finalizado')
+                            <button wire:click.prevent="mostrarAutenticacao()"
+                                class="p-2 border rounded text-md font-semibold bg-white hover:shadow-xl hover:text-white hover:bg-yellow-400">
+                                Autenticar Pedido
+                            </button>
+                        @endif
+
+                        @if ($telaPedido->status != 'Concluido')
                             <button type="submit"
                                 class="p-2 border rounded text-md font-semibold bg-white hover:shadow-xl hover:text-white hover:bg-blue-500">
                                 {{ $telaPedido->status == 'Aberto' ? 'Finalizar Pedido' : 'Salvar Pedido' }}
@@ -383,14 +385,13 @@
 
     @if ($showAutenticacao)
         <div class="flex justify-center">
-            <div class="fixed top-11 bg-white border-2 shadow-xl rounded sm:top-32 sm:w-96">
-                <h1 class="text-xl font-semibold text-center ">Autenticar</h1>
+            <div class="fixed top-11 bg-gray-50 border-2 shadow-xl rounded sm:top-16 sm:w-80">
 
                 <div class="flex flex-col m-3">
                     <div class="flex items-center flex-col mb-2">
                         <label for="pagamento" class="block mb-2 text-xl font-semibold text-gray-900 ">Forma de
                             Pagamento</label>
-                        <select wire:model="formaDePagamento" id="pagamento" @disabled(true)
+                        <select wire:model="formaDePagamento" id="pagamento"
                             class=" bg-gray-50 border border-gray-300 text-gray-600 text-md font-semibold rounded block w-52 p-1 ">
                             <option selected></option>
 
@@ -403,46 +404,47 @@
                         </select>
                     </div>
 
-                    <div class="flex m-1 gap-2">
+                    {{-- <div class="flex m-1 gap-2">
                         <div class="flex items-center gap-1 mb-3">
                             <label for="pagamento" class="block mb-2 text-xl font-semibold text-gray-900 ">Valor
                                 Pago</label>
-                            <input wire:model.lazy="valorPago" type="text"
+                            <input wire:model.live="valorPago" type="text"
                                 class="border-gray-300 bg-gray-50 rounded w-20 text-md font-semibold text-center"
                                 value="">
                         </div>
 
                         @php
-                            $this->troco = $this->totalPedido - $this->valorPago;
+                            $valor = $this->totalPedido - $this->valorPago;
+                            $this->troco = $valor;
                         @endphp
 
                         <div class="flex items-center gap-4 m-1 mb-3">
                             <label for="pagamento"
                                 class="block mb-2 text-xl font-semibold text-gray-900 ">Troco</label>
-                            <input wire:model.lazy="troco" type="number"
-                                class="border-gray-300 bg-gray-50 rounded w-20 text-md font-semibold text-center"
-                                @disabled(true)>
+                            <h1 wire:model.lazy="troco" type="number"
+                                class="border-gray-300 bg-gray-50 rounded w-20 text-md font-semibold text-center">
+                                {{ number_format($this->troco, 2, ',') }}</h1>
                         </div>
-                    </div>
+                    </div> --}}
 
-                    <div class="flex items-center justify-end  gap-4 m-1 mb-3">
+                    <div class="flex items-center justify-end  gap-1 m-2 mb-3">
                         <label for="pagamento"
                             class="block mb-2 text-xl font-semibold text-gray-900 ">Desconto</label>
-                        <input wire:model.lazy="desconto" type="number"
+                        <input wire:model.live="desconto" type="number"
                             class="border-gray-300 bg-gray-50 rounded w-20 text-md font-semibold text-center"
                             value="">
                     </div>
 
                     @php
-                        $this->totalPedido = $this->totalPedido - $desconto;
+                        $this->total = $this->totalPedido - $desconto;
                     @endphp
 
-                    <div class="flex justify-end items-center gap-4 m-1">
+                    <div class="flex justify-end items-center gap-1 m-2">
                         <label for="pagamento" class="block mb-2 text-xl font-semibold text-gray-900 ">Total do
                             Pedido</label>
-                        <h1 wire:model.live="totalPedido" 
+                        <h1 wire:model.live="totalPedido"
                             class="p-2 border-gray-300 bg-gray-50 rounded w-24 text-md font-semibold text-center"
-                            value="">{{ number_format($totalPedido, 2, ',') }}</h1>
+                            value="">{{ number_format($this->total, 2, ',') }}</h1>
                     </div>
                 </div>
 

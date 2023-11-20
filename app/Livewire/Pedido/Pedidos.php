@@ -50,6 +50,7 @@ class Pedidos extends Component
     #autenticação
     public $showAutenticacao = false;
     public $desconto;
+    public $total;
     public $valorPago;
     public $troco;
 
@@ -88,6 +89,7 @@ class Pedidos extends Component
 
         $this->formaDePagamento = $this->telaPedido->forma_pagamento_id;
         $this->totalPedido = $this->telaPedido->total_pedido;
+        $this->total = $this->telaPedido->total_pedido;
         $this->desconto = $this->telaPedido->desconto;
         $this->totalItens = $this->telaPedido->total_itens;
         $this->status = $this->telaPedido->status;
@@ -152,6 +154,45 @@ class Pedidos extends Component
         ]);
     }
 
+    public function removerItem(Item $item)
+    {
+        $this->itemPedido = $item;
+
+        $this->alert('info', 'Remover Esse Item do Pedido?', [
+            'position' => 'center',
+            'timer' => 5000,
+            'toast' => false,
+            'showConfirmButton' => true,
+            'confirmButtonColor' => '#3085d6',
+            'onConfirmed' => 'deleteItem',
+            'showCancelButton' => true,
+            'cancelButtonColor' => '#d33',
+            'onDismissed' => '',
+            'cancelButtonText' => 'Cancelar',
+            'confirmButtonText' => 'Deletar',
+        ]);
+    }
+
+    public function deleteItem()
+    {
+
+        $pedido = PedidoItem::where('pedido_id', $this->telaPedido->id)
+            ->where('item_id', $this->itemPedido->id)->get()->first();
+
+        $this->totalPedido = $this->totalPedido - ($this->itemPedido->preco_1 * $pedido->quantidade);
+
+
+        PedidoItem::where('pedido_id', $this->telaPedido->id)
+            ->where('item_id', $this->itemPedido->id)->delete();
+
+
+        $this->alert('success', 'Item Removido!', [
+            'position' => 'center',
+            'timer' => '1000',
+            'toast' => false,
+        ]);
+    }
+
     public function pesquisaClientes()
     {
         $clientes = Cliente::select([
@@ -191,7 +232,7 @@ class Pedidos extends Component
 
     public function finalizarPedido()
     {
-        Pedido::findOrFail($this->telaPedido->id)->update([
+        Pedido::find($this->telaPedido->id)->update([
             'forma_pagamento_id' => $this->formaDePagamento,
             'descricao' => $this->descricao,
             'total_itens' => $this->totalItens,
@@ -199,13 +240,27 @@ class Pedidos extends Component
             'status' => 'Finalizado'
         ]);
 
+        $this->fecharPedido();
+
+        $this->alert('success', 'Pedido Finalizado!', [
+            'position' => 'center',
+            'timer' => '1000',
+            'toast' => false,
+        ]);
+
+    }
+
+    public function mostrarAutenticacao()
+    {
         $this->showAutenticacao = true;
+
     }
 
     public function autenticarPedido()
     {
         Pedido::findOrFail($this->telaPedido->id)->update([
-            'total_pedido' => $this->totalPedido,
+            'forma_pagamento_id' => $this->formaDePagamento,
+            'total_pedido' => $this->total,
             'desconto' => $this->desconto,
             'status' => 'Autenticado'
         ]);
@@ -217,6 +272,8 @@ class Pedidos extends Component
             'timer' => '1000',
             'toast' => false,
         ]);
+
+        $this->fecharPedido();
     }
 
     public function editePedido()
@@ -240,45 +297,6 @@ class Pedidos extends Component
         $this->fecharPedido();
 
         $this->alert('success', 'Pedido Salvo!', [
-            'position' => 'center',
-            'timer' => '1000',
-            'toast' => false,
-        ]);
-    }
-
-    public function removerItem(Item $item)
-    {
-        $this->itemPedido = $item;
-
-        $this->alert('info', 'Remover Esse Item do Pedido?', [
-            'position' => 'center',
-            'timer' => 5000,
-            'toast' => false,
-            'showConfirmButton' => true,
-            'confirmButtonColor' => '#3085d6',
-            'onConfirmed' => 'deleteItem',
-            'showCancelButton' => true,
-            'cancelButtonColor' => '#d33',
-            'onDismissed' => '',
-            'cancelButtonText' => 'Cancelar',
-            'confirmButtonText' => 'Deletar',
-        ]);
-    }
-
-    public function deleteItem()
-    {
-
-        $pedido = PedidoItem::where('pedido_id', $this->telaPedido->id)
-            ->where('item_id', $this->itemPedido->id)->get()->first();
-
-        $this->totalPedido = $this->totalPedido - ($this->itemPedido->preco_1 * $pedido->quantidade);
-
-
-        PedidoItem::where('pedido_id', $this->telaPedido->id)
-            ->where('item_id', $this->itemPedido->id)->delete();
-
-
-        $this->alert('success', 'Item Removido!', [
             'position' => 'center',
             'timer' => '1000',
             'toast' => false,
