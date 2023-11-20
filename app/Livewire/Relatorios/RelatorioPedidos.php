@@ -6,12 +6,35 @@ use App\Models\Cliente;
 use App\Models\FormaPagamento;
 use App\Models\Pedido;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class RelatorioPedidos extends Component
 {
+    use WithPagination;
+
+    public $cliente;
+    public $formaPagamento;
+
+    public $mostrarRelatorio;
+
+    public $menuRelatorio = true;
+
+    public function mostrarFiltros(){
+        $this->mostrarRelatorio = false;
+        $this->menuRelatorio = true;
+    }
+
+    public function visualizarRelatorio(){
+        $this->mostrarRelatorio = true;
+        $this->menuRelatorio = false;
+    }
+
     public function render()
     {
-        $pedidos = Pedido::all();
+        $pedidos = Pedido::where('cliente_id', 'like', '%'. $this->cliente .'%')
+                    ->where('forma_pagamento_id', 'like', '%'. $this->formaPagamento .'%')
+                    ->paginate(10);
+
         $clientes = Cliente::all();
         $formaPagamentos = FormaPagamento::all();
 

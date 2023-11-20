@@ -15,6 +15,23 @@
                     placeholder="Pesquisar Pedido">
             </div>
         </div>
+
+
+        <div class="flex items-center">
+            <div class="relative">
+                <input name="start" type="date"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
+                    placeholder="Selecione a data">
+            </div>
+            <span class="mx-4 text-gray-500">a</span>
+            <div class="relative">
+                <input name="end" type="date"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
+                    placeholder="Selecione a data">
+            </div>
+        </div>
+
+
         <button wire:click="novoPedido()"
             class="flex flex-row gap-2 text-gray-600 font-semibold border p-2 rounded-md bg-white hover:bg-gray-50 hover:shadow-lg">
             <svg class="w-6 h-6 text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -146,7 +163,8 @@
                             <option selected></option>
 
                             @foreach ($formasPagamentos as $formaPagamento)
-                                <option value="{{ $formaPagamento->id }}" class="font-semibold text-md text-gray-600">
+                                <option value="{{ $formaPagamento->id }}"
+                                    class="font-semibold text-md text-gray-600">
                                     {{ $formaPagamento->nome }}</option>
                             @endforeach
 
