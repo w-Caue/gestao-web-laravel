@@ -11,7 +11,7 @@
                 <div>
                     <a href="{{ route('relatorio-pedidos') }}"
                         class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:w-1/3 hover:bg-gray-100 cursor-pointer m-5">
-                        <div class="border p-4 m-2 rounded-full bg-gray-300">
+                        <div class="border p-4 m-2 rounded-full bg-gray-100">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-11 h-11 text-gray-600">
                                 <path stroke-linecap="round" stroke-linejoin="round"

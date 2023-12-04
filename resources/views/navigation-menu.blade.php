@@ -28,6 +28,10 @@
                         {{ __('Pedidos') }}
                     </x-nav-link>
 
+                    <x-nav-link href="{{ route('contas') }}" :active="request()->routeIs('contas')">
+                        {{ __('Contas') }}
+                    </x-nav-link>
+
                     <x-nav-link href="{{ route('relatorios') }}" :active="request()->routeIs('relatorios')">
                         {{ __('Relatorios') }}
                     </x-nav-link>
@@ -171,15 +175,19 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link href="{{ route('clientes') }}">
+            <x-responsive-nav-link href="{{ route('clientes') }}" :active="request()->routeIs('clientes')">
                 {{ __('Clientes') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link href="{{ route('itens') }}">
+            <x-responsive-nav-link href="{{ route('itens') }}" :active="request()->routeIs('itens')">
                 {{ __('Itens') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link href="{{ route('pedidos') }}">
+            <x-responsive-nav-link href="{{ route('contas') }}" :active="request()->routeIs('contas')">
+                {{ __('Contas') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link href="{{ route('pedidos') }}" :active="request()->routeIs('pedidos')">
                 {{ __('Pedidos') }}
             </x-responsive-nav-link>
         </div>

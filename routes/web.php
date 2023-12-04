@@ -34,17 +34,32 @@ Route::middleware([
     Route::get('/clientes', function () {
         return view('pages.cliente.index');
     })->name('clientes');
-    
+
     Route::get('/pedidos', function () {
         return view('pages.pedido.index');
     })->name('pedidos');
+
+    Route::get('/contas', function () {
+        return view('pages.contas.index');
+    })->name('contas');
+
+    Route::prefix('/contas')->group(function () {
+
+        Route::get('/contas-pagar', function () {
+            return view('pages.contas.contas-pagar');
+        })->name('contas-pagar');
+
+    });
 
     Route::get('/relatorios', function () {
         return view('pages.relatorios');
     })->name('relatorios');
 
-    Route::get('/relatorio-pedidos', function () {
-        return view('pages.relatorios.relatorio-pedidos');
-    })->name('relatorio-pedidos');
+    Route::prefix('/relatorios')->group(function () {
 
+        Route::get('/relatorio-pedidos', function () {
+            return view('pages.relatorios.relatorio-pedidos');
+        })->name('relatorio-pedidos');
+
+    });
 });
