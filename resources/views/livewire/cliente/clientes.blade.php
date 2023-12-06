@@ -1,6 +1,6 @@
 <div>
 
-    <div class="flex justify-between flex-wrap mb-4 m-7">
+    <div class="flex justify-between items-center flex-wrap mb-4 m-7">
         <div class="">
             <label for="table-search" class="sr-only">Pesquisa</label>
             <div class="relative mt-1">
@@ -17,6 +17,22 @@
             </div>
         </div>
 
+        <div class="flex gap-3">
+            <label for="">
+                <input wire:model.live='tipo' value="Cliente"
+                    class=" h-5 w-5 appearance-none rounded-full border-2 border-solid border-gray-300 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-blue-600 checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s]"
+                    type="radio" name="tipo" id="radioNoLabel01" />
+                <span class="text-md font-semibold text-gray-500">Cliente</span>
+            </label>
+
+            <label for="">
+                <input wire:model.live='tipo' value="Empresa"
+                    class=" h-5 w-5 appearance-none rounded-full border-2 border-solid border-gray-300 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-blue-600 checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s]"
+                    type="radio" name="tipo" id="radioNoLabel01" />
+                <span class="text-md font-semibold text-gray-500">Empresa</span>
+            </label>
+        </div>
+
         <button wire:click="novoCliente()"
             class="flex flex-row gap-2 text-gray-600 font-semibold border p-2 rounded-md bg-white hover:bg-gray-50 hover:shadow-lg">
             <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -26,6 +42,7 @@
             </svg>
             Novo Cliente
         </button>
+
     </div>
 
     <div class="mx-7 relative overflow-x-auto shadow-md rounded-lg">
@@ -73,7 +90,7 @@
                             </button>
                         </td>
 
-                        <td class="px-6 py-4 text-right">
+                        <td class="px-6 py-2 text-right">
                             <button wire:click="edit({{ $cliente->id }})" class="p-1 border rounded bg-blue-500">
                                 <span class="text-md font-semibold text-white">Editar</span>
                             </button>
@@ -111,7 +128,7 @@
 
                 <h1 class="text-xl font-semibold text-center m-3">Cliente</h1>
 
-                <div class="flex justify-center m-2">
+                <div class="m-2 flex justify-center">
                     <form wire:submit.prevent="{{ $form->clienteId ? 'update()' : 'save()' }}" class="w-1/2">
                         <div class="flex flex-wrap -mx-3 mb-4">
                             <div class="w-full  px-3 mb-6 md:mb-0">
@@ -150,24 +167,47 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="flex flex-wrap -mx-3 m-4">
-                            <div class="w-full px-3 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                    for="grid-city">
-                                    Whatsapp
-                                </label>
-                                <input wire:model="form.whatsapp"
-                                    class="appearance-none block w-44 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-city" type="text" placeholder="">
+
+                        <div class="flex gap-5 items-center">
+                            <div class="flex flex-wrap -mx-3 m-4">
+                                <div class="w-full px-3 mb-6 md:mb-0">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                        for="grid-city">
+                                        Whatsapp
+                                    </label>
+                                    <input wire:model="form.whatsapp"
+                                        class="appearance-none block w-44 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                        id="grid-city" type="text" placeholder="">
+                                </div>
+
+                                <div>
+                                    @error('form.whatsapp')
+                                        <span class="error">{{ $message }}</span>
+                                    @enderror
+                                </div>
                             </div>
 
-                            <div>
-                                @error('form.whatsapp')
-                                    <span class="error">{{ $message }}</span>
-                                @enderror
+                            <div class="flex -mx-3 mb-4">
+                                <div class="w-full  px-3 mb-6 md:mb-0">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                        for="grid-first-name">
+                                        Empresa
+                                    </label>
+
+                                    <input wire:model.live="form.tipo"
+                                        class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-neutral-300 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] checked:border-primary checked:bg-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ml-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ml-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent dark:border-neutral-600 dark:checked:border-primary dark:checked:bg-primary dark:focus:before:shadow-[0px_0px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca]"
+                                        type="checkbox" value="Empresa" id="checkboxChecked" />
+                                </div>
+
+                                <div>
+                                    @error('form.tipo')
+                                        <span class="error">{{ $message }}</span>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
-                        <div class="mb-3">
+
+                        <div class="mb-3 ">
                             <div class="flex justify-center">
                                 <button type="submit"
                                     class="p-2 border rounded text-md font-semibold bg-white hover:shadow-xl hover:text-white hover:bg-blue-500">

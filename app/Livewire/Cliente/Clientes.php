@@ -21,6 +21,7 @@ class Clientes extends Component
     public $newCliente = false;
 
     public $clienteId;
+    public $tipo = 'Cliente';
 
     protected $listeners = [
         'delete'
@@ -33,7 +34,7 @@ class Clientes extends Component
 
     public function fecharCliente()
     {
-        $this->reset();
+        $this->reset('form.nome', 'form.email', 'form.whatsapp', 'form.tipo');
 
         $this->resetValidation();
 
@@ -109,7 +110,8 @@ class Clientes extends Component
     public function render()
     {
         $clientes = Cliente::where('nome', 'like', '%'. $this->search .'%')
-                    ->where('status', 'Ativo')->paginate(5);
+                    ->where('status', 'Ativo')
+                    ->where('tipo', $this->tipo)->paginate(5);
 
         return view('livewire.cliente.clientes', [
             'clientes' => $clientes

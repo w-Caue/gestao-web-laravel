@@ -21,14 +21,23 @@ class ClienteForm extends Form
     #[Rule('numeric', message: 'É necessario colocar um número válido!')]
     public $whatsapp = '';
 
+    public $tipo;
+
     public function save()
     {
+        if($this->tipo == true){
+            $this->tipo = 'Empresa';
+        } else {
+            $this->tipo = 'Cliente';
+        }
+
         $this->validate();
 
         Cliente::create([
             'nome' => $this->nome,
             'email' => $this->email,
             'whatsapp' => $this->whatsapp,
+            'tipo' => $this->tipo,
         ]);
     }
 
@@ -38,16 +47,29 @@ class ClienteForm extends Form
         $this->nome = $cliente->nome;
         $this->email = $cliente->email;
         $this->whatsapp = $cliente->whatsapp;
+
+        if($cliente->tipo == 'Empresa'){
+            $this->tipo = true;
+        } else {
+            $this->tipo = false;
+        }
     }
 
     public function update()
     {
         $this->validate();
 
+        if($this->tipo == true){
+            $this->tipo = 'Empresa';
+        } else {
+            $this->tipo = 'Cliente';
+        }
+
         Cliente::findOrFail($this->clienteId)->update([
             'nome' => $this->nome,
             'email' => $this->email,
-            'whatsapp' => $this->whatsapp
+            'whatsapp' => $this->whatsapp,
+            'tipo' => $this->tipo
         ]);
     }
 }

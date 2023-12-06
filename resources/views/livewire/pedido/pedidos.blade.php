@@ -222,7 +222,7 @@
                     <div class="flex justify-center flex-wrap m-3 overflow-auto h-60">
                         @foreach ($clientes as $cliente)
                             <div wire:click="selecioneCliente({{ $cliente->id }})"
-                                class="m-2 p-2 text-gray-400 shadow border rounded w-44 hover:bg-gray-100 hover:shadow-xl hover:border-2 cursor-pointer">
+                                class="m-2 p-2 text-gray-400 shadow border rounded w-44 h-24 hover:bg-gray-100 hover:shadow-xl hover:border-2 cursor-pointer">
                                 <h1 class="text-sm  font-semibold">#{{ $cliente->id }}</h1>
                                 <h1 class="text-lg font-semibold text-gray-500">{{ $cliente->nome }}</h1>
                                 <h1 class="text-sm  font-semibold">{{ $cliente->whatsapp }}</h1>
