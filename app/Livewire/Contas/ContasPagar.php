@@ -6,6 +6,7 @@ use App\Livewire\Forms\ContasForm;
 use App\Models\AgenteCobrador;
 use App\Models\Cliente;
 use App\Models\Conta;
+use App\Models\FormaPagamento;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -21,13 +22,21 @@ class ContasPagar extends Component
     public $clientes;
     public $clienteDocumento;
 
-    public $clienteEmpresa;
+    #Criar Documento
     public $descricao;
-    public $agCobrador;
-    public $dtLancamento;
-    public $dtVencimento;
-    public $vlDocumento;
+    public $agenteCobrador;
+    public $dataLancamento;
+    public $dataVencimento;
+    public $valorDocumento;
+
+    #Baixar Documento
+    public $dtPagamento;
+    public $valorPagar;
+
     public $statusDocumento = 'Aberto';
+
+    public $showBaixa;
+
 
     public function novoDocumento()
     {
@@ -36,6 +45,7 @@ class ContasPagar extends Component
 
     public function fecharDocumento()
     {
+        $this->reset('clienteDocumento', 'descricao', 'agenteCobrador');
         $this->showDocumento = false;
     }
 
@@ -66,14 +76,14 @@ class ContasPagar extends Component
 
     public function criarDocumento()
     {
-        
+
         Conta::create([
             'cliente_id' => $this->clienteDocumento->id,
             'descricao' => $this->descricao,
-            'ag_cobrador_id' => $this->agCobrador,
-            'data_lancamento' => $this->dtLancamento,
-            'data_vencimento' => $this->dtVencimento,
-            'valor_documento' => $this->vlDocumento,
+            'ag_cobrador_id' => $this->agenteCobrador,
+            'data_lancamento' => $this->dataLancamento,
+            'data_vencimento' => $this->dataVencimento,
+            'valor_documento' => $this->valorDocumento,
             'status_documento' => $this->statusDocumento,
         ]);
 
@@ -87,15 +97,36 @@ class ContasPagar extends Component
         ]);
     }
 
+    public function baixaDocumento()
+    {
+        $this->showBaixa = !$this->showBaixa;
+    }
+
+    public function mostrarDocumento(Conta $documento)
+    {
+        $this->showDocumento = true;
+
+        $this->clienteDocumento = Cliente::where('id', $documento->cliente_id)->get()->first();
+        $this->descricao = $documento->descricao;
+        $this->dataLancamento = date('d/m/Y', strtotime($documento->data_lancamento));
+        $this->agenteCobrador = $documento->ag_cobrador_id;
+        $this->dataVencimento = date('d/m/Y', strtotime($documento->data_vencimento));
+        $this->valorDocumento = number_format($documento->valor_documento, 2, ',', '.');
+
+    }
+
     public function render()
     {
         $contas = Conta::all();
 
         $agenteCobradores = AgenteCobrador::all();
 
+        $formasPagamentos = FormaPagamento::all();
+
         return view('livewire.contas.contas-pagar', [
             'contas' => $contas,
-            'agenteCobradores' => $agenteCobradores
+            'agenteCobradores' => $agenteCobradores,
+            'formasPagamentos' => $formasPagamentos
         ]);
     }
 }

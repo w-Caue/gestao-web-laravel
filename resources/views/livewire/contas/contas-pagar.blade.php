@@ -59,7 +59,13 @@
                             {{ number_format($conta->valor_documento, 2, ',', '.') }}
                         </td>
                         <td class="px-6 py-4 text-center">
-
+                            <button wire:click.prevent="mostrarDocumento({{ $conta->id }})">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15.75 15.75l-2.489-2.489m0 0a3.375 3.375 0 10-4.773-4.773 3.375 3.375 0 004.774 4.774zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </button>
                         </td>
                     </tr>
                 @endforeach
@@ -87,12 +93,12 @@
                 <div class="mx-5  flex gap-3">
                     <div class="">
                         <button wire:click.prevent="criarDocumento()"
-                            class="p-2 border rounded shadow-xl font-semibold text-md text-gray-500 hover:text-white hover:bg-blue-500 hover:border-blue-500">Salvar</button>
+                            class="p-2 border rounded shadow-xl font-semibold text-md text-white bg-blue-500 border-blue-500 hover:bg-blue-600 hover:border-blue-600">Salvar</button>
                     </div>
 
                     <div class="">
-                        <button wire:click.prevent="criarDocumento()"
-                            class="p-2 border rounded shadow-xl font-semibold text-md text-gray-500 hover:text-white hover:bg-green-500 hover:border-green-500">Baixar</button>
+                        <button wire:click.prevent="baixaDocumento()"
+                            class="p-2 border rounded shadow-xl font-semibold text-md text-white bg-green-500 border-green-500 hover:bg-green-600 hover:border-green-600">Baixar</button>
                     </div>
                 </div>
 
@@ -102,7 +108,7 @@
                             <span class="font-semibold text-gray-700">Cliente/Empresa</span>
 
                             <label for="" class="flex gap-1">
-                                <input type="text" value="{{ $clienteDocumento->nome ?? "" }}"
+                                <input type="text" value="{{ $clienteDocumento->nome ?? '' }}" 
                                     class="p-2 border-gray-200 rounded text-md text-gray-500 font-semibold shadow-xl">
 
                                 <button wire:click.prevent="visualizarClientes()"
@@ -128,7 +134,7 @@
                         <div class="">
                             <label for="data" class="flex flex-col">
                                 <span class="font-semibold text-gray-700">Dt. Lançamento</span>
-                                <input type="date" wire:model="dtLancamento"
+                                <input type="date" wire:model="dataLancamento"
                                     class="p-2 w-36 border-gray-200 rounded text-md font-semibold shadow-xl text-gray-600 bg-white">
                             </label>
                         </div>
@@ -138,7 +144,7 @@
                         <div class="">
                             <label for="data" class="flex flex-col">
                                 <span class="font-semibold text-gray-700">Ag. Cobrador</span>
-                                <select type="date" wire:model="agCobrador"
+                                <select type="date" wire:model="agenteCobrador"
                                     class="p-2 w-32 border-gray-200 rounded text-md font-semibold shadow-xl text-gray-600 bg-white">
 
                                     <option value=""></option>
@@ -154,7 +160,7 @@
                         <div class="">
                             <label for="data" class="flex flex-col">
                                 <span class="font-semibold text-gray-700">Dt. Vencimento</span>
-                                <input type="date" wire:model.lazy="dtVencimento"
+                                <input type="date" wire:model.lazy="dataVencimento"
                                     class="p-2 w-36 border-gray-200 rounded text-md font-semibold shadow-xl text-gray-600 bg-white">
                             </label>
                         </div>
@@ -162,7 +168,7 @@
                         <div class="">
                             <label for="decricao" class="flex flex-col">
                                 <span class="font-semibold text-gray-700">Vl. Documento</span>
-                                <input wire:model.lazy="vlDocumento" placeholder="R$"
+                                <input wire:model.lazy="valorDocumento" placeholder="R$"
                                     class="p-2 w-28 border-gray-200 rounded text-md font-semibold text-gray-600 shadow-xl bg-white">
                             </label>
                         </div>
@@ -216,6 +222,92 @@
                         @endforeach
                     </div>
                 @endif
+
+            </div>
+        </div>
+    @endif
+
+    @if ($showBaixa)
+        <div class="flex justify-center">
+            <div class="fixed top-11 bg-gray-50 border border-gray-300 shadow-2xl rounded-lg sm:top-16 sm:w-1/3">
+
+                <div class="flex justify-between items-center m-2">
+                    <h1 class="text-xl font-semibold text-gray-800">Baixa Documento</h1>
+
+                    <button wire:click="baixaDocumento()"
+                        class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500">
+                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="m-2 ">
+                    <form action="">
+
+                        <div class="border p-3 rounded bg-white mb-2">
+                            <div class="mb-2">
+                                <label for="decricao" class="flex items-center justify-between">
+                                    <span class="font-semibold text-gray-700">Data do Vencimento</span>
+                                    <input wire:model="dataVencimento"
+                                        class="p-2 w-36 border-gray-200 rounded text-md font-semibold text-gray-600 shadow-lg bg-white">
+                                </label>
+                            </div>
+
+                            <div class="mb-2">
+                                <label for="decricao" class="flex items-center justify-between">
+                                    <span class="font-semibold text-gray-700">Data do Pagamento</span>
+                                    <input wire:model.lazy="" type="date"
+                                        class="p-2 w-36 border-gray-200 rounded text-md font-semibold text-gray-600 shadow-lg bg-white">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="border p-3 rounded bg-white mb-2">
+                            <div class="">
+                                <label for="" class="flex flex-col">
+                                    <span class="font-semibold text-gray-700">Forma Pagamento</span>
+                                    <select type="date" wire:model="formaPagamento"
+                                        class="p-2 w-44 border-gray-200 rounded text-md font-semibold shadow-lg text-gray-600 bg-white">
+
+                                        <option value=""></option>
+
+                                        @foreach ($formasPagamentos as $formaPagamento)
+                                            <option class="font-semibold text-gray-700"
+                                                value="{{ $formaPagamento->id }}">
+                                                {{ $formaPagamento->nome }}</option>
+                                        @endforeach
+                                    </select>
+                                </label>
+                            </div>
+
+                            <div class="my-3">
+                                <label for="decricao" class="flex items-center justify-between">
+                                    <span class="font-semibold text-gray-700">Valor a Pagar:</span>
+                                    <input wire:model.lazy="valorDocumento" placeholder="R$"
+                                        class="p-2 w-36 border-gray-200 rounded text-md font-semibold text-gray-600 shadow-lg bg-white">
+                                </label>
+                            </div>
+
+                            <div class="">
+                                <label for="decricao" class="flex items-center justify-between">
+                                    <span class="font-semibold text-gray-700">Valor:</span>
+                                    <input wire:model.lazy="" placeholder="R$"
+                                        class="p-2 w-36 border-gray-200 rounded text-md font-semibold text-gray-600 shadow-lg bg-white">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-center m-5">
+                            <button
+                                class="p-2 border rounded shadow-lg text-white bg-blue-500 border-blue-500 hover:bg-blue-600 hover:border-blue-600">Confirma
+                                Baixa</button>
+                        </div>
+
+                    </form>
+                </div>
 
             </div>
         </div>

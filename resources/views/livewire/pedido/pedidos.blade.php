@@ -19,13 +19,13 @@
 
         <div class="flex items-center">
             <div class="relative">
-                <input name="start" type="date"
+                <input name="start" type="date" wire:model.lazy='startDate'
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
-                    placeholder="Selecione a data">
+                    placeholder="Selecione a data" value="{{date('Y/m/d', strtotime($startDate))}}">
             </div>
             <span class="mx-4 text-gray-500">a</span>
             <div class="relative">
-                <input name="end" type="date"
+                <input name="end" type="date" wire:model.lazy='endDate'
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
                     placeholder="Selecione a data">
             </div>

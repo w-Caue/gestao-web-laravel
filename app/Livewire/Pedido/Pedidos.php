@@ -8,6 +8,7 @@ use App\Models\Item;
 use App\Models\Pedido;
 use App\Models\PedidoItem;
 use App\Models\Status;
+use Illuminate\Support\Facades\Date;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -18,6 +19,8 @@ class Pedidos extends Component
     use WithPagination;
 
     public $newPedido;
+    public $startDate;
+    public $endDate;
 
     #tela de clientes
     public $showClientes;
@@ -247,13 +250,11 @@ class Pedidos extends Component
             'timer' => '1000',
             'toast' => false,
         ]);
-
     }
 
     public function mostrarAutenticacao()
     {
         $this->showAutenticacao = true;
-
     }
 
     public function autenticarPedido()
@@ -317,7 +318,14 @@ class Pedidos extends Component
 
     public function render()
     {
-        $pedidos = Pedido::paginate(5);
+        if ($this->startDate == null or $this->startDate == '' or $this->endDate == null or $this->endDate == '') {
+            $this->startDate = date('Y/m/d');
+            $this->endDate = date('Y/m/d');
+        }
+
+        $pedidos = Pedido::whereDate('created_at', '>=', $this->startDate)
+            ->whereDate('created_at', '<=', $this->endDate)
+            ->paginate(5);
 
         $formasPagamentos = FormaPagamento::all();
 
