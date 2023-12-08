@@ -2,34 +2,41 @@
 
     @if ($menuRelatorio)
         <div class="flex justify-center">
-            <div class="border bg-white rounded-lg shadow-xl flex flex-col w-1/2 m-2">
+            <div class="border bg-gray-50 rounded-lg shadow-xl flex flex-col w-1/2 m-2">
 
-                <div class="flex gap-2 flex-wrap m-3">
-                    <label for="countries" class="block mb-2 text-xl font-semibold text-gray-900">Cliente</label>
-                    <select wire:model.live="cliente" id="countries"
-                        class="border border-gray-300 text-gray-900 text-md font-semibold rounded w-52 p-1">
-                        <option class="text-gray-900 text-md font-semibold text-center" selected>Todos</option>
+                <div class="m-3 p-3 border-2 rounded bg-white">
 
-                        @foreach ($clientes as $cliente)
-                            <option class="text-gray-900 text-md font-semibold" value="{{ $cliente->id }}">
-                                {{ $cliente->nome }}</option>
-                        @endforeach
-                    </select>
-                </div>
+                    <div class="flex gap-1 items-start m-3">
+                        <label for="countries" class="mb-2 text-lg font-semibold text-gray-900">
+                            <span>Cliente</span>
+                            <input wire:model.live="cliente" id="cliente" placeholder="Todos"
+                                class="border border-gray-300 text-gray-900 text-md font-semibold rounded w-44 p-1">
+                        </label>
 
-                <div class="flex gap-2 flex-wrap m-3">
-                    <label for="countries" class="block mb-2 text-xl font-semibold text-gray-900">Forma de
-                        Pagamento</label>
-                    <select wire:model.live="formaPagamento" id="countries"
-                        class="border border-gray-300 text-gray-900 text-md font-semibold rounded w-52 p-1">
-                        <option class="text-gray-900 text-md font-semibold text-center" value=" " selected>Todas
-                        </option>
+                        <button class="p-1 border rounded text-white bg-blue-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                            </svg>
+                        </button>
+                    </div>
 
-                        @foreach ($formaPagamentos as $formaPagamento)
-                            <option class="text-gray-900 text-md font-semibold" value="{{ $formaPagamento->id }}">
-                                {{ $formaPagamento->nome }}</option>
-                        @endforeach
-                    </select>
+                    <div class="flex gap-2 flex-wrap m-3">
+                        <label for="countries" class="block mb-2 text-lg font-semibold text-gray-900">Forma de
+                            Pagamento</label>
+                        <select wire:model.live="formaPagamento" id="countries"
+                            class="border border-gray-300 text-gray-900 text-md font-semibold rounded w-52 p-1">
+                            <option class="text-gray-900 text-md font-semibold text-center" value=" " selected>
+                                Todas
+                            </option>
+
+                            @foreach ($formaPagamentos as $formaPagamento)
+                                <option class="text-gray-900 text-md font-semibold" value="{{ $formaPagamento->id }}">
+                                    {{ $formaPagamento->nome }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
 
                 <div class="m-3 flex justify-center">
@@ -47,9 +54,10 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
                 <div class="m-1 flex justify-end">
-                    <button wire:click.prevent="mostrarFiltros()" class="flex gap-1 p-1 border text-md font-semibold text-gray-700 rounded shadow-xl hover:text-white hover:bg-blue-500">
-                        <svg class="w-6 h-6" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+                    <button wire:click.prevent="mostrarFiltros()"
+                        class="flex gap-1 p-1 border text-md font-semibold text-gray-700 rounded shadow-xl hover:text-white hover:bg-blue-500">
+                        <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 20 18">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="m2.133 2.6 5.856 6.9L8 14l4 3 .011-7.5 5.856-6.9a1 1 0 0 0-.804-1.6H2.937a1 1 0 0 0-.804 1.6Z" />
                         </svg>

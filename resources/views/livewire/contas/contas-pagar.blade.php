@@ -1,6 +1,6 @@
 <div>
 
-    <div class="m-7">
+    <div class="mx-7 my-2">
         <div>
             <button wire:click.prevent="novoDocumento()"
                 class="p-2 border rounded-lg shadow-lg font-semibold bg-white hover:text-white hover:bg-blue-500 hover:border-blue-500">
@@ -13,10 +13,10 @@
         <table class="w-full text-sm text-left text-gray-500">
             <thead class="text-xs font-semibold text-gray-700 uppercase bg-gray-50">
                 <tr>
-                    <th scope="col" class="px-6 py-3 ">
+                    <th scope="col" class="px-4 py-3 ">
                         #
                     </th>
-                    <th scope="col" class="px-6 py-3 text-center">
+                    <th scope="col" class="px-4 py-3 text-center">
                         Empresa
                     </th>
                     <th scope="col" class="px-6 py-3 text-center">
@@ -32,6 +32,12 @@
                         Valor do Documento
                     </th>
                     <th scope="col" class="px-6 py-3 text-center">
+                        Data do Pagamento
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Valor Pago
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
 
                     </th>
 
@@ -39,15 +45,15 @@
             </thead>
             <tbody>
                 @foreach ($contas as $conta)
-                    <tr class="bg-white border-b hover:bg-gray-50">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                    <tr class="bg-white border-b hover:bg-gray-50 {{ $conta->status_documento == 'Finalizado' ? 'text-gray-500' : '' }}">
+                        <th scope="row" class="px-4 py-4 font-medium text-gray-900 whitespace-nowrap">
                             {{ $conta->id }}
                         </th>
-                        <td class="px-6 py-4 text-center font-semibold">
+                        <td class="px-4 py-4 text-center font-semibold">
                             {{ $conta->cliente->nome }}
                         </td>
                         <td class="px-6 py-4 text-center font-semibold">
-                            {{ $conta->descricao }}
+                            {{ $conta->descricao ? $conta->descricao : '-' }}
                         </td>
                         <td class="px-6 py-4 text-center font-semibold">
                             {{ date('d/m/Y', strtotime($conta->data_lancamento)) }}
@@ -58,8 +64,14 @@
                         <td class="px-6 py-4 text-center font-semibold">
                             {{ number_format($conta->valor_documento, 2, ',', '.') }}
                         </td>
-                        <td class="px-6 py-4 text-center">
-                            <button wire:click.prevent="mostrarDocumento({{ $conta->id }})">
+                        <td class="px-6 py-4 text-center font-semibold">
+                            {{ $conta->data_pagamento ? date('d/m/Y', strtotime($conta->data_pagamento)) : '-'}}
+                        </td>
+                        <td class="px-6 py-4 text-center font-semibold">
+                            {{ $conta->valor_pago ? number_format($conta->valor_pago, 2, ',', '.') : '-' }}
+                        </td>
+                        <td class="px-6 py-2 text-center">
+                            <button wire:click.prevent="mostrarDocumento({{ $conta->id }})" class="hover:text-blue-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -108,7 +120,7 @@
                             <span class="font-semibold text-gray-700">Cliente/Empresa</span>
 
                             <label for="" class="flex gap-1">
-                                <input type="text" value="{{ $clienteDocumento->nome ?? '' }}" 
+                                <input type="text" value="{{ $clienteDocumento->nome ?? '' }}"
                                     class="p-2 border-gray-200 rounded text-md text-gray-500 font-semibold shadow-xl">
 
                                 <button wire:click.prevent="visualizarClientes()"
@@ -135,6 +147,7 @@
                             <label for="data" class="flex flex-col">
                                 <span class="font-semibold text-gray-700">Dt. Lançamento</span>
                                 <input type="date" wire:model="dataLancamento"
+                                    value="{{ date('m/d/Y', strtotime($conta->data_vencimento)) }}"
                                     class="p-2 w-36 border-gray-200 rounded text-md font-semibold shadow-xl text-gray-600 bg-white">
                             </label>
                         </div>
@@ -245,21 +258,22 @@
                 </div>
 
                 <div class="m-2 ">
-                    <form action="">
+                    <form wire:submit.prevent="confirmarBaixa()">
 
                         <div class="border p-3 rounded bg-white mb-2">
                             <div class="mb-2">
-                                <label for="decricao" class="flex items-center justify-between">
-                                    <span class="font-semibold text-gray-700">Data do Vencimento</span>
-                                    <input wire:model="dataVencimento"
-                                        class="p-2 w-36 border-gray-200 rounded text-md font-semibold text-gray-600 shadow-lg bg-white">
+                                <label for="data" class="flex items-center justify-between">
+                                    <span class="font-semibold text-gray-700">Data Vencimento</span>
+                                    <input type="date" wire:model.lazy="dataVencimento"
+                                        @disabled(true)
+                                        class="p-2 w-36 border-gray-200 rounded text-md font-semibold shadow-xl text-gray-600 bg-white">
                                 </label>
                             </div>
 
                             <div class="mb-2">
                                 <label for="decricao" class="flex items-center justify-between">
                                     <span class="font-semibold text-gray-700">Data do Pagamento</span>
-                                    <input wire:model.lazy="" type="date"
+                                    <input wire:model.lazy="dataPagamento" type="date"
                                         class="p-2 w-36 border-gray-200 rounded text-md font-semibold text-gray-600 shadow-lg bg-white">
                                 </label>
                             </div>
@@ -267,7 +281,7 @@
 
                         <div class="border p-3 rounded bg-white mb-2">
                             <div class="">
-                                <label for="" class="flex flex-col">
+                                <label for="" class="flex items-center justify-between">
                                     <span class="font-semibold text-gray-700">Forma Pagamento</span>
                                     <select type="date" wire:model="formaPagamento"
                                         class="p-2 w-44 border-gray-200 rounded text-md font-semibold shadow-lg text-gray-600 bg-white">
@@ -294,16 +308,17 @@
                             <div class="">
                                 <label for="decricao" class="flex items-center justify-between">
                                     <span class="font-semibold text-gray-700">Valor:</span>
-                                    <input wire:model.lazy="" placeholder="R$"
+                                    <input wire:model.lazy="valorPago" placeholder="R$"
                                         class="p-2 w-36 border-gray-200 rounded text-md font-semibold text-gray-600 shadow-lg bg-white">
                                 </label>
                             </div>
                         </div>
 
                         <div class="flex justify-center m-5">
-                            <button
-                                class="p-2 border rounded shadow-lg text-white bg-blue-500 border-blue-500 hover:bg-blue-600 hover:border-blue-600">Confirma
-                                Baixa</button>
+                            <button type="submit"
+                                class="p-2 border-2 rounded shadow-xl font-semibold text-gray-600 hover:text-white hover:bg-green-500 hover:border-green-500">
+                                Confirma Baixa
+                            </button>
                         </div>
 
                     </form>

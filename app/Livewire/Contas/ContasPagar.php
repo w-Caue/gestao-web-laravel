@@ -9,10 +9,12 @@ use App\Models\Conta;
 use App\Models\FormaPagamento;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ContasPagar extends Component
 {
     use LivewireAlert;
+    use WithPagination;
 
     public ContasForm $form;
 
@@ -26,12 +28,14 @@ class ContasPagar extends Component
     public $descricao;
     public $agenteCobrador;
     public $dataLancamento;
-    public $dataVencimento;
+    public $dataVencimento ;
     public $valorDocumento;
 
     #Baixar Documento
-    public $dtPagamento;
-    public $valorPagar;
+    public $documento;
+    public $dataPagamento;
+    public $formaPagamento;
+    public $valorPago;
 
     public $statusDocumento = 'Aberto';
 
@@ -41,11 +45,14 @@ class ContasPagar extends Component
     public function novoDocumento()
     {
         $this->showDocumento = true;
+
+        $this->dataLancamento = date('Y-m-d');
     }
 
     public function fecharDocumento()
     {
-        $this->reset('clienteDocumento', 'descricao', 'agenteCobrador');
+        $this->reset('clienteDocumento', 'descricao', 'agenteCobrador', 'dataLancamento', 
+        'dataVencimento', 'valorDocumento', 'formaPagamento', 'valorPago');
         $this->showDocumento = false;
     }
 
@@ -106,18 +113,39 @@ class ContasPagar extends Component
     {
         $this->showDocumento = true;
 
+        $this->documento = $documento;
         $this->clienteDocumento = Cliente::where('id', $documento->cliente_id)->get()->first();
         $this->descricao = $documento->descricao;
-        $this->dataLancamento = date('d/m/Y', strtotime($documento->data_lancamento));
+        $this->dataLancamento = date('Y-m-d', strtotime($documento->data_lancamento));
         $this->agenteCobrador = $documento->ag_cobrador_id;
-        $this->dataVencimento = date('d/m/Y', strtotime($documento->data_vencimento));
+        $this->dataVencimento = date('Y-m-d', strtotime($documento->data_vencimento));
         $this->valorDocumento = number_format($documento->valor_documento, 2, ',', '.');
+        $this->dataPagamento = date('Y-m-d');
 
+    }
+
+    public function confirmarBaixa(){
+        Conta::findOrFail($this->documento->id)->update([
+            'status_documento' => 'Finalizado',
+            'forma_pagamento_id' => $this->formaPagamento,
+            'data_pagamento' => $this->dataPagamento,
+            'valor_pago' => $this->valorPago,
+        ]);
+
+        $this->baixaDocumento();
+        $this->fecharDocumento();
+
+        $this->alert('success', 'Documento Baixado!', [
+            'position' => 'center',
+            'timer' => 2000,
+            'toast' => false,
+            'text' => 'com sucesso',
+        ]);
     }
 
     public function render()
     {
-        $contas = Conta::all();
+        $contas = Conta::paginate(5);
 
         $agenteCobradores = AgenteCobrador::all();
 

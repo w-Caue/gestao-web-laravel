@@ -52,14 +52,18 @@ Route::middleware([
     });
 
     Route::get('/relatorios', function () {
-        return view('pages.relatorios');
+        return view('pages.relatorios.index');
     })->name('relatorios');
 
     Route::prefix('/relatorios')->group(function () {
 
-        Route::get('/relatorio-pedidos', function () {
+        Route::get('/pedidos', function () {
             return view('pages.relatorios.relatorio-pedidos');
         })->name('relatorio-pedidos');
+
+        Route::get('/contas-pagar', function () {
+            return view('pages.relatorios.relatorio-contas-pagar');
+        })->name('relatorio-contas-pagar');
 
     });
 });
