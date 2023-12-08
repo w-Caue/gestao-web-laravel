@@ -126,7 +126,7 @@ class ContasPagar extends Component
 
     public function confirmarBaixa(){
         Conta::findOrFail($this->documento->id)->update([
-            'status_documento' => 'Finalizado',
+            'status_documento' => 'Pagar',
             'forma_pagamento_id' => $this->formaPagamento,
             'data_pagamento' => $this->dataPagamento,
             'valor_pago' => $this->valorPago,

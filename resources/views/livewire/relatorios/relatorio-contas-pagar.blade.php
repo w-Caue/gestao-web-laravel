@@ -4,7 +4,7 @@
 
             <div class="m-3 text-gray-600 flex justify-between items-center">
                 <h1 class="font-bold text-xl">Relatório</h1>
-                <h1 class="font-bold text-xl text-gray-800">Pedidos</h1>
+                <h1 class="font-bold text-xl text-gray-800">Contas a Pagar</h1>
             </div>
 
             <form>
@@ -12,8 +12,8 @@
 
                     <div class="flex gap-1 items-start m-3">
                         <label for="cliente" class="mb-2 text-lg font-semibold text-gray-900">
-                            <span>Cliente</span>
-                            <input wire:model.live="cliente" id="cliente" placeholder="Todos"
+                            <span>Cliente/Empresa</span>
+                            <input wire:model.live="clienteEmpresa" id="cliente" placeholder="Todos"
                                 class="border border-gray-300 text-gray-900 text-md font-semibold rounded w-44 p-1">
                         </label>
 
@@ -28,20 +28,45 @@
 
                     <div class="flex gap-2 flex-wrap m-3">
                         <label for="countries" class="block mb-2 text-lg font-semibold text-gray-900">
-                            <span>Forma de Pagamento</span>
+                            <span>Agente Cobrador</span>
 
-                            <select wire:model.live="formaPagamento" id="countries"
+                            <select wire:model.live="agenteCobrador" id="countries"
                                 class="border border-gray-300 text-gray-500 text-md font-semibold rounded w-52 p-1">
                                 <option class="text-gray-900 text-md font-semibold" value=" " selected>
                                     Todas
                                 </option>
 
-                                @foreach ($formaPagamentos as $formaPagamento)
+                                @foreach ($agentesCobradores as $agenteCobrador)
                                     <option class="text-gray-900 text-md font-semibold"
-                                        value="{{ $formaPagamento->id }}">
-                                        {{ $formaPagamento->nome }}</option>
+                                        value="{{ $agenteCobrador->id }}">
+                                        {{ $agenteCobrador->nome }}</option>
                                 @endforeach
                             </select>
+                        </label>
+                    </div>
+
+                    <div class="flex gap-2 flex-wrap m-3 w-64">
+                        <label for="countries" class="block mb-2 text-lg font-semibold text-gray-900">
+                            <span>Status</span>
+
+                            <div class="flex flex-wrap gap-3">
+                                <label for="">
+                                    <input id="link-radio" wire:model="status" name="status" type="radio" value="Pagar" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                                    <span class="text-sm">Pagar</span>
+                                </label>
+                                <label for="">
+                                    <input id="link-radio" wire:model="status" name="status" type="radio" value="Vencido" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                                    <span class="text-sm">Vencido</span>
+                                </label>
+                                <label for="">
+                                    <input id="link-radio" wire:model="status" name="status" type="radio" value="Aberto" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                                    <span class="text-sm">Aberto</span>
+                                </label>
+                                <label for="">
+                                    <input id="link-radio" wire:model="status" name="status" type="radio" value="Deletado" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                                    <span class="text-sm">Deletado</span>
+                                </label>
+                            </div>
                         </label>
                     </div>
                 </div>
@@ -51,7 +76,7 @@
 
                     <div class="flex gap-1 items-start m-1">
                         <label for="data" class="mb-2 text-lg font-semibold text-gray-900">
-                            <input wire:model.live="startData" id="startData" type="date"
+                            <input wire:model="startData" id="startData" type="date"
                                 class="border border-gray-300 text-gray-900 text-md font-semibold rounded w-36 p-1">
                         </label>
                     </div>
@@ -60,14 +85,14 @@
 
                     <div class="flex gap-1 items-start m-1">
                         <label for="data" class="mb-2 text-lg font-semibold text-gray-900">
-                            <input wire:model.live="endData" id="endData" type="date"
+                            <input wire:model="endData" id="endData" type="date"
                                 class="border border-gray-300 text-gray-900 text-md font-semibold rounded w-36 p-1">
                         </label>
                     </div>
                 </div>
 
                 <div class="m-3 flex justify-center">
-                    <button wire:click.prevent="visualizarRelatorio()"
+                    <button wire:click.prevent="mostrarRelatorio()"
                         class="border p-2 rounded shadow-md text-md font-semibold bg-white hover:text-white hover:bg-blue-500 hover:border-blue-500">
                         Visualizar Relatório
                     </button>
@@ -77,7 +102,7 @@
         </div>
     </div>
 
-    @if ($mostrarRelatorio)
+    @if ($visualizarDocumentos)
         <div class="flex justify-center ">
             <div class="fixed top-11 bg-white border shadow-2xl rounded-lg sm:top-11 sm:w-5/6 h-5/6 overflow-auto">
 
@@ -92,7 +117,7 @@
                         <span>Imprimir</span>
                     </button>
 
-                    <button wire:click.prevent="mostrarFiltros()"
+                    <button wire:click.prevent="fecharRelatorio()"
                         class="flex gap-1 p-1 border text-md font-semibold text-gray-700 rounded shadow-xl hover:text-white hover:bg-red-500">
                         <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                             viewBox="0 0 20 14">
@@ -110,11 +135,11 @@
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
                                     <th scope="col" class="px-4 py-3">
-                                        ID Pedido
+                                        ID 
                                     </th>
                                     <th scope="col" class="px-4 py-3">
                                         <div class="flex items-center">
-                                            Cliente
+                                            Cliente/Empresa
                                             <a href="#"><svg class="w-3 h-3 ms-1.5" aria-hidden="true"
                                                     xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                                     viewBox="0 0 24 24">
@@ -136,7 +161,7 @@
                                     </th>
                                     <th scope="col" class="px-4 py-3">
                                         <div class="flex items-center">
-                                            Forma de Pagamento
+                                            Agente Cobrador
                                             <a href="#"><svg class="w-3 h-3 ms-1.5" aria-hidden="true"
                                                     xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                                     viewBox="0 0 24 24">
@@ -147,7 +172,7 @@
                                     </th>
                                     <th scope="col" class="px-4 py-3">
                                         <div class="flex items-center">
-                                            Total do Pedido
+                                            Valor do Documento
                                             <a href="#"><svg class="w-3 h-3 ms-1.5" aria-hidden="true"
                                                     xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                                     viewBox="0 0 24 24">
@@ -158,7 +183,18 @@
                                     </th>
                                     <th scope="col" class="px-4 py-3">
                                         <div class="flex items-center">
-                                            Data da Criação
+                                            Data do Lançamento
+                                            <a href="#"><svg class="w-3 h-3 ms-1.5" aria-hidden="true"
+                                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path
+                                                        d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
+                                                </svg></a>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-4 py-3">
+                                        <div class="flex items-center">
+                                            Data do Vencimento
                                             <a href="#"><svg class="w-3 h-3 ms-1.5" aria-hidden="true"
                                                     xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                                     viewBox="0 0 24 24">
@@ -170,26 +206,29 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($pedidos as $pedido)
+                                @foreach ($documentos as $documento)
                                     <tr class="bg-white border-b">
                                         <th scope="row"
-                                            class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
-                                            {{ $pedido->id }}
+                                            class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
+                                            {{ $documento->id }}
                                         </th>
-                                        <td class="px-4 py-2">
-                                            {{ $pedido->cliente->nome }}
+                                        <td class="px-4 py-3">
+                                            {{ $documento->cliente_id }}
                                         </td>
-                                        <td class="px-4 py-2">
-                                            {{ $pedido->descricao }}
+                                        <td class="px-4 py-3">
+                                            {{ $documento->descricao }}
                                         </td>
-                                        <td class="px-4 py-2">
-                                            {{ $pedido->formaPagamento->nome }}
+                                        <td class="px-4 py-3">
+                                            {{ $documento->ag_cobrador_id }}
                                         </td>
-                                        <td class="px-4 py-2">
-                                            {{ number_format($pedido->total_pedido, 2, ',') }}
+                                        <td class="px-4 py-3">
+                                            {{ number_format($documento->valor_documento, 2, ',') }}
                                         </td>
-                                        <td class="px-4 py-2">
-                                            {{ $pedido->created_at->format('d/m/Y') }}
+                                        <td class="px-4 py-3 text-center font-semibold">
+                                            {{ date('d/m/Y', strtotime($documento->data_lancamento)) }}
+                                        </td>
+                                        <td class="px-4 py-3 text-center font-semibold">
+                                            {{ date('d/m/Y', strtotime($documento->data_vencimento)) }}
                                         </td>
                                     </tr>
                                 @endforeach
@@ -197,9 +236,7 @@
                             <tfoot>
                                 <tr class="font-semibold text-gray-900">
                                     <th scope="row" class="px-6 py-3 text-base">Total</th>
-                                    <td class="px-6 py-3"></td>
-                                    <td class="px-6 py-3"></td>
-                                    <td class="px-6 py-3"></td>
+                                    <td colspan="3" class="px-6 py-3"></td>
                                     <td class="px-6 py-3">00,00</td>
                                 </tr>
                             </tfoot>
@@ -209,5 +246,4 @@
             </div>
         </div>
     @endif
-
 </div>

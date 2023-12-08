@@ -17,16 +17,14 @@ class RelatorioPedidos extends Component
 
     public $mostrarRelatorio;
 
-    public $menuRelatorio = true;
 
     public function mostrarFiltros(){
         $this->mostrarRelatorio = false;
-        $this->menuRelatorio = true;
     }
 
     public function visualizarRelatorio(){
         $this->mostrarRelatorio = true;
-        $this->menuRelatorio = false;
+     
     }
 
     public function render()
