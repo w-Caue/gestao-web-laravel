@@ -18,7 +18,7 @@ class Conta extends Model
         return $this->belongsTo('App\Models\Cliente' , 'cliente_id');
     }
 
-    public function agCobrador(){
+    public function agenteCobrador(){
         return $this->belongsTo('App\Models\AgenteCobrador', 'ag_cobrador_id');
     }
 

@@ -1,6 +1,6 @@
 <div>
 
-    <div class="flex justify-between items-center flex-wrap mb-4 m-7">
+    <div class="flex justify-between items-center flex-wrap my-2 mx-7">
         <div class="">
             <label for="table-search" class="sr-only">Pesquisa</label>
             <div class="relative mt-1">
@@ -12,7 +12,7 @@
                     </svg>
                 </div>
                 <input wire:model.live="search" type="text" id="table-search"
-                    class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                    class="block p-2 pl-10 text-sm text-gray-600 font-semibold border border-gray-300 rounded-lg w-80 bg-white focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Pesquisar Cliente">
             </div>
         </div>
@@ -70,16 +70,16 @@
             <tbody>
                 @foreach ($clientes as $cliente)
                     <tr class="bg-white border-b hover:bg-gray-50">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        <th scope="row" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap">
                             {{ $cliente->id }}
                         </th>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        <th scope="row" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap">
                             {{ $cliente->nome }}
                         </th>
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-3">
                             {{ $cliente->email }}
                         </td>
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-3">
                             <button class="flex gap-1 hover:underline hover:text-green-600">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                     fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16">
@@ -90,7 +90,7 @@
                             </button>
                         </td>
 
-                        <td class="px-6 py-2 text-right">
+                        <td class="px-6 py-3 text-right">
                             <button wire:click="edit({{ $cliente->id }})" class="p-1 border rounded bg-blue-500">
                                 <span class="text-md font-semibold text-white">Editar</span>
                             </button>

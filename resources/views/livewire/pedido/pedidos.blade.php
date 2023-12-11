@@ -1,5 +1,5 @@
 <div>
-    <div class="flex justify-between flex-wrap mb-4 m-7">
+    <div class="flex justify-between flex-wrap my-2 mx-7">
         <div class="">
             <label for="table-search" class="sr-only">Pesquisa</label>
             <div class="relative mt-1">
@@ -17,10 +17,10 @@
         </div>
 
 
-        <div class="flex items-center">
+        <div class="flex flex-wrap items-center">
             <div class="flex gap-1 items-start m-1">
                 <label for="data" class="mb-2 text-lg font-semibold text-gray-600">
-                    <input wire:model="startDate" id="startData" type="date"
+                    <input wire:model.lazy="startDate" id="startData" type="date"
                         class="border border-gray-300 text-gray-600 text-md font-semibold rounded w-36 p-1">
                 </label>
             </div>
@@ -29,7 +29,7 @@
 
             <div class="flex gap-1 items-start m-1">
                 <label for="data" class="mb-2 text-lg font-semibold text-gray-600">
-                    <input wire:model="endDate" id="endData" type="date"
+                    <input wire:model.lazy="endDate" id="endData" type="date"
                         class="border border-gray-300 text-gray-600 text-md font-semibold rounded w-36 p-1">
                 </label>
             </div>
@@ -58,9 +58,6 @@
                         Cliente
                     </th>
                     <th scope="col" class="px-6 py-3 text-center">
-                        Descrição
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
                         Forma de Pagamento
                     </th>
                     <th scope="col" class="px-6 py-3 text-center">
@@ -76,6 +73,9 @@
                         Total Pedido
                     </th>
                     <th scope="col" class="px-6 py-3 text-center">
+                        Data do Pedido
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
 
                     </th>
 
@@ -84,34 +84,34 @@
             <tbody>
                 @foreach ($pedidos as $pedido)
                     <tr class="bg-white border-b hover:bg-gray-50">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        <th scope="row" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap">
                             {{ $pedido->id }}
                         </th>
-                        <th scope="row" class="px-6 py-4 text-center font-semibold  whitespace-nowrap">
+                        <th scope="row" class="px-6 py-3 text-center font-semibold  whitespace-nowrap">
                             <button wire:click.prevent="detalheCliente({{ $pedido->id }})">
                                 {{ $pedido->cliente->nome }}
                             </button>
                         </th>
-                        <td class="px-6 py-4 text-center font-semibold">
-                            {{ $pedido->descricao }}
-                        </td>
-                        <td class="px-6 py-4 text-center font-semibold">
+                        <td class="px-6 py-3 text-center font-semibold">
                             {{ $pedido->formaPagamento->nome }}
                         </td>
                         <td
-                            class="px-6 py-4 text-center font-semibold {{ $pedido->status == 'Concluido' ? 'text-green-600' : '' }} {{ $pedido->status == 'Finalizado' ? 'text-blue-500' : '' }} {{ $pedido->status == 'Autenticado' ? 'text-yellow-500' : '' }} {{ $pedido->status == 'Pendente Pagamento' ? 'text-red-400' : '' }} {{ $pedido->status == 'Encomenda' ? 'text-purple-500' : '' }}">
+                            class="px-6 py-3 text-center font-semibold {{ $pedido->status == 'Concluido' ? 'text-green-600' : '' }} {{ $pedido->status == 'Finalizado' ? 'text-blue-500' : '' }} {{ $pedido->status == 'Autenticado' ? 'text-yellow-500' : '' }} {{ $pedido->status == 'Pendente Pagamento' ? 'text-red-400' : '' }} {{ $pedido->status == 'Encomenda' ? 'text-purple-500' : '' }}">
                             {{ $pedido->status }}
                         </td>
-                        <td class="px-6 py-4 text-center font-semibold">
+                        <td class="px-6 py-3 text-center font-semibold">
                             {{ number_format($pedido->total_itens, 2, ',') }}
                         </td>
-                        <td class="px-6 py-4 text-center font-semibold">
+                        <td class="px-6 py-3 text-center font-semibold">
                             {{ number_format($pedido->desconto, 2, ',') }}
                         </td>
-                        <td class="px-6 py-4 text-center font-semibold">
+                        <td class="px-6 py-3 text-center font-semibold">
                             {{ number_format($pedido->total_pedido, 2, ',') }}
                         </td>
-                        <td class="px-6 py-4 text-center">
+                        <td class="px-6 py-3 text-center font-semibold">
+                            {{ date('d/m/Y', strtotime($pedido->created_at)) }}
+                        </td>
+                        <td class="px-6 py-3 text-center">
                             @if ($pedido->status == 'Aberto')
                                 <button wire:click="visualizarPedido({{ $pedido->id }})"
                                     class="font-semibold text-blue-500 hover:underline">
@@ -363,12 +363,15 @@
                                 </tbody>
                                 <tfoot>
                                     <tr class="font-semibold bg-white text-gray-900">
-                                        <th scope="row" class="px-6 py-3 text-base">Total</th>
+                                        <th scope="row" class="px-6 py-3 text-base bg-gray-50">Total</th>
                                         <td colspan="3" class="px-6 py-3"></td>
-                                        <td class="px-6 py-3">
+                                        <td class="px-6 py-3 bg-gray-50">
                                             <h1 wire:model.live="totalPedido">
                                                 {{ number_format($totalItens, 2, ',') }}</h1>
                                         </td>
+                                        @if ($telaPedido->status == 'Aberto')
+                                            <td class="px-6 py-3"></td>
+                                        @endif
                                     </tr>
                                 </tfoot>
                             </table>
@@ -542,6 +545,9 @@
                 <h1 class="text-xl font-semibold text-center m-3">Informações do Cliente</h1>
 
                 <div class="m-3 flex flex-wrap gap-2">
+                    <h1 class="text-md font-semibold text-gray-900 bg-gray-300 p-2 rounded">
+                        #{{ $informacoesCliente->id }}
+                    </h1>
                     <h1 class="text-md font-semibold text-gray-800 bg-gray-100 p-2 rounded w-44">
                         {{ $informacoesCliente->cliente->nome }}
                     </h1>

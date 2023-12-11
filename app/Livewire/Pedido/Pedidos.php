@@ -183,7 +183,12 @@ class Pedidos extends Component
             ->where('item_id', $this->itemPedido->id)->get()->first();
 
         $this->totalPedido = $this->totalPedido - ($this->itemPedido->preco_1 * $pedido->quantidade);
+        $this->totalItens = $this->totalItens - ($this->itemPedido->preco_1 * $pedido->quantidade);
 
+        Pedido::findOrFail($this->telaPedido->id)->update([
+            'total_pedido' => $this->totalPedido,
+            'total_itens' => $this->totalItens
+        ]);
 
         PedidoItem::where('pedido_id', $this->telaPedido->id)
             ->where('item_id', $this->itemPedido->id)->delete();
@@ -203,7 +208,7 @@ class Pedidos extends Component
             'clientes.nome',
             'clientes.whatsapp',
             'clientes.status',
-        ])->where('status', 'Ativo')->get();
+        ])->where('status', 'Ativo')->where('tipo', 'Cliente')->get();
 
         $this->clientes = $clientes;
     }
@@ -318,8 +323,10 @@ class Pedidos extends Component
 
     public function render()
     {
-        $this->startDate = date('Y-m-d');
-        $this->endDate = date('Y-m-d');
+        if ($this->startDate == null or $this->startDate == '' or $this->endDate == null or $this->endDate == '') {
+            $this->startDate = date('Y-m-d');
+            $this->endDate = date('Y-m-d');
+        }
 
         $pedidos = Pedido::whereDate('created_at', '>=', $this->startDate)
             ->whereDate('created_at', '<=', $this->endDate)

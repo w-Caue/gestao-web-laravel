@@ -3,6 +3,7 @@
 namespace App\Livewire\Relatorios;
 
 use App\Models\AgenteCobrador;
+use App\Models\Cliente;
 use App\Models\Conta;
 use Livewire\Component;
 
@@ -17,6 +18,10 @@ class RelatorioContasPagar extends Component
     public $endData;
 
     public $visualizarDocumentos;
+
+    public $clientes;
+    public $mostrarClientes;
+    public $clienteRelatorio;
 
     public function mostrarRelatorio()
     {
@@ -38,8 +43,7 @@ class RelatorioContasPagar extends Component
         if ($this->clienteEmpresa == '') {
             $this->documentos = $documentos->get();
         } else {
-            $documentos->where('cliente_id', $this->clienteEmpresa)
-                ->orWhere('ag_cobrador_id', $this->agenteCobrador);
+            $documentos->where('cliente_id', $this->clienteEmpresa);
             $this->documentos = $documentos->get();
         }
 
@@ -47,6 +51,33 @@ class RelatorioContasPagar extends Component
 
     public function fecharRelatorio(){
         $this->visualizarDocumentos = false;
+    }
+
+    public function visualizarClientes()
+    {
+        $this->mostrarClientes = !$this->mostrarClientes;
+    }
+
+    public function pesquisaClientes()
+    {
+        $clientes = Cliente::select([
+            'clientes.id',
+            'clientes.nome',
+            'clientes.whatsapp',
+            'clientes.status',
+            'clientes.tipo',
+        ])->where('status', 'Ativo')->where('tipo', 'Empresa')->get();
+
+        $this->clientes = $clientes;
+    }
+
+    public function selecioneCliente($cliente)
+    {
+        $this->clienteRelatorio = Cliente::where('id', $cliente)->get()->first();
+
+        $this->clienteEmpresa = $this->clienteRelatorio->id;
+
+        $this->visualizarClientes();
     }
 
     public function render()
