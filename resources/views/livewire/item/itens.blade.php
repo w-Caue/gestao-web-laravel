@@ -1,7 +1,7 @@
 <div>
 
     <div class="flex justify-between flex-wrap mb-4 m-7">
-        <div class="">
+        <div class="mb-4 md:mb-0">
             <label for="table-search" class="sr-only">Pesquisa</label>
             <div class="relative mt-1">
                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -98,7 +98,7 @@
 
     @if ($newItem)
         <div class="flex justify-center">
-            <div class="fixed top-11 bg-gray-50 border shadow-2xl rounded-lg sm:top-14 sm:w-1/2">
+            <div class="fixed top-11 w-80 bg-gray-50 border shadow-2xl rounded-lg sm:top-14 sm:w-1/2">
 
                 <div>
                     <button wire:click="fecharItem()"
@@ -115,8 +115,8 @@
 
                 <div class="flex justify-center m-2">
                     <form wire:submit.prevent="{{ $form->itemId ? 'update()' : 'save()' }}" class="w-full max-w-2xl">
-                        <div class="flex flex-wrap -mx-3 mb-6">
-                            <div class="w-full  px-3 mb-6 md:mb-0">
+                        <div class="flex flex-wrap mb-2 md:mb-3">
+                            <div class="w-full px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                                     for="grid-first-name">
                                     Nome
@@ -128,8 +128,8 @@
                             </div>
 
                         </div>
-                        <div class="flex flex-wrap -mx-3 mb-6">
-                            <div class="w-full  px-3 mb-6 md:mb-0">
+                        <div class="flex flex-wrap mb-2 md:mb-3">
+                            <div class="w-full px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                                     for="grid-first-name">
                                     Descrição
@@ -140,8 +140,8 @@
 
                             </div>
                         </div>
-                        <div class="flex flex-wrap -mx-3 m-7">
-                            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                        <div class="flex flex-wrap m-1">
+                            <div class="w-44 md:w-1/3 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                                     for="grid-city">
                                     Marca
@@ -150,7 +150,7 @@
                                     class="appearance-none block w-full font-semibold text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none"
                                     id="grid-city" type="text" placeholder="">
                             </div>
-                            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                            <div class="w-44 md:w-1/3 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                                     for="grid-state">
                                     Unidade de Medida
@@ -170,14 +170,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mb-3">
+                        <div class="my-5 ml-4">
                             <a wire:click="precificacao"
                                 class="text-gray-700 bg-white font-semibold p-3 border-2 rounded shadow-lg cursor-pointer">
                                 Precificação
                             </a>
                             <div class="flex justify-center">
                                 <button type="submit"
-                                    class="text-white  bg-blue-500 font-semibold p-2 border rounded">
+                                    class="mt-4 text-white bg-blue-500 font-semibold p-2 border rounded">
                                     {{ $form->itemId ? 'Salvar' : 'Cadastrar' }}
 
                                 </button>

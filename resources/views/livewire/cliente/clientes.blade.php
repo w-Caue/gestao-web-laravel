@@ -1,7 +1,7 @@
 <div>
 
     <div class="flex justify-between items-center flex-wrap my-2 mx-7">
-        <div class="">
+        <div class="mb-4 md:mb-0">
             <label for="table-search" class="sr-only">Pesquisa</label>
             <div class="relative mt-1">
                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <div class="flex gap-3">
+        <div class="flex gap-3 mb-4 md:mb-0">
             <label for="">
                 <input wire:model.live='tipo' value="Cliente"
                     class=" h-5 w-5 appearance-none rounded-full border-2 border-solid border-gray-300 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-blue-600 checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s]"
@@ -55,7 +55,7 @@
                     <th scope="col" class="px-6 py-3">
                         Nome
                     </th>
-                    <th scope="col" class="px-6 py-3 ">
+                    <th scope="col" class="px-6 py-3">
                         Email
                     </th>
                     <th scope="col" class="px-6 py-3 ">
@@ -76,7 +76,7 @@
                         <th scope="row" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap">
                             {{ $cliente->nome }}
                         </th>
-                        <td class="px-6 py-3">
+                        <td class="px-6 py-3 ">
                             {{ $cliente->email }}
                         </td>
                         <td class="px-6 py-3">
@@ -113,7 +113,7 @@
 
     @if ($newCliente)
         <div class="flex justify-center">
-            <div class="fixed top-11 bg-gray-50 border shadow-2xl rounded-lg sm:top-28 sm:w-1/2">
+            <div class="fixed top-11 w-80 bg-gray-50 border shadow-2xl rounded-lg sm:top-28 sm:w-1/2">
 
                 <div>
                     <button wire:click="fecharCliente()"
@@ -129,9 +129,10 @@
                 <h1 class="text-xl font-semibold text-center m-3">Cliente</h1>
 
                 <div class="m-2 flex justify-center">
-                    <form wire:submit.prevent="{{ $form->clienteId ? 'update()' : 'save()' }}" class="w-1/2 font-semibold">
+                    <form wire:submit.prevent="{{ $form->clienteId ? 'update()' : 'save()' }}"
+                        class="md:w-1/2 font-semibold">
                         <div class="flex flex-wrap -mx-3 mb-4">
-                            <div class="w-full  px-3 mb-6 md:mb-0">
+                            <div class="w-full px-3 mb-6 md:mb-0">
                                 <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2"
                                     for="grid-first-name">
                                     Nome
@@ -140,15 +141,12 @@
                                     class="appearance-none block w-full bg-white text-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                                     id="grid-first-name" type="text" placeholder="">
 
-                            </div>
-
-                            <div>
                                 @error('form.nome')
-                                    <span class="error">{{ $message }}</span>
+                                    <span class="error text-sm">{{ $message }}</span>
                                 @enderror
                             </div>
-
                         </div>
+
                         <div class="flex flex-wrap -mx-3 mb-4">
                             <div class="w-full  px-3 mb-6 md:mb-0">
                                 <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2"
@@ -159,9 +157,6 @@
                                     class="appearance-none block w-full bg-white text-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                                     id="grid-first-name" type="email" placeholder="">
 
-                            </div>
-
-                            <div>
                                 @error('form.email')
                                     <span class="error">{{ $message }}</span>
                                 @enderror
@@ -176,11 +171,8 @@
                                         Whatsapp
                                     </label>
                                     <input wire:model="form.whatsapp"
-                                        class="appearance-none block w-44 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                        class="appearance-none block w-44 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                         id="grid-city" type="text" placeholder="">
-                                </div>
-
-                                <div>
                                     @error('form.whatsapp')
                                         <span class="error">{{ $message }}</span>
                                     @enderror
@@ -188,7 +180,8 @@
                             </div>
 
                             <div class="flex -mx-3 mb-4">
-                                <label for="countries" class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2">
+                                <label for="countries"
+                                    class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2">
                                     <span>Tipo</span>
 
                                     <div class="flex flex-wrap gap-3">
@@ -199,21 +192,18 @@
                                             <span class="text-sm">Empresa</span>
                                         </label>
                                     </div>
-                                </label>
-
-                                <div>
                                     @error('form.tipo')
                                         <span class="error">{{ $message }}</span>
                                     @enderror
-                                </div>
+                                </label>
                             </div>
-                            
+
                         </div>
 
                         <div class="mb-3 ">
                             <div class="flex justify-center">
                                 <button type="submit"
-                                    class="p-2 border rounded text-md font-semibold bg-white hover:shadow-xl hover:text-white hover:bg-blue-500">
+                                    class="p-2 border rounded text-md font-semibold border-gray-500 bg-white hover:shadow-xl hover:text-white hover:bg-blue-500 hover:border-blue-500">
                                     Salvar
                                 </button>
                             </div>
