@@ -147,7 +147,11 @@
                             <label for="data" class="flex flex-col">
                                 <span class="font-semibold text-gray-700">Dt. Lançamento</span>
                                 <input type="date" wire:model="dataLancamento"
+<<<<<<< HEAD
                                     value="{{ date('m/d/Y', strtotime($conta->data_vencimento)) }}"
+=======
+                                    value=""
+>>>>>>> master
                                     class="p-2 w-36 border-gray-200 rounded text-md font-semibold shadow-xl text-gray-600 bg-white">
                             </label>
                         </div>
@@ -224,7 +228,11 @@
                 </div>
 
                 @if ($clientes)
+<<<<<<< HEAD
                     <div class="flex justify-center flex-wrap m-3 overflow-auto h-60">
+=======
+                    <div class="flex justify-center flex-wrap m-3 overflow-auto h-auto max-h-60">
+>>>>>>> master
                         @foreach ($clientes as $cliente)
                             <div wire:click="selecioneCliente({{ $cliente->id }})"
                                 class="m-2 p-2 text-gray-400 shadow border rounded w-44 h-24 hover:bg-gray-100 hover:shadow-xl hover:border-2 cursor-pointer">

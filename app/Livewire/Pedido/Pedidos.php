@@ -318,10 +318,8 @@ class Pedidos extends Component
 
     public function render()
     {
-        if ($this->startDate == null or $this->startDate == '' or $this->endDate == null or $this->endDate == '') {
-            $this->startDate = date('Y/m/d');
-            $this->endDate = date('Y/m/d');
-        }
+        $this->startDate = date('Y-m-d');
+        $this->endDate = date('Y-m-d');
 
         $pedidos = Pedido::whereDate('created_at', '>=', $this->startDate)
             ->whereDate('created_at', '<=', $this->endDate)

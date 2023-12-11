@@ -18,6 +18,7 @@
 
 
         <div class="flex items-center">
+<<<<<<< HEAD
             <div class="relative">
                 <input name="start" type="date" wire:model.lazy='startDate'
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
@@ -28,6 +29,22 @@
                 <input name="end" type="date" wire:model.lazy='endDate'
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
                     placeholder="Selecione a data">
+=======
+            <div class="flex gap-1 items-start m-1">
+                <label for="data" class="mb-2 text-lg font-semibold text-gray-600">
+                    <input wire:model="startDate" id="startData" type="date"
+                        class="border border-gray-300 text-gray-600 text-md font-semibold rounded w-36 p-1">
+                </label>
+            </div>
+
+            <span class="font-semibold text-gray-700 text-lg mx-2">á</span>
+
+            <div class="flex gap-1 items-start m-1">
+                <label for="data" class="mb-2 text-lg font-semibold text-gray-600">
+                    <input wire:model="endDate" id="endData" type="date"
+                        class="border border-gray-300 text-gray-600 text-md font-semibold rounded w-36 p-1">
+                </label>
+>>>>>>> master
             </div>
         </div>
 
@@ -159,12 +176,20 @@
                         <label for="pagamento" class="block mb-2 text-xl font-semibold text-gray-900 ">Forma de
                             Pagamento</label>
                         <select wire:model="formaDePagamento" id="pagamento"
+<<<<<<< HEAD
                             class="bg-gray-50 border border-gray-300 text-gray-600 text-md font-semibold rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-44 p-2.5 ">
+=======
+                            class="bg-white border border-gray-300 text-gray-600 text-md font-semibold rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-44 p-2.5 ">
+>>>>>>> master
                             <option selected></option>
 
                             @foreach ($formasPagamentos as $formaPagamento)
                                 <option value="{{ $formaPagamento->id }}"
+<<<<<<< HEAD
                                     class="font-semibold text-md text-gray-600">
+=======
+                                    class="font-semibold text-md text-gray-600 bg-white">
+>>>>>>> master
                                     {{ $formaPagamento->nome }}</option>
                             @endforeach
 
@@ -173,7 +198,11 @@
 
                     <div class="m-3">
                         <textarea wire:model="descricao" id="message" rows="4"
+<<<<<<< HEAD
                             class="block p-2.5 w-full font-semibold text-md text-gray-600 bg-gray-50 rounded-lg border border-gray-300 focus:border-blue-500 "
+=======
+                            class="block p-2.5 w-full font-semibold text-md text-gray-600 bg-white rounded-lg border border-gray-300 focus:border-blue-500 "
+>>>>>>> master
                             placeholder="Adicione uma descrição..."></textarea>
                     </div>
 
@@ -219,7 +248,11 @@
                 </div>
 
                 @if ($clientes)
+<<<<<<< HEAD
                     <div class="flex justify-center flex-wrap m-3 overflow-auto h-60">
+=======
+                    <div class="flex justify-center flex-wrap m-3 overflow-auto h-auto max-h-60">
+>>>>>>> master
                         @foreach ($clientes as $cliente)
                             <div wire:click="selecioneCliente({{ $cliente->id }})"
                                 class="m-2 p-2 text-gray-400 shadow border rounded w-44 h-24 hover:bg-gray-100 hover:shadow-xl hover:border-2 cursor-pointer">
@@ -260,12 +293,20 @@
                                 Pagamento</label>
                             <select wire:model="formaDePagamento" id="pagamento"
                                 @if ($telaPedido->status == 'Concluido') @disabled(true) @endif
+<<<<<<< HEAD
                                 class=" bg-gray-50 border border-gray-300 text-gray-600 text-md font-semibold rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-44 p-1 ">
+=======
+                                class=" bg-white border border-gray-300 text-gray-600 text-md font-semibold rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-44 p-1 ">
+>>>>>>> master
                                 <option selected></option>
 
                                 @foreach ($formasPagamentos as $formaPagamento)
                                     <option value="{{ $formaPagamento->id }}"
+<<<<<<< HEAD
                                         class="font-semibold text-md text-gray-600">
+=======
+                                        class="font-semibold text-md text-gray-600 bg-white">
+>>>>>>> master
                                         {{ $formaPagamento->nome }}</option>
                                 @endforeach
 
@@ -275,7 +316,11 @@
                         @if ($telaPedido->status == 'Aberto')
                             <div class="">
                                 <button wire:click.prevent="telaItens()"
+<<<<<<< HEAD
                                     class="p-1 border rounded-md font-semibold text-gray-600 hover:bg-blue-500 hover:text-white">
+=======
+                                    class="p-1 border-2 rounded-md font-semibold bg-white text-gray-700 hover:bg-blue-500 hover:text-white">
+>>>>>>> master
                                     Adicionar Itens
                                 </button>
                             </div>
@@ -285,12 +330,20 @@
                                     do Pedido</label>
                                 <select wire:model="status" id="status"
                                     @if ($telaPedido->status == 'Concluido') @disabled(true) @endif
+<<<<<<< HEAD
                                     class=" bg-gray-50 border border-gray-300 text-gray-600 text-md font-semibold rounded focus:ring-blue-500 focus:border-blue-500 block w-48 p-1 ">
+=======
+                                    class=" bg-white border border-gray-300 text-gray-600 text-md font-semibold rounded focus:ring-blue-500 focus:border-blue-500 block w-48 p-1 ">
+>>>>>>> master
                                     <option selected></option>
 
                                     @foreach ($statusPedido as $pedidoStatus)
                                         <option value="{{ $pedidoStatus->nome }}"
+<<<<<<< HEAD
                                             class="font-semibold text-md text-gray-600">
+=======
+                                            class="font-semibold text-md text-gray-600 bg-white">
+>>>>>>> master
                                             {{ $pedidoStatus->nome }}</option>
                                     @endforeach
 
@@ -302,8 +355,13 @@
 
                     <div class="m-3">
                         <div class="relative overflow-x-auto shadow-md sm:rounded-lg border">
+<<<<<<< HEAD
                             <table class="w-full text-sm text-left text-gray-500">
                                 <thead class="text-xs font-semibold text-gray-700 uppercase bg-gray-100">
+=======
+                            <table class="w-full text-sm text-left">
+                                <thead class="text-xs font-semibold text-gray-800 uppercase bg-gray-100">
+>>>>>>> master
                                     <tr>
                                         <th scope="col" class="px-6 py-3">
                                             Nome Item
@@ -327,9 +385,15 @@
                                         @endif
                                     </tr>
                                 </thead>
+<<<<<<< HEAD
                                 <tbody>
                                     @foreach ($telaPedido->itens as $item)
                                         <tr class="border-gray-200 font-semibold">
+=======
+                                <tbody class="">
+                                    @foreach ($telaPedido->itens as $item)
+                                        <tr class="border-gray-200 font-semibold bg-white">
+>>>>>>> master
                                             <th scope="row"
                                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50">
                                                 {{ $item->nome }}
@@ -347,7 +411,11 @@
                                                 {{ number_format($item->pivot->total, '2', ',') }}
                                             </td>
                                             @if ($telaPedido->status == 'Aberto')
+<<<<<<< HEAD
                                                 <td class="px-6 py-4 bg-white">
+=======
+                                                <td class="px-6 py-4">
+>>>>>>> master
                                                     <button wire:click.prevent="removerItem({{ $item->id }})"
                                                         class="font-semibold text-red-500 cursor-pointer hover:underline">
                                                         remover
@@ -358,11 +426,17 @@
                                     @endforeach
                                 </tbody>
                                 <tfoot>
+<<<<<<< HEAD
                                     <tr class="font-semibold text-gray-900">
                                         <th scope="row" class="px-6 py-3 text-base">Total</th>
                                         <td class="px-6 py-3"></td>
                                         <td class="px-6 py-3"></td>
                                         <td class="px-6 py-3"></td>
+=======
+                                    <tr class="font-semibold bg-white text-gray-900">
+                                        <th scope="row" class="px-6 py-3 text-base">Total</th>
+                                        <td colspan="3" class="px-6 py-3"></td>
+>>>>>>> master
                                         <td class="px-6 py-3">
                                             <h1 wire:model.live="totalPedido">
                                                 {{ number_format($totalItens, 2, ',') }}</h1>
@@ -377,7 +451,11 @@
                     <div class="m-3">
                         <textarea wire:model="descricao" id="message" rows="3"
                             @if ($telaPedido->status == 'Concluido') @disabled(true) @endif
+<<<<<<< HEAD
                             class="block p-2.5 w-full font-semibold text-md text-gray-600 bg-gray-50 rounded-lg border border-gray-300 focus:border-blue-500 "
+=======
+                            class="block p-2.5 w-full font-semibold text-md text-gray-600 bg-white rounded-lg border border-gray-300 focus:border-blue-500 "
+>>>>>>> master
                             placeholder="Adicione uma descrição..."></textarea>
                     </div>
 
@@ -504,7 +582,11 @@
                     </button>
                 </div>
 
+<<<<<<< HEAD
                 <div class="flex justify-center flex-wrap gap-3 m-3 overflow-auto h-80">
+=======
+                <div class="flex justify-center flex-wrap gap-3 m-3 overflow-auto h-auto max-h-80">
+>>>>>>> master
                     @foreach ($itens as $item)
                         <div wire:click="quantidadeItem({{ $item->id }})"
                             class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:w-1/3 hover:bg-gray-100 cursor-pointer">
