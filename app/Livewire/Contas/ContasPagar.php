@@ -28,7 +28,7 @@ class ContasPagar extends Component
     public $descricao;
     public $agenteCobrador;
     public $dataLancamento;
-    public $dataVencimento ;
+    public $dataVencimento;
     public $valorDocumento;
 
     #Baixar Documento
@@ -40,7 +40,11 @@ class ContasPagar extends Component
     public $statusDocumento = 'Aberto';
 
     public $showBaixa;
+    public $status = 'Ativo';
 
+    protected $listeners = [
+        'deleteRetorno'
+    ];
 
     public function novoDocumento()
     {
@@ -51,8 +55,17 @@ class ContasPagar extends Component
 
     public function fecharDocumento()
     {
-        $this->reset('clienteDocumento', 'descricao', 'agenteCobrador', 'dataLancamento', 
-        'dataVencimento', 'valorDocumento', 'formaPagamento', 'valorPago');
+        $this->reset(
+            'clienteDocumento',
+            'descricao',
+            'agenteCobrador',
+            'dataLancamento',
+            'dataVencimento',
+            'valorDocumento',
+            'formaPagamento',
+            'valorPago',
+            'documento'
+        );
         $this->showDocumento = false;
     }
 
@@ -121,10 +134,10 @@ class ContasPagar extends Component
         $this->dataVencimento = date('Y-m-d', strtotime($documento->data_vencimento));
         $this->valorDocumento = number_format($documento->valor_documento, 2, ',', '.');
         $this->dataPagamento = date('Y-m-d');
-
     }
 
-    public function confirmarBaixa(){
+    public function confirmarBaixa()
+    {
         Conta::findOrFail($this->documento->id)->update([
             'status_documento' => 'Pagar',
             'forma_pagamento_id' => $this->formaPagamento,
@@ -143,9 +156,72 @@ class ContasPagar extends Component
         ]);
     }
 
+    public function deletarDocumento()
+    {
+        if ($this->documento->status == "Deletado") {
+            $this->alert('info', 'Retornar Esse Documento?', [
+                'position' => 'center',
+                'timer' => 5000,
+                'toast' => false,
+                'showConfirmButton' => true,
+                'confirmButtonColor' => '#bb27d9',
+                'onConfirmed' => 'deleteRetorno',
+                'showCancelButton' => true,
+                'cancelButtonColor' => '#d33',
+                'onDismissed' => '',
+                'cancelButtonText' => 'Cancelar',
+                'confirmButtonText' => 'Retornar',
+            ]);
+        } else {
+            $this->alert('info', 'Deletar Esse Documento?', [
+                'position' => 'center',
+                'timer' => 5000,
+                'toast' => false,
+                'showConfirmButton' => true,
+                'confirmButtonColor' => '#3085d6',
+                'onConfirmed' => 'deleteRetorno',
+                'showCancelButton' => true,
+                'cancelButtonColor' => '#d33',
+                'onDismissed' => '',
+                'cancelButtonText' => 'Cancelar',
+                'confirmButtonText' => 'Deletar',
+            ]);
+        }
+    }
+
+    public function deleteRetorno()
+    {
+
+        if ($this->documento->status == "Deletado") {
+            Conta::where('id', $this->documento->id)->update([
+                'status' => 'Ativo'
+            ]);
+
+            $this->fecharDocumento();
+
+            $this->alert('success', 'Documento Retornado!', [
+                'position' => 'center',
+                'timer' => '1000',
+                'toast' => false,
+            ]);
+        } else {
+            Conta::where('id', $this->documento->id)->update([
+                'status' => 'Deletado'
+            ]);
+
+            $this->fecharDocumento();
+
+            $this->alert('success', 'Documento Deletado!', [
+                'position' => 'center',
+                'timer' => '1000',
+                'toast' => false,
+            ]);
+        }
+    }
+
     public function render()
     {
-        $contas = Conta::paginate(5);
+        $contas = Conta::where('status', $this->status)->paginate(5);
 
         $agenteCobradores = AgenteCobrador::all();
 

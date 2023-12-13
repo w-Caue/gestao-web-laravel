@@ -183,12 +183,12 @@
                 {{ __('Itens') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link href="{{ route('contas') }}" :active="request()->routeIs('contas')">
-                {{ __('Contas') }}
-            </x-responsive-nav-link>
-
             <x-responsive-nav-link href="{{ route('pedidos') }}" :active="request()->routeIs('pedidos')">
                 {{ __('Pedidos') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link href="{{ route('contas') }}" :active="request()->routeIs('contas')">
+                {{ __('Contas') }}
             </x-responsive-nav-link>
         </div>
 

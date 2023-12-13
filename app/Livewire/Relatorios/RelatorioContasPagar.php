@@ -42,6 +42,7 @@ class RelatorioContasPagar extends Component
         $documentos = Conta::select([
             'contas.id',
             'contas.cliente_id',
+            'contas.status',
             'contas.descricao',
             'contas.ag_cobrador_id',
             'contas.forma_pagamento_id',
@@ -54,7 +55,8 @@ class RelatorioContasPagar extends Component
 
 
         if ($this->clienteEmpresa == '') {
-            $documentos->whereDate('data_vencimento', '>=', $this->dataVencimentoInicio)->
+            $documentos->where('status', 'Ativo')->
+                        whereDate('data_vencimento', '>=', $this->dataVencimentoInicio)->
                         whereDate('data_vencimento', '<=', $this->dataVencimentoFinal);
             $this->documentos = $documentos->get();
         } else {
