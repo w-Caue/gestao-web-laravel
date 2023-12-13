@@ -17,7 +17,8 @@
                                 class="border border-gray-300 text-gray-700 text-md font-semibold rounded w-44 p-1">
                         </label>
 
-                        <button wire:click.prevent="visualizarClientes()" class="p-1 border rounded text-white bg-blue-500">
+                        <button wire:click.prevent="visualizarClientes()"
+                            class="p-1 border rounded text-white bg-blue-500">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -45,7 +46,7 @@
                         </label>
                     </div>
 
-                    <div class="flex gap-2 flex-wrap m-3 w-64">
+                    {{-- <div class="flex gap-2 flex-wrap m-3 w-64">
                         <label for="countries" class="block mb-2 text-lg font-semibold text-gray-900">
                             <span>Status</span>
 
@@ -76,26 +77,47 @@
                                 </label>
                             </div>
                         </label>
-                    </div>
+                    </div> --}}
                 </div>
 
-                <div class="m-3 p-3 border-2 rounded bg-white flex items-center gap-2">
-                    <span class="font-semibold text-gray-800 text-lg">Data</span>
+                <div class="m-3 p-3 border-2 rounded bg-white flex flex-col gap-2">
+                    <div class="flex items-center gap-2">
+                        <span class="font-semibold text-gray-800 text-lg">Data Lançamento:</span>
 
-                    <div class="flex gap-1 items-start m-1">
-                        <label for="data" class="mb-2 text-lg font-semibold text-gray-900">
-                            <input wire:model="startData" id="startData" type="date"
-                                class="border border-gray-300 text-gray-900 text-md font-semibold rounded w-36 p-1">
-                        </label>
+                        <div class="flex gap-1 items-start m-1">
+                            <label for="data" class="mb-2 text-lg font-semibold text-gray-900">
+                                <input wire:model="startData" id="startData" type="date"
+                                    class="border border-gray-300 text-gray-900 text-md font-semibold rounded w-36 p-1">
+                            </label>
+                        </div>
+
+                        <span class="font-semibold text-gray-700 text-lg">á</span>
+
+                        <div class="flex gap-1 items-start m-1">
+                            <label for="data" class="mb-2 text-lg font-semibold text-gray-900">
+                                <input wire:model="endData" id="endData" type="date"
+                                    class="border border-gray-300 text-gray-900 text-md font-semibold rounded w-36 p-1">
+                            </label>
+                        </div>
                     </div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-semibold text-gray-800 text-lg">Data Vencimento:</span>
 
-                    <span class="font-semibold text-gray-700 text-lg">á</span>
+                        <div class="flex gap-1 items-start m-1">
+                            <label for="data" class="mb-2 text-lg font-semibold text-gray-900">
+                                <input wire:model="dataVencimentoInicio" id="startData" type="date"
+                                    class="border border-gray-300 text-gray-900 text-md font-semibold rounded w-36 p-1">
+                            </label>
+                        </div>
 
-                    <div class="flex gap-1 items-start m-1">
-                        <label for="data" class="mb-2 text-lg font-semibold text-gray-900">
-                            <input wire:model="endData" id="endData" type="date"
-                                class="border border-gray-300 text-gray-900 text-md font-semibold rounded w-36 p-1">
-                        </label>
+                        <span class="font-semibold text-gray-700 text-lg">á</span>
+
+                        <div class="flex gap-1 items-start m-1">
+                            <label for="data" class="mb-2 text-lg font-semibold text-gray-900">
+                                <input wire:model="dataVencimentoFinal" id="endData" type="date"
+                                    class="border border-gray-300 text-gray-900 text-md font-semibold rounded w-36 p-1">
+                            </label>
+                        </div>
                     </div>
                 </div>
 
@@ -215,7 +237,7 @@
                                         <td class="px-4 py-3">
                                             {{ $documento->agenteCobrador->nome }}
                                         </td>
-                                        <td class="px-4 py-3">
+                                        <td class="px-4 py-3 text-center">
                                             {{ number_format($documento->valor_documento, 2, ',', '.') }}
                                         </td>
                                         <td class="px-4 py-3 text-center font-semibold">
@@ -230,7 +252,7 @@
                             <tfoot>
                                 <tr class="font-semibold text-gray-900">
                                     <th scope="row" colspan="3" class="px-6 py-3 text-base">Total</th>
-                                    <td class="px-6 py-3">0</td>
+                                    <td class="px-6 py-3 text-center">R$ {{ number_format($totais, 2, ',', '.') }}</td>
                                 </tr>
                             </tfoot>
                         </table>
