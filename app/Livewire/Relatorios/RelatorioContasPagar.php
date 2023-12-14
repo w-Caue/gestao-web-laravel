@@ -43,6 +43,7 @@ class RelatorioContasPagar extends Component
             'contas.id',
             'contas.cliente_id',
             'contas.status',
+            'contas.status_documento',
             'contas.descricao',
             'contas.ag_cobrador_id',
             'contas.forma_pagamento_id',

@@ -38,7 +38,7 @@ class ContasPagar extends Component
     public $formaPagamento;
     public $valorPago;
 
-    public $statusDocumento = 'Aberto';
+    public $statusDocumento = 'Pagar';
 
     public $showBaixa;
     public $status = 'Ativo';
@@ -59,6 +59,7 @@ class ContasPagar extends Component
         $this->reset(
             'clienteDocumento',
             'descricao',
+            'statusDocumento',
             'agenteCobrador',
             'dataLancamento',
             'dataVencimento',
@@ -121,8 +122,7 @@ class ContasPagar extends Component
     {
         $this->valorDocumento = str_replace(',','.', $this->valorDocumento);
         $this->valorDocumento = floatval($this->valorDocumento);
-        // dd($this->valorDocumento);
-
+    
         Conta::findOrFail($this->documento->id)->update([
             'cliente_id' => $this->clienteDocumento->id,
             'descricao' => $this->descricao,
@@ -164,8 +164,11 @@ class ContasPagar extends Component
 
     public function confirmarBaixa()
     {
+        $this->valorPago = str_replace(',','.', $this->valorPago);
+        $this->valorPago = floatval($this->valorPago);
+
         Conta::findOrFail($this->documento->id)->update([
-            'status_documento' => 'Pagar',
+            'status_documento' => 'Pago',
             'forma_pagamento_id' => $this->formaPagamento,
             'data_pagamento' => $this->dataPagamento,
             'valor_pago' => $this->valorPago,

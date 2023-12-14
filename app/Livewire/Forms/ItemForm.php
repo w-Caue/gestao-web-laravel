@@ -30,6 +30,13 @@ class ItemForm extends Form
     {
         $this->validate();
 
+        $this->preco1 = str_replace(',', '.', $this->preco1);
+        $this->preco1 = floatval($this->preco1);
+        $this->preco2 = str_replace(',', '.', $this->preco2);
+        $this->preco2 = floatval($this->preco2);
+        $this->vlcusto = str_replace(',', '.', $this->vlcusto);
+        $this->vlcusto = floatval($this->vlcusto);
+
         Item::create([
             'nome' => $this->nome,
             'descricao' => $this->descricao,
@@ -48,13 +55,20 @@ class ItemForm extends Form
         $this->descricao = $item->descricao;
         $this->marca = $item->marca;
         $this->unidadeMedida = $item->unidade_medida_id;
-        $this->vlcusto = $item->valor_custo;
-        $this->preco1 = $item->preco_1;
-        $this->preco2 = $item->preco_2;
+        $this->vlcusto = number_format($item->valor_custo, 2, ',', '');
+        $this->preco1 = number_format($item->preco_1, 2, ',', '');
+        $this->preco2 = number_format($item->preco_2, 2, ',', '');
     }
 
     public function update()
     {
+        $this->preco1 = str_replace(',', '.', $this->preco1);
+        $this->preco1 = floatval($this->preco1);
+        $this->preco2 = str_replace(',', '.', $this->preco2);
+        $this->preco2 = floatval($this->preco2);
+        $this->vlcusto = str_replace(',', '.', $this->vlcusto);
+        $this->vlcusto = floatval($this->vlcusto);
+
         Item::findOrFail($this->itemId)->update([
             'nome' => $this->nome,
             'descricao' => $this->descricao,

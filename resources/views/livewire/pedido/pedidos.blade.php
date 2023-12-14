@@ -37,8 +37,8 @@
 
 
         <button wire:click="novoPedido()"
-            class="flex flex-row gap-2 text-gray-600 font-semibold border p-2 rounded-md bg-white hover:bg-gray-50 hover:shadow-lg">
-            <svg class="w-6 h-6 text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            class="flex flex-row gap-2 text-gray-600 font-semibold border p-3 rounded-md bg-white hover:bg-gray-50 hover:shadow-lg">
+            <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                 viewBox="0 0 19 20">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M6 15a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0h8m-8 0-1-4m9 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm1-4H5m0 0L3 4m0 0h5.501M3 4l-.792-3H1m11 3h6m-3 3V1" />
@@ -163,7 +163,7 @@
                         <label for="pagamento" class="block mb-2 text-xl font-semibold text-gray-900 ">Forma de
                             Pagamento</label>
                         <select wire:model="formaDePagamento" id="pagamento"
-                            class="bg-white border border-gray-300 text-gray-600 text-md font-semibold rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-44 p-2.5 ">
+                            class="bg-white border-2 border-gray-300 text-gray-600 text-md font-semibold rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-44 p-2.5 ">
                             <option selected></option>
 
                             @foreach ($formasPagamentos as $formaPagamento)
@@ -177,13 +177,13 @@
 
                     <div class="m-3">
                         <textarea wire:model="descricao" id="message" rows="4"
-                            class="block p-2.5 w-full font-semibold text-md text-gray-600 bg-white rounded-lg border border-gray-300 focus:border-blue-500 "
+                            class="block p-2.5 w-full font-semibold text-md text-gray-600 bg-white rounded-lg border-2 border-gray-300 focus:border-blue-500 "
                             placeholder="Adicione uma descrição..."></textarea>
                     </div>
 
                     <div class="flex justify-center m-4">
                         <button type="submit"
-                            class="p-2 border rounded text-md font-semibold bg-white hover:shadow-xl hover:text-white hover:bg-blue-500">Criar
+                            class="p-2 border-2 border-gray-300 rounded text-md font-semibold bg-white hover:shadow-xl hover:text-white hover:bg-blue-500 hover:border-blue-500">Criar
                             Pedido</button>
                     </div>
                 </form>

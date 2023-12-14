@@ -35,7 +35,7 @@ class Itens extends Component
 
     public function fecharItem()
     {
-        $this->reset();
+        $this->reset('form.nome', 'form.decricao', 'form.marca', 'form.unidadeMedida', 'form.vlcusto', 'form.preco1', 'form.preco2');
 
         $this->newItem = false;
     }

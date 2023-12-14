@@ -114,7 +114,7 @@
                 <h1 class="text-xl font-semibold text-center m-3">Item</h1>
 
                 <div class="flex justify-center m-2">
-                    <form wire:submit.prevent="{{ $form->itemId ? 'update()' : 'save()' }}" class="w-full max-w-2xl">
+                    <form wire:submit.prevent="{{ $form->itemId ? 'update()' : 'save()' }}" class="w-full max-w-2xl font-semibold">
                         <div class="flex flex-wrap mb-2 md:mb-3">
                             <div class="w-full px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -172,7 +172,7 @@
                         </div>
                         <div class="my-5 ml-4">
                             <a wire:click="precificacao"
-                                class="text-gray-700 bg-white font-semibold p-3 border-2 rounded shadow-lg cursor-pointer">
+                                class="text-gray-700 bg-white font-semibold p-3 border-2 rounded shadow-lg hover:text-white hover:bg-blue-500 hover:border-blue-500 cursor-pointer">
                                 Precificação
                             </a>
                             <div class="flex justify-center">
