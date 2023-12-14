@@ -7,6 +7,7 @@ use App\Models\AgenteCobrador;
 use App\Models\Cliente;
 use App\Models\Conta;
 use App\Models\FormaPagamento;
+use Faker\Core\Number;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -96,7 +97,6 @@ class ContasPagar extends Component
 
     public function criarDocumento()
     {
-
         Conta::create([
             'cliente_id' => $this->clienteDocumento->id,
             'descricao' => $this->descricao,
@@ -110,6 +110,32 @@ class ContasPagar extends Component
         $this->fecharDocumento();
 
         $this->alert('success', 'Documento criado!', [
+            'position' => 'center',
+            'timer' => 2000,
+            'toast' => false,
+            'text' => 'com sucesso',
+        ]);
+    }
+
+    public function editarDocumento()
+    {
+        $this->valorDocumento = str_replace(',','.', $this->valorDocumento);
+        $this->valorDocumento = floatval($this->valorDocumento);
+        // dd($this->valorDocumento);
+
+        Conta::findOrFail($this->documento->id)->update([
+            'cliente_id' => $this->clienteDocumento->id,
+            'descricao' => $this->descricao,
+            'ag_cobrador_id' => $this->agenteCobrador,
+            'data_lancamento' => $this->dataLancamento,
+            'data_vencimento' => $this->dataVencimento,
+            'valor_documento' => $this->valorDocumento,
+            'status_documento' => $this->statusDocumento,
+        ]);
+
+        $this->fecharDocumento();
+
+        $this->alert('success', 'Documento Atualizado!', [
             'position' => 'center',
             'timer' => 2000,
             'toast' => false,
@@ -132,7 +158,7 @@ class ContasPagar extends Component
         $this->dataLancamento = date('Y-m-d', strtotime($documento->data_lancamento));
         $this->agenteCobrador = $documento->ag_cobrador_id;
         $this->dataVencimento = date('Y-m-d', strtotime($documento->data_vencimento));
-        $this->valorDocumento = number_format($documento->valor_documento, 2, ',', '.');
+        $this->valorDocumento = number_format($documento->valor_documento, 2, ',','');
         $this->dataPagamento = date('Y-m-d');
     }
 

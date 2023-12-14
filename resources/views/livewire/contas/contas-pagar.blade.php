@@ -13,7 +13,7 @@
                         </svg>
                     </div>
                     <input wire:model.live="search" type="text" id="table-search"
-                        class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg md:w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                        class="block p-2 pl-10 text-sm font-semibold text-gray-900 border border-gray-300 rounded-lg md:w-80 bg-white focus:ring-blue-500 focus:border-blue-500"
                         placeholder="Pesquisar Pedido">
                 </div>
             </div>
@@ -30,7 +30,7 @@
                     <input wire:model.live='status' value="Deletado"
                         class=" h-5 w-5 appearance-none rounded-full border-2 border-solid border-gray-300 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-blue-600 checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s]"
                         type="radio" name="status" id="radioNoLabel01" />
-                    <span class="text-md font-semibold text-gray-500">Deletado</span>
+                    <span class="text-md font-semibold text-gray-500">Deletados</span>
                 </label>
             </div>
 
@@ -147,38 +147,42 @@
                 </div>
 
                 <div class="mx-5 flex justify-between items-center gap-3">
-                    <div class="">
-                        <button wire:click.prevent="criarDocumento()"
-                            class="flex gap-1 p-2 border rounded shadow-xl font-semibold text-md text-white bg-blue-500 border-blue-500 hover:bg-blue-600 hover:border-blue-600">
-                            <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 20 20">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="m7 10 2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                            </svg>
-                            Salvar
-                        </button>
-                    </div>
-
-                    <div class="flex gap-1">
-                        <div>
-                            <button wire:click.prevent="{{ $documento == null ? '' : 'baixaDocumento()' }} "
-                                class="flex gap-1 p-2 border rounded shadow-xl font-semibold text-md {{ $documento == null ? ' opacity-50' : 'opacity-100' }} text-white bg-green-500 border-green-500 hover:bg-green-600 hover:border-green-600">
+                    @if ($documento == null or $documento->status == 'Ativo')
+                        <div class="">
+                            <button wire:click.prevent="{{$documento != null ? 'editarDocumento' : 'criarDocumento()'}}"
+                                class="flex gap-1 p-2 border rounded shadow-xl font-semibold text-md text-white bg-blue-500 border-blue-500 hover:bg-blue-600 hover:border-blue-600">
                                 <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                     fill="none" viewBox="0 0 20 20">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M11.905 1.316 15.633 6M18 10h-5a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h5m0-5a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1m0-5V7a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h15a1 1 0 0 0 1-1v-3m-6.367-9L7.905 1.316 2.352 6h9.281Z" />
+                                        stroke-width="2" d="m7 10 2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                 </svg>
-                                Baixar
+                                Salvar
                             </button>
                         </div>
+                    @endif
+
+                    <div class="flex gap-1">
+                        @if ($documento != null and $documento->status != 'Deletado')
+                            <div>
+                                <button wire:click.prevent="{{ $documento == null ? '' : 'baixaDocumento()' }} "
+                                    class="flex gap-1 p-2 border rounded shadow-xl font-semibold text-md {{ $documento == null ? ' opacity-50' : 'opacity-100' }} text-white bg-green-500 border-green-500 hover:bg-green-600 hover:border-green-600">
+                                    <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        fill="none" viewBox="0 0 20 20">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M11.905 1.316 15.633 6M18 10h-5a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h5m0-5a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1m0-5V7a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h15a1 1 0 0 0 1-1v-3m-6.367-9L7.905 1.316 2.352 6h9.281Z" />
+                                    </svg>
+                                    Baixar
+                                </button>
+                            </div>
+                        @endif
 
                         @if ($documento != null and $documento->status == 'Deletado')
                             <div class="">
                                 <button wire:click.prevent="{{ $documento == null ? '' : 'deletarDocumento()' }}"
                                     class="flex gap-1 p-2 border rounded shadow-xl font-semibold text-md {{ $documento == null ? ' opacity-50' : 'opacity-100' }} text-white bg-purple-500 border-purple-500 hover:bg-purple-600 hover:border-purple-600">
-                                    <svg class="w-6 h-6" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+                                    <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        fill="none" viewBox="0 0 18 20">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                             stroke-width="2"
                                             d="M16 1v5h-5M2 19v-5h5m10-4a8 8 0 0 1-14.947 3.97M1 10a8 8 0 0 1 14.947-3.97" />

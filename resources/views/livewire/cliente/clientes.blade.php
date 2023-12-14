@@ -130,52 +130,40 @@
 
                 <div class="m-2 flex justify-center">
                     <form wire:submit.prevent="{{ $form->clienteId ? 'update()' : 'save()' }}"
-                        class="md:w-1/2 font-semibold">
-                        <div class="flex flex-wrap -mx-3 mb-4">
-                            <div class="w-full px-3 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2"
-                                    for="grid-first-name">
-                                    Nome
-                                </label>
-                                <input wire:model="form.nome"
-                                    class="appearance-none block w-full bg-white text-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                                    id="grid-first-name" type="text" placeholder="">
+                        class="w-full max-w-2xl font-semibold">
+                        <div class="w-full px-3">
+                            <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2"
+                                for="grid-first-name">
+                                Nome
+                            </label>
+                            <input wire:model="form.nome"
+                                class="appearance-none block w-full bg-white text-gray-700 border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                                id="grid-first-name" type="text" placeholder="">
 
-                                @error('form.nome')
-                                    <span class="error text-sm">{{ $message }}</span>
-                                @enderror
-                            </div>
                         </div>
 
-                        <div class="flex flex-wrap -mx-3 mb-4">
-                            <div class="w-full  px-3 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2"
-                                    for="grid-first-name">
-                                    Email
-                                </label>
-                                <input wire:model="form.email"
-                                    class="appearance-none block w-full bg-white text-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                                    id="grid-first-name" type="email" placeholder="">
+                        <div class="w-full px-3">
+                            <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2"
+                                for="grid-first-name">
+                                Email
+                            </label>
+                            <input wire:model="form.email"
+                                class="appearance-none block w-full bg-white text-gray-700 border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                                id="grid-first-name" type="text" placeholder="">
 
-                                @error('form.email')
-                                    <span class="error">{{ $message }}</span>
-                                @enderror
-                            </div>
                         </div>
 
-                        <div class="flex gap-7 items-center">
+                        <div class="flex gap-7 items-center ml-3">
                             <div class="flex flex-wrap -mx-3 m-4">
-                                <div class="w-full px-3 mb-6 md:mb-0">
+                                <div class="w-full px-3">
                                     <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2"
-                                        for="grid-city">
+                                        for="grid-first-name">
                                         Whatsapp
                                     </label>
                                     <input wire:model="form.whatsapp"
-                                        class="appearance-none block w-44 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                        id="grid-city" type="text" placeholder="">
-                                    @error('form.whatsapp')
-                                        <span class="error">{{ $message }}</span>
-                                    @enderror
+                                        class="appearance-none block w-full bg-white text-gray-700 border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                                        id="grid-first-name" type="text" placeholder="">
+        
                                 </div>
                             </div>
 
@@ -187,9 +175,9 @@
                                     <div class="flex flex-wrap gap-3">
                                         <label for="">
                                             <input wire:model.live="form.tipo"
-                                                class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-neutral-300 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] checked:border-primary checked:bg-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ml-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ml-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent dark:border-neutral-600 dark:checked:border-primary dark:checked:bg-primary dark:focus:before:shadow-[0px_0px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca]"
+                                                class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-gray-300 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] checked:border-primary checked:bg-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ml-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ml-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent dark:border-gray-400 dark:checked:border-primary dark:checked:bg-primary dark:focus:before:shadow-[0px_0px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca]"
                                                 type="checkbox" value="Empresa" id="checkboxChecked" />
-                                            <span class="text-sm">Empresa</span>
+                                            <span class="text-gray-600 text-sm">Empresa</span>
                                         </label>
                                     </div>
                                     @error('form.tipo')
@@ -203,7 +191,7 @@
                         <div class="mb-3 ">
                             <div class="flex justify-center">
                                 <button type="submit"
-                                    class="p-2 border rounded text-md font-semibold border-gray-500 bg-white hover:shadow-xl hover:text-white hover:bg-blue-500 hover:border-blue-500">
+                                    class="p-2 border rounded text-md font-semibold border-gray-300 bg-white hover:shadow-xl hover:text-white hover:bg-blue-500 hover:border-blue-500">
                                     Salvar
                                 </button>
                             </div>
