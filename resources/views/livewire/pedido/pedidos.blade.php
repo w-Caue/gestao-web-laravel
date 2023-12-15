@@ -11,7 +11,7 @@
                     </svg>
                 </div>
                 <input wire:model.live="search" type="text" id="table-search"
-                    class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg md:w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                    class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg md:w-80 bg-white focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Pesquisar Pedido">
             </div>
         </div>
@@ -37,7 +37,7 @@
 
 
         <button wire:click="novoPedido()"
-            class="flex flex-row gap-2 text-gray-600 font-semibold border p-3 rounded-md bg-white hover:bg-gray-50 hover:shadow-lg">
+            class="flex flex-row gap-2 text-white font-semibold border p-3 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500">
             <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                 viewBox="0 0 19 20">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

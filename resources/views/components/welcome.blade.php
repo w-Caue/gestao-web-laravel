@@ -1,8 +1,8 @@
-<div class="p-6 lg:p-8 bg-white border-b border-gray-200">
+<div class="p-6 lg:p-8 bg-white border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
     {{-- <x-application-logo class="block h-12 w-auto" /> --}}
 
-    <h1 class=" text-2xl font-semibold text-gray-700">
-        Bem vindo ao <span class="font-bold text-blue-600">Gestão Web!</span>
+    <h1 class=" text-2xl font-semibold text-gray-700 dark:text-white">
+        Bem vindo ao <span class="font-bold text-indigo-500">Web Gestão!</span>
     </h1>
 
     {{-- <p class="mt-6 text-gray-500 leading-relaxed">

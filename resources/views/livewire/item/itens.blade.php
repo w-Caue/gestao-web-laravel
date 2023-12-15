@@ -1,6 +1,6 @@
 <div>
 
-    <div class="flex justify-between flex-wrap mb-4 m-7">
+    <div class="flex justify-between flex-wrap my-2 mx-7">
         <div class="mb-4 md:mb-0">
             <label for="table-search" class="sr-only">Pesquisa</label>
             <div class="relative mt-1">
@@ -17,8 +17,8 @@
             </div>
         </div>
         <button wire:click="novoItem()"
-            class="flex flex-row gap-2 text-gray-600 font-semibold border p-2 rounded-md bg-white hover:bg-gray-50 hover:shadow-lg">
-            <svg class="w-6 h-6 text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            class="flex flex-row gap-2 text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500">
+            <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                 viewBox="0 0 20 20">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M10 5.757v8.486M5.757 10h8.486M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -114,7 +114,8 @@
                 <h1 class="text-xl font-semibold text-center m-3">Item</h1>
 
                 <div class="flex justify-center m-2">
-                    <form wire:submit.prevent="{{ $form->itemId ? 'update()' : 'save()' }}" class="w-full max-w-2xl font-semibold">
+                    <form wire:submit.prevent="{{ $form->itemId ? 'update()' : 'save()' }}"
+                        class="w-full max-w-2xl font-semibold">
                         <div class="flex flex-wrap mb-2 md:mb-3">
                             <div class="w-full px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -172,12 +173,18 @@
                         </div>
                         <div class="my-5 ml-4">
                             <a wire:click="precificacao"
-                                class="text-gray-700 bg-white font-semibold p-3 border-2 rounded shadow-lg hover:text-white hover:bg-blue-500 hover:border-blue-500 cursor-pointer">
+                                class="flex flex-row gap-2 w-40 text-white font-semibold border p-2 rounded-md bg-green-500 transition-all duration-300 hover:scale-95 hover:bg-green-600 cursor-pointer">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+
                                 Precificação
                             </a>
                             <div class="flex justify-center">
                                 <button type="submit"
-                                    class="mt-4 text-white bg-blue-500 font-semibold p-2 border rounded">
+                                    class="flex flex-row gap-2 text-white font-semibold border p-3 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 cursor-pointer">
                                     {{ $form->itemId ? 'Salvar' : 'Cadastrar' }}
 
                                 </button>

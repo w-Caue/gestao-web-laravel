@@ -98,6 +98,9 @@ class ContasPagar extends Component
 
     public function criarDocumento()
     {
+        $this->valorDocumento = str_replace(',','.', $this->valorDocumento);
+        $this->valorDocumento = floatval($this->valorDocumento);
+
         Conta::create([
             'cliente_id' => $this->clienteDocumento->id,
             'descricao' => $this->descricao,

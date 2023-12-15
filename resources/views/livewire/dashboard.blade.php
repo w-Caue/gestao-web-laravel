@@ -1,8 +1,8 @@
 <div>
     <div class="flex flex-wrap gap-2 mt-2 mx-12">
         <a href="{{ route('clientes') }}"
-            class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:w-56 hover:bg-gray-100 cursor-pointer ">
-            <div class="border p-4 m-2 rounded-full bg-purple-500">
+            class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:w-56 hover:bg-gray-100 cursor-pointer dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-600">
+            <div class="border p-4 m-2 rounded-full bg-purple-500 dark:border-none">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-9 h-9 text-white">
                     <path fill-rule="evenodd"
                         d="M8.25 6.75a3.75 3.75 0 117.5 0 3.75 3.75 0 01-7.5 0zM15.75 9.75a3 3 0 116 0 3 3 0 01-6 0zM2.25 9.75a3 3 0 116 0 3 3 0 01-6 0zM6.31 15.117A6.745 6.745 0 0112 12a6.745 6.745 0 016.709 7.498.75.75 0 01-.372.568A12.696 12.696 0 0112 21.75c-2.305 0-4.47-.612-6.337-1.684a.75.75 0 01-.372-.568 6.787 6.787 0 011.019-4.38z"
@@ -13,14 +13,14 @@
 
             </div>
             <div class="flex flex-col justify-between p-4 leading-normal">
-                <h5 class="mb-2 text-xl font-bold tracking-tight text-purple-500">Clientes</h5>
+                <h5 class="mb-2 text-xl font-bold tracking-tight text-purple-500 dark:text-gray-300">Clientes</h5>
                 <p class="mb-1 text-center text-xl font-semibold text-purple-500">{{ $clientes }}</p>
             </div>
         </a>
 
         <a href="{{ route('pedidos') }}"
-            class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:w-72 hover:bg-gray-100 cursor-pointer ">
-            <div class="border p-4 m-2 rounded-full bg-blue-500">
+            class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:w-72 hover:bg-gray-100 cursor-pointer dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-600">
+            <div class="border p-4 m-2 rounded-full bg-blue-500 dark:border-none">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-9 h-9 text-white">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -29,14 +29,14 @@
 
             </div>
             <div class="flex flex-col justify-between p-4 leading-normal">
-                <h5 class="mb-2 text-xl font-bold tracking-tight text-blue-500">Pedidos em Aberto</h5>
+                <h5 class="mb-2 text-xl font-bold tracking-tight text-blue-500 dark:text-gray-300">Pedidos em Aberto</h5>
                 <p class="mb-1 text-center text-xl font-semibold text-blue-500">{{ $pedidos }}</p>
             </div>
         </a>
 
         <a href="{{ route('contas') }}"
-            class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:w-72 hover:bg-gray-100 cursor-pointer ">
-            <div class="border p-4 m-2 rounded-full bg-red-500">
+            class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:w-72 hover:bg-gray-100 cursor-pointer dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-600">
+            <div class="border p-4 m-2 rounded-full bg-red-500 dark:border-none">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-11 h-11 text-white">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -45,7 +45,7 @@
 
             </div>
             <div class="flex flex-col justify-between p-4 leading-normal">
-                <h5 class="mb-2 text-xl font-bold tracking-tight text-red-500">Contas Vencidas</h5>
+                <h5 class="mb-2 text-xl font-bold tracking-tight text-red-500 dark:text-gray-300">Contas Vencidas</h5>
                 <p class="mb-1 text-center text-xl font-semibold text-red-500">{{ $contas }}</p>
             </div>
         </a>
