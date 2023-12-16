@@ -5,8 +5,8 @@
             <label for="table-search" class="sr-only">Pesquisa</label>
             <div class="relative mt-1">
                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                    <svg class="w-4 h-4 text-gray-600 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 20 20">
+                    <svg class="w-4 h-4 text-gray-600 dark:text-white" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                     </svg>
@@ -33,7 +33,7 @@
             </label>
         </div>
 
-        <button wire:click="novoCliente()"
+        <button x-data x-on:click="$dispatch('open-modal')"
             class="flex flex-row gap-2 text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 dark:border-none">
             <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                 viewBox="0 0 20 18">
@@ -47,7 +47,7 @@
 
     <div class="mx-7 relative overflow-x-auto shadow-md rounded-lg">
         <table class="w-full text-sm text-left text-gray-500 dark:text-white">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:text-white dark:bg-gray-600">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:text-white dark:bg-gray-700">
                 <tr>
                     <th scope="col" class="px-6 py-3">
                         #
@@ -69,11 +69,14 @@
             </thead>
             <tbody>
                 @foreach ($clientes as $cliente)
-                    <tr class="bg-white border-b hover:bg-gray-50 dark:text-gray-100 dark:bg-gray-500">
-                        <th scope="row" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-gray-200">
+                    <tr
+                        class="bg-white border-b hover:bg-gray-50 dark:text-gray-100 dark:bg-gray-500 dark:hover:bg-gray-600 dark:border-gray-400">
+                        <th scope="row"
+                            class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-gray-200">
                             {{ $cliente->id }}
                         </th>
-                        <th scope="row" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-gray-200">
+                        <th scope="row"
+                            class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-gray-200">
                             {{ $cliente->nome }}
                         </th>
                         <td class="px-6 py-3 ">
@@ -91,13 +94,14 @@
                         </td>
 
                         <td class="px-6 py-3 text-right">
-                            <button wire:click="edit({{ $cliente->id }})" class="p-1 border rounded bg-blue-500 dark:border-none">
-                                <span class="text-md font-semibold text-white">Editar</span>
+                            <button wire:click="edit({{ $cliente->id }})"
+                                class=" text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 dark:border-none">
+                                <span>Editar</span>
                             </button>
 
                             <button wire:click.prevent="remover({{ $cliente->id }})"
-                                class="p-1 border rounded bg-red-500 dark:border-none">
-                                <span class="text-md font-semibold text-white">Deletar</span>
+                                class="text-white font-semibold border p-2 rounded-md bg-red-500 transition-all duration-300 hover:scale-95 hover:bg-red-600 dark:border-none">
+                                <span>Deletar</span>
                             </button>
                         </td>
 
@@ -111,44 +115,123 @@
         {{ $clientes->links('layouts.paginate') }}
     </div>
 
+    <x-modal-web title="Cliente">
+        @slot('body')
+            <div class="m-2 flex justify-center">
+                <form wire:submit.prevent="{{ $form->clienteId ? 'update()' : 'save()' }}"
+                    class="w-full max-w-2xl font-semibold">
+                    <div class="w-full px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white"
+                            for="grid-first-name">
+                            Nome
+                        </label>
+                        <input wire:model="form.nome"
+                            class="appearance-none block w-full bg-white text-gray-700 border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:bg-gray-300"
+                            id="grid-first-name" type="text" placeholder="">
+
+                    </div>
+
+                    <div class="w-full px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white"
+                            for="grid-first-name">
+                            Email
+                        </label>
+                        <input wire:model="form.email"
+                            class="appearance-none block w-full bg-white text-gray-700 border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:bg-gray-300"
+                            id="grid-first-name" type="text" placeholder="">
+
+                    </div>
+
+                    <div class="flex gap-7 items-center ml-3">
+                        <div class="flex flex-wrap -mx-3 m-4">
+                            <div class="w-full px-3">
+                                <label
+                                    class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white"
+                                    for="grid-first-name">
+                                    Whatsapp
+                                </label>
+                                <input wire:model="form.whatsapp"
+                                    class="appearance-none block w-full bg-white text-gray-700 border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:bg-gray-300"
+                                    id="grid-first-name" type="text" placeholder="">
+
+                            </div>
+                        </div>
+
+                        <div class="flex -mx-3 mb-4">
+                            <label for="countries"
+                                class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white">
+                                <span>Tipo</span>
+
+                                <div class="flex flex-wrap gap-3">
+                                    <label for="">
+                                        <input wire:model.live="form.tipo"
+                                            class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-gray-300 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] checked:border-primary checked:bg-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ml-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ml-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent dark:border-gray-400 dark:checked:border-primary dark:checked:bg-primary dark:focus:before:shadow-[0px_0px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca]"
+                                            type="checkbox" value="Empresa" id="checkboxChecked" />
+                                        <span class="text-gray-600 text-sm dark:text-gray-300">Empresa</span>
+                                    </label>
+                                </div>
+                                @error('form.tipo')
+                                    <span class="error">{{ $message }}</span>
+                                @enderror
+                            </label>
+                        </div>
+
+                    </div>
+
+                    <div class="mb-3 ">
+                        <div class="flex justify-center">
+                            <button type="submit"
+                                class="flex flex-row gap-2 text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 dark:border-none">
+                                Salvar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        @endslot
+    </x-modal-web>
+
     @if ($newCliente)
         <div class="flex justify-center ">
-            <div class="fixed top-11 w-80 bg-gray-50 border shadow-2xl rounded-lg sm:top-28 sm:w-1/2 ">
+            <div
+                class="fixed top-11 w-80 bg-gray-50 border shadow-2xl rounded-lg sm:top-28 sm:w-1/2 dark:bg-gray-600 dark:border-gray-400">
 
                 <div>
                     <button wire:click="fecharCliente()"
-                        class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500">
+                        class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500 dark:text-white">
                         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                         </svg>
                     </button>
                 </div>
 
-                <h1 class="text-xl font-semibold text-center m-3">Cliente</h1>
+                <h1 class="text-xl font-semibold text-center m-3 dark:text-white">Cliente</h1>
 
                 <div class="m-2 flex justify-center">
                     <form wire:submit.prevent="{{ $form->clienteId ? 'update()' : 'save()' }}"
                         class="w-full max-w-2xl font-semibold">
                         <div class="w-full px-3">
-                            <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2"
+                            <label
+                                class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white"
                                 for="grid-first-name">
                                 Nome
                             </label>
                             <input wire:model="form.nome"
-                                class="appearance-none block w-full bg-white text-gray-700 border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                                class="appearance-none block w-full bg-white text-gray-700 border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:bg-gray-300"
                                 id="grid-first-name" type="text" placeholder="">
 
                         </div>
 
                         <div class="w-full px-3">
-                            <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2"
+                            <label
+                                class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white"
                                 for="grid-first-name">
                                 Email
                             </label>
                             <input wire:model="form.email"
-                                class="appearance-none block w-full bg-white text-gray-700 border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                                class="appearance-none block w-full bg-white text-gray-700 border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:bg-gray-300"
                                 id="grid-first-name" type="text" placeholder="">
 
                         </div>
@@ -156,20 +239,21 @@
                         <div class="flex gap-7 items-center ml-3">
                             <div class="flex flex-wrap -mx-3 m-4">
                                 <div class="w-full px-3">
-                                    <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2"
+                                    <label
+                                        class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white"
                                         for="grid-first-name">
                                         Whatsapp
                                     </label>
                                     <input wire:model="form.whatsapp"
-                                        class="appearance-none block w-full bg-white text-gray-700 border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                                        class="appearance-none block w-full bg-white text-gray-700 border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:bg-gray-300"
                                         id="grid-first-name" type="text" placeholder="">
-        
+
                                 </div>
                             </div>
 
                             <div class="flex -mx-3 mb-4">
                                 <label for="countries"
-                                    class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2">
+                                    class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white">
                                     <span>Tipo</span>
 
                                     <div class="flex flex-wrap gap-3">
@@ -177,7 +261,7 @@
                                             <input wire:model.live="form.tipo"
                                                 class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-gray-300 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] checked:border-primary checked:bg-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ml-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ml-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent dark:border-gray-400 dark:checked:border-primary dark:checked:bg-primary dark:focus:before:shadow-[0px_0px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca]"
                                                 type="checkbox" value="Empresa" id="checkboxChecked" />
-                                            <span class="text-gray-600 text-sm">Empresa</span>
+                                            <span class="text-gray-600 text-sm dark:text-gray-300">Empresa</span>
                                         </label>
                                     </div>
                                     @error('form.tipo')
@@ -191,7 +275,7 @@
                         <div class="mb-3 ">
                             <div class="flex justify-center">
                                 <button type="submit"
-                                    class="p-2 border rounded text-md font-semibold border-gray-300 bg-white hover:shadow-xl hover:text-white hover:bg-blue-500 hover:border-blue-500">
+                                    class="flex flex-row gap-2 text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 dark:border-none">
                                     Salvar
                                 </button>
                             </div>
@@ -201,5 +285,6 @@
             </div>
         </div>
     @endif
+
 
 </div>

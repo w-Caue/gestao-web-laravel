@@ -4,6 +4,7 @@ namespace App\Livewire\Cliente;
 
 use App\Livewire\Forms\ClienteForm;
 use App\Models\Cliente;
+use App\Traits\WithModal;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -19,6 +20,7 @@ class Clientes extends Component
     public $search = '';
 
     public $newCliente = false;
+    public $nome;
 
     public $clienteId;
     public $tipo = 'Cliente';
@@ -45,7 +47,7 @@ class Clientes extends Component
     {
         $this->form->save();
 
-        $this->fecharCliente();
+        $this->dispatch('close-modal');
 
         $this->alert('success', 'Cliente Cadastrado', [
             'position' => 'center',
@@ -57,7 +59,9 @@ class Clientes extends Component
 
     public function edit(Cliente $cliente)
     {
-        $this->novoCliente();
+        $this->nome = $cliente->nome;
+
+        $this->dispatch('open-modal');
 
         $this->form->edit($cliente);
     }
