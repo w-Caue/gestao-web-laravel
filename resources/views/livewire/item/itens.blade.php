@@ -97,8 +97,8 @@
     </div>
 
     @if ($newItem)
-        <div class="flex justify-center">
-            <div class="fixed top-11 w-80 bg-gray-50 border shadow-2xl rounded-lg sm:top-14 sm:w-1/2">
+        <div class="flex justify-center ">
+            <div class="fixed top-11 w-80 bg-gray-50 border shadow-2xl rounded-lg sm:top-14 sm:w-1/2 ">
 
                 <div>
                     <button wire:click="fecharItem()"

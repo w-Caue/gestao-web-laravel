@@ -20,7 +20,7 @@ class Clientes extends Component
     public $search = '';
 
     public $newCliente = false;
-    public $nome;
+    public $meunome;
 
     public $clienteId;
     public $tipo = 'Cliente';
@@ -54,16 +54,17 @@ class Clientes extends Component
             'timer' => 2000,
             'toast' => false,
             'text' => 'com sucesso',
-           ]);
+        ]);
     }
 
     public function edit(Cliente $cliente)
     {
-        $this->nome = $cliente->nome;
+        $this->form->edit($cliente);
+ 
+        $this->meunome = $cliente->nome;
+        // dd($this->nome);
 
         $this->dispatch('open-modal');
-
-        $this->form->edit($cliente);
     }
 
     public function update()
@@ -77,13 +78,14 @@ class Clientes extends Component
             'timer' => 2000,
             'toast' => false,
             'text' => 'com sucesso',
-           ]);
+        ]);
     }
 
-    public function remover(Cliente $cliente){
+    public function remover(Cliente $cliente)
+    {
         $this->clienteId = $cliente->id;
 
-        $this->alert('info','Deletar o Cadastro Desse Cliente?', [
+        $this->alert('info', 'Deletar o Cadastro Desse Cliente?', [
             'position' => 'center',
             'timer' => 5000,
             'toast' => false,
@@ -95,10 +97,11 @@ class Clientes extends Component
             'onDismissed' => '',
             'cancelButtonText' => 'Cancelar',
             'confirmButtonText' => 'Deletar',
-           ]);
+        ]);
     }
 
-    public function delete(){
+    public function delete()
+    {
 
         Cliente::where('id', $this->clienteId)->update([
             'status' => 'Deletado'
@@ -113,9 +116,9 @@ class Clientes extends Component
 
     public function render()
     {
-        $clientes = Cliente::where('nome', 'like', '%'. $this->search .'%')
-                    ->where('status', 'Ativo')
-                    ->where('tipo', $this->tipo)->paginate(5);
+        $clientes = Cliente::where('nome', 'like', '%' . $this->search . '%')
+            ->where('status', 'Ativo')
+            ->where('tipo', $this->tipo)->paginate(5);
 
         return view('livewire.cliente.clientes', [
             'clientes' => $clientes

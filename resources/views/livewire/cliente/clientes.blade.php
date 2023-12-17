@@ -69,7 +69,7 @@
             </thead>
             <tbody>
                 @foreach ($clientes as $cliente)
-                    <tr
+                    <tr wire:key="{{ $cliente->id }}"
                         class="bg-white border-b hover:bg-gray-50 dark:text-gray-100 dark:bg-gray-500 dark:hover:bg-gray-600 dark:border-gray-400">
                         <th scope="row"
                             class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-gray-200">
@@ -94,7 +94,7 @@
                         </td>
 
                         <td class="px-6 py-3 text-right">
-                            <button wire:click="edit({{ $cliente->id }})"
+                            <button wire:click.prevent="edit({{ $cliente }})"
                                 class=" text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 dark:border-none">
                                 <span>Editar</span>
                             </button>
@@ -115,110 +115,37 @@
         {{ $clientes->links('layouts.paginate') }}
     </div>
 
-    <x-modal-web title="Cliente">
-        @slot('body')
-            <div class="m-2 flex justify-center">
-                <form wire:submit.prevent="{{ $form->clienteId ? 'update()' : 'save()' }}"
-                    class="w-full max-w-2xl font-semibold">
-                    <div class="w-full px-3">
-                        <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white"
-                            for="grid-first-name">
-                            Nome
-                        </label>
-                        <input wire:model="form.nome"
-                            class="appearance-none block w-full bg-white text-gray-700 border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:bg-gray-300"
-                            id="grid-first-name" type="text" placeholder="">
+    <h1 class="text-white">{{$meunome}}</h1>
+    
 
-                    </div>
-
-                    <div class="w-full px-3">
-                        <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white"
-                            for="grid-first-name">
-                            Email
-                        </label>
-                        <input wire:model="form.email"
-                            class="appearance-none block w-full bg-white text-gray-700 border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:bg-gray-300"
-                            id="grid-first-name" type="text" placeholder="">
-
-                    </div>
-
-                    <div class="flex gap-7 items-center ml-3">
-                        <div class="flex flex-wrap -mx-3 m-4">
-                            <div class="w-full px-3">
-                                <label
-                                    class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white"
-                                    for="grid-first-name">
-                                    Whatsapp
-                                </label>
-                                <input wire:model="form.whatsapp"
-                                    class="appearance-none block w-full bg-white text-gray-700 border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:bg-gray-300"
-                                    id="grid-first-name" type="text" placeholder="">
-
-                            </div>
-                        </div>
-
-                        <div class="flex -mx-3 mb-4">
-                            <label for="countries"
-                                class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white">
-                                <span>Tipo</span>
-
-                                <div class="flex flex-wrap gap-3">
-                                    <label for="">
-                                        <input wire:model.live="form.tipo"
-                                            class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-gray-300 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] checked:border-primary checked:bg-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ml-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ml-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent dark:border-gray-400 dark:checked:border-primary dark:checked:bg-primary dark:focus:before:shadow-[0px_0px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca]"
-                                            type="checkbox" value="Empresa" id="checkboxChecked" />
-                                        <span class="text-gray-600 text-sm dark:text-gray-300">Empresa</span>
-                                    </label>
-                                </div>
-                                @error('form.tipo')
-                                    <span class="error">{{ $message }}</span>
-                                @enderror
-                            </label>
-                        </div>
-
-                    </div>
-
-                    <div class="mb-3 ">
-                        <div class="flex justify-center">
-                            <button type="submit"
-                                class="flex flex-row gap-2 text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 dark:border-none">
-                                Salvar
-                            </button>
-                        </div>
-                    </div>
-                </form>
+    <div x-data ="{show : false}" x-show ="show" x-cloak x-on:open-modal.window ="show = true"
+        x-on:close-modal.window ="show = false" x-on:keydown.escape.window ="show = false" class="fixed z-50 inset-0"
+        x-transition.duration.200ms>
+        <div x-on:click ="show = false" class="fixed inset-0 bg-gray-900 opacity-40">
+        </div>
+        <div class="bg-white rounded m-auto fixed inset-0 max-w-2xl h-auto dark:bg-gray-600 dark:border-gray-400"
+            style="max-height: 450px">
+            <div class="py-3 flex items-center justify-between mx-3 my-2">
+                <h1 class="text-xl font-semibold text-center dark:text-white">Cliente</h1>
+                <button x-on:click="$dispatch('close-modal')"
+                    class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500 dark:text-white">
+                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                </button>
             </div>
-        @endslot
-    </x-modal-web>
-
-    @if ($newCliente)
-        <div class="flex justify-center ">
-            <div
-                class="fixed top-11 w-80 bg-gray-50 border shadow-2xl rounded-lg sm:top-28 sm:w-1/2 dark:bg-gray-600 dark:border-gray-400">
-
-                <div>
-                    <button wire:click="fecharCliente()"
-                        class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500 dark:text-white">
-                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                        </svg>
-                    </button>
-                </div>
-
-                <h1 class="text-xl font-semibold text-center m-3 dark:text-white">Cliente</h1>
-
+            <div>
                 <div class="m-2 flex justify-center">
-                    <form wire:submit.prevent="{{ $form->clienteId ? 'update()' : 'save()' }}"
-                        class="w-full max-w-2xl font-semibold">
+                    <form wire:submit.prevent="{{ $form->clienteId ? 'update()' : 'save()' }}" class="w-full max-w-2xl font-semibold">
                         <div class="w-full px-3">
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white"
                                 for="grid-first-name">
                                 Nome
                             </label>
-                            <input wire:model="form.nome"
+                            <input wire:model='meunome'
                                 class="appearance-none block w-full bg-white text-gray-700 border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:bg-gray-300"
                                 id="grid-first-name" type="text" placeholder="">
 
@@ -284,7 +211,5 @@
                 </div>
             </div>
         </div>
-    @endif
-
-
+    </div>
 </div>

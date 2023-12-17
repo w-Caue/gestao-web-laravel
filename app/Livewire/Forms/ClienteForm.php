@@ -53,6 +53,8 @@ class ClienteForm extends Form
         } else {
             $this->tipo = false;
         }
+
+        
     }
 
     public function update()
