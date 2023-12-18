@@ -19,19 +19,18 @@ class Clientes extends Component
 
     public $search = '';
 
-    public $newCliente = false;
-    public $meunome;
+    public $mostrarEdicao = false;
 
     public $clienteId;
     public $tipo = 'Cliente';
 
     protected $listeners = [
-        'delete'
+        'delete', 'nome'
     ];
 
     public function novoCliente()
     {
-        $this->newCliente = !$this->newCliente;
+        $this->mostrarEdicao = !$this->mostrarEdicao;
     }
 
     public function fecharCliente()
@@ -40,7 +39,7 @@ class Clientes extends Component
 
         $this->resetValidation();
 
-        $this->newCliente = false;
+        $this->mostrarEdicao = false;
     }
 
     public function save()
@@ -60,18 +59,15 @@ class Clientes extends Component
     public function edit(Cliente $cliente)
     {
         $this->form->edit($cliente);
- 
-        $this->meunome = $cliente->nome;
-        // dd($this->nome);
-
-        $this->dispatch('open-modal');
+        
+        $this->mostrarEdicao = true;
     }
 
     public function update()
     {
         $this->form->update();
 
-        $this->novoCliente();
+        $this->mostrarEdicao = false;
 
         $this->alert('success', 'Cliente Atualizado', [
             'position' => 'center',

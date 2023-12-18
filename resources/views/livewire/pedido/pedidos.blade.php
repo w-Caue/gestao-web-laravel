@@ -11,7 +11,7 @@
                     </svg>
                 </div>
                 <input wire:model.live="search" type="text" id="table-search"
-                    class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg md:w-80 bg-white focus:ring-blue-500 focus:border-blue-500"
+                    class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg md:w-80 bg-white dark:bg-gray-600 dark:text-white"
                     placeholder="Pesquisar Pedido">
             </div>
         </div>
@@ -21,23 +21,23 @@
             <div class="flex gap-1 items-start m-1">
                 <label for="data" class="mb-2 text-lg font-semibold text-gray-600">
                     <input wire:model.lazy="startDate" id="startData" type="date"
-                        class="border border-gray-300 text-gray-600 text-md font-semibold rounded w-36 p-1">
+                        class="border border-gray-300 text-gray-600 text-md font-semibold rounded w-36 p-1 dark:text-white dark:bg-gray-600 dark:border-none">
                 </label>
             </div>
 
-            <span class="font-semibold text-gray-700 text-lg mx-2">á</span>
+            <span class="font-semibold text-gray-700 text-lg mx-2 dark:text-white">á</span>
 
             <div class="flex gap-1 items-start m-1">
                 <label for="data" class="mb-2 text-lg font-semibold text-gray-600">
                     <input wire:model.lazy="endDate" id="endData" type="date"
-                        class="border border-gray-300 text-gray-600 text-md font-semibold rounded w-36 p-1">
+                        class="border border-gray-300 text-gray-600 text-md font-semibold rounded w-36 p-1 dark:text-white dark:bg-gray-600 dark:border-none">
                 </label>
             </div>
         </div>
 
 
         <button wire:click="novoPedido()"
-            class="flex flex-row gap-2 text-white font-semibold border p-3 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500">
+            class="flex flex-row gap-2 text-white font-semibold border p-3 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 dark:border-none">
             <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                 viewBox="0 0 19 20">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -48,8 +48,8 @@
     </div>
 
     <div class="mx-7 relative overflow-x-auto shadow-md rounded-lg">
-        <table class="w-full text-sm text-left text-gray-500">
-            <thead class="text-xs font-semibold text-gray-700 uppercase bg-gray-50">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-white">
+            <thead class="text-xs font-semibold text-gray-700 uppercase bg-gray-50 dark:text-white dark:bg-gray-700">
                 <tr>
                     <th scope="col" class="px-6 py-3 ">
                         #
@@ -83,11 +83,14 @@
             </thead>
             <tbody>
                 @foreach ($pedidos as $pedido)
-                    <tr class="bg-white border-b hover:bg-gray-50">
-                        <th scope="row" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap">
+                    <tr
+                        class="bg-white border-b hover:bg-gray-50 dark:text-gray-100 dark:bg-gray-500 dark:hover:bg-gray-600 dark:border-gray-400">
+                        <th scope="row"
+                            class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{ $pedido->id }}
                         </th>
-                        <th scope="row" class="px-6 py-3 text-center font-semibold  whitespace-nowrap">
+                        <th scope="row"
+                            class="px-6 py-3 text-center font-semibold  whitespace-nowrap dark:text-white">
                             <button wire:click.prevent="detalheCliente({{ $pedido->id }})">
                                 {{ $pedido->cliente->nome }}
                             </button>
@@ -138,11 +141,12 @@
 
     @if ($newPedido)
         <div class="flex justify-center">
-            <div class="fixed top-11 bg-gray-50 border shadow-2xl rounded-lg sm:top-28 sm:w-1/2">
+            <div
+                class="fixed top-11 bg-gray-50 border shadow-2xl rounded-lg sm:top-28 sm:w-1/2 dark:bg-gray-700 dark:border-gray-600">
 
                 <div>
                     <button wire:click="fecharPedido()"
-                        class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500">
+                        class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500 dark:text-white">
                         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -151,7 +155,7 @@
                     </button>
                 </div>
 
-                <h1 class="text-xl font-semibold text-center m-3">Criar Pedido</h1>
+                <h1 class="text-xl font-semibold text-center m-3 dark:text-white">Criar Pedido</h1>
 
                 <form wire:submit.prevent="save()">
                     <div class="flex justify-center">
@@ -160,15 +164,16 @@
                     </div>
 
                     <div class="m-3">
-                        <label for="pagamento" class="block mb-2 text-xl font-semibold text-gray-900 ">Forma de
-                            Pagamento</label>
+                        <label for="pagamento" class="block mb-2 text-xl font-semibold text-gray-900 dark:text-white">
+                            Forma de Pagamento
+                        </label>
                         <select wire:model="formaDePagamento" id="pagamento"
-                            class="bg-white border-2 border-gray-300 text-gray-600 text-md font-semibold rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-44 p-2.5 ">
+                            class="bg-white border-2 border-gray-300 text-gray-600 text-md font-semibold rounded-lg w-44 p-2.5 dark:bg-gray-300">
                             <option selected></option>
 
                             @foreach ($formasPagamentos as $formaPagamento)
                                 <option value="{{ $formaPagamento->id }}"
-                                    class="font-semibold text-md text-gray-600 bg-white">
+                                    class="font-semibold text-md text-gray-600 bg-white dark:bg-gray-300">
                                     {{ $formaPagamento->nome }}</option>
                             @endforeach
 
@@ -177,14 +182,15 @@
 
                     <div class="m-3">
                         <textarea wire:model="descricao" id="message" rows="4"
-                            class="block p-2.5 w-full font-semibold text-md text-gray-600 bg-white rounded-lg border-2 border-gray-300 focus:border-blue-500 "
+                            class="block p-2.5 w-full font-semibold text-md text-gray-600 bg-white rounded-lg border-2 border-gray-300 dark:bg-gray-300"
                             placeholder="Adicione uma descrição..."></textarea>
                     </div>
 
                     <div class="flex justify-center m-4">
                         <button type="submit"
-                            class="p-2 border-2 border-gray-300 rounded text-md font-semibold bg-white hover:shadow-xl hover:text-white hover:bg-blue-500 hover:border-blue-500">Criar
-                            Pedido</button>
+                            class="text-white font-semibold border p-3 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 cursor-pointer dark:border-none">
+                            Criar Pedido
+                        </button>
                     </div>
                 </form>
             </div>
@@ -193,11 +199,13 @@
 
     @if ($showClientes)
         <div class="flex justify-center">
-            <div class="fixed top-11 bg-white border border-gray-300 shadow-2xl rounded-lg sm:top-28 sm:w-1/3">
+            <div
+                class="fixed top-11 bg-white border border-gray-300 shadow-2xl rounded-lg sm:top-28 sm:w-1/3 dark:bg-gray-600 dark:border-gray-500">
 
-                <div>
+                <div class="flex justify-between m-3 dark:text-white">
+                    <h1 class="text-xl font-semibold text-center">Clientes</h1>
                     <button wire:click="visualizarClientes()"
-                        class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500">
+                        class="p-1 border rounded hover:text-white hover:bg-red-500">
                         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -206,14 +214,14 @@
                     </button>
                 </div>
 
-                <h1 class="text-xl font-semibold text-center m-3">Clientes</h1>
+
 
                 <div class="flex justify-center items-center m-4 gap-1">
                     <input wire:model.live="search" type="text" id="table-search"
-                        class="p-2 text-sm text-gray-900 border border-gray-200 rounded w-80 focus:ring-gray-100 focus:border-gray-100"
+                        class="p-2 text-md font-semibold text-gray-900 border border-gray-200 rounded w-80 focus:ring-gray-100 focus:border-gray-100 dark:bg-gray-300 dark:border-none"
                         placeholder="Pesquisar Cliente">
 
-                    <button wire:click="pesquisaClientes()" class="p-2 bg-blue-500 rounded">
+                    <button wire:click="pesquisaClientes()" class="text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 cursor-pointer dark:border-none">
                         <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                             fill="none" viewBox="0 0 20 20">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -226,10 +234,10 @@
                     <div class="flex justify-center flex-wrap m-3 overflow-auto h-auto max-h-60">
                         @foreach ($clientes as $cliente)
                             <div wire:click="selecioneCliente({{ $cliente->id }})"
-                                class="m-2 p-2 text-gray-400 shadow border rounded w-44 h-24 hover:bg-gray-100 hover:shadow-xl hover:border-2 cursor-pointer">
-                                <h1 class="text-sm  font-semibold">#{{ $cliente->id }}</h1>
-                                <h1 class="text-lg font-semibold text-gray-500">{{ $cliente->nome }}</h1>
-                                <h1 class="text-sm  font-semibold">{{ $cliente->whatsapp }}</h1>
+                                class="m-2 p-2 text-gray-400 shadow border rounded w-44 h-24 hover:bg-gray-100 hover:shadow-xl hover:border-2 cursor-pointer dark:bg-gray-300 dark:hover:bg-gray-400 dark:border-none">
+                                <h1 class="text-sm  font-semibold dark:text-gray-600">#{{ $cliente->id }}</h1>
+                                <h1 class="text-lg font-semibold text-gray-500 dark:text-gray-700">{{ $cliente->nome }}</h1>
+                                <h1 class="text-sm  font-semibold dark:text-gray-600">{{ $cliente->whatsapp }}</h1>
                             </div>
                         @endforeach
                     </div>
@@ -241,10 +249,10 @@
 
     @if ($showPedido)
         <div class="flex justify-center">
-            <div class="fixed top-11 bg-gray-50 border shadow-2xl rounded-lg sm:top-8 sm:w-1/2">
+            <div class="fixed top-11 bg-gray-50 border shadow-2xl rounded-lg sm:top-8 sm:w-1/2 dark:bg-gray-700 dark:border-none">
                 <div>
                     <button wire:click.prevent="fecharPedido()"
-                        class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500">
+                        class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500 dark:text-white">
                         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -253,23 +261,23 @@
                     </button>
                 </div>
 
-                <h1 class="text-xl font-semibold text-center m-3">Pedido</h1>
+                <h1 class="text-xl font-semibold text-center m-3 dark:text-white">Pedido</h1>
 
                 <form
                     wire:submit.prevent="{{ $telaPedido->status == 'Aberto' ? 'finalizarPedido()' : 'editePedido()' }}">
 
                     <div class="m-3 flex justify-between items-center">
                         <div>
-                            <label for="pagamento" class="block mb-2 text-xl font-semibold text-gray-900 ">Forma de
+                            <label for="pagamento" class="block mb-2 text-xl font-semibold text-gray-900 dark:text-white">Forma de
                                 Pagamento</label>
                             <select wire:model="formaDePagamento" id="pagamento"
                                 @if ($telaPedido->status == 'Concluido') @disabled(true) @endif
-                                class=" bg-white border border-gray-300 text-gray-600 text-md font-semibold rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-44 p-1 ">
+                                class="bg-white border border-gray-300 text-gray-600 text-md font-semibold rounded w-44 p-1 dark:bg-gray-100 dark:border-none">
                                 <option selected></option>
 
                                 @foreach ($formasPagamentos as $formaPagamento)
                                     <option value="{{ $formaPagamento->id }}"
-                                        class="font-semibold text-md text-gray-600 bg-white">
+                                        class="font-semibold text-md text-gray-600">
                                         {{ $formaPagamento->nome }}</option>
                                 @endforeach
 
@@ -279,22 +287,22 @@
                         @if ($telaPedido->status == 'Aberto')
                             <div class="">
                                 <button wire:click.prevent="telaItens()"
-                                    class="p-1 border-2 rounded-md font-semibold bg-white text-gray-700 hover:bg-blue-500 hover:text-white">
+                                    class="text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 cursor-pointer dark:border-none">
                                     Adicionar Itens
                                 </button>
                             </div>
                         @else
                             <div class="">
-                                <label for="status" class="block mb-2 text-lg font-semibold text-gray-900 ">Status
+                                <label for="status" class="block mb-2 text-lg font-semibold text-gray-900 dark:text-white">Status
                                     do Pedido</label>
                                 <select wire:model="status" id="status"
                                     @if ($telaPedido->status == 'Concluido') @disabled(true) @endif
-                                    class=" bg-white border border-gray-300 text-gray-600 text-md font-semibold rounded focus:ring-blue-500 focus:border-blue-500 block w-48 p-1 ">
+                                    class=" bg-white border border-gray-300 text-gray-600 text-md font-semibold rounded w-48 p-1 dark:bg-gray-300">
                                     <option selected></option>
 
                                     @foreach ($statusPedido as $pedidoStatus)
                                         <option value="{{ $pedidoStatus->nome }}"
-                                            class="font-semibold text-md text-gray-600 bg-white">
+                                            class="font-semibold text-md text-gray-600">
                                             {{ $pedidoStatus->nome }}</option>
                                     @endforeach
 
@@ -305,9 +313,9 @@
                     </div>
 
                     <div class="m-3">
-                        <div class="relative overflow-x-auto shadow-md sm:rounded-lg border">
+                        <div class="relative overflow-x-auto shadow-md sm:rounded-lg border dark:border-gray-500">
                             <table class="w-full text-sm text-left">
-                                <thead class="text-xs font-semibold text-gray-800 uppercase bg-gray-100">
+                                <thead class="text-xs font-semibold text-gray-800 uppercase bg-gray-100 dark:text-white dark:bg-gray-700">
                                     <tr>
                                         <th scope="col" class="px-6 py-3">
                                             Nome Item
@@ -333,27 +341,27 @@
                                 </thead>
                                 <tbody class="">
                                     @foreach ($telaPedido->itens as $item)
-                                        <tr class="border-gray-200 font-semibold bg-white">
+                                        <tr class="border-b border-gray-200 font-semibold bg-white dark:text-gray-100 dark:bg-gray-500 dark:hover:bg-gray-600 dark:border-gray-400">
                                             <th scope="row"
-                                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50">
+                                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                                 {{ $item->nome }}
                                             </th>
-                                            <td class="px-6 py-4 bg-white">
+                                            <td class="px-6 py-4">
                                                 {{ $item->descricao }}
                                             </td>
-                                            <td class="px-6 py-4 bg-gray-50">
+                                            <td class="px-6 py-4">
                                                 {{ number_format($item->preco_1, '2', ',') }}
                                             </td>
-                                            <td class="px-6 py-4 bg-white">
+                                            <td class="px-6 py-4">
                                                 {{ $item->pivot->quantidade }}
                                             </td>
-                                            <td class="px-6 py-4 bg-gray-50">
+                                            <td class="px-6 py-4">
                                                 {{ number_format($item->pivot->total, '2', ',') }}
                                             </td>
                                             @if ($telaPedido->status == 'Aberto')
                                                 <td class="px-6 py-4">
                                                     <button wire:click.prevent="removerItem({{ $item->id }})"
-                                                        class="font-semibold text-red-500 cursor-pointer hover:underline">
+                                                        class="text-white font-semibold border p-1 rounded-md bg-red-500 transition-all duration-300 hover:scale-95 hover:bg-red-700 cursor-pointer dark:border-none">
                                                         remover
                                                     </button>
                                                 </td>
@@ -362,10 +370,9 @@
                                     @endforeach
                                 </tbody>
                                 <tfoot>
-                                    <tr class="font-semibold bg-white text-gray-900">
-                                        <th scope="row" class="px-6 py-3 text-base bg-gray-50">Total</th>
-                                        <td colspan="3" class="px-6 py-3"></td>
-                                        <td class="px-6 py-3 bg-gray-50">
+                                    <tr class="font-semibold bg-white text-gray-900 dark:text-gray-100 dark:bg-gray-500">
+                                        <th colspan="4" scope="row" class="px-6 py-3 text-base bg-gray-50 dark:bg-gray-500">Total</th>
+                                        <td class="px-6 py-3 bg-gray-50 dark:bg-gray-500">
                                             <h1 wire:model.live="totalPedido">
                                                 {{ number_format($totalItens, 2, ',') }}</h1>
                                         </td>
@@ -382,21 +389,21 @@
                     <div class="m-3">
                         <textarea wire:model="descricao" id="message" rows="3"
                             @if ($telaPedido->status == 'Concluido') @disabled(true) @endif
-                            class="block p-2.5 w-full font-semibold text-md text-gray-600 bg-white rounded-lg border border-gray-300 focus:border-blue-500 "
+                            class="block p-2.5 w-full font-semibold text-md text-gray-600 bg-white rounded-lg border border-gray-300 dark:bg-gray-100 "
                             placeholder="Adicione uma descrição..."></textarea>
                     </div>
 
                     <div class="flex justify-center m-4 gap-3">
                         @if ($telaPedido->status == 'Finalizado')
                             <button wire:click.prevent="mostrarAutenticacao()"
-                                class="p-2 border rounded text-md font-semibold bg-white hover:shadow-xl hover:text-white hover:bg-yellow-400">
+                                class="text-white font-semibold border p-2 rounded-md bg-indigo-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-600 cursor-pointer dark:border-none">
                                 Autenticar Pedido
                             </button>
                         @endif
 
                         @if ($telaPedido->status != 'Concluido')
                             <button type="submit"
-                                class="p-2 border rounded text-md font-semibold bg-white hover:shadow-xl hover:text-white hover:bg-blue-500">
+                                class="text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 cursor-pointer dark:border-none">
                                 {{ $telaPedido->status == 'Aberto' ? 'Finalizar Pedido' : 'Salvar Pedido' }}
                             </button>
                         @endif
@@ -481,10 +488,11 @@
 
     @if ($showItem)
         <div class="flex justify-center">
-            <div class="fixed top-11 bg-white border shadow-2xl rounded-lg sm:top-11 sm:w-2/3">
-                <div>
+            <div class="fixed top-11 bg-white border shadow-2xl rounded-lg sm:top-11 sm:w-2/3 dark:bg-gray-600">
+                <div class="flex justify-between m-3 dark:text-white">
+                    <h1 class="text-xl font-semibold text-center">Adicione os Itens</h1>
                     <button wire:click="fecharTelaItens()"
-                        class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500">
+                        class="p-1 border rounded hover:text-white hover:bg-red-500">
                         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -492,8 +500,6 @@
                         </svg>
                     </button>
                 </div>
-
-                <h1 class="text-xl font-semibold text-center m-3">Adicione os Itens ao Pedido</h1>
 
                 <div class="flex justify-center items-center m-4 gap-1">
                     <input wire:model.live="search" type="text" id="table-search"
