@@ -55,7 +55,7 @@
 
     <div class="mx-7 relative overflow-x-auto shadow-md rounded-lg">
         <table class="w-full text-sm text-left text-gray-500 dark:text-white">
-            <thead class="text-xs font-semibold text-gray-700 uppercase bg-gray-50 dark:text-white dark:bg-gray-700">
+            <thead class="text-xs font-semibold text-gray-700 uppercase bg-gray-100 dark:text-white dark:bg-gray-700">
                 <tr>
                     <th scope="col" class="px-4 py-3 ">
                         #
@@ -90,7 +90,7 @@
             <tbody>
                 @foreach ($contas as $conta)
                     <tr wire:key="{{ $conta->id }}"
-                        class="border-b {{ $conta->status_documento == 'Pagar' ? 'text-gray-800 bg-blue-50' : 'hover:bg-gray-50 ' }} {{ $conta->status == 'Deletado' ? 'text-white bg-red-400 hover:bg-red-500' : 'bg-white' }}">
+                        class="border-b {{ $conta->status_documento == 'Pagar' ? 'text-gray-800 bg-white hover:bg-gray-50 dark:text-white dark:bg-gray-500 dark:hover:bg-gray-600' : '' }} {{ $conta->status == 'Deletado' ? 'text-white bg-red-400 hover:bg-red-500' : 'dark:text-white dark:bg-gray-500' }}">
                         <th scope="row" class="px-4 py-3 font-semibold whitespace-nowrap">
                             {{ $conta->id }}
                         </th>
@@ -157,7 +157,7 @@
                     @if ($documento == null or $documento->status == 'Ativo')
                         <div class="">
                             <button wire:click.prevent="{{$documento != null ? 'editarDocumento' : 'criarDocumento()'}}"
-                                class="flex flex-row gap-2 text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-blue-600">
+                                class="flex flex-row gap-2 text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-blue-600 dark:border-none">
                                 <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                     fill="none" viewBox="0 0 20 20">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -172,7 +172,7 @@
                         @if ($documento != null and $documento->status != 'Deletado')
                             <div>
                                 <button wire:click.prevent="{{ $documento == null ? '' : 'baixaDocumento()' }} "
-                                    class="flex flex-row gap-2 text-white font-semibold border p-2 rounded-md bg-green-500 transition-all duration-300 hover:scale-95 hover:bg-green-600 {{ $documento == null ? ' opacity-50' : 'opacity-100' }}">
+                                    class="flex flex-row gap-2 text-white font-semibold border p-2 rounded-md bg-green-500 transition-all duration-300 hover:scale-95 hover:bg-green-600 {{ $documento == null ? ' opacity-50' : 'opacity-100' }} dark:border-none">
                                     <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                         fill="none" viewBox="0 0 20 20">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -187,7 +187,7 @@
                         @if ($documento != null and $documento->status == 'Deletado')
                             <div class="">
                                 <button wire:click.prevent="{{ $documento == null ? '' : 'deletarDocumento()' }}"
-                                    class="flex flex-row gap-2 text-white font-semibold border p-2 rounded-md bg-purple-500 transition-all duration-300 hover:scale-95 hover:bg-purple-600{{ $documento == null ? ' opacity-50' : 'opacity-100' }}">
+                                    class="flex flex-row gap-2 text-white font-semibold border p-2 rounded-md bg-purple-500 transition-all duration-300 hover:scale-95 hover:bg-purple-600{{ $documento == null ? ' opacity-50' : 'opacity-100' }} dark:border-none">
                                     <svg class="w-6 h-6 hover:animate-spin" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                         fill="none" viewBox="0 0 18 20">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -200,7 +200,7 @@
                         @else
                             <div class="">
                                 <button wire:click.prevent="{{ $documento == null ? '' : 'deletarDocumento()' }}"
-                                    class="flex flex-row gap-2 text-white font-semibold border p-2 rounded-md bg-red-500 transition-all duration-300 hover:scale-95 hover:bg-red-600 {{ $documento == null ? ' opacity-50' : 'opacity-100' }}">
+                                    class="flex flex-row gap-2 text-white font-semibold border p-2 rounded-md bg-red-500 transition-all duration-300 hover:scale-95 hover:bg-red-600 {{ $documento == null ? ' opacity-50' : 'opacity-100' }} dark:border-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ">
                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -213,14 +213,14 @@
                     </div>
                 </div>
 
-                <form class="m-5 border-2 p-3 rounded bg-white">
+                <form class="m-5 border-2 p-3 rounded bg-white dark:bg-gray-500 dark:border-gray-400">
                     <div class="flex flex-wrap gap-7 mb-2 items-center">
                         <div class="">
-                            <span class="font-semibold text-gray-700">Cliente/Empresa</span>
+                            <span class="font-semibold text-gray-700 dark:text-white">Cliente/Empresa</span>
 
                             <label for="" class="flex gap-1">
                                 <input type="text" value="{{ $clienteDocumento->nome ?? '' }}"
-                                    class="p-2 border-gray-200 rounded text-md text-gray-500 font-semibold shadow-xl">
+                                    class="p-2 border-gray-200 rounded text-md text-gray-500 font-semibold shadow-xl dark:bg-gray-200">
 
                                 <button x-data x-on:click.prevent="$dispatch('open-clientes')" wire:click.prevent="visualizarClientes()"
                                     class="p-2 w-10 rounded text-white bg-blue-500 hover:border-blue-500">
@@ -236,17 +236,17 @@
 
                         <div class="">
                             <label for="decricao" class="flex flex-col">
-                                <span class="font-semibold text-gray-700">Descrição</span>
+                                <span class="font-semibold text-gray-700 dark:text-white">Descrição</span>
                                 <input wire:model="descricao"
-                                    class="p-2 w-full md:w-80 border-gray-200 rounded text-md font-semibold text-gray-600 shadow-xl bg-white">
+                                    class="p-2 w-full md:w-80 border-gray-200 rounded text-md font-semibold text-gray-600 shadow-xl bg-white dark:bg-gray-200">
                             </label>
                         </div>
 
                         <div class="">
                             <label for="data" class="flex flex-col">
-                                <span class="font-semibold text-gray-700">Dt. Lançamento</span>
+                                <span class="font-semibold text-gray-700 dark:text-white">Dt. Lançamento</span>
                                 <input type="date" wire:model="dataLancamento" value=""
-                                    class="p-2 w-36 border-gray-200 rounded text-md font-semibold shadow-xl text-gray-600 bg-white">
+                                    class="p-2 w-36 border-gray-200 rounded text-md font-semibold shadow-xl text-gray-600 bg-white dark:bg-gray-200">
                             </label>
                         </div>
 
@@ -254,9 +254,9 @@
                     <div class="flex flex-wrap gap-5">
                         <div class="">
                             <label for="data" class="flex flex-col">
-                                <span class="font-semibold text-gray-700">Ag. Cobrador</span>
+                                <span class="font-semibold text-gray-700 dark:text-white">Ag. Cobrador</span>
                                 <select type="date" wire:model="agenteCobrador"
-                                    class="p-2 w-32 border-gray-200 rounded text-md font-semibold shadow-xl text-gray-600 bg-white">
+                                    class="p-2 w-32 border-gray-200 rounded text-md font-semibold shadow-xl text-gray-600 bg-white dark:bg-gray-200">
 
                                     <option value=""></option>
 
@@ -271,17 +271,17 @@
 
                         <div class="">
                             <label for="data" class="flex flex-col">
-                                <span class="font-semibold text-gray-700">Dt. Vencimento</span>
+                                <span class="font-semibold text-gray-700 dark:text-white">Dt. Vencimento</span>
                                 <input type="date" wire:model.lazy="dataVencimento"
-                                    class="p-2 w-36 border-gray-200 rounded text-md font-semibold shadow-xl text-gray-600 bg-white">
+                                    class="p-2 w-36 border-gray-200 rounded text-md font-semibold shadow-xl text-gray-600 bg-white dark:bg-gray-200">
                             </label>
                         </div>
 
                         <div class="">
                             <label for="decricao" class="flex flex-col">
-                                <span class="font-semibold text-gray-700">Vl. Documento</span>
+                                <span class="font-semibold text-gray-700 dark:text-white">Vl. Documento</span>
                                 <input wire:model.lazy="valorDocumento" placeholder="R$"
-                                    class="p-2 w-28 border-gray-200 rounded text-md font-semibold text-gray-600 shadow-lg bg-white">
+                                    class="p-2 w-28 border-gray-200 rounded text-md font-semibold text-gray-600 shadow-lg bg-white dark:bg-gray-200">
                             </label>
                         </div>
                     </div>
@@ -312,10 +312,10 @@
 
     @if ($showBaixa)
         <div class="flex justify-center">
-            <div class="fixed top-11 bg-gray-50 border border-gray-300 shadow-2xl rounded-lg sm:top-16 sm:w-1/3">
+            <div class="fixed top-11 bg-gray-50 border border-gray-300 shadow-2xl rounded-lg sm:top-16 sm:w-1/3 dark:bg-gray-600 dark:border-gray-500">
 
-                <div class="flex justify-between items-center m-2">
-                    <h1 class="text-xl font-semibold text-gray-800">Baixa Documento</h1>
+                <div class="flex justify-between items-center m-2 dark:text-white">
+                    <h1 class="text-xl font-semibold">Baixa Documento</h1>
 
                     <button wire:click="baixaDocumento()"
                         class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500">
@@ -330,31 +330,31 @@
                 <div class="m-2 ">
                     <form wire:submit.prevent="confirmarBaixa()">
 
-                        <div class="border p-3 rounded bg-white mb-2">
+                        <div class="border p-3 rounded bg-white mb-2 dark:bg-gray-500 dark:border-none">
                             <div class="mb-2">
                                 <label for="data" class="flex items-center justify-between">
-                                    <span class="font-semibold text-gray-700">Data Vencimento</span>
+                                    <span class="font-semibold text-gray-700 dark:text-white">Data Vencimento</span>
                                     <input type="date" wire:model.lazy="dataVencimento"
                                         @disabled(true)
-                                        class="p-2 w-36 border-gray-200 rounded text-md font-semibold shadow-xl text-gray-600 bg-white">
+                                        class="p-2 w-36 border-gray-200 rounded text-md font-semibold shadow-xl text-gray-600 bg-white dark:bg-gray-200">
                                 </label>
                             </div>
 
                             <div class="mb-2">
                                 <label for="decricao" class="flex items-center justify-between">
-                                    <span class="font-semibold text-gray-700">Data do Pagamento</span>
+                                    <span class="font-semibold text-gray-700 dark:text-white">Data do Pagamento</span>
                                     <input wire:model.lazy="dataPagamento" type="date"
-                                        class="p-2 w-36 border-gray-200 rounded text-md font-semibold text-gray-600 shadow-lg bg-white">
+                                        class="p-2 w-36 border-gray-200 rounded text-md font-semibold text-gray-600 shadow-lg bg-white dark:bg-gray-200">
                                 </label>
                             </div>
                         </div>
 
-                        <div class="border p-3 rounded bg-white mb-2">
+                        <div class="border p-3 rounded bg-white mb-2 dark:bg-gray-500 dark:border-none">
                             <div class="">
                                 <label for="" class="flex items-center justify-between">
-                                    <span class="font-semibold text-gray-700">Forma Pagamento</span>
+                                    <span class="font-semibold text-gray-700 dark:text-white">Forma Pagamento</span>
                                     <select type="date" wire:model="formaPagamento"
-                                        class="p-2 w-44 border-gray-200 rounded text-md font-semibold shadow-lg text-gray-600 bg-white">
+                                        class="p-2 w-44 border-gray-200 rounded text-md font-semibold shadow-lg text-gray-600 bg-white dark:bg-gray-200">
 
                                         <option value=""></option>
 
@@ -369,24 +369,24 @@
 
                             <div class="my-3">
                                 <label for="decricao" class="flex items-center justify-between">
-                                    <span class="font-semibold text-gray-700">Valor a Pagar:</span>
+                                    <span class="font-semibold text-gray-700 dark:text-white">Valor a Pagar:</span>
                                     <input wire:model.lazy="valorDocumento" placeholder="R$"
-                                        class="p-2 w-36 border-gray-200 rounded text-md font-semibold text-gray-600 shadow-lg bg-white">
+                                        class="p-2 w-36 border-gray-200 rounded text-md font-semibold text-gray-600 shadow-lg bg-white dark:bg-gray-200">
                                 </label>
                             </div>
 
                             <div class="">
                                 <label for="decricao" class="flex items-center justify-between">
-                                    <span class="font-semibold text-gray-700">Valor:</span>
+                                    <span class="font-semibold text-gray-700 dark:text-white">Valor:</span>
                                     <input wire:model.lazy="valorPago" placeholder="R$"
-                                        class="p-2 w-36 border-gray-200 rounded text-md font-semibold text-gray-600 shadow-lg bg-white">
+                                        class="p-2 w-36 border-gray-200 rounded text-md font-semibold text-gray-600 shadow-lg bg-white dark:bg-gray-200">
                                 </label>
                             </div>
                         </div>
 
                         <div class="flex justify-center m-5">
                             <button type="submit"
-                                class="flex flex-row gap-2 text-white font-semibold border p-2 rounded-md bg-green-500 transition-all duration-300 hover:scale-95 hover:bg-green-600">
+                                class="text-white font-semibold border p-2 rounded-md bg-green-500 transition-all duration-300 hover:scale-95 hover:bg-green-600 dark:border-none">
                                 Confirma Baixa
                             </button>
                         </div>

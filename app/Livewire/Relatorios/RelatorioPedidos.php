@@ -12,10 +12,12 @@ class RelatorioPedidos extends Component
 {
     use WithPagination;
 
-    public $cliente;
-    public $formaPagamento;
-
     public $mostrarRelatorio;
+
+    public $clientes;
+    public $clienteRelatorio;
+    public $clienteEmpresa;
+    public $formaPagamento;
 
 
     public function mostrarFiltros(){
@@ -27,9 +29,29 @@ class RelatorioPedidos extends Component
      
     }
 
+    public function pesquisaClientes()
+    {
+        $clientes = Cliente::select([
+            'clientes.id',
+            'clientes.nome',
+            'clientes.whatsapp',
+            'clientes.status',
+            'clientes.tipo',
+        ])->where('status', 'Ativo')->get();
+
+        $this->clientes = $clientes;
+    }
+
+    public function selecioneCliente($cliente)
+    {
+        $this->clienteRelatorio = Cliente::where('id', $cliente)->get()->first();
+
+        $this->clienteEmpresa = $this->clienteRelatorio->id;
+    }
+
     public function render()
     {
-        $pedidos = Pedido::where('cliente_id', 'like', '%'. $this->cliente .'%')
+        $pedidos = Pedido::where('cliente_id', 'like', '%'. $this->clienteEmpresa .'%')
                     ->where('forma_pagamento_id', 'like', '%'. $this->formaPagamento .'%')
                     ->paginate(10);
 

@@ -90,7 +90,7 @@
                             {{ $pedido->id }}
                         </th>
                         <th scope="row"
-                            class="px-6 py-3 text-center font-semibold  whitespace-nowrap dark:text-white">
+                            class="px-6 py-3 text-center font-semibold  whitespace-nowrap dark:text-gray-100">
                             <button x-data x-on:click="$dispatch('open-modal')"
                                 wire:click.prevent="detalheCliente({{ $pedido->id }})">
                                 {{ $pedido->cliente->nome }}

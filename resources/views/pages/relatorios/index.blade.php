@@ -7,11 +7,11 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg dark:bg-gray-700">
                 <div class="flex flex-wrap gap-4">
                     <a href="{{ route('relatorio-pedidos') }}"
-                        class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:w-1/3 hover:bg-gray-100 cursor-pointer m-5">
-                        <div class="border p-4 m-2 rounded-full bg-blue-500">
+                        class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:w-1/3 hover:bg-gray-100 cursor-pointer m-5 dark:bg-gray-500 dark:border-none dark:hover:bg-gray-600">
+                        <div class="border p-4 m-2 rounded-full bg-blue-500 dark:border-none">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-9 h-9 text-white">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -20,15 +20,15 @@
 
                         </div>
                         <div class="flex flex-col justify-between p-4 leading-normal">
-                            <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">Pedidos</h5>
-                            <p class="mb-1 font-semibold text-gray-600">Relatorio de todos o seus pedidos</p>
+                            <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Pedidos</h5>
+                            <p class="mb-1 font-semibold text-gray-600 dark:text-gray-300">Relatorio de todos o seus pedidos</p>
 
                         </div>
                     </a>
 
                     <a href="{{ route('relatorio-contas-pagar') }}"
-                        class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:w-1/3 hover:bg-gray-100 cursor-pointer m-5">
-                        <div class="border p-4 m-2 rounded-full bg-red-500">
+                        class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:w-1/3 hover:bg-gray-100 cursor-pointer m-5 dark:bg-gray-500 dark:border-none dark:hover:bg-gray-600">
+                        <div class="border p-4 m-2 rounded-full bg-red-500 dark:border-none">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke-width="1.5" stroke="currentColor" class="w-11 h-11 text-white">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -36,8 +36,8 @@
                             </svg>
                         </div>
                         <div class="flex flex-col justify-between p-4 leading-normal">
-                            <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">Contas a Pagar</h5>
-                            <p class="mb-1 font-semibold text-gray-600">Relatorio de suas contas</p>
+                            <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Contas a Pagar</h5>
+                            <p class="mb-1 font-semibold text-gray-600 dark:text-gray-300">Relatorio de suas contas</p>
 
                         </div>
                     </a>
