@@ -83,7 +83,7 @@
             </thead>
             <tbody>
                 @foreach ($pedidos as $pedido)
-                    <tr
+                    <tr wire:key="{{ $pedido->id }}"
                         class="bg-white border-b hover:bg-gray-50 dark:text-gray-100 dark:bg-gray-500 dark:hover:bg-gray-600 dark:border-gray-400">
                         <th scope="row"
                             class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -91,7 +91,8 @@
                         </th>
                         <th scope="row"
                             class="px-6 py-3 text-center font-semibold  whitespace-nowrap dark:text-white">
-                            <button wire:click.prevent="detalheCliente({{ $pedido->id }})">
+                            <button x-data x-on:click="$dispatch('open-modal')"
+                                wire:click.prevent="detalheCliente({{ $pedido->id }})">
                                 {{ $pedido->cliente->nome }}
                             </button>
                         </th>
@@ -139,6 +140,24 @@
         {{ $pedidos->links('layouts.paginate') }}
     </div>
 
+    <x-clientes>
+        @slot('body')
+            @if ($clientes)
+                <div class="flex justify-center flex-wrap m-3 overflow-auto h-auto max-h-60">
+                    @foreach ($clientes as $cliente)
+                        <div wire:click="selecioneCliente({{ $cliente->id }})"
+                            class="m-2 p-2 text-gray-400 shadow border rounded w-44 h-24 hover:bg-gray-100 hover:shadow-xl hover:border-2 cursor-pointer dark:bg-gray-300 dark:hover:bg-gray-400 dark:border-none">
+                            <h1 class="text-sm  font-semibold dark:text-gray-600">#{{ $cliente->id }}</h1>
+                            <h1 class="text-lg font-semibold text-gray-500 dark:text-gray-700">
+                                {{ $cliente->nome }}</h1>
+                            <h1 class="text-sm  font-semibold dark:text-gray-600">{{ $cliente->whatsapp }}</h1>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+        @endslot
+    </x-clientes>
+
     @if ($newPedido)
         <div class="flex justify-center">
             <div
@@ -149,8 +168,8 @@
                         class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500 dark:text-white">
                         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                         </svg>
                     </button>
                 </div>
@@ -159,7 +178,7 @@
 
                 <form wire:submit.prevent="save()">
                     <div class="flex justify-center">
-                        <button wire:click.prevent="visualizarClientes()"
+                        <button x-data x-on:click.prevent="$dispatch('open-clientes')"
                             class=" text-white bg-blue-500 p-2 border-blue-500 rounded text-md font-semibold hover:shadow-xl hover:bg-blue-600">{{ $clientePedido->nome ?? 'Selecione Um Cliente' }}</button>
                     </div>
 
@@ -197,59 +216,10 @@
         </div>
     @endif
 
-    @if ($showClientes)
-        <div class="flex justify-center">
-            <div
-                class="fixed top-11 bg-white border border-gray-300 shadow-2xl rounded-lg sm:top-28 sm:w-1/3 dark:bg-gray-600 dark:border-gray-500">
-
-                <div class="flex justify-between m-3 dark:text-white">
-                    <h1 class="text-xl font-semibold text-center">Clientes</h1>
-                    <button wire:click="visualizarClientes()"
-                        class="p-1 border rounded hover:text-white hover:bg-red-500">
-                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                        </svg>
-                    </button>
-                </div>
-
-
-
-                <div class="flex justify-center items-center m-4 gap-1">
-                    <input wire:model.live="search" type="text" id="table-search"
-                        class="p-2 text-md font-semibold text-gray-900 border border-gray-200 rounded w-80 focus:ring-gray-100 focus:border-gray-100 dark:bg-gray-300 dark:border-none"
-                        placeholder="Pesquisar Cliente">
-
-                    <button wire:click="pesquisaClientes()" class="text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 cursor-pointer dark:border-none">
-                        <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                            fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                        </svg>
-                    </button>
-                </div>
-
-                @if ($clientes)
-                    <div class="flex justify-center flex-wrap m-3 overflow-auto h-auto max-h-60">
-                        @foreach ($clientes as $cliente)
-                            <div wire:click="selecioneCliente({{ $cliente->id }})"
-                                class="m-2 p-2 text-gray-400 shadow border rounded w-44 h-24 hover:bg-gray-100 hover:shadow-xl hover:border-2 cursor-pointer dark:bg-gray-300 dark:hover:bg-gray-400 dark:border-none">
-                                <h1 class="text-sm  font-semibold dark:text-gray-600">#{{ $cliente->id }}</h1>
-                                <h1 class="text-lg font-semibold text-gray-500 dark:text-gray-700">{{ $cliente->nome }}</h1>
-                                <h1 class="text-sm  font-semibold dark:text-gray-600">{{ $cliente->whatsapp }}</h1>
-                            </div>
-                        @endforeach
-                    </div>
-                @endif
-
-            </div>
-        </div>
-    @endif
-
     @if ($showPedido)
         <div class="flex justify-center">
-            <div class="fixed top-11 bg-gray-50 border shadow-2xl rounded-lg sm:top-8 sm:w-1/2 dark:bg-gray-700 dark:border-none">
+            <div
+                class="fixed top-11 bg-gray-50 border shadow-2xl rounded-lg sm:top-8 sm:w-1/2 dark:bg-gray-700 dark:border-gray-600">
                 <div>
                     <button wire:click.prevent="fecharPedido()"
                         class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500 dark:text-white">
@@ -268,7 +238,8 @@
 
                     <div class="m-3 flex justify-between items-center">
                         <div>
-                            <label for="pagamento" class="block mb-2 text-xl font-semibold text-gray-900 dark:text-white">Forma de
+                            <label for="pagamento"
+                                class="block mb-2 text-xl font-semibold text-gray-900 dark:text-white">Forma de
                                 Pagamento</label>
                             <select wire:model="formaDePagamento" id="pagamento"
                                 @if ($telaPedido->status == 'Concluido') @disabled(true) @endif
@@ -293,7 +264,8 @@
                             </div>
                         @else
                             <div class="">
-                                <label for="status" class="block mb-2 text-lg font-semibold text-gray-900 dark:text-white">Status
+                                <label for="status"
+                                    class="block mb-2 text-lg font-semibold text-gray-900 dark:text-white">Status
                                     do Pedido</label>
                                 <select wire:model="status" id="status"
                                     @if ($telaPedido->status == 'Concluido') @disabled(true) @endif
@@ -315,7 +287,8 @@
                     <div class="m-3">
                         <div class="relative overflow-x-auto shadow-md sm:rounded-lg border dark:border-gray-500">
                             <table class="w-full text-sm text-left">
-                                <thead class="text-xs font-semibold text-gray-800 uppercase bg-gray-100 dark:text-white dark:bg-gray-700">
+                                <thead
+                                    class="text-xs font-semibold text-gray-800 uppercase bg-gray-100 dark:text-white dark:bg-gray-700">
                                     <tr>
                                         <th scope="col" class="px-6 py-3">
                                             Nome Item
@@ -341,7 +314,8 @@
                                 </thead>
                                 <tbody class="">
                                     @foreach ($telaPedido->itens as $item)
-                                        <tr class="border-b border-gray-200 font-semibold bg-white dark:text-gray-100 dark:bg-gray-500 dark:hover:bg-gray-600 dark:border-gray-400">
+                                        <tr
+                                            class="border-b border-gray-200 font-semibold bg-white dark:text-gray-100 dark:bg-gray-500 dark:hover:bg-gray-600 dark:border-gray-400">
                                             <th scope="row"
                                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                                 {{ $item->nome }}
@@ -370,9 +344,10 @@
                                     @endforeach
                                 </tbody>
                                 <tfoot>
-                                    <tr class="font-semibold bg-white text-gray-900 dark:text-gray-100 dark:bg-gray-500">
-                                        <th colspan="4" scope="row" class="px-6 py-3 text-base bg-gray-50 dark:bg-gray-500">Total</th>
-                                        <td class="px-6 py-3 bg-gray-50 dark:bg-gray-500">
+                                    <tr
+                                        class="font-semibold bg-white text-gray-900 dark:text-gray-100 dark:bg-gray-600">
+                                        <th colspan="4" scope="row" class="px-6 py-3 text-base">Total</th>
+                                        <td class="px-6 py-3">
                                             <h1 wire:model.live="totalPedido">
                                                 {{ number_format($totalItens, 2, ',') }}</h1>
                                         </td>
@@ -415,14 +390,16 @@
 
     @if ($showAutenticacao)
         <div class="flex justify-center">
-            <div class="fixed top-11 bg-gray-50 border-2 shadow-xl rounded sm:top-16 sm:w-80">
+            <div
+                class="fixed top-11 bg-gray-50 border-2 shadow-xl rounded sm:top-16 sm:w-80 dark:bg-gray-600 dark:border-none">
 
                 <div class="flex flex-col m-3">
-                    <div class="flex items-center flex-col mb-2">
-                        <label for="pagamento" class="block mb-2 text-xl font-semibold text-gray-900 ">Forma de
+                    <div class="flex items-center m-2">
+                        <label for="pagamento"
+                            class="block mb-2 text-xl font-semibold text-gray-900 dark:text-white">Forma de
                             Pagamento</label>
                         <select wire:model="formaDePagamento" id="pagamento"
-                            class=" bg-gray-50 border border-gray-300 text-gray-600 text-md font-semibold rounded block w-52 p-1 ">
+                            class="bg-gray-50 border border-gray-300 text-gray-600 text-md font-semibold rounded w-32 p-1 dark:bg-gray-200">
                             <option selected></option>
 
                             @foreach ($formasPagamentos as $formaPagamento)
@@ -457,9 +434,9 @@
                         </div>
                     </div> --}}
 
-                    <div class="flex items-center justify-end  gap-1 m-2 mb-3">
+                    <div class="flex items-center justify-between gap-1 m-2 mb-3">
                         <label for="pagamento"
-                            class="block mb-2 text-xl font-semibold text-gray-900 ">Desconto</label>
+                            class="block mb-2 text-xl font-semibold text-gray-900 dark:text-white">Desconto</label>
                         <input wire:model.live="desconto" type="number"
                             class="border-gray-300 bg-gray-50 rounded w-20 text-md font-semibold text-center"
                             value="">
@@ -469,8 +446,9 @@
                         $this->total = $this->totalPedido - $desconto;
                     @endphp
 
-                    <div class="flex justify-end items-center gap-1 m-2">
-                        <label for="pagamento" class="block mb-2 text-xl font-semibold text-gray-900 ">Total do
+                    <div class="flex justify-between items-center gap-1 m-2">
+                        <label for="pagamento"
+                            class="block mb-2 text-xl font-semibold text-gray-900 dark:text-white">Total do
                             Pedido</label>
                         <h1 wire:model.live="totalPedido"
                             class="p-2 border-gray-300 bg-gray-50 rounded w-24 text-md font-semibold text-center"
@@ -480,7 +458,7 @@
 
                 <div class="flex justify-center m-2">
                     <button wire:click.prevent="autenticarPedido()"
-                        class="p-2 border rounded text-md font-semibold">Confirmar</button>
+                        class="text-white font-semibold border p-2 rounded-md bg-indigo-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-700 cursor-pointer dark:border-none">Confirmar</button>
                 </div>
             </div>
         </div>
@@ -488,7 +466,8 @@
 
     @if ($showItem)
         <div class="flex justify-center">
-            <div class="fixed top-11 bg-white border shadow-2xl rounded-lg sm:top-11 sm:w-2/3 dark:bg-gray-600">
+            <div
+                class="fixed top-11 bg-white border shadow-2xl rounded-lg sm:top-11 sm:w-2/3 dark:bg-gray-600 dark:border-none">
                 <div class="flex justify-between m-3 dark:text-white">
                     <h1 class="text-xl font-semibold text-center">Adicione os Itens</h1>
                     <button wire:click="fecharTelaItens()"
@@ -518,7 +497,7 @@
                 <div class="flex justify-center flex-wrap gap-3 m-3 overflow-auto h-auto max-h-80">
                     @foreach ($itens as $item)
                         <div wire:click="quantidadeItem({{ $item->id }})"
-                            class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:w-1/3 hover:bg-gray-100 cursor-pointer">
+                            class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:w-1/3 hover:bg-gray-100 cursor-pointer transition-all hover:scale-95 duration-75 dark:bg-gray-200">
 
                             <div class="flex flex-col justify-between p-4 leading-normal">
                                 <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">{{ $item->nome }}
@@ -534,54 +513,56 @@
         </div>
     @endif
 
-    @if ($clienteDetalhe)
-        <div class="flex justify-center">
-            <div class="fixed top-11 left-14 bg-gray-50 border shadow-xl rounded-lg sm:top-40 sm:w-1/3">
-                <div>
-                    <button wire:click="fecharDetalheCliente()"
-                        class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500">
-                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                        </svg>
-                    </button>
-                </div>
-
-                <h1 class="text-xl font-semibold text-center m-3">Informações do Cliente</h1>
-
-                <div class="m-3 flex flex-wrap gap-2">
-                    <h1 class="text-md font-semibold text-gray-900 bg-gray-300 p-2 rounded">
-                        #{{ $informacoesCliente->id }}
-                    </h1>
-                    <h1 class="text-md font-semibold text-gray-800 bg-gray-100 p-2 rounded w-44">
-                        {{ $informacoesCliente->cliente->nome }}
-                    </h1>
-
-                    <button
-                        class="flex items-center gap-1 text-md font-semibold text-gray-800 bg-gray-100 p-2 rounded w-44 hover:underline hover:text-green-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-whatsapp" viewBox="0 0 16 16">
-                            <path
-                                d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z" />
-                        </svg>
-                        {{ $informacoesCliente->cliente->whatsapp }}
-                    </button>
-
-                    <h1 class="text-md font-semibold text-gray-800 bg-gray-100 p-2 rounded w-52">
-                        {{ $informacoesCliente->cliente->email }}
-                    </h1>
-                </div>
-            </div>
+    {{-- Detalhe do Cliente --}}
+    <div x-data="{ showDtCliente: false }" x-show="showDtCliente" x-cloak x-on:open-modal.window="showDtCliente = true"
+        x-on:close-modal.window="showDtCliente = false" x-on:keydown.escape.window="showDtCliente = false"
+        x-transition.duration.200ms
+        class="fixed top-11 left-14 bg-gray-50 border shadow-xl rounded-lg sm:top-40 sm:w-1/3">
+        <div x-on:click ="showDtCliente = false" class="fixed inset-0">
         </div>
-    @endif
+        <div>
+            <button x-on:click="showDtCliente = false"
+                class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500">
+                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                </svg>
+            </button>
+        </div>
+
+        <h1 class="text-xl font-semibold text-center m-3">Informações do Cliente</h1>
+
+        <div class="m-3 flex flex-wrap gap-2">
+            <h1 class="text-md font-semibold text-gray-900 bg-gray-300 p-2 rounded">
+                #{{ $informacoesCliente->id ?? '' }}
+            </h1>
+            <h1 class="text-md font-semibold text-gray-800 bg-gray-100 p-2 rounded w-44">
+                {{ $informacoesCliente->nome ?? '' }}
+            </h1>
+
+            <button
+                class="flex items-center gap-1 text-md font-semibold text-gray-800 bg-gray-100 p-2 rounded w-44 hover:underline hover:text-green-600">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-whatsapp" viewBox="0 0 16 16">
+                    <path
+                        d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z" />
+                </svg>
+                {{ $informacoesCliente->whatsapp ?? '' }}
+            </button>
+
+            <h1 class="text-md font-semibold text-gray-800 bg-gray-100 p-2 rounded w-52">
+                {{ $informacoesCliente->email ?? '' }}
+            </h1>
+        </div>
+    </div>
 
     @if ($detalheItem)
         <div class="flex justify-center">
-            <div class="fixed top-11 bg-white border shadow-xl rounded-lg sm:top-40 sm:w-80">
+            <div class="fixed top-11 bg-white border shadow-xl rounded-lg sm:top-40 sm:w-80 dark:bg-gray-500">
                 <div>
                     <button wire:click="fecharDetalhe()"
-                        class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500">
+                        class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500 dark:text-white">
                         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -590,7 +571,7 @@
                     </button>
                 </div>
 
-                <h1 class="text-xl font-semibold text-center m-3">Quantidade</h1>
+                <h1 class="text-xl font-semibold text-center m-3 dark:text-white">Quantidade</h1>
 
                 <div class="flex flex-col items-center gap-3 m-3">
                     <input wire:model.lazy="quantidade" type="number"
@@ -598,7 +579,7 @@
                         value="{{ $quantidade }}">
 
                     <button wire:click.prevent="adicionarItem()"
-                        class="p-2 border rounded text-lg font-semibold w-28 hover:text-white hover:bg-blue-500">Salvar</button>
+                        class="text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 cursor-pointer dark:border-none">Salvar</button>
                 </div>
 
             </div>

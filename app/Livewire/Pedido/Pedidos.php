@@ -29,7 +29,7 @@ class Pedidos extends Component
 
     #detalhe do cliente
     public $clienteDetalhe;
-    public $informacoesCliente;
+    public Cliente $informacoesCliente;
 
     #criar pedido
     public $formaDePagamento;
@@ -72,16 +72,12 @@ class Pedidos extends Component
         $this->resetValidation();
         $this->newPedido = false;
         $this->showPedido = false;
+        $this->dispatch('close-clientes');
     }
 
     public function fecharTelaItens()
     {
         $this->showItem = false;
-    }
-
-    public function visualizarClientes()
-    {
-        $this->showClientes = !$this->showClientes;
     }
 
     public function visualizarPedido(Pedido $pedido)
@@ -217,7 +213,7 @@ class Pedidos extends Component
     {
         $this->clientePedido = Cliente::where('id', $cliente)->get()->first();
 
-        $this->visualizarClientes();
+        $this->dispatch('close-clientes');
     }
 
     public function save()
@@ -311,9 +307,7 @@ class Pedidos extends Component
 
     public function detalheCliente(Pedido $pedido)
     {
-        $this->clienteDetalhe = true;
-
-        $this->informacoesCliente = Pedido::where('cliente_id', $pedido->cliente_id)->get()->first();
+        $this->informacoesCliente = Cliente::where('id', $pedido->cliente_id)->get()->first();
     }
 
     public function fecharDetalheCliente()
@@ -332,12 +326,15 @@ class Pedidos extends Component
             ->whereDate('created_at', '<=', $this->endDate)
             ->paginate(5);
 
+        $itens = Item::all();
+
         $formasPagamentos = FormaPagamento::all();
 
         $statusPedido = Status::all();
 
         return view('livewire.pedido.pedidos', [
             'pedidos' => $pedidos,
+            'itens' => $itens,
             'formasPagamentos' => $formasPagamentos,
             'statusPedido' => $statusPedido
         ]);

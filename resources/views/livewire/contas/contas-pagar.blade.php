@@ -6,14 +6,14 @@
                 <label for="table-search" class="sr-only">Pesquisa</label>
                 <div class="relative mt-1">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        <svg class="w-4 h-4 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                             fill="none" viewBox="0 0 20 20">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                         </svg>
                     </div>
                     <input wire:model.live="search" type="text" id="table-search"
-                        class="block p-2 pl-10 text-sm font-semibold text-gray-900 border border-gray-300 rounded-lg md:w-80 bg-white focus:ring-blue-500 focus:border-blue-500"
+                        class="block p-2 pl-10 text-sm font-semibold text-gray-900 border border-gray-300 rounded-lg md:w-80 bg-white focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-none"
                         placeholder="Pesquisar Pedido">
                 </div>
             </div>
@@ -23,7 +23,7 @@
                     <input wire:model.live='status' value="Ativo"
                         class=" h-5 w-5 appearance-none rounded-full border-2 border-solid border-gray-300 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-blue-600 checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s]"
                         type="radio" name="status" id="radioNoLabel01" />
-                    <span class="text-md font-semibold text-gray-500">Á Pagar</span>
+                    <span class="text-md font-semibold text-gray-500 dark:text-white">Á Pagar</span>
                 </label>
 
                 {{-- <label for="">
@@ -37,12 +37,12 @@
                     <input wire:model.live='status' value="Deletado"
                         class=" h-5 w-5 appearance-none rounded-full border-2 border-solid border-gray-300 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-blue-600 checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s]"
                         type="radio" name="status" id="radioNoLabel01" />
-                    <span class="text-md font-semibold text-gray-500">Deletados</span>
+                    <span class="text-md font-semibold text-gray-500 dark:text-white">Deletados</span>
                 </label>
             </div>
 
             <button wire:click.prevent="novoDocumento()"
-                class="flex flex-row gap-2 text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500">
+                class="flex flex-row gap-2 text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 dark:border-none">
                 <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                     viewBox="0 0 20 20">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -54,8 +54,8 @@
     </div>
 
     <div class="mx-7 relative overflow-x-auto shadow-md rounded-lg">
-        <table class="w-full text-sm text-left text-gray-500">
-            <thead class="text-xs font-semibold text-gray-700 uppercase bg-gray-50">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-white">
+            <thead class="text-xs font-semibold text-gray-700 uppercase bg-gray-50 dark:text-white dark:bg-gray-700">
                 <tr>
                     <th scope="col" class="px-4 py-3 ">
                         #
@@ -89,7 +89,7 @@
             </thead>
             <tbody>
                 @foreach ($contas as $conta)
-                    <tr
+                    <tr wire:key="{{ $conta->id }}"
                         class="border-b {{ $conta->status_documento == 'Pagar' ? 'text-gray-800 bg-blue-50' : 'hover:bg-gray-50 ' }} {{ $conta->status == 'Deletado' ? 'text-white bg-red-400 hover:bg-red-500' : 'bg-white' }}">
                         <th scope="row" class="px-4 py-3 font-semibold whitespace-nowrap">
                             {{ $conta->id }}
@@ -138,10 +138,10 @@
     @if ($showDocumento)
         <div class="flex justify-center">
             <div
-                class="fixed top-11 w-80 h-auto bg-gray-50 border shadow-2xl rounded-lg max-h-96 sm:top-28 sm:h-auto sm:w-2/3 overflow-auto">
+                class="fixed top-11 w-80 h-auto bg-gray-50 border shadow-2xl rounded-lg max-h-96 sm:top-28 sm:h-auto sm:w-2/3 overflow-auto dark:bg-gray-600 dark:border-gray-500">
 
-                <div class="flex justify-between items-center m-2">
-                    <h1 class="text-xl font-semibold text-gray-800">Contas a Pagar</h1>
+                <div class="flex justify-between items-center m-2 dark:text-white">
+                    <h1 class="text-xl font-semibold">Contas a Pagar</h1>
 
                     <button wire:click="fecharDocumento()"
                         class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500">
@@ -222,7 +222,7 @@
                                 <input type="text" value="{{ $clienteDocumento->nome ?? '' }}"
                                     class="p-2 border-gray-200 rounded text-md text-gray-500 font-semibold shadow-xl">
 
-                                <button wire:click.prevent="visualizarClientes()"
+                                <button x-data x-on:click.prevent="$dispatch('open-clientes')" wire:click.prevent="visualizarClientes()"
                                     class="p-2 w-10 rounded text-white bg-blue-500 hover:border-blue-500">
 
                                     <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -291,53 +291,24 @@
         </div>
     @endif
 
-    @if ($showClientes)
-        <div class="flex justify-center">
-            <div class="fixed top-11 bg-white border border-gray-300 shadow-2xl rounded-lg sm:top-28 sm:w-1/3">
-
-                <div>
-                    <button wire:click="visualizarClientes()"
-                        class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500">
-                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                        </svg>
-                    </button>
+    {{-- Clientes --}}
+    <x-clientes>
+        @slot('body')
+            @if ($clientes)
+                <div class="flex justify-center flex-wrap m-3 overflow-auto h-auto max-h-60">
+                    @foreach ($clientes as $cliente)
+                        <div wire:click="selecioneCliente({{ $cliente->id }})"
+                            class="m-2 p-2 text-gray-400 shadow border rounded w-44 h-24 hover:bg-gray-100 hover:shadow-xl hover:border-2 cursor-pointer dark:bg-gray-300 dark:hover:bg-gray-400 dark:border-none">
+                            <h1 class="text-sm  font-semibold dark:text-gray-600">#{{ $cliente->id }}</h1>
+                            <h1 class="text-lg font-semibold text-gray-500 dark:text-gray-700">
+                                {{ $cliente->nome }}</h1>
+                            <h1 class="text-sm  font-semibold dark:text-gray-600">{{ $cliente->whatsapp }}</h1>
+                        </div>
+                    @endforeach
                 </div>
-
-                <h1 class="text-xl font-semibold text-center m-3">Clientes</h1>
-
-                <div class="flex justify-center items-center m-4 gap-1">
-                    <input wire:model.live="search" type="text" id="table-search"
-                        class="p-2 text-sm text-gray-900 border border-gray-200 rounded w-80 focus:ring-gray-100 focus:border-gray-100"
-                        placeholder="Pesquisar Cliente">
-
-                    <button wire:click="pesquisaClientes()" class="p-2 bg-blue-500 rounded">
-                        <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                            fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                        </svg>
-                    </button>
-                </div>
-
-                @if ($clientes)
-                    <div class="flex justify-center flex-wrap m-3 overflow-auto h-auto max-h-60">
-                        @foreach ($clientes as $cliente)
-                            <div wire:click="selecioneCliente({{ $cliente->id }})"
-                                class="m-2 p-2 text-gray-400 shadow border rounded w-44 h-24 hover:bg-gray-100 hover:shadow-xl hover:border-2 cursor-pointer">
-                                <h1 class="text-sm  font-semibold">#{{ $cliente->id }}</h1>
-                                <h1 class="text-lg font-semibold text-gray-500">{{ $cliente->nome }}</h1>
-                                <h1 class="text-sm  font-semibold">{{ $cliente->whatsapp }}</h1>
-                            </div>
-                        @endforeach
-                    </div>
-                @endif
-
-            </div>
-        </div>
-    @endif
+            @endif
+        @endslot
+    </x-clientes>
 
     @if ($showBaixa)
         <div class="flex justify-center">
