@@ -91,7 +91,7 @@
                             </label>
                         </div>
 
-                        <span class="font-semibold text-gray-700 text-lg">á</span>
+                        <span class="font-semibold text-gray-700 text-lg dark:text-white">á</span>
 
                         <div class="flex gap-1 items-start m-1">
                             <label for="data" class="mb-2 text-lg font-semibold text-gray-900">
@@ -110,7 +110,7 @@
                             </label>
                         </div>
 
-                        <span class="font-semibold text-gray-700 text-lg">á</span>
+                        <span class="font-semibold text-gray-700 text-lg dark:text-white">á</span>
 
                         <div class="flex gap-1 items-start m-1">
                             <label for="data" class="mb-2 text-lg font-semibold text-gray-900">
