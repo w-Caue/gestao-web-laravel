@@ -13,7 +13,7 @@
                     <div class="flex gap-1 items-start m-3">
                         <label for="cliente" class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
                             <span>Cliente</span>
-                            <input wire:model.live="clienteEmpresa" id="cliente" placeholder="Todos"
+                            <input wire:model.live="cliente" id="cliente" placeholder="Todos" value="{{ $clienteRelatorio->nome ?? '' }}"
                                 class="border border-gray-300 text-gray-900 text-md font-semibold rounded w-44 p-1 dark:bg-gray-300">
                         </label>
 
@@ -32,7 +32,7 @@
 
                             <select wire:model.live="formaPagamento" id="countries"
                                 class="border border-gray-300 text-gray-500 text-md font-semibold rounded w-52 p-1 dark:bg-gray-300">
-                                <option class="text-gray-900 text-md font-semibold" value=" " selected>
+                                <option class="text-gray-900 text-md font-semibold" value="" selected>
                                     Todas
                                 </option>
 
@@ -51,7 +51,7 @@
 
                     <div class="flex gap-1 items-start m-1">
                         <label for="data" class="mb-2 text-lg font-semibold text-gray-900">
-                            <input wire:model.live="startData" id="startData" type="date"
+                            <input wire:model.live="dataInicio" id="startData" type="date"
                                 class="border border-gray-300 text-gray-900 text-md font-semibold rounded w-36 p-1 dark:text-gray-600 dark:bg-gray-300">
                         </label>
                     </div>
@@ -60,14 +60,14 @@
 
                     <div class="flex gap-1 items-start m-1">
                         <label for="data" class="mb-2 text-lg font-semibold text-gray-900">
-                            <input wire:model.live="endData" id="endData" type="date"
+                            <input wire:model.live="dataFinal" id="endData" type="date"
                                 class="border border-gray-300 text-gray-900 text-md font-semibold rounded w-36 p-1 dark:text-gray-600 dark:bg-gray-300">
                         </label>
                     </div>
                 </div>
 
                 <div class="m-3 flex justify-center">
-                    <button wire:click.prevent="visualizarRelatorio()"
+                    <button wire:click.prevent="relatorio()"
                         class="text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-600 dark:border-none">
                         Visualizar Relatório
                     </button>
@@ -92,7 +92,7 @@
                         <span>Imprimir</span>
                     </button>
 
-                    <button wire:click.prevent="mostrarFiltros()"
+                    <button wire:click.prevent="filtros()"
                         class="flex gap-1 p-1 border text-md font-semibold text-gray-700 rounded shadow-xl hover:text-white hover:bg-red-500 dark:text-white">
                         <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                             viewBox="0 0 20 14">
@@ -105,7 +105,7 @@
                 </div>
 
                 <div class="bg-white border overflow-hidden shadow-xl sm:rounded-lg m-2 dark:bg-gray-600">
-                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                    <div class="relative overflow-auto shadow-md sm:rounded-lg h-auto max-h-96">
                         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-white">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:text-white dark:bg-gray-600">
                                 <tr>
@@ -115,17 +115,6 @@
                                     <th scope="col" class="px-4 py-3">
                                         <div class="flex items-center">
                                             Cliente
-                                            <a href="#"><svg class="w-3 h-3 ms-1.5" aria-hidden="true"
-                                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                                    viewBox="0 0 24 24">
-                                                    <path
-                                                        d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
-                                                </svg></a>
-                                        </div>
-                                    </th>
-                                    <th scope="col" class="px-4 py-3">
-                                        <div class="flex items-center">
-                                            Descrição
                                             <a href="#"><svg class="w-3 h-3 ms-1.5" aria-hidden="true"
                                                     xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                                     viewBox="0 0 24 24">
@@ -169,7 +158,7 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="">
                                 @foreach ($pedidos as $pedido)
                                     <tr class="bg-white border-b font-semibold dark:bg-gray-500 dark:text-white">
                                         <th scope="row"
@@ -179,13 +168,10 @@
                                         <td class="px-4 py-2">
                                             {{ $pedido->cliente->nome }}
                                         </td>
-                                        <td class="px-4 py-2">
-                                            {{ $pedido->descricao }}
-                                        </td>
-                                        <td class="px-4 py-2">
+                                        <td class="px-4 py-2 text-center">
                                             {{ $pedido->formaPagamento->nome }}
                                         </td>
-                                        <td class="px-4 py-2">
+                                        <td class="px-4 py-2 text-center">
                                             {{ number_format($pedido->total_pedido, 2, ',') }}
                                         </td>
                                         <td class="px-4 py-2">
@@ -196,8 +182,8 @@
                             </tbody>
                             <tfoot>
                                 <tr class="font-semibold text-gray-900 dark:text-white">
-                                    <th colspan="4" scope="row" class="px-6 py-3 text-base">Total</th>
-                                    <td class="px-6 py-3">00,00</td>
+                                    <th colspan="3" scope="row" class="px-6 py-3 text-base">Total</th>
+                                    <td class="px-6 py-3 text-center">R$ {{ number_format($totais, 2, ',', '.') }}</td>
                                 </tr>
                             </tfoot>
                         </table>

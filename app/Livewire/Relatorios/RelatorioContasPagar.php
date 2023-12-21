@@ -11,7 +11,7 @@ class RelatorioContasPagar extends Component
 {
     public $documentos;
 
-    public $clienteEmpresa = '';
+    public $clienteEmpresa;
     public $agenteCobrador;
     public $status;
     public $startData;
@@ -30,12 +30,17 @@ class RelatorioContasPagar extends Component
     public $dataVencimentoFinal;
 
 
-    public function mount(){
-        $this->dataVencimentoInicio = date('Y-m-d');
-        $this->dataVencimentoFinal = date('Y-m-d');
+    public function mount()
+    {
+        // $this->dataVencimentoInicio = date('m');
+        // $this->dataVencimentoFinal = date('Y-m-d');
     }
 
-    public function mostrarRelatorio()
+    public function fecharRelatorio(){
+        $this->visualizarDocumentos = false;
+    }
+
+    public function relatorio()
     {
         $this->visualizarDocumentos = true;
 
@@ -52,35 +57,28 @@ class RelatorioContasPagar extends Component
             'contas.data_pagamento',
             'contas.valor_documento',
             'contas.valor_pago',
-        ]);
+        ])    #Filtros
+            ->when($this->clienteEmpresa, function ($query) {
+                return $query->where('cliente_id', $this->clienteEmpresa);
+            })
+            ->when($this->agenteCobrador, function ($query) {
+                return $query->where('ag_cobrador_id', $this->agenteCobrador);
+            })
+            ->when($this->dataVencimentoInicio, function ($query) {
+                return $query->whereDate('data_vencimento', '>=', $this->dataVencimentoInicio);
+            })
+            ->when($this->dataVencimentoFinal, function ($query) {
+                return $query->whereDate('data_vencimento', '<=', $this->dataVencimentoFinal);
+            });
 
-
-        if ($this->clienteEmpresa == '') {
-            $documentos->where('status', 'Ativo')->
-                        whereDate('data_vencimento', '>=', $this->dataVencimentoInicio)->
-                        whereDate('data_vencimento', '<=', $this->dataVencimentoFinal);
-            $this->documentos = $documentos->get();
-        } else {
-            $documentos->where('cliente_id', $this->clienteEmpresa);
-            $this->documentos = $documentos->get();
-        }
+        $this->documentos = $documentos->get();
 
         $total = 0;
         foreach ($this->documentos as $key => $value) {
             $total += $value['valor_documento'];
         }
+
         $this->totais = $total;
-
-    }
-
-    public function fecharRelatorio()
-    {
-        $this->visualizarDocumentos = false;
-    }
-
-    public function visualizarClientes()
-    {
-        $this->mostrarClientes = !$this->mostrarClientes;
     }
 
     public function pesquisaClientes()
@@ -102,7 +100,7 @@ class RelatorioContasPagar extends Component
 
         $this->clienteEmpresa = $this->clienteRelatorio->id;
 
-        $this->visualizarClientes();
+        $this->dispatch('close-clientes');
     }
 
     public function render()

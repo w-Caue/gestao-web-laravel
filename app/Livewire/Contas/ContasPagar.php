@@ -93,7 +93,7 @@ class ContasPagar extends Component
     {
         $this->clienteDocumento = Cliente::where('id', $cliente)->get()->first();
 
-        $this->visualizarClientes();
+        $this->dispatch('close-clientes');
     }
 
     public function criarDocumento()

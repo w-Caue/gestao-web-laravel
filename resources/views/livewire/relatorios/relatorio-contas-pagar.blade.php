@@ -1,24 +1,24 @@
 <div>
     <div class="flex justify-center">
-        <div class="border bg-gray-50 rounded-lg shadow-xl flex flex-col w-1/2 m-2">
+        <div class="border bg-gray-50 rounded-lg shadow-xl flex flex-col w-1/2 m-2 dark:bg-gray-700 dark:border-gray-600">
 
-            <div class="m-3 text-gray-600 flex justify-between items-center">
+            <div class="m-3 text-gray-700 flex justify-between items-center dark:text-white">
                 <h1 class="font-bold text-xl">Relatório</h1>
-                <h1 class="font-bold text-xl text-gray-800">Contas a Pagar</h1>
+                <h1 class="font-bold text-xl">Contas a Pagar</h1>
             </div>
 
             <form>
-                <div class="m-3 p-3 border-2 rounded bg-white">
+                <div class="m-3 p-3 border-2 rounded bg-white dark:bg-gray-500 dark:border-gray-400">
 
                     <div class="flex gap-1 items-start m-3">
-                        <label for="cliente" class="mb-2 text-lg font-semibold text-gray-900">
+                        <label for="cliente" class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
                             <span>Cliente/Empresa</span>
                             <input wire:model.live="clienteEmpresa" id="cliente" placeholder="Todos"
-                                class="border border-gray-300 text-gray-700 text-md font-semibold rounded w-44 p-1">
+                                class="border border-gray-300 text-gray-700 text-md font-semibold rounded w-44 p-1 dark:bg-gray-200">
                         </label>
 
-                        <button wire:click.prevent="visualizarClientes()"
-                            class="p-1 border rounded text-white bg-blue-500">
+                        <button x-data x-on:click.prevent="$dispatch('open-clientes')"
+                            class="p-1 border rounded text-white bg-blue-500 dark:border-none">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -28,18 +28,17 @@
                     </div>
 
                     <div class="flex gap-2 flex-wrap m-3">
-                        <label for="countries" class="block mb-2 text-lg font-semibold text-gray-900">
+                        <label for="countries" class="block mb-2 text-lg font-semibold text-gray-900 dark:text-white">
                             <span>Agente Cobrador</span>
 
                             <select wire:model.live="agenteCobrador" id="countries"
-                                class="border border-gray-300 text-gray-500 text-md font-semibold rounded w-52 p-1">
-                                <option class="text-gray-900 text-md font-semibold" value=" " selected>
+                                class="border border-gray-300 text-gray-600 text-md font-semibold rounded w-52 p-1 dark:bg-gray-200">
+                                <option class="text-md font-semibold" value=" " selected>
                                     Todas
                                 </option>
 
                                 @foreach ($agentesCobradores as $agenteCobrador)
-                                    <option class="text-gray-900 text-md font-semibold"
-                                        value="{{ $agenteCobrador->id }}">
+                                    <option class="text-md font-semibold" value="{{ $agenteCobrador->id }}">
                                         {{ $agenteCobrador->nome }}</option>
                                 @endforeach
                             </select>
@@ -80,14 +79,15 @@
                     </div> --}}
                 </div>
 
-                <div class="m-3 p-3 border-2 rounded bg-white flex flex-col gap-2">
+                <div
+                    class="m-3 p-3 border-2 rounded bg-white flex flex-col gap-2 dark:bg-gray-500 dark:border-gray-400">
                     <div class="flex items-center gap-2">
-                        <span class="font-semibold text-gray-800 text-lg">Data Lançamento:</span>
+                        <span class="font-semibold text-gray-800 text-lg dark:text-white">Data Lançamento:</span>
 
                         <div class="flex gap-1 items-start m-1">
                             <label for="data" class="mb-2 text-lg font-semibold text-gray-900">
                                 <input wire:model="startData" id="startData" type="date"
-                                    class="border border-gray-300 text-gray-900 text-md font-semibold rounded w-36 p-1">
+                                    class="border border-gray-300 text-gray-900 text-md font-semibold rounded w-36 p-1 dark:text-gray-600 dark:bg-gray-200">
                             </label>
                         </div>
 
@@ -96,17 +96,17 @@
                         <div class="flex gap-1 items-start m-1">
                             <label for="data" class="mb-2 text-lg font-semibold text-gray-900">
                                 <input wire:model="endData" id="endData" type="date"
-                                    class="border border-gray-300 text-gray-900 text-md font-semibold rounded w-36 p-1">
+                                    class="border border-gray-300 text-gray-900 text-md font-semibold rounded w-36 p-1 dark:text-gray-600 dark:bg-gray-200">
                             </label>
                         </div>
                     </div>
                     <div class="flex items-center gap-2">
-                        <span class="font-semibold text-gray-800 text-lg">Data Vencimento:</span>
+                        <span class="font-semibold text-gray-800 text-lg dark:text-white">Data Vencimento:</span>
 
                         <div class="flex gap-1 items-start m-1">
                             <label for="data" class="mb-2 text-lg font-semibold text-gray-900">
                                 <input wire:model="dataVencimentoInicio" id="startData" type="date"
-                                    class="border border-gray-300 text-gray-900 text-md font-semibold rounded w-36 p-1">
+                                    class="border border-gray-300 text-gray-900 text-md font-semibold rounded w-36 p-1 dark:text-gray-600 dark:bg-gray-200">
                             </label>
                         </div>
 
@@ -115,15 +115,15 @@
                         <div class="flex gap-1 items-start m-1">
                             <label for="data" class="mb-2 text-lg font-semibold text-gray-900">
                                 <input wire:model="dataVencimentoFinal" id="endData" type="date"
-                                    class="border border-gray-300 text-gray-900 text-md font-semibold rounded w-36 p-1">
+                                    class="border border-gray-300 text-gray-900 text-md font-semibold rounded w-36 p-1 dark:text-gray-600 dark:bg-gray-200">
                             </label>
                         </div>
                     </div>
                 </div>
 
                 <div class="m-3 flex justify-center">
-                    <button wire:click.prevent="mostrarRelatorio()"
-                        class="border p-2 rounded shadow-md text-md font-semibold bg-white hover:text-white hover:bg-blue-500 hover:border-blue-500">
+                    <button wire:click.prevent="relatorio()"
+                        class="text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-600 dark:border-none">
                         Visualizar Relatório
                     </button>
                 </div>
@@ -135,11 +135,11 @@
     @if ($visualizarDocumentos)
         <div class="flex justify-center ">
             <div
-                class="fixed top-11 bg-white border shadow-2xl rounded-lg sm:top-11 sm:w-5/6 h-auto max-h-5/6 overflow-auto">
+                class="fixed top-11 bg-white border shadow-2xl rounded-lg sm:top-11 sm:w-5/6 h-auto max-h-5/6 overflow-auto dark:bg-gray-600 dark:border-gray-500">
 
                 <div class="m-1 flex justify-end gap-2">
                     <button
-                        class="p-1 border text-md font-semibold text-gray-500 rounded shadow-xl flex gap-1 hover:bg-gray-50 hover:text-gray-800">
+                        class="flex gap-1 text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-600 dark:border-none">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                             <path fill-rule="evenodd"
                                 d="M7.875 1.5C6.839 1.5 6 2.34 6 3.375v2.99c-.426.053-.851.11-1.274.174-1.454.218-2.476 1.483-2.476 2.917v6.294a3 3 0 003 3h.27l-.155 1.705A1.875 1.875 0 007.232 22.5h9.536a1.875 1.875 0 001.867-2.045l-.155-1.705h.27a3 3 0 003-3V9.456c0-1.434-1.022-2.7-2.476-2.917A48.716 48.716 0 0018 6.366V3.375c0-1.036-.84-1.875-1.875-1.875h-8.25zM16.5 6.205v-2.83A.375.375 0 0016.125 3h-8.25a.375.375 0 00-.375.375v2.83a49.353 49.353 0 019 0zm-.217 8.265c.178.018.317.16.333.337l.526 5.784a.375.375 0 01-.374.409H7.232a.375.375 0 01-.374-.409l.526-5.784a.373.373 0 01.333-.337 41.741 41.741 0 018.566 0zm.967-3.97a.75.75 0 01.75-.75h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75H18a.75.75 0 01-.75-.75V10.5zM15 9.75a.75.75 0 00-.75.75v.008c0 .414.336.75.75.75h.008a.75.75 0 00.75-.75V10.5a.75.75 0 00-.75-.75H15z"
@@ -149,9 +149,9 @@
                     </button>
 
                     <button wire:click.prevent="fecharRelatorio()"
-                        class="flex gap-1 p-1 border text-md font-semibold text-gray-700 rounded shadow-xl hover:text-white hover:bg-red-500">
-                        <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                            fill="currentColor" viewBox="0 0 20 14">
+                        class="flex gap-1 p-1 border text-md font-semibold text-gray-700 rounded shadow-xl hover:text-white hover:bg-red-500 dark:text-white">
+                        <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            viewBox="0 0 20 14">
                             <path
                                 d="M13.606 3.748V2.53a1.542 1.542 0 0 0-.872-1.431 1.352 1.352 0 0 0-1.472.2L6.155 5.552a1.6 1.6 0 0 0 0 2.415l5.108 4.25a1.355 1.355 0 0 0 1.472.2 1.546 1.546 0 0 0 .872-1.428v-1.09a4.721 4.721 0 0 1 3.7 2.868 1.186 1.186 0 0 0 1.08.73 1.225 1.225 0 0 0 1.213-1.286v-1.33a6.923 6.923 0 0 0-5.994-7.133Z" />
                             <path
@@ -160,10 +160,10 @@
                     </button>
                 </div>
 
-                <div class="bg-white border overflow-hidden shadow-xl sm:rounded-lg m-2">
-                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-                            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <div class="bg-white border overflow-hidden shadow-xl sm:rounded-lg m-2 dark:bg-gray-600">
+                    <div class="relative overflow-auto shadow-md sm:rounded-lg h-auto max-h-96">
+                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-white">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:text-white dark:bg-gray-600">
                                 <tr>
                                     <th scope="col" class="px-4 py-3">
                                         ID
@@ -227,8 +227,8 @@
                             </thead>
                             <tbody>
                                 @foreach ($documentos as $documento)
-                                    <tr class="bg-white border-b font-semibold">
-                                        <th scope="row" class="px-4 py-3 text-gray-900 whitespace-nowrap">
+                                    <tr class="bg-white border-b font-semibold dark:bg-gray-500 dark:text-white">
+                                        <th scope="row" class="px-4 py-3 whitespace-nowrap">
                                             {{ $documento->id }}
                                         </th>
                                         <td class="px-4 py-3">
@@ -250,7 +250,7 @@
                                 @endforeach
                             </tbody>
                             <tfoot>
-                                <tr class="font-semibold text-gray-900">
+                                <tr class="font-semibold text-gray-900 dark:text-white">
                                     <th scope="row" colspan="3" class="px-6 py-3 text-base">Total</th>
                                     <td class="px-6 py-3 text-center">R$ {{ number_format($totais, 2, ',', '.') }}</td>
                                 </tr>
@@ -262,51 +262,22 @@
         </div>
     @endif
 
-    @if ($mostrarClientes)
-        <div class="flex justify-center">
-            <div class="fixed top-11 bg-white border border-gray-300 shadow-2xl rounded-lg sm:top-28 sm:w-1/3">
-
-                <div>
-                    <button wire:click="visualizarClientes()"
-                        class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500">
-                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                        </svg>
-                    </button>
+    {{-- Clientes --}}
+    <x-clientes>
+        @slot('body')
+            @if ($clientes)
+                <div class="flex justify-center flex-wrap m-3 overflow-auto h-auto max-h-60">
+                    @foreach ($clientes as $cliente)
+                        <div wire:click="selecioneCliente({{ $cliente->id }})"
+                            class="m-2 p-2 text-gray-400 shadow border rounded w-44 h-24 hover:bg-gray-100 hover:shadow-xl hover:border-2 cursor-pointer dark:bg-gray-300 dark:hover:bg-gray-400 dark:border-none">
+                            <h1 class="text-sm  font-semibold dark:text-gray-600">#{{ $cliente->id }}</h1>
+                            <h1 class="text-lg font-semibold text-gray-500 dark:text-gray-700">
+                                {{ $cliente->nome }}</h1>
+                            <h1 class="text-sm  font-semibold dark:text-gray-600">{{ $cliente->whatsapp }}</h1>
+                        </div>
+                    @endforeach
                 </div>
-
-                <h1 class="text-xl font-semibold text-center m-3">Clientes</h1>
-
-                <div class="flex justify-center items-center m-4 gap-1">
-                    <input wire:model.live="search" type="text" id="table-search"
-                        class="p-2 text-sm text-gray-900 border border-gray-200 rounded w-80 focus:ring-gray-100 focus:border-gray-100"
-                        placeholder="Pesquisar Cliente">
-
-                    <button wire:click="pesquisaClientes()" class="p-2 bg-blue-500 rounded">
-                        <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                            fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                        </svg>
-                    </button>
-                </div>
-
-                @if ($clientes)
-                    <div class="flex justify-center flex-wrap m-3 overflow-auto h-auto max-h-60">
-                        @foreach ($clientes as $cliente)
-                            <div wire:click="selecioneCliente({{ $cliente->id }})"
-                                class="m-2 p-2 text-gray-400 shadow border rounded w-44 h-24 hover:bg-gray-100 hover:shadow-xl hover:border-2 cursor-pointer">
-                                <h1 class="text-sm  font-semibold">#{{ $cliente->id }}</h1>
-                                <h1 class="text-lg font-semibold text-gray-500">{{ $cliente->nome }}</h1>
-                                <h1 class="text-sm  font-semibold">{{ $cliente->whatsapp }}</h1>
-                            </div>
-                        @endforeach
-                    </div>
-                @endif
-
-            </div>
-        </div>
-    @endif
+            @endif
+        @endslot
+    </x-clientes>
 </div>

@@ -1,9 +1,11 @@
 <div class="p-6 lg:p-8 bg-white border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
     {{-- <x-application-logo class="block h-12 w-auto" /> --}}
 
-    <h1 class=" text-2xl font-semibold text-gray-700 dark:text-white">
+    <h1 class="text-2xl font-semibold text-gray-700 dark:text-white">
         Bem vindo ao <span class="font-bold text-indigo-500">Web Gestão!</span>
     </h1>
+
+    
 
     {{-- <p class="mt-6 text-gray-500 leading-relaxed">
         Laravel Jetstream provides a beautiful, robust starting point for your next Laravel application. Laravel is designed

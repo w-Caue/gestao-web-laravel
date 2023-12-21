@@ -53,7 +53,8 @@
                     Web Gestão Sistema
                 </h1>
                 <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-200">
-                    Sistema de gestão completo com cadastro de clientes, produtos e pedidos para vendas. Gerencie suas contas com o Web Gestão
+                    Sistema de gestão completo com cadastro de clientes, produtos e pedidos para vendas. Gerencie suas
+                    contas com o Web Gestão
                 </p>
                 <form class="w-full max-w-md mx-auto">
                     <label for="default-email"
@@ -79,12 +80,16 @@
                     </div>
                 </form>
             </div>
+
             <div
                 class="bg-gradient-to-b from-blue-50 to-transparent dark:from-blue-900 w-full h-full absolute top-0 left-0 z-0">
             </div>
         </section>
-
     </div>
+    <p class="text-gray-300 font-semibold text-center">
+        Desenvolvido por
+        <a href="" class="text-sm text-indigo-500">Code Set7</a>
+    </p>
 </body>
 
 </html>

@@ -123,7 +123,7 @@
 
                         <x-slot name="content">
                             <!-- Account Management -->
-                            <div class="block px-4 py-2 text-xs text-gray-400">
+                            <div class="block px-4 py-2 text-xs">
                                 {{ __('Gerenciar conta') }}
                             </div>
 
@@ -190,6 +190,9 @@
             <x-responsive-nav-link href="{{ route('contas') }}" :active="request()->routeIs('contas')">
                 {{ __('Contas') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('relatorios') }}" :active="request()->routeIs('relatorios')">
+                {{ __('Relatórios') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
@@ -203,7 +206,7 @@
                 @endif
 
                 <div>
-                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
+                    <div class="font-medium text-base text-gray-800 dark:text-white">{{ Auth::user()->name }}</div>
                     <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
                 </div>
             </div>

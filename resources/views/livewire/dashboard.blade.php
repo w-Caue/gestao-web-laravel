@@ -1,7 +1,7 @@
 <div>
-    <div class="flex flex-wrap gap-2 mt-2 mx-12">
+    <div class="flex flex-wrap justify-center gap-2 mt-2 mx-9 sm:justify-start">
         <a href="{{ route('clientes') }}"
-            class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:w-56 hover:bg-gray-100 cursor-pointer dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-600">
+            class="flex flex-col items-center w-56 bg-white border border-gray-200 rounded-lg shadow md:flex-row md:w-56 hover:bg-gray-100 cursor-pointer dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-600">
             <div class="border p-4 m-2 rounded-full bg-purple-500 dark:border-none">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-9 h-9 text-white">
                     <path fill-rule="evenodd"
@@ -19,7 +19,7 @@
         </a>
 
         <a href="{{ route('pedidos') }}"
-            class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:w-72 hover:bg-gray-100 cursor-pointer dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-600">
+            class="flex flex-col items-center w-56 bg-white border border-gray-200 rounded-lg shadow md:flex-row md:w-72 hover:bg-gray-100 cursor-pointer dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-600">
             <div class="border p-4 m-2 rounded-full bg-blue-500 dark:border-none">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-9 h-9 text-white">
@@ -35,7 +35,7 @@
         </a>
 
         <a href="{{ route('contas') }}"
-            class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:w-72 hover:bg-gray-100 cursor-pointer dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-600">
+            class="flex flex-col items-center w-56 bg-white border border-gray-200 rounded-lg shadow md:flex-row md:w-72 hover:bg-gray-100 cursor-pointer dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-600">
             <div class="border p-4 m-2 rounded-full bg-red-500 dark:border-none">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-11 h-11 text-white">
