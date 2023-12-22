@@ -115,7 +115,7 @@
         {{ $clientes->links('layouts.paginate') }}
     </div>
 
-    <div x-data="{ show: false }" x-show="show" x-cloak x-on:open-modal.window="show = true"
+    {{-- <div x-data="{ show: false }" x-show="show" x-cloak x-on:open-modal.window="show = true"
         x-on:close-modal.window="show = false" x-on:keydown.escape.window="show = false" class="fixed z-50 inset-0"
         x-transition.duration.200ms>
         <div x-on:click ="show = false" class="fixed inset-0 bg-gray-900 opacity-40">
@@ -209,7 +209,13 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
+
+    <x-modal-web title="">
+        @slot('body')
+            <h1 class="text-white text-center text-2xl">Rica</h1>
+        @endslot
+    </x-modal-web>
 
     @if ($mostrarEdicao)
         <div class="bg-white rounded m-auto fixed inset-0 max-w-2xl h-auto dark:bg-gray-600 dark:border-gray-400"

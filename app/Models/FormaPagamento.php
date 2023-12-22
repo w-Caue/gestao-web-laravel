@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class FormaPagamento extends Model
 {
     use HasFactory;
+    protected $fillable = ['nome'];
     protected $table = 'formas_pagamentos';
 }

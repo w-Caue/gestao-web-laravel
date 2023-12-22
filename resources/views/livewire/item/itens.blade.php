@@ -212,7 +212,7 @@
                                         <div class="flex flex-col m-4">
 
                                             <div class="flex flex-wrap -mx-3 mb-2 ">
-                                                <div class="w-36 px-3 md:mb-0">
+                                                {{-- <div class="w-36 px-3 md:mb-0">
                                                     <label
                                                         class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white"
                                                         for="grid-city">
@@ -221,7 +221,7 @@
                                                     <input
                                                         class="appearance-none block w-full text-gray-700 border-2 border-gray-300 rounded py-3 px-4 leading-tight focus:outline-none dark:bg-gray-300"
                                                         id="grid-city" type="text" placeholder="" disabled>
-                                                </div>
+                                                </div> --}}
 
 
                                                 <div class="w-44 px-3 md:mb-0">

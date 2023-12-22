@@ -71,4 +71,8 @@ Route::middleware([
         })->name('relatorio-contas-pagar');
 
     });
+
+    Route::get('/configuracao', function () {
+        return view('pages.configuracao.index');
+    })->name('configuracao');
 });

@@ -6,5 +6,5 @@
     </x-slot>
 
     @livewire('Cliente.Clientes')
-    
+
 </x-app-layout>
