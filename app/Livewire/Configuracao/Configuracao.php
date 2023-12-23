@@ -11,7 +11,7 @@ class Configuracao extends Component
     use LivewireAlert;
 
     public $nome;
-    public $formaDePagamentoId;
+    public $formaDePagamento;
 
     public $newFormaPG;
 
@@ -19,19 +19,28 @@ class Configuracao extends Component
     {
         $this->newFormaPG = !$this->newFormaPG;
 
-        $this->reset('nome', 'formaDePagamentoId');
+        $this->reset('nome', 'formaDePagamento');
     }
 
     public function formaPG(FormaPagamento $formaPagamento)
     {
         $this->mostrarForm();
 
-        $this->formaDePagamentoId = $formaPagamento->id;
+        $this->formaDePagamento = $formaPagamento;
         $this->nome = $formaPagamento->nome;
     }
 
     public function save()
     {
+        if ($this->nome == null or $this->nome == '') {
+            $this->alert('error', 'Informe o nome', [
+                'position' => 'center',
+                'timer' => 2000,
+                'toast' => true,
+            ]);
+            return;
+        }
+
         FormaPagamento::create([
             'nome' => $this->nome,
         ]);
@@ -47,7 +56,7 @@ class Configuracao extends Component
 
     public function update()
     {
-        FormaPagamento::findOrFail($this->formaDePagamentoId)->update([
+        FormaPagamento::findOrFail($this->formaDePagamento->id)->update([
             'nome' => $this->nome
         ]);
 
@@ -58,6 +67,35 @@ class Configuracao extends Component
             'timer' => 2000,
             'toast' => true,
         ]);
+    }
+
+    public function deleteRetorno()
+    {
+        if ($this->formaDePagamento->status == 'Deletado') {
+            FormaPagamento::findOrFail($this->formaDePagamento->id)->update([
+                'status' => 'Ativo'
+            ]);
+
+            $this->mostrarForm();
+
+            $this->alert('success', 'Forma de Pagamento Retornada!', [
+                'position' => 'center',
+                'timer' => 2000,
+                'toast' => true,
+            ]);
+        } else {
+            FormaPagamento::findOrFail($this->formaDePagamento->id)->update([
+                'status' => 'Deletado'
+            ]);
+
+            $this->mostrarForm();
+
+            $this->alert('success', 'Forma de Pagamento Deletada!', [
+                'position' => 'center',
+                'timer' => 2000,
+                'toast' => true,
+            ]);
+        }
     }
 
     public function render()
