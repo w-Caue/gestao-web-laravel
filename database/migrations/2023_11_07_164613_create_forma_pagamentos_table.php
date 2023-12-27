@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('formas_pagamentos', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
+            $table->string('status')->default('Ativo');
             $table->timestamps();
         });
     }
