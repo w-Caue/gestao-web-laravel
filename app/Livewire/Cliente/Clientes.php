@@ -15,31 +15,31 @@ class Clientes extends Component
 
     use WithPagination;
 
-    public ClienteForm $form;
+    // public ClienteForm $form;
 
     public $search = '';
 
-    public $mostrarEdicao = false;
-
-    public $clienteId;
+    public $cliente;
+    public $codigoCliente;
     public $tipo = 'Cliente';
 
     protected $listeners = [
         'delete', 'nome'
     ];
 
-    public function novoCliente()
+    public function show(Cliente $cliente)
     {
-        $this->mostrarEdicao = !$this->mostrarEdicao;
+        $this->codigoCliente = $cliente->id;
+
+        $this->pesquisaCliente();
+        $this->dispatch('open-modal');
     }
 
-    public function fecharCliente()
-    {
-        $this->reset('form.nome', 'form.email', 'form.whatsapp', 'form.tipo');
-
-        $this->resetValidation();
-
-        $this->mostrarEdicao = false;
+    function pesquisaCliente(){
+        $this->cliente = Cliente::where('id', '=', $this->codigoCliente)->get()->first();
+        if($this->cliente == null){
+            $this->cliente = new Cliente();
+        }
     }
 
     public function save()
@@ -56,18 +56,9 @@ class Clientes extends Component
         ]);
     }
 
-    public function edit(Cliente $cliente)
-    {
-        $this->form->edit($cliente);
-        
-        $this->mostrarEdicao = true;
-    }
-
     public function update()
     {
         $this->form->update();
-
-        $this->mostrarEdicao = false;
 
         $this->alert('success', 'Cliente Atualizado', [
             'position' => 'center',
@@ -79,7 +70,7 @@ class Clientes extends Component
 
     public function remover(Cliente $cliente)
     {
-        $this->clienteId = $cliente->id;
+        // $this->clienteId = $cliente->id;
 
         $this->alert('info', 'Deletar o Cadastro Desse Cliente?', [
             'position' => 'center',
