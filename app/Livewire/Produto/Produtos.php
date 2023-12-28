@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Item;
+namespace App\Livewire\Produto;
 
 use App\Livewire\Forms\ItemForm;
 use App\Models\Item;
@@ -9,7 +9,7 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class Itens extends Component
+class Produtos extends Component
 {
     use LivewireAlert;
 
@@ -19,13 +19,23 @@ class Itens extends Component
 
     public $search = '';
 
-    public $newItem = false;
+    public $modal = false;
+
+    public $codigoProduto;
 
     public $precoItem = false;
 
-    public function novoItem()
+    public function show(Item $produto)
     {
-        $this->newItem = !$this->newItem;
+        $this->codigoProduto = $produto->id;
+
+        $this->form->pesquisarProduto($produto);
+        $this->modal = true;
+    }
+
+    public function closeModal()
+    {
+        $this->modal = false;
     }
 
     public function precificacao()
@@ -33,18 +43,11 @@ class Itens extends Component
         $this->precoItem = !$this->precoItem;
     }
 
-    public function fecharItem()
-    {
-        $this->reset('form.nome', 'form.decricao', 'form.marca', 'form.unidadeMedida', 'form.vlcusto', 'form.preco1', 'form.preco2');
-
-        $this->newItem = false;
-    }
-
     public function save()
     {
         $this->form->save();
 
-        $this->fecharItem();
+        $this->modal = false;
 
         $this->alert('success', 'Item Cadastrado!', [
             'position' => 'center',
@@ -53,12 +56,12 @@ class Itens extends Component
         ]);
     }
 
-    public function edit(Item $item)
-    {
-        $this->novoItem();
+    // public function edit(Item $item)
+    // {
+    //     $this->novoItem();
 
-        $this->form->edit($item);
-    }
+    //     $this->form->edit($item);
+    // }
 
     public function update()
     {
@@ -75,12 +78,12 @@ class Itens extends Component
 
     public function render()
     {
-        $itens = Item::where('nome', 'like' , '%'.$this->search.'%')->paginate(5);
+        $produtos = Item::where('nome', 'like', '%' . $this->search . '%')->paginate(5);
 
         $unidadeMedidas = UnidadeMedida::all();
 
-        return view('livewire.item.itens', [
-            'itens' => $itens,
+        return view('livewire.produto.produtos', [
+            'produtos' => $produtos,
             'unidadeMedidas' => $unidadeMedidas
         ]);
     }

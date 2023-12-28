@@ -9,16 +9,14 @@ use Livewire\Form;
 class ClienteForm extends Form
 {
 
-    public $clienteId = '';
+    public $codigoCliente = '';
 
     #[Rule('required', message: 'O campo nome tem que ser preenchido!')]
     #[Rule('min:3', message: 'O campo nome tem que ter mais de 3 caracteres!')]
     public $nome = '';
 
-    #[Rule('email', message: 'É necessario colocar um email válido!')]
     public $email = '';
 
-    #[Rule('numeric', message: 'É necessario colocar um número válido!')]
     public $whatsapp = '';
 
     public $tipo;
@@ -41,9 +39,11 @@ class ClienteForm extends Form
         ]);
     }
 
-    public function edit(Cliente $cliente)
+    public function pesquisaCliente(Cliente $cliente)
     {
-        $this->clienteId = $cliente->id;
+
+        $this->codigoCliente = $cliente->id;
+
         $this->nome = $cliente->nome;
         $this->email = $cliente->email;
         $this->whatsapp = $cliente->whatsapp;
@@ -53,7 +53,6 @@ class ClienteForm extends Form
         } else {
             $this->tipo = false;
         }
-
         
     }
 
@@ -67,7 +66,7 @@ class ClienteForm extends Form
             $this->tipo = 'Cliente';
         }
 
-        Cliente::findOrFail($this->clienteId)->update([
+        Cliente::findOrFail($this->codigoCliente)->update([
             'nome' => $this->nome,
             'email' => $this->email,
             'whatsapp' => $this->whatsapp,

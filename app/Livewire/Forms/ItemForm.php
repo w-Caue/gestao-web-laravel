@@ -8,7 +8,7 @@ use Livewire\Form;
 
 class ItemForm extends Form
 {
-    public $itemId;
+    public $codigoProduto;
 
     #[Rule('required|min:3')]
     public $nome = '';
@@ -48,16 +48,16 @@ class ItemForm extends Form
         ]);
     }
 
-    public function edit(Item $item)
+    public function pesquisarProduto(Item $produto)
     {
-        $this->itemId = $item->id;
-        $this->nome = $item->nome;
-        $this->descricao = $item->descricao;
-        $this->marca = $item->marca;
-        $this->unidadeMedida = $item->unidade_medida_id;
-        $this->vlcusto = number_format($item->valor_custo, 2, ',', '');
-        $this->preco1 = number_format($item->preco_1, 2, ',', '');
-        $this->preco2 = number_format($item->preco_2, 2, ',', '');
+        $this->codigoProduto = $produto->id;
+        $this->nome = $produto->nome;
+        $this->descricao = $produto->descricao;
+        $this->marca = $produto->marca;
+        $this->unidadeMedida = $produto->unidade_medida_id;
+        $this->vlcusto = number_format($produto->valor_custo, 2, ',', '');
+        $this->preco1 = number_format($produto->preco_1, 2, ',', '');
+        $this->preco2 = number_format($produto->preco_2, 2, ',', '');
     }
 
     public function update()
@@ -69,7 +69,7 @@ class ItemForm extends Form
         $this->vlcusto = str_replace(',', '.', $this->vlcusto);
         $this->vlcusto = floatval($this->vlcusto);
 
-        Item::findOrFail($this->itemId)->update([
+        Item::findOrFail($this->codigoProduto)->update([
             'nome' => $this->nome,
             'descricao' => $this->descricao,
             'marca' => $this->marca,

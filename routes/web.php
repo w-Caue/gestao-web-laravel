@@ -32,9 +32,9 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('/itens', function () {
-        return view('pages.item.index');
-    })->name('itens');
+    Route::get('/produtos', function () {
+        return view('pages.produto.index');
+    })->name('produtos');
 
     Route::get('/clientes', function () {
         return view('pages.cliente.index');

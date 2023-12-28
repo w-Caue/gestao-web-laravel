@@ -33,7 +33,7 @@
             </label>
         </div>
 
-        <button wire:click="show(0)" x-data x-on:click="$dispatch('open-modal')"
+        <button wire:click="show()"
             class="flex flex-row gap-2 text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 dark:border-none">
             <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                 viewBox="0 0 20 18">
@@ -65,7 +65,8 @@
             </thead>
             <tbody>
                 @foreach ($clientes as $cliente)
-                    <tr wire:key="{{ $cliente->id }}" wire:click.prevent="show({{ $cliente }})"
+                    <tr wire:key="{{ $cliente->id }}" wire:click="show({{ $cliente }})"
+                        wire:click="$dispatch('open-modal')"
                         class="bg-white border-b hover:bg-gray-50 dark:text-gray-100 dark:bg-gray-500 dark:hover:bg-gray-600 dark:border-gray-400 cursor-pointer">
                         <th scope="row"
                             class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-gray-200">
@@ -98,80 +99,114 @@
         {{ $clientes->links('layouts.paginate') }}
     </div>
 
-    <x-modal-web title="Cliente" :javaScript="false" wire:model="show()">
-        @slot('body')
-            <div class="m-2 flex justify-center" >
-                <form wire:submit.prevent="{{ $cliente->id ? 'update()' : 'save()' }}"
-                    class="w-full max-w-2xl font-semibold">
-                    <div class="w-full px-3">
-                        <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white"
-                            for="grid-first-name">
-                            Nome 
-                        </label>
-                        <input wire:model.defer="cliente->nome"
-                            class="appearance-none block w-full bg-white text-gray-700 border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:bg-gray-300"
-                            id="grid-first-name" type="text">
+    @if ($modal)
+        <x-modal-web title="Cliente" wire:model="modal">
 
-                    </div>
+            @slot('body')
+                <button wire:click.prevent="closeModal()"
+                    class=" absolute right-2 top-4 p-1 m-1 border rounded hover:text-white hover:bg-red-500 hover:border-red-500 dark:text-white">
+                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                </button>
 
-                    <div class="w-full px-3">
-                        <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white"
-                            for="grid-first-name">
-                            Email
-                        </label>
-                        <input wire:model="cliente.email"
-                            class="appearance-none block w-full bg-white text-gray-700 border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:bg-gray-300"
-                            id="grid-first-name" type="text" placeholder="">
+                <div class="m-2 flex justify-center">
+                    <form wire:submit.prevent="{{ $form->codigoCliente ? 'update()' : 'save()' }}"
+                        class="w-full max-w-2xl font-semibold">
+                        <div class="w-full px-3">
+                            <label
+                                class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white"
+                                for="grid-first-name">
+                                Nome
+                            </label>
+                            <input wire:model.defer="form.nome"
+                                class="appearance-none block w-full bg-white text-gray-700 border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:bg-gray-300"
+                                id="grid-first-name" type="text">
 
-                    </div>
+                            @error('form.nome')
+                                <span class="error dark:text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
 
-                    <div class="flex gap-7 items-center ml-3">
-                        <div class="flex flex-wrap -mx-3 m-4">
-                            <div class="w-full px-3">
-                                <label
-                                    class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white"
-                                    for="grid-first-name">
-                                    Whatsapp
+                        <div class="w-full px-3">
+                            <label
+                                class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white"
+                                for="grid-first-name">
+                                Email
+                            </label>
+                            <input wire:model.defer="form.email"
+                                class="appearance-none block w-full bg-white text-gray-700 border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:bg-gray-300"
+                                id="grid-first-name" type="text" placeholder="">
+
+                            @error('form.email')
+                                <span class="error">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="flex gap-7 items-center ml-3">
+                            <div class="flex flex-wrap -mx-3 m-4">
+                                <div class="w-full px-3">
+                                    <label
+                                        class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white"
+                                        for="grid-first-name">
+                                        Whatsapp
+                                    </label>
+                                    <input wire:model="form.whatsapp"
+                                        class="appearance-none block w-full bg-white text-gray-700 border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:bg-gray-300"
+                                        id="grid-first-name" type="text" placeholder="">
+
+                                    @error('form.whatsapp')
+                                        <span class="error">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="flex -mx-3 mb-4">
+                                <label for="countries"
+                                    class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white">
+                                    <span>Tipo</span>
+
+                                    <div class="flex flex-wrap gap-3">
+                                        <label for="">
+                                            <input wire:model.live="form.tipo"
+                                                class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-gray-300 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] checked:border-primary checked:bg-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ml-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ml-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent dark:border-gray-400 dark:checked:border-primary dark:checked:bg-primary dark:focus:before:shadow-[0px_0px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca]"
+                                                type="checkbox" value="Empresa" id="checkboxChecked" />
+                                            <span class="text-gray-600 text-sm dark:text-gray-300">Empresa</span>
+                                        </label>
+                                    </div>
+
+                                    @error('form.tipo')
+                                        <span class="error">{{ $message }}</span>
+                                    @enderror
                                 </label>
-                                <input wire:model="cliente.whatsapp"
-                                    class="appearance-none block w-full bg-white text-gray-700 border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:bg-gray-300"
-                                    id="grid-first-name" type="text" placeholder="">
+                            </div>
 
+                        </div>
+
+                        <div class="mb-3 ">
+                            <div class="flex justify-center">
+                                <button type="submit"
+                                    class="flex flex-row gap-2 text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 dark:border-none">
+                                    Salvar
+                                </button>
+
+                                @if ($form->codigoCliente)
+                                    <button wire:click.prevent="remover()"
+                                        class="absolute right-1 text-white font-semibold border p-2 rounded-md bg-red-500 transition-all duration-300 hover:scale-95 hover:bg-red-700 dark:border-none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                        </svg>
+                                    </button>
+                                @endif
                             </div>
                         </div>
-
-                        <div class="flex -mx-3 mb-4">
-                            <label for="countries"
-                                class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white">
-                                <span>Tipo</span>
-
-                                <div class="flex flex-wrap gap-3">
-                                    <label for="">
-                                        <input wire:model.live="cliente.tipo"
-                                            class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-gray-300 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] checked:border-primary checked:bg-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ml-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ml-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent dark:border-gray-400 dark:checked:border-primary dark:checked:bg-primary dark:focus:before:shadow-[0px_0px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca]"
-                                            type="checkbox" value="Empresa" id="checkboxChecked" />
-                                        <span class="text-gray-600 text-sm dark:text-gray-300">Empresa</span>
-                                    </label>
-                                </div>
-                                @error('form.tipo')
-                                    <span class="error">{{ $message }}</span>
-                                @enderror
-                            </label>
-                        </div>
-
-                    </div>
-
-                    <div class="mb-3 ">
-                        <div class="flex justify-center">
-                            <button type="submit"
-                                class="flex flex-row gap-2 text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 dark:border-none">
-                                Salvar
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        @endslot
-    </x-modal-web>
-
+                    </form>
+                </div>
+            @endslot
+        </x-modal-web>
+    @endif
 </div>

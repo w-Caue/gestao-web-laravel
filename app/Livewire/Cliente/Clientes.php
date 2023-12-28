@@ -15,38 +15,38 @@ class Clientes extends Component
 
     use WithPagination;
 
-    // public ClienteForm $form;
+    public ClienteForm $form;
 
     public $search = '';
+    public $modal = false;
 
     public $cliente;
+
     public $codigoCliente;
     public $tipo = 'Cliente';
 
     protected $listeners = [
-        'delete', 'nome'
+        'delete'
     ];
 
     public function show(Cliente $cliente)
     {
         $this->codigoCliente = $cliente->id;
-
-        $this->pesquisaCliente();
-        $this->dispatch('open-modal');
+        $this->form->pesquisaCliente($cliente);
+        $this->modal = true;
     }
 
-    function pesquisaCliente(){
-        $this->cliente = Cliente::where('id', '=', $this->codigoCliente)->get()->first();
-        if($this->cliente == null){
-            $this->cliente = new Cliente();
-        }
+    public function closeModal()
+    {
+        $this->resetValidation();
+        $this->modal = false;
     }
 
     public function save()
     {
         $this->form->save();
 
-        $this->dispatch('close-modal');
+        $this->modal = false;
 
         $this->alert('success', 'Cliente Cadastrado', [
             'position' => 'center',
@@ -60,6 +60,8 @@ class Clientes extends Component
     {
         $this->form->update();
 
+        $this->modal = false;
+
         $this->alert('success', 'Cliente Atualizado', [
             'position' => 'center',
             'timer' => 2000,
@@ -68,19 +70,17 @@ class Clientes extends Component
         ]);
     }
 
-    public function remover(Cliente $cliente)
+    public function remover()
     {
-        // $this->clienteId = $cliente->id;
-
         $this->alert('info', 'Deletar o Cadastro Desse Cliente?', [
             'position' => 'center',
             'timer' => 5000,
             'toast' => false,
             'showConfirmButton' => true,
-            'confirmButtonColor' => '#3085d6',
+            'confirmButtonColor' => '#d33',
             'onConfirmed' => 'delete',
             'showCancelButton' => true,
-            'cancelButtonColor' => '#d33',
+            'cancelButtonColor' => '#3085d6',
             'onDismissed' => '',
             'cancelButtonText' => 'Cancelar',
             'confirmButtonText' => 'Deletar',
@@ -90,9 +90,11 @@ class Clientes extends Component
     public function delete()
     {
 
-        Cliente::where('id', $this->clienteId)->update([
+        Cliente::where('id', $this->codigoCliente)->update([
             'status' => 'Deletado'
         ]);
+
+        $this->modal = false;
 
         $this->alert('success', 'Cliente Deletado!', [
             'position' => 'center',

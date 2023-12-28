@@ -20,8 +20,8 @@
                         {{ __('Clientes') }}
                     </x-nav-link>
 
-                    <x-nav-link href="{{ route('itens') }}" :active="request()->routeIs('itens')">
-                        {{ __('Itens') }}
+                    <x-nav-link href="{{ route('produtos') }}" :active="request()->routeIs('produtos')">
+                        {{ __('Produtos') }}
                     </x-nav-link>
 
                     <x-nav-link href="{{ route('pedidos') }}" :active="request()->routeIs('pedidos')">
@@ -183,8 +183,8 @@
                 {{ __('Clientes') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link href="{{ route('itens') }}" :active="request()->routeIs('itens')">
-                {{ __('Itens') }}
+            <x-responsive-nav-link href="{{ route('produtos') }}" :active="request()->routeIs('produtos')">
+                {{ __('Produtos') }}
             </x-responsive-nav-link>
 
             <x-responsive-nav-link href="{{ route('pedidos') }}" :active="request()->routeIs('pedidos')">

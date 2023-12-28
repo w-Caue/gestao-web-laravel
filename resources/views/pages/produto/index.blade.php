@@ -1,10 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl leading-tight">
-            {{ __('Itens') }}
+            {{ __('Produtos') }}
         </h2>
     </x-slot>
 
-    @livewire('Item.Itens')
+    @livewire('Produto.Produtos')
     
 </x-app-layout>
