@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('itens', function(Blueprint $table){
+        Schema::table('produtos', function(Blueprint $table){
             $table->unsignedBigInteger('unidade_medida_id')->nullable()->after('marca');
             $table->foreign('unidade_medida_id')->references('id')->on('unidade_medidas');
         });
@@ -22,8 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('itens', function(Blueprint $table){
-            $table->dropForeign('itens_unidade_medida_id_foreign');
+        Schema::table('produtos', function(Blueprint $table){
+            $table->dropForeign('produtos_unidade_medida_id_foreign');
             $table->dropColumn('unidade_medida_id');
         });
     }

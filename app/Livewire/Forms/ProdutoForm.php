@@ -2,11 +2,11 @@
 
 namespace App\Livewire\Forms;
 
-use App\Models\Item;
+use App\Models\Produto;
 use Livewire\Attributes\Rule;
 use Livewire\Form;
 
-class ItemForm extends Form
+class ProdutoForm extends Form
 {
     public $codigoProduto;
 
@@ -37,7 +37,7 @@ class ItemForm extends Form
         $this->vlcusto = str_replace(',', '.', $this->vlcusto);
         $this->vlcusto = floatval($this->vlcusto);
 
-        Item::create([
+        Produto::create([
             'nome' => $this->nome,
             'descricao' => $this->descricao,
             'marca' => $this->marca,
@@ -48,7 +48,7 @@ class ItemForm extends Form
         ]);
     }
 
-    public function pesquisarProduto(Item $produto)
+    public function pesquisarProduto(Produto $produto)
     {
         $this->codigoProduto = $produto->id;
         $this->nome = $produto->nome;
@@ -69,7 +69,7 @@ class ItemForm extends Form
         $this->vlcusto = str_replace(',', '.', $this->vlcusto);
         $this->vlcusto = floatval($this->vlcusto);
 
-        Item::findOrFail($this->codigoProduto)->update([
+        Produto::findOrFail($this->codigoProduto)->update([
             'nome' => $this->nome,
             'descricao' => $this->descricao,
             'marca' => $this->marca,

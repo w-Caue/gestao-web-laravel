@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Item extends Model
+class Produto extends Model
 {
     use HasFactory;
-    protected $table = 'itens';
+    protected $table = 'Produtos';
     protected $fillable = ['nome', 'descricao', 'marca', 'unidade_medida_id', 'valor_custo', 'preco_1', 'preco_2'];
 
     public function unidadeMedida(){

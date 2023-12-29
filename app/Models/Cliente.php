@@ -9,5 +9,4 @@ class Cliente extends Model
 {
     use HasFactory;
     protected $fillable = ['nome', 'email', 'whatsapp', 'tipo'];
-    public $timestamps = false;
 }

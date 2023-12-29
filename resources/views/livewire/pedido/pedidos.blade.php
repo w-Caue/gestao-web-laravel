@@ -1,5 +1,5 @@
 <div>
-    <div class="flex justify-between flex-wrap my-2 mx-7">
+    <div class="flex justify-between items-center flex-col sm:flex-row my-2 mx-7">
         <div class="">
             <label for="table-search" class="sr-only">Pesquisa</label>
             <div class="relative mt-1">
@@ -17,8 +17,8 @@
         </div>
 
 
-        <div class="flex flex-wrap items-center">
-            <div class="flex gap-1 items-start m-1">
+        <div class="flex items-center my-2">
+            <div class="flex gap-1 items-start sm:m-1">
                 <label for="data" class="mb-2 text-lg font-semibold text-gray-600">
                     <input wire:model.lazy="startDate" id="startData" type="date"
                         class="border border-gray-300 text-gray-600 text-md font-semibold rounded w-36 p-1 dark:text-white dark:bg-gray-600 dark:border-none">
@@ -36,8 +36,8 @@
         </div>
 
 
-        <button wire:click="novoPedido()"
-            class="flex flex-row gap-2 text-white font-semibold border p-3 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 dark:border-none">
+        <button wire:click="openModal()"
+            class="flex justify-center w-full sm:w-44 gap-2 text-white font-semibold border p-3 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 dark:border-none">
             <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                 viewBox="0 0 19 20">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -75,16 +75,12 @@
                     <th scope="col" class="px-6 py-3 text-center">
                         Data do Pedido
                     </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-
-                    </th>
-
                 </tr>
             </thead>
             <tbody>
                 @foreach ($pedidos as $pedido)
-                    <tr wire:key="{{ $pedido->id }}"
-                        class="bg-white border-b hover:bg-gray-50 dark:text-gray-100 dark:bg-gray-500 dark:hover:bg-gray-600 dark:border-gray-400">
+                    <tr wire:key="{{ $pedido->id }}" wire:click.prevent="show({{ $pedido->id }})"
+                        class="bg-white border-b hover:bg-gray-50 dark:text-gray-100 dark:bg-gray-500 dark:hover:bg-gray-600 dark:border-gray-400 cursor-pointer">
                         <th scope="row"
                             class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{ $pedido->id }}
@@ -115,21 +111,6 @@
                         <td class="px-6 py-3 text-center font-semibold">
                             {{ date('d/m/Y', strtotime($pedido->created_at)) }}
                         </td>
-                        <td class="px-6 py-3 text-center">
-                            @if ($pedido->status == 'Aberto')
-                                <button wire:click="visualizarPedido({{ $pedido->id }})"
-                                    class="font-semibold text-blue-500 hover:underline">
-                                    Adicionar Itens
-                                </button>
-                            @endif
-
-                            @if ($pedido->status != 'Aberto')
-                                <button wire:click="visualizarPedido({{ $pedido->id }})"
-                                    class="font-semibold text-blue-500 hover:underline">
-                                    Visualizar Pedido
-                                </button>
-                            @endif
-                        </td>
                     </tr>
                 @endforeach
             </tbody>
@@ -140,377 +121,367 @@
         {{ $pedidos->links('layouts.paginate') }}
     </div>
 
-    <x-clientes>
-        @slot('body')
-            @if ($clientes)
-                <div class="flex justify-center flex-wrap m-3 overflow-auto h-auto max-h-60">
-                    @foreach ($clientes as $cliente)
-                        <div wire:click="selecioneCliente({{ $cliente->id }})"
-                            class="m-2 p-2 text-gray-400 shadow border rounded w-44 h-24 hover:bg-gray-100 hover:shadow-xl hover:border-2 cursor-pointer dark:bg-gray-300 dark:hover:bg-gray-400 dark:border-none">
-                            <h1 class="text-sm  font-semibold dark:text-gray-600">#{{ $cliente->id }}</h1>
-                            <h1 class="text-lg font-semibold text-gray-500 dark:text-gray-700">
-                                {{ $cliente->nome }}</h1>
-                            <h1 class="text-sm  font-semibold dark:text-gray-600">{{ $cliente->whatsapp }}</h1>
+    @if ($modal)
+        <x-modal-web title="Novo Pedido" wire:model="modal">
+            @slot('body')
+                <button wire:click.prevent="closeModal()"
+                    class=" absolute right-2 top-4 p-1 m-1 border rounded hover:text-white hover:bg-red-500 hover:border-red-500 dark:text-white">
+                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                </button>
+
+                <x-modal-detalhes name="clientes" title="Clientes">
+                    @slot('body')
+                        <div class="flex justify-center items-center m-4 gap-1">
+                            <input wire:model.live="search" type="text" id="table-search"
+                                class="p-2 text-md font-semibold text-gray-900 border border-gray-200 rounded w-80 focus:ring-gray-100 focus:border-gray-100 dark:bg-gray-300 dark:border-none"
+                                placeholder="Pesquisar Cliente">
+
+                            <button wire:click.prevent="pesquisaClientes()"
+                                class="text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 cursor-pointer dark:border-none">
+                                <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                </svg>
+                            </button>
                         </div>
-                    @endforeach
-                </div>
-            @endif
-        @endslot
-    </x-clientes>
 
-    @if ($newPedido)
-        <div class="flex justify-center">
-            <div
-                class="fixed top-11 bg-gray-50 border shadow-2xl rounded-lg sm:top-28 sm:w-1/2 dark:bg-gray-700 dark:border-gray-600">
-
-                <div>
-                    <button wire:click="fecharPedido()"
-                        class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500 dark:text-white">
-                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                        </svg>
-                    </button>
-                </div>
-
-                <h1 class="text-xl font-semibold text-center m-3 dark:text-white">Criar Pedido</h1>
-
-                <form wire:submit.prevent="save()">
-                    <div class="flex justify-center">
-                        <button x-data x-on:click.prevent="$dispatch('open-clientes')"
-                            class=" text-white bg-blue-500 p-2 border-blue-500 rounded text-md font-semibold hover:shadow-xl hover:bg-blue-600">{{ $clientePedido->nome ?? 'Selecione Um Cliente' }}</button>
-                    </div>
-
-                    <div class="m-3">
-                        <label for="pagamento" class="block mb-2 text-xl font-semibold text-gray-900 dark:text-white">
-                            Forma de Pagamento
-                        </label>
-                        <select wire:model="formaDePagamento" id="pagamento"
-                            class="bg-white border-2 border-gray-300 text-gray-600 text-md font-semibold rounded-lg w-44 p-2.5 dark:bg-gray-300">
-                            <option selected></option>
-
-                            @foreach ($formasPagamentos as $formaPagamento)
-                                <option value="{{ $formaPagamento->id }}"
-                                    class="font-semibold text-md text-gray-600 bg-white dark:bg-gray-300">
-                                    {{ $formaPagamento->nome }}</option>
-                            @endforeach
-
-                        </select>
-                    </div>
-
-                    <div class="m-3">
-                        <textarea wire:model="descricao" id="message" rows="4"
-                            class="block p-2.5 w-full font-semibold text-md text-gray-600 bg-white rounded-lg border-2 border-gray-300 dark:bg-gray-300"
-                            placeholder="Adicione uma descrição..."></textarea>
-                    </div>
-
-                    <div class="flex justify-center m-4">
-                        <button type="submit"
-                            class="text-white font-semibold border p-3 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 cursor-pointer dark:border-none">
-                            Criar Pedido
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    @endif
-
-    @if ($showPedido)
-        <div class="flex justify-center">
-            <div
-                class="fixed top-11 bg-gray-50 border shadow-2xl rounded-lg sm:top-8 sm:w-1/2 dark:bg-gray-700 dark:border-gray-600">
-                <div>
-                    <button wire:click.prevent="fecharPedido()"
-                        class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500 dark:text-white">
-                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                        </svg>
-                    </button>
-                </div>
-
-                <h1 class="text-xl font-semibold text-center m-3 dark:text-white">Pedido</h1>
-
-                <form
-                    wire:submit.prevent="{{ $telaPedido->status == 'Aberto' ? 'finalizarPedido()' : 'editePedido()' }}">
-
-                    <div class="m-3 flex justify-between items-center">
-                        <div>
-                            <label for="pagamento"
-                                class="block mb-2 text-xl font-semibold text-gray-900 dark:text-white">Forma de
-                                Pagamento</label>
-                            <select wire:model="formaDePagamento" id="pagamento"
-                                @if ($telaPedido->status == 'Concluido') @disabled(true) @endif
-                                class="bg-white border border-gray-300 text-gray-600 text-md font-semibold rounded w-44 p-1 dark:bg-gray-100 dark:border-none">
-                                <option selected></option>
-
-                                @foreach ($formasPagamentos as $formaPagamento)
-                                    <option value="{{ $formaPagamento->id }}"
-                                        class="font-semibold text-md text-gray-600">
-                                        {{ $formaPagamento->nome }}</option>
+                        @if ($clientes)
+                            <div class="flex justify-center flex-wrap m-3 overflow-auto h-auto max-h-60">
+                                @foreach ($clientes as $cliente)
+                                    <div wire:click="selecioneCliente({{ $cliente->id }})"
+                                        class="m-2 p-2 text-gray-400 shadow border rounded w-44 h-24 hover:bg-gray-100 hover:shadow-xl hover:border-2 cursor-pointer dark:bg-gray-300 dark:hover:bg-gray-400 dark:border-none">
+                                        <h1 class="text-sm  font-semibold dark:text-gray-600">#{{ $cliente->id }}</h1>
+                                        <h1 class="text-lg font-semibold text-gray-500 dark:text-gray-700">
+                                            {{ $cliente->nome }}</h1>
+                                        <h1 class="text-sm  font-semibold dark:text-gray-600">{{ $cliente->whatsapp }}</h1>
+                                    </div>
                                 @endforeach
+                            </div>
+                        @endif
+                    @endslot
+                </x-modal-detalhes>
 
-                            </select>
+                <x-modal-detalhes name="produtos" title="Produtos">
+                    @slot('body')
+                        <div class="flex justify-center items-center m-4 gap-1">
+                            <input wire:model.live="search" type="text" id="table-search"
+                                class="p-2 text-sm text-gray-900 border border-gray-200 rounded w-80 focus:ring-gray-100 focus:border-gray-100"
+                                placeholder="Pesquisar Item">
+
+                            <button wire:click="pedidoProdutos()" class="p-2 bg-blue-500 rounded">
+                                <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                </svg>
+                            </button>
                         </div>
 
-                        @if ($telaPedido->status == 'Aberto')
-                            <div class="">
-                                <button wire:click.prevent="telaItens()"
-                                    class="text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 cursor-pointer dark:border-none">
-                                    Adicionar Itens
-                                </button>
-                            </div>
-                        @else
-                            <div class="">
-                                <label for="status"
-                                    class="block mb-2 text-lg font-semibold text-gray-900 dark:text-white">Status
-                                    do Pedido</label>
-                                <select wire:model="status" id="status"
-                                    @if ($telaPedido->status == 'Concluido') @disabled(true) @endif
-                                    class=" bg-white border border-gray-300 text-gray-600 text-md font-semibold rounded w-48 p-1 dark:bg-gray-300">
+                        <div class="flex justify-center flex-wrap gap-3 m-3 overflow-auto h-auto max-h-80">
+                            @if ($produtos)
+                                @foreach ($produtos as $produto)
+                                    <div wire:click="detalheProduto({{ $produto->id }})" x-data
+                                        x-on:click.prevent="$dispatch('open-detalhes', { name : 'quantidade' })"
+                                        class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:w-1/3 hover:bg-gray-100 cursor-pointer transition-all hover:scale-95 duration-75 dark:bg-gray-200">
+
+                                        <div class="flex flex-col justify-between p-4 leading-normal">
+                                            <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">
+                                                {{ $produto->nome }}
+                                            </h5>
+                                            <p class="mb-1 font-semibold text-gray-600">{{ $produto->descricao }}</p>
+                                            <p class="mb-1 font-semibold text-gray-900">
+                                                R${{ number_format($produto->preco_1, 2, ',', '.') }}</p>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
+                        </div>
+                    @endslot
+                </x-modal-detalhes>
+
+                <x-modal-detalhes name="quantidade" title="Quantidade">
+                    @slot('body')
+                        <div class="flex flex-col items-center gap-3 m-3">
+                            <input wire:model.lazy="quantidade" type="number"
+                                class="rounded-xl border border-gray-400 w-28 text-lg font-semibold text-center"
+                                value="{{ $quantidade }}">
+
+                            <button wire:click.prevent="adicionarItem()"
+                                class="text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 cursor-pointer dark:border-none">Salvar</button>
+                        </div>
+                    @endslot
+                </x-modal-detalhes>
+
+                <x-modal-detalhes name="autenticacao" title="Autenticação">
+                    @slot('body')
+                        <div class="flex flex-col m-3">
+                            <div class="flex justify-between m-2">
+                                <label for="pagamento"
+                                    class="block mb-2 text-xl font-semibold text-gray-900 dark:text-white">Forma de
+                                    Pagamento</label>
+                                <select wire:model="formaDePagamento" id="pagamento"
+                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-md font-semibold rounded w-32 p-1 dark:bg-gray-200">
                                     <option selected></option>
 
-                                    @foreach ($statusPedido as $pedidoStatus)
-                                        <option value="{{ $pedidoStatus->nome }}"
+                                    @foreach ($formasPagamentos as $formaPagamento)
+                                        <option value="{{ $formaPagamento->id }}"
                                             class="font-semibold text-md text-gray-600">
-                                            {{ $pedidoStatus->nome }}</option>
+                                            {{ $formaPagamento->nome }}</option>
                                     @endforeach
 
                                 </select>
                             </div>
-                        @endif
 
-                    </div>
+                            <div class="flex items-center justify-between gap-1 m-2 mb-3">
+                                <label for="pagamento"
+                                    class="block mb-2 text-xl font-semibold text-gray-900 dark:text-white">Desconto</label>
+                                <input wire:model.live="desconto" type="number"
+                                    class="border-gray-300 bg-gray-50 rounded w-20 text-md font-semibold text-center"
+                                    value="">
+                            </div>
 
-                    <div class="m-3">
-                        <div class="relative overflow-x-auto shadow-md sm:rounded-lg border dark:border-gray-500">
-                            <table class="w-full text-sm text-left">
-                                <thead
-                                    class="text-xs font-semibold text-gray-800 uppercase bg-gray-100 dark:text-white dark:bg-gray-700">
-                                    <tr>
-                                        <th scope="col" class="px-6 py-3">
-                                            Nome Item
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Descrição
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Preço
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Quantidade
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Total
-                                        </th>
-                                        @if ($telaPedido->status == 'Aberto')
-                                            <th scope="col" class="px-6 py-3">
+                            @php
+                                $this->total = $this->totalPedido - $desconto;
+                            @endphp
 
-                                            </th>
-                                        @endif
-                                    </tr>
-                                </thead>
-                                <tbody class="">
-                                    @foreach ($telaPedido->itens as $item)
-                                        <tr
-                                            class="border-b border-gray-200 font-semibold bg-white dark:text-gray-100 dark:bg-gray-500 dark:hover:bg-gray-600 dark:border-gray-400">
-                                            <th scope="row"
-                                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                {{ $item->nome }}
-                                            </th>
-                                            <td class="px-6 py-4">
-                                                {{ $item->descricao }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                {{ number_format($item->preco_1, '2', ',') }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                {{ $item->pivot->quantidade }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                {{ number_format($item->pivot->total, '2', ',') }}
-                                            </td>
-                                            @if ($telaPedido->status == 'Aberto')
-                                                <td class="px-6 py-4">
-                                                    <button wire:click.prevent="removerItem({{ $item->id }})"
-                                                        class="text-white font-semibold border p-1 rounded-md bg-red-500 transition-all duration-300 hover:scale-95 hover:bg-red-700 cursor-pointer dark:border-none">
-                                                        remover
-                                                    </button>
-                                                </td>
-                                            @endif
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                                <tfoot>
-                                    <tr
-                                        class="font-semibold bg-white text-gray-900 dark:text-gray-100 dark:bg-gray-600">
-                                        <th colspan="4" scope="row" class="px-6 py-3 text-base">Total</th>
-                                        <td class="px-6 py-3">
-                                            <h1 wire:model.live="totalPedido">
-                                                {{ number_format($totalItens, 2, ',') }}</h1>
-                                        </td>
-                                        @if ($telaPedido->status == 'Aberto')
-                                            <td class="px-6 py-3"></td>
-                                        @endif
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-
-                    </div>
-
-                    <div class="m-3">
-                        <textarea wire:model="descricao" id="message" rows="3"
-                            @if ($telaPedido->status == 'Concluido') @disabled(true) @endif
-                            class="block p-2.5 w-full font-semibold text-md text-gray-600 bg-white rounded-lg border border-gray-300 dark:bg-gray-100 "
-                            placeholder="Adicione uma descrição..."></textarea>
-                    </div>
-
-                    <div class="flex justify-center m-4 gap-3">
-                        @if ($telaPedido->status == 'Finalizado')
-                            <button wire:click.prevent="mostrarAutenticacao()"
-                                class="text-white font-semibold border p-2 rounded-md bg-indigo-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-600 cursor-pointer dark:border-none">
-                                Autenticar Pedido
-                            </button>
-                        @endif
-
-                        @if ($telaPedido->status != 'Concluido')
-                            <button type="submit"
-                                class="text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 cursor-pointer dark:border-none">
-                                {{ $telaPedido->status == 'Aberto' ? 'Finalizar Pedido' : 'Salvar Pedido' }}
-                            </button>
-                        @endif
-                    </div>
-                </form>
-            </div>
-        </div>
-    @endif
-
-    @if ($showAutenticacao)
-        <div class="flex justify-center">
-            <div
-                class="fixed top-11 bg-gray-50 border-2 shadow-xl rounded sm:top-16 sm:w-80 dark:bg-gray-600 dark:border-none">
-
-                <div class="flex flex-col m-3">
-                    <div class="flex items-center m-2">
-                        <label for="pagamento"
-                            class="block mb-2 text-xl font-semibold text-gray-900 dark:text-white">Forma de
-                            Pagamento</label>
-                        <select wire:model="formaDePagamento" id="pagamento"
-                            class="bg-gray-50 border border-gray-300 text-gray-600 text-md font-semibold rounded w-32 p-1 dark:bg-gray-200">
-                            <option selected></option>
-
-                            @foreach ($formasPagamentos as $formaPagamento)
-                                <option value="{{ $formaPagamento->id }}"
-                                    class="font-semibold text-md text-gray-600">
-                                    {{ $formaPagamento->nome }}</option>
-                            @endforeach
-
-                        </select>
-                    </div>
-
-                    {{-- <div class="flex m-1 gap-2">
-                        <div class="flex items-center gap-1 mb-3">
-                            <label for="pagamento" class="block mb-2 text-xl font-semibold text-gray-900 ">Valor
-                                Pago</label>
-                            <input wire:model.live="valorPago" type="text"
-                                class="border-gray-300 bg-gray-50 rounded w-20 text-md font-semibold text-center"
-                                value="">
-                        </div>
-
-                        @php
-                            $valor = $this->totalPedido - $this->valorPago;
-                            $this->troco = $valor;
-                        @endphp
-
-                        <div class="flex items-center gap-4 m-1 mb-3">
-                            <label for="pagamento"
-                                class="block mb-2 text-xl font-semibold text-gray-900 ">Troco</label>
-                            <h1 wire:model.lazy="troco" type="number"
-                                class="border-gray-300 bg-gray-50 rounded w-20 text-md font-semibold text-center">
-                                {{ number_format($this->troco, 2, ',') }}</h1>
-                        </div>
-                    </div> --}}
-
-                    <div class="flex items-center justify-between gap-1 m-2 mb-3">
-                        <label for="pagamento"
-                            class="block mb-2 text-xl font-semibold text-gray-900 dark:text-white">Desconto</label>
-                        <input wire:model.live="desconto" type="number"
-                            class="border-gray-300 bg-gray-50 rounded w-20 text-md font-semibold text-center"
-                            value="">
-                    </div>
-
-                    @php
-                        $this->total = $this->totalPedido - $desconto;
-                    @endphp
-
-                    <div class="flex justify-between items-center gap-1 m-2">
-                        <label for="pagamento"
-                            class="block mb-2 text-xl font-semibold text-gray-900 dark:text-white">Total do
-                            Pedido</label>
-                        <h1 wire:model.live="totalPedido"
-                            class="p-2 border-gray-300 bg-gray-50 rounded w-24 text-md font-semibold text-center"
-                            value="">{{ number_format($this->total, 2, ',') }}</h1>
-                    </div>
-                </div>
-
-                <div class="flex justify-center m-2">
-                    <button wire:click.prevent="autenticarPedido()"
-                        class="text-white font-semibold border p-2 rounded-md bg-indigo-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-700 cursor-pointer dark:border-none">Confirmar</button>
-                </div>
-            </div>
-        </div>
-    @endif
-
-    @if ($showItem)
-        <div class="flex justify-center">
-            <div
-                class="fixed top-11 bg-white border shadow-2xl rounded-lg sm:top-11 sm:w-2/3 dark:bg-gray-600 dark:border-none">
-                <div class="flex justify-between m-3 dark:text-white">
-                    <h1 class="text-xl font-semibold text-center">Adicione os Itens</h1>
-                    <button wire:click="fecharTelaItens()"
-                        class="p-1 border rounded hover:text-white hover:bg-red-500">
-                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                        </svg>
-                    </button>
-                </div>
-
-                <div class="flex justify-center items-center m-4 gap-1">
-                    <input wire:model.live="search" type="text" id="table-search"
-                        class="p-2 text-sm text-gray-900 border border-gray-200 rounded w-80 focus:ring-gray-100 focus:border-gray-100"
-                        placeholder="Pesquisar Item">
-
-                    <button class="p-2 bg-blue-500 rounded">
-                        <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                            fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                        </svg>
-                    </button>
-                </div>
-
-                <div class="flex justify-center flex-wrap gap-3 m-3 overflow-auto h-auto max-h-80">
-                    @foreach ($itens as $item)
-                        <div wire:click="quantidadeItem({{ $item->id }})"
-                            class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:w-1/3 hover:bg-gray-100 cursor-pointer transition-all hover:scale-95 duration-75 dark:bg-gray-200">
-
-                            <div class="flex flex-col justify-between p-4 leading-normal">
-                                <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">{{ $item->nome }}
-                                </h5>
-                                <p class="mb-1 font-semibold text-gray-600">{{ $item->descricao }}</p>
-                                <p class="mb-1 font-semibold text-gray-900">
-                                    R${{ number_format($item->preco_1, 2, ',', '.') }}</p>
+                            <div class="flex justify-between items-center gap-1 m-2">
+                                <label for="pagamento"
+                                    class="block mb-2 text-xl font-semibold text-gray-900 dark:text-white">Total do
+                                    Pedido</label>
+                                <h1 wire:model.live="totalPedido"
+                                    class="p-2 border-gray-300 bg-gray-50 rounded w-24 text-md font-semibold text-center"
+                                    value="">{{ number_format($this->total, 2, ',') }}</h1>
                             </div>
                         </div>
-                    @endforeach
+
+                        <div class="flex justify-center m-2">
+                            <button wire:click.prevent="autenticarPedido()"
+                                class="text-white font-semibold border p-2 rounded-md bg-indigo-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-700 cursor-pointer dark:border-none">Confirmar</button>
+                        </div>
+                    @endslot
+                </x-modal-detalhes>
+
+                <div x-data="{ form: @entangle('formStatus') }">
+                    <div x-show=" form === 'novo'">
+                        <form wire:submit.prevent="save()">
+                            <div class="flex justify-center">
+
+                            </div>
+
+                            <div class="mx-3">
+                                <label for="pagamento"
+                                    class="block mb-2 text-xl font-semibold text-gray-900 dark:text-white">
+                                    Cliente
+                                </label>
+                                <div class="flex gap-1 my-2">
+                                    <input
+                                        class="appearance-none w-60 bg-white text-gray-700 font-semibold border-2 border-gray-300 rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white dark:bg-gray-300"
+                                        id="grid-first-name" type="text" value="{{ $clientePedido->nome ?? '' }}">
+                                    <button x-data x-on:click.prevent="$dispatch('open-detalhes', { name : 'clientes' })"
+                                        class=" text-white bg-blue-500 p-2 border-blue-500 rounded text-md font-semibold hover:shadow-xl hover:bg-blue-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="mx-3">
+                                <label for="pagamento"
+                                    class="block mb-2 text-xl font-semibold text-gray-900 dark:text-white">
+                                    Forma de Pagamento
+                                </label>
+                                <select wire:model="formaDePagamento" id="pagamento"
+                                    class="bg-white border-2 border-gray-300 text-gray-600 text-md font-semibold rounded-lg w-44 p-2.5 dark:bg-gray-300">
+                                    <option selected></option>
+
+                                    @foreach ($formasPagamentos as $formaPagamento)
+                                        <option value="{{ $formaPagamento->id }}"
+                                            class="font-semibold text-md text-gray-600 bg-white dark:bg-gray-300">
+                                            {{ $formaPagamento->nome }}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+
+                            <div class="m-3">
+                                <textarea wire:model="descricao" id="message" rows="4"
+                                    class="block p-2.5 w-full font-semibold text-md text-gray-600 bg-white rounded-lg border-2 border-gray-300 dark:bg-gray-300"
+                                    placeholder="Adicione uma descrição..."></textarea>
+                            </div>
+
+                            <div class="flex justify-center m-4">
+                                <button type="submit"
+                                    class="text-white font-semibold border p-3 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 cursor-pointer dark:border-none">
+                                    Criar Pedido
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div x-show=" form === 'visualizar'">
+                        <form
+                            wire:submit.prevent="{{ $telaPedido->status == 'Aberto' ? 'finalizarPedido()' : 'editePedido()' }}">
+
+                            <div class="mx-3 flex justify-between items-center">
+                                <div>
+                                    <label for="pagamento"
+                                        class="block mb-2 text-xl font-semibold text-gray-900 dark:text-white">Forma de
+                                        Pagamento</label>
+                                    <select wire:model="formaDePagamento" id="pagamento"
+                                        @if ($telaPedido->status == 'Concluido') @disabled(true) @endif
+                                        class="bg-white border border-gray-300 text-gray-600 text-md font-semibold rounded w-44 p-1 dark:bg-gray-100 dark:border-none">
+                                        <option selected></option>
+
+                                        @foreach ($formasPagamentos as $formaPagamento)
+                                            <option value="{{ $formaPagamento->id }}"
+                                                class="font-semibold text-md text-gray-600">
+                                                {{ $formaPagamento->nome }}</option>
+                                        @endforeach
+
+                                    </select>
+                                </div>
+
+                                @if ($telaPedido->status == 'Aberto')
+                                    <div class="">
+                                        <button x-data
+                                            x-on:click.prevent="$dispatch('open-detalhes', { name : 'produtos' })"
+                                            class="text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 cursor-pointer dark:border-none">
+                                            Adicionar Produtos
+                                        </button>
+                                    </div>
+                                @else
+                                    <div class="">
+                                        <label for="status"
+                                            class="block mb-2 text-lg font-semibold text-gray-900 dark:text-white">Status
+                                            do Pedido</label>
+                                        <select wire:model="status" id="status"
+                                            @if ($telaPedido->status == 'Concluido') @disabled(true) @endif
+                                            class=" bg-white border border-gray-300 text-gray-600 text-md font-semibold rounded w-32 p-1 dark:bg-gray-300">
+                                            <option selected></option>
+
+                                            @foreach ($statusPedido as $pedidoStatus)
+                                                <option value="{{ $pedidoStatus->nome }}"
+                                                    class="font-semibold text-md text-gray-600">
+                                                    {{ $pedidoStatus->nome }}</option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
+                                @endif
+
+                            </div>
+
+                            <div class="m-3">
+                                <div
+                                    class="relative overflow-auto shadow-md sm:rounded-lg border dark:border-gray-500 h-auto max-h-32">
+                                    <table class="w-full text-sm text-left">
+                                        <thead
+                                            class="text-xs font-semibold text-gray-800 uppercase bg-gray-100 dark:text-white dark:bg-gray-700">
+                                            <tr>
+                                                <th scope="col" class="px-6 py-3">
+                                                    Nome Item
+                                                </th>
+                                                <th scope="col" class="px-6 py-3">
+                                                    Descrição
+                                                </th>
+                                                <th scope="col" class="px-6 py-3">
+                                                    Preço
+                                                </th>
+                                                <th scope="col" class="px-6 py-3">
+                                                    Quantidade
+                                                </th>
+                                                <th scope="col" class="px-6 py-3">
+                                                    Total
+                                                </th>
+                                                {{-- @if ($telaPedido->status == 'Aberto')
+                                                    <th scope="col" class="px-6 py-3">
+
+                                                    </th>
+                                                @endif --}}
+                                            </tr>
+                                        </thead>
+                                        <tbody class="">
+                                            @foreach ($telaPedido->produtos as $produto)
+                                                <tr
+                                                    class="border-b border-gray-200 font-semibold bg-white dark:text-gray-100 dark:bg-gray-500 dark:hover:bg-gray-600 dark:border-gray-400">
+                                                    <th scope="row"
+                                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                        {{ $produto->nome }}
+                                                    </th>
+                                                    <td class="px-6 py-4">
+                                                        {{ $produto->descricao }}
+                                                    </td>
+                                                    <td class="px-6 py-4">
+                                                        {{ number_format($produto->preco_1, '2', ',') }}
+                                                    </td>
+                                                    <td class="px-6 py-4">
+                                                        {{ $produto->pivot->quantidade }}
+                                                    </td>
+                                                    <td class="px-6 py-4">
+                                                        {{ number_format($produto->pivot->total, '2', ',') }}
+                                                    </td>
+                                                    {{-- @if ($telaPedido->status == 'Aberto')
+                                                        <td class="px-6 py-4">
+                                                            <button wire:click.prevent="removerItem({{ $produto->id }})"
+                                                                class="text-white font-semibold border p-1 rounded-md bg-red-500 transition-all duration-300 hover:scale-95 hover:bg-red-700 cursor-pointer dark:border-none">
+                                                                remover
+                                                            </button>
+                                                        </td>
+                                                    @endif --}}
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                        <tfoot>
+                                            <tr
+                                                class="font-semibold bg-white text-gray-900 dark:text-gray-100 dark:bg-gray-600">
+                                                <th colspan="4" scope="row" class="px-6 py-3 text-base">Total
+                                                </th>
+                                                <td class="px-6 py-3">
+                                                    <h1 wire:model.live="totalPedido">
+                                                        {{ number_format($totalProdutos, 2, ',') ?? '' }}</h1>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+
+                            </div>
+
+                            <div class="m-3">
+                                <textarea wire:model="descricao" id="message" rows="3"
+                                    @if ($telaPedido->status == 'Concluido') @disabled(true) @endif
+                                    class="block p-2.5 w-full font-semibold text-md text-gray-600 bg-white rounded-lg border border-gray-300 dark:bg-gray-100 "
+                                    placeholder="Adicione uma descrição..."></textarea>
+                            </div>
+
+                            <div class="flex justify-center m-4 gap-3">
+                                @if ($telaPedido->status == 'Finalizado')
+                                    <button x-data x-on:click.prevent="$dispatch('open-detalhes', { name : 'autenticacao' })"
+                                        class="text-white font-semibold border p-2 rounded-md bg-indigo-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-600 cursor-pointer dark:border-none">
+                                        Autenticar Pedido
+                                    </button>
+                                @endif
+
+                                @if ($telaPedido->status != 'Concluido')
+                                    <button type="submit"
+                                        class="text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 cursor-pointer dark:border-none">
+                                        {{ $telaPedido->status == 'Aberto' ? 'Finalizar Pedido' : 'Salvar Pedido' }}
+                                    </button>
+                                @endif
+                            </div>
+                        </form>
+
+                    </div>
                 </div>
-            </div>
-        </div>
+            @endslot
+        </x-modal-web>
     @endif
 
     {{-- Detalhe do Cliente --}}
@@ -557,32 +528,4 @@
         </div>
     </div>
 
-    @if ($detalheItem)
-        <div class="flex justify-center">
-            <div class="fixed top-11 bg-white border shadow-xl rounded-lg sm:top-40 sm:w-80 dark:bg-gray-500">
-                <div>
-                    <button wire:click="fecharDetalhe()"
-                        class="p-1 m-1 border rounded float-right hover:text-white hover:bg-red-500 dark:text-white">
-                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                        </svg>
-                    </button>
-                </div>
-
-                <h1 class="text-xl font-semibold text-center m-3 dark:text-white">Quantidade</h1>
-
-                <div class="flex flex-col items-center gap-3 m-3">
-                    <input wire:model.lazy="quantidade" type="number"
-                        class="rounded-xl border border-gray-400 w-28 text-lg font-semibold text-center"
-                        value="{{ $quantidade }}">
-
-                    <button wire:click.prevent="adicionarItem()"
-                        class="text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 cursor-pointer dark:border-none">Salvar</button>
-                </div>
-
-            </div>
-        </div>
-    @endif
 </div>

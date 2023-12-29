@@ -3,7 +3,8 @@
 namespace App\Livewire\Produto;
 
 use App\Livewire\Forms\ItemForm;
-use App\Models\Item;
+use App\Livewire\Forms\ProdutoForm;
+use App\Models\Produto;
 use App\Models\UnidadeMedida;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -15,7 +16,7 @@ class Produtos extends Component
 
     use WithPagination;
 
-    public ItemForm $form;
+    public ProdutoForm $form;
 
     public $search = '';
 
@@ -23,9 +24,7 @@ class Produtos extends Component
 
     public $codigoProduto;
 
-    public $precoItem = false;
-
-    public function show(Item $produto)
+    public function show(Produto $produto)
     {
         $this->codigoProduto = $produto->id;
 
@@ -36,11 +35,6 @@ class Produtos extends Component
     public function closeModal()
     {
         $this->modal = false;
-    }
-
-    public function precificacao()
-    {
-        $this->precoItem = !$this->precoItem;
     }
 
     public function save()
@@ -56,29 +50,22 @@ class Produtos extends Component
         ]);
     }
 
-    // public function edit(Item $item)
-    // {
-    //     $this->novoItem();
-
-    //     $this->form->edit($item);
-    // }
-
     public function update()
     {
         $this->form->update();
 
-        $this->fecharItem();
+        $this->modal = false;
 
         $this->alert('success', 'Cadastro Salvo!', [
             'position' => 'center',
-            'timer' => '2000',
+            'timer' => '1000',
             'toast' => false,
         ]);
     }
 
     public function render()
     {
-        $produtos = Item::where('nome', 'like', '%' . $this->search . '%')->paginate(5);
+        $produtos = Produto::where('nome', 'like', '%' . $this->search . '%')->paginate(5);
 
         $unidadeMedidas = UnidadeMedida::all();
 

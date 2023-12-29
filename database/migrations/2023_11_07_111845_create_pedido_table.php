@@ -22,11 +22,11 @@ return new class extends Migration
         Schema::create('pedidos_itens', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('pedido_id');
-            $table->unsignedBigInteger('item_id');
+            $table->unsignedBigInteger('produto_id');
             $table->timestamps();
 
             $table->foreign('pedido_id')->references('id')->on('pedidos');
-            $table->foreign('item_id')->references('id')->on('itens');
+            $table->foreign('produto_id')->references('id')->on('produtos');
         });
     }
 

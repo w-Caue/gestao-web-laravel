@@ -286,13 +286,12 @@
                         </div>
                     </div>
                 </form>
-
             </div>
         </div>
     @endif
 
     {{-- Clientes --}}
-    <x-clientes>
+    <x-modal-detalhes>
         @slot('body')
             @if ($clientes)
                 <div class="flex justify-center flex-wrap m-3 overflow-auto h-auto max-h-60">
@@ -308,7 +307,7 @@
                 </div>
             @endif
         @endslot
-    </x-clientes>
+    </x-modal-detalhes>
 
     @if ($showBaixa)
         <div class="flex justify-center">

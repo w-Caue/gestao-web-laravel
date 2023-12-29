@@ -15,8 +15,8 @@ class Pedido extends Model
         return $this->belongsTo('App\Models\Cliente' , 'cliente_id');
     }
 
-    public function itens(){
-        return $this->belongsToMany('App\Models\Item', 'pedidos_itens')->withPivot('quantidade', 'total');
+    public function Produtos(){
+        return $this->belongsToMany('App\Models\Produto', 'pedidos_itens')->withPivot('quantidade', 'total');
     }
 
     public function formaPagamento(){

@@ -7,6 +7,7 @@ use App\Models\FormaPagamento;
 use App\Models\Item;
 use App\Models\Pedido;
 use App\Models\PedidoItem;
+use App\Models\Produto;
 use App\Models\Status;
 use Illuminate\Support\Facades\Date;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -18,12 +19,12 @@ class Pedidos extends Component
     use LivewireAlert;
     use WithPagination;
 
-    public $newPedido;
+    public $modal = false;
+    public $formStatus;
     public $startDate;
     public $endDate;
 
     #tela de clientes
-    public $showClientes;
     public $clientes;
     public $clientePedido;
 
@@ -37,18 +38,16 @@ class Pedidos extends Component
     public $status = 'Aberto';
 
     #tela de itens
-    public $showPedido;
     public $telaPedido;
-    public $showItem;
-    public $itens;
-    public $detalheItem;
-    public $itemId;
+    public $produtos;
+    public $codigoProduto;
+
     public $quantidade = 1;
 
     #visualizar pedido
     public $itemPedido;
     public $totalPedido = '0';
-    public $totalItens = '';
+    public $totalProdutos = '0';
 
     #autenticação
     public $showAutenticacao = false;
@@ -61,28 +60,49 @@ class Pedidos extends Component
         'deleteItem'
     ];
 
-    public function novoPedido()
+    public function show(Pedido $pedido)
     {
-        $this->newPedido = true;
+        $this->modal = true;
+        $this->visualizarPedido($pedido);
+
     }
 
-    public function fecharPedido()
+    public function openModal()
     {
-        $this->reset();
+        $this->modal = true;  
+        $this->formStatus = 'novo';
+        $this->telaPedido = new Pedido();
+    }
+
+    public function closeModal()
+    {
+        $this->reset('formaDePagamento');
         $this->resetValidation();
-        $this->newPedido = false;
-        $this->showPedido = false;
-        $this->dispatch('close-clientes');
+        $this->modal = false;
+        $this->dispatch('close-detalhes');
     }
 
-    public function fecharTelaItens()
+    public function save()
     {
-        $this->showItem = false;
+        Pedido::create([
+            'cliente_id' => $this->clientePedido->id,
+            'forma_pagamento_id' => $this->formaDePagamento,
+            'descricao' => $this->descricao,
+            'status' => 'Aberto'
+        ]);
+
+        $this->modal = false;
+
+        $this->alert('success', 'Pedido Criado!', [
+            'position' => 'center',
+            'timer' => '2000',
+            'toast' => false,
+        ]);
     }
 
     public function visualizarPedido(Pedido $pedido)
     {
-        $this->showPedido = true;
+        $this->formStatus = 'visualizar';
 
         $this->telaPedido = Pedido::where('id', $pedido->id)->get()->first();
 
@@ -90,60 +110,118 @@ class Pedidos extends Component
         $this->totalPedido = $this->telaPedido->total_pedido;
         $this->total = $this->telaPedido->total_pedido;
         $this->desconto = $this->telaPedido->desconto;
-        $this->totalItens = $this->telaPedido->total_itens;
+        $this->totalProdutos = $this->telaPedido->total_itens;
         $this->status = $this->telaPedido->status;
         $this->descricao = $this->telaPedido->descricao;
     }
 
-    public function telaItens()
+    public function finalizarPedido()
     {
-        $this->showItem = true;
+        Pedido::find($this->telaPedido->id)->update([
+            'forma_pagamento_id' => $this->formaDePagamento,
+            'descricao' => $this->descricao,
+            'total_itens' => $this->totalProdutos,
+            'total_pedido' => $this->totalPedido,
+            'status' => 'Finalizado'
+        ]);
 
-        $itens = Item::select([
-            'itens.id',
-            'itens.nome',
-            'itens.descricao',
-            'itens.marca',
-            'itens.preco_1',
-        ])->where('marca', 'Propria')->get();
+        $this->modal = false;
 
-        $this->itens = $itens;
+        $this->alert('success', 'Pedido Finalizado!', [
+            'position' => 'center',
+            'timer' => '1000',
+            'toast' => false,
+        ]);
     }
 
-    public function quantidadeItem(Item $item)
+    public function autenticarPedido()
     {
-        $this->detalheItem = true;
+        Pedido::findOrFail($this->telaPedido->id)->update([
+            'forma_pagamento_id' => $this->formaDePagamento,
+            'total_pedido' => $this->total,
+            'desconto' => $this->desconto,
+            'status' => 'Autenticado'
+        ]);
 
-        $this->itemId = $item;
+        $this->dispatch('close-detalhes');
 
-        $this->totalItens = $item->preco_1;
+        $this->alert('success', 'Pedido Autenticado!', [
+            'position' => 'center',
+            'timer' => '1000',
+            'toast' => false,
+        ]);
+
+        $this->modal = false;
     }
 
-    public function fecharDetalhe()
+    public function editePedido()
     {
-        $this->detalheItem = false;
+        if ($this->status == 'Aberto') {
+            Pedido::findOrFail($this->telaPedido->id)->update([
+                'forma_pagamento_id' => $this->formaDePagamento,
+                'total_pedido' => $this->telaPedido->total_itens,
+                'desconto' => '0',
+                'descricao' => $this->descricao,
+                'status' => $this->status
+            ]);
+        } else {
+            Pedido::findOrFail($this->telaPedido->id)->update([
+                'forma_pagamento_id' => $this->formaDePagamento,
+                'descricao' => $this->descricao,
+                'status' => $this->status
+            ]);
+        }
+
+        $this->modal = false;
+
+        $this->alert('success', 'Pedido Salvo!', [
+            'position' => 'center',
+            'timer' => '1000',
+            'toast' => false,
+        ]);
+    }
+
+    public function pedidoProdutos()
+    {
+        $produtos = Produto::select([
+            'produtos.id',
+            'produtos.nome',
+            'produtos.descricao',
+            'produtos.marca',
+            'produtos.preco_1',
+        ])->get();
+
+        $this->produtos = $produtos;
+    }
+
+    public function detalheProduto(Produto $produto)
+    {
+
+        $this->codigoProduto = $produto;
+
+        $this->totalProdutos = $produto->preco_1;
     }
 
     public function adicionarItem()
     {
 
-        $this->totalItens = $this->totalItens * $this->quantidade;
+        $this->totalProdutos = $this->totalProdutos * $this->quantidade;
 
         PedidoItem::create([
             'pedido_id' => $this->telaPedido->id,
-            'item_id' => $this->itemId->id,
+            'produto_id' => $this->codigoProduto->id,
             'quantidade' => $this->quantidade,
-            'total' => $this->totalItens
+            'total' => $this->totalProdutos
         ]);
 
-        $this->fecharDetalhe();
+        $this->dispatch('close-detalhes');
 
-        $this->totalPedido = $this->totalItens + $this->totalPedido;
-        $this->totalItens = $this->totalItens + $this->telaPedido->total_itens;
+        $this->totalPedido = $this->totalProdutos + $this->totalPedido;
+        $this->totalProdutos = $this->totalProdutos + $this->telaPedido->total_itens;
 
         Pedido::findOrFail($this->telaPedido->id)->update([
             'total_pedido' => $this->totalPedido,
-            'total_itens' => $this->totalItens
+            'total_itens' => $this->totalProdutos
         ]);
 
         $this->alert('success', 'Item Adicionado!', [
@@ -153,7 +231,7 @@ class Pedidos extends Component
         ]);
     }
 
-    public function removerItem(Item $item)
+    public function removerItem(Produto $item)
     {
         $this->itemPedido = $item;
 
@@ -179,11 +257,11 @@ class Pedidos extends Component
             ->where('item_id', $this->itemPedido->id)->get()->first();
 
         $this->totalPedido = $this->totalPedido - ($this->itemPedido->preco_1 * $pedido->quantidade);
-        $this->totalItens = $this->totalItens - ($this->itemPedido->preco_1 * $pedido->quantidade);
+        $this->totalProdutos = $this->totalProdutos - ($this->itemPedido->preco_1 * $pedido->quantidade);
 
         Pedido::findOrFail($this->telaPedido->id)->update([
             'total_pedido' => $this->totalPedido,
-            'total_itens' => $this->totalItens
+            'total_itens' => $this->totalProdutos
         ]);
 
         PedidoItem::where('pedido_id', $this->telaPedido->id)
@@ -216,95 +294,6 @@ class Pedidos extends Component
         $this->dispatch('close-clientes');
     }
 
-    public function save()
-    {
-        Pedido::create([
-            'cliente_id' => $this->clientePedido->id,
-            'forma_pagamento_id' => $this->formaDePagamento,
-            'descricao' => $this->descricao,
-            'status' => 'Aberto'
-        ]);
-
-        $this->fecharPedido();
-
-        $this->alert('success', 'Pedido Criado!', [
-            'position' => 'center',
-            'timer' => '2000',
-            'toast' => false,
-        ]);
-    }
-
-    public function finalizarPedido()
-    {
-        Pedido::find($this->telaPedido->id)->update([
-            'forma_pagamento_id' => $this->formaDePagamento,
-            'descricao' => $this->descricao,
-            'total_itens' => $this->totalItens,
-            'total_pedido' => $this->totalPedido,
-            'status' => 'Finalizado'
-        ]);
-
-        $this->fecharPedido();
-
-        $this->alert('success', 'Pedido Finalizado!', [
-            'position' => 'center',
-            'timer' => '1000',
-            'toast' => false,
-        ]);
-    }
-
-    public function mostrarAutenticacao()
-    {
-        $this->showAutenticacao = true;
-    }
-
-    public function autenticarPedido()
-    {
-        Pedido::findOrFail($this->telaPedido->id)->update([
-            'forma_pagamento_id' => $this->formaDePagamento,
-            'total_pedido' => $this->total,
-            'desconto' => $this->desconto,
-            'status' => 'Autenticado'
-        ]);
-
-        $this->showAutenticacao = false;
-
-        $this->alert('success', 'Pedido Autenticado!', [
-            'position' => 'center',
-            'timer' => '1000',
-            'toast' => false,
-        ]);
-
-        $this->fecharPedido();
-    }
-
-    public function editePedido()
-    {
-        if ($this->status == 'Aberto') {
-            Pedido::findOrFail($this->telaPedido->id)->update([
-                'forma_pagamento_id' => $this->formaDePagamento,
-                'total_pedido' => $this->telaPedido->total_itens,
-                'desconto' => '0',
-                'descricao' => $this->descricao,
-                'status' => $this->status
-            ]);
-        } else {
-            Pedido::findOrFail($this->telaPedido->id)->update([
-                'forma_pagamento_id' => $this->formaDePagamento,
-                'descricao' => $this->descricao,
-                'status' => $this->status
-            ]);
-        }
-
-        $this->fecharPedido();
-
-        $this->alert('success', 'Pedido Salvo!', [
-            'position' => 'center',
-            'timer' => '1000',
-            'toast' => false,
-        ]);
-    }
-
     public function detalheCliente(Pedido $pedido)
     {
         $this->informacoesCliente = Cliente::where('id', $pedido->cliente_id)->get()->first();
@@ -326,7 +315,7 @@ class Pedidos extends Component
             ->whereDate('created_at', '<=', $this->endDate)
             ->paginate(5);
 
-        $itens = Item::all();
+        $itens = Produto::all();
 
         $formasPagamentos = FormaPagamento::all();
 
