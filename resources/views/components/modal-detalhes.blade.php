@@ -3,7 +3,7 @@
     <div x-data="{ open: false , name : '{{ $name }}'}" x-show="open" x-cloak x-on:open-detalhes.window="open = ($event.detail.name === name)"
         x-on:close-detalhes.window="open = false" x-on:keydown.escape.window="open = false"
         x-transition.duration.300ms
-        class="fixed mt-5 z-50 bg-white border border-gray-300 shadow-2xl rounded-lg sm:top-28 sm:w-1/3 dark:bg-gray-500 dark:border-none">
+        class="fixed mt-5 z-50 bg-gray-100 border border-gray-300 shadow-2xl rounded-lg sm:top-28 sm:w-1/3 dark:bg-gray-500 dark:border-none">
         <div x-on:click ="open = false" class="fixed">
         </div>
 

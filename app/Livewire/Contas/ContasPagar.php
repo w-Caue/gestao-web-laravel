@@ -3,6 +3,7 @@
 namespace App\Livewire\Contas;
 
 use App\Livewire\Forms\ContasForm;
+use App\Livewire\Forms\ContasPagarForm;
 use App\Models\AgenteCobrador;
 use App\Models\Cliente;
 use App\Models\Conta;
@@ -17,63 +18,39 @@ class ContasPagar extends Component
     use LivewireAlert;
     use WithPagination;
 
-    public ContasForm $form;
+    public ContasPagarForm $form;
 
-    public  $showDocumento;
+    public $modal = false;
 
-    public $showClientes;
     public $clientes;
-    public $clienteDocumento;
-
-    #Criar Documento
-    public $descricao;
-    public $agenteCobrador;
-    public $dataLancamento;
-    public $dataVencimento;
-    public $valorDocumento;
-
-    #Baixar Documento
+   
     public $documento;
-    public $dataPagamento;
-    public $formaPagamento;
-    public $valorPago;
 
-    public $statusDocumento = 'Pagar';
-
-    public $showBaixa;
     public $status = 'Ativo';
 
     protected $listeners = [
         'deleteRetorno'
     ];
 
-    public function novoDocumento()
-    {
-        $this->showDocumento = true;
-
-        $this->dataLancamento = date('Y-m-d');
+    public function mount(){
+        $this->form->dataLancamento = date('Y-m-d');
     }
 
-    public function fecharDocumento()
+    public function show(Conta $documento)
     {
-        $this->reset(
-            'clienteDocumento',
-            'descricao',
-            'statusDocumento',
-            'agenteCobrador',
-            'dataLancamento',
-            'dataVencimento',
-            'valorDocumento',
-            'formaPagamento',
-            'valorPago',
-            'documento'
-        );
-        $this->showDocumento = false;
+        $this->modal = true;
+
+        $this->documento = $documento;
+        $this->form->pesquisaDocumentos($documento);
     }
 
-    public function visualizarClientes()
-    {
-        $this->showClientes = !$this->showClientes;
+    public function openModal(){
+        $this->modal = true;
+    }
+
+    public function closeModal(){
+        $this->reset();
+        $this->modal = false;
     }
 
     public function pesquisaClientes()
@@ -84,34 +61,23 @@ class ContasPagar extends Component
             'clientes.whatsapp',
             'clientes.status',
             'clientes.tipo',
-        ])->where('status', 'Ativo')->where('tipo', 'Empresa')->get();
+        ])->get();
 
         $this->clientes = $clientes;
     }
 
     public function selecioneCliente($cliente)
     {
-        $this->clienteDocumento = Cliente::where('id', $cliente)->get()->first();
+        $this->form->clienteDocumento = Cliente::where('id', $cliente)->get()->first();
 
-        $this->dispatch('close-clientes');
+        $this->dispatch('close-detalhes');
     }
 
     public function criarDocumento()
     {
-        $this->valorDocumento = str_replace(',','.', $this->valorDocumento);
-        $this->valorDocumento = floatval($this->valorDocumento);
+        $this->form->save();
 
-        Conta::create([
-            'cliente_id' => $this->clienteDocumento->id,
-            'descricao' => $this->descricao,
-            'ag_cobrador_id' => $this->agenteCobrador,
-            'data_lancamento' => $this->dataLancamento,
-            'data_vencimento' => $this->dataVencimento,
-            'valor_documento' => $this->valorDocumento,
-            'status_documento' => $this->statusDocumento,
-        ]);
-
-        $this->fecharDocumento();
+        $this->closeModal();
 
         $this->alert('success', 'Documento criado!', [
             'position' => 'center',
@@ -123,20 +89,9 @@ class ContasPagar extends Component
 
     public function editarDocumento()
     {
-        $this->valorDocumento = str_replace(',','.', $this->valorDocumento);
-        $this->valorDocumento = floatval($this->valorDocumento);
-    
-        Conta::findOrFail($this->documento->id)->update([
-            'cliente_id' => $this->clienteDocumento->id,
-            'descricao' => $this->descricao,
-            'ag_cobrador_id' => $this->agenteCobrador,
-            'data_lancamento' => $this->dataLancamento,
-            'data_vencimento' => $this->dataVencimento,
-            'valor_documento' => $this->valorDocumento,
-            'status_documento' => $this->statusDocumento,
-        ]);
-
-        $this->fecharDocumento();
+        $this->form->update();
+        
+        $this->closeModal();
 
         $this->alert('success', 'Documento Atualizado!', [
             'position' => 'center',
@@ -146,39 +101,12 @@ class ContasPagar extends Component
         ]);
     }
 
-    public function baixaDocumento()
-    {
-        $this->showBaixa = !$this->showBaixa;
-    }
-
-    public function mostrarDocumento(Conta $documento)
-    {
-        $this->showDocumento = true;
-
-        $this->documento = $documento;
-        $this->clienteDocumento = Cliente::where('id', $documento->cliente_id)->get()->first();
-        $this->descricao = $documento->descricao;
-        $this->dataLancamento = date('Y-m-d', strtotime($documento->data_lancamento));
-        $this->agenteCobrador = $documento->ag_cobrador_id;
-        $this->dataVencimento = date('Y-m-d', strtotime($documento->data_vencimento));
-        $this->valorDocumento = number_format($documento->valor_documento, 2, ',','');
-        $this->dataPagamento = date('Y-m-d');
-    }
-
     public function confirmarBaixa()
     {
-        $this->valorPago = str_replace(',','.', $this->valorPago);
-        $this->valorPago = floatval($this->valorPago);
+        $this->form->baixa();
 
-        Conta::findOrFail($this->documento->id)->update([
-            'status_documento' => 'Pago',
-            'forma_pagamento_id' => $this->formaPagamento,
-            'data_pagamento' => $this->dataPagamento,
-            'valor_pago' => $this->valorPago,
-        ]);
-
-        $this->baixaDocumento();
-        $this->fecharDocumento();
+        $this->dispatch('close-detalhes');
+        $this->closeModal();
 
         $this->alert('success', 'Documento Baixado!', [
             'position' => 'center',
@@ -229,7 +157,7 @@ class ContasPagar extends Component
                 'status' => 'Ativo'
             ]);
 
-            $this->fecharDocumento();
+            $this->closeModal();
 
             $this->alert('success', 'Documento Retornado!', [
                 'position' => 'center',
@@ -241,7 +169,7 @@ class ContasPagar extends Component
                 'status' => 'Deletado'
             ]);
 
-            $this->fecharDocumento();
+            $this->closeModal();
 
             $this->alert('success', 'Documento Deletado!', [
                 'position' => 'center',
