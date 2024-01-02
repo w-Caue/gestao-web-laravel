@@ -54,11 +54,13 @@ class ContasPagarForm extends Form
 
     public function save()
     {
-        $this->validate();
+        // $this->validate();
 
         $this->valorDocumento = str_replace(',', '.', $this->valorDocumento);
         $this->valorDocumento = floatval($this->valorDocumento);
 
+
+        // dd($this->clienteDocumento);
         Conta::create([
             'cliente_id' => $this->clienteDocumento->id,
             'descricao' => $this->descricao,
@@ -72,7 +74,7 @@ class ContasPagarForm extends Form
 
     public function update()
     {
-        $this->validate();
+        // $this->validate();
 
         $this->valorDocumento = str_replace(',', '.', $this->valorDocumento);
         $this->valorDocumento = floatval($this->valorDocumento);

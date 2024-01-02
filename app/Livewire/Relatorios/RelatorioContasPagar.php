@@ -20,9 +20,9 @@ class RelatorioContasPagar extends Component
     public $visualizarDocumentos;
 
     public $clientes;
+    public $tipo = 'Cliente';
     public $mostrarClientes;
     public $clienteRelatorio;
-    public $doc;
 
     public $totais;
 
@@ -36,7 +36,8 @@ class RelatorioContasPagar extends Component
         // $this->dataVencimentoFinal = date('Y-m-d');
     }
 
-    public function fecharRelatorio(){
+    public function fecharRelatorio()
+    {
         $this->visualizarDocumentos = false;
     }
 
@@ -89,9 +90,12 @@ class RelatorioContasPagar extends Component
             'clientes.whatsapp',
             'clientes.status',
             'clientes.tipo',
-        ])->where('status', 'Ativo')->where('tipo', 'Empresa')->get();
+        ])->when($this->tipo, function ($query) {
+            return $query->where('tipo', '=', $this->tipo);
+        });
 
-        $this->clientes = $clientes;
+
+        $this->clientes = $clientes->get();
     }
 
     public function selecioneCliente($cliente)
@@ -100,7 +104,7 @@ class RelatorioContasPagar extends Component
 
         $this->clienteEmpresa = $this->clienteRelatorio->id;
 
-        $this->dispatch('close-clientes');
+        $this->dispatch('close-detalhes');
     }
 
     public function render()

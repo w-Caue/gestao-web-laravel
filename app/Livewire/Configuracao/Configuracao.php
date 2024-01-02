@@ -14,6 +14,7 @@ class Configuracao extends Component
     public $formaDePagamento;
 
     public $newFormaPG;
+    public $modal;
 
     public function mostrarForm()
     {

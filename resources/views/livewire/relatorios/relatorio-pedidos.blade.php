@@ -17,7 +17,7 @@
                                 class="border border-gray-300 text-gray-900 text-md font-semibold rounded w-44 p-1 dark:bg-gray-300">
                         </label>
 
-                        <button x-data x-on:click.prevent="$dispatch('open-clientes')" class="p-1 border rounded text-white bg-blue-500 dark:border-none">
+                        <button x-data x-on:click.prevent="$dispatch('open-detalhes', {name : 'clientes'})" class="p-1 border rounded text-white bg-blue-500 dark:border-none">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -194,8 +194,39 @@
     @endif
 
     {{-- Clientes --}}
-    <x-clientes>
+    <x-modal-detalhes name="clientes" title="Pessoas">
         @slot('body')
+            <div class="flex gap-3 mx-7 md:mb-0">
+                <label for="">
+                    <input wire:model.live='tipo' value="Cliente"
+                        class=" h-5 w-5 appearance-none rounded-full border-2 border-solid border-gray-300 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-blue-600 checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s]"
+                        type="radio" name="tipo" id="radioNoLabel01" />
+                    <span class="text-md font-semibold text-gray-500 dark:text-gray-200">Pessoa</span>
+                </label>
+
+                <label for="">
+                    <input wire:model.live='tipo' value="Empresa"
+                        class=" h-5 w-5 appearance-none rounded-full border-2 border-solid border-gray-300 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-blue-600 checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s]"
+                        type="radio" name="tipo" id="radioNoLabel01" />
+                    <span class="text-md font-semibold text-gray-500 dark:text-gray-200">Empresa</span>
+                </label>
+            </div>
+
+            <div class="flex justify-center items-center m-4 gap-1">
+                <input wire:model.live="search" type="text" id="table-search"
+                    class="p-2 text-md font-semibold text-gray-900 border border-gray-200 rounded w-80 focus:ring-gray-100 focus:border-gray-100 dark:bg-gray-300 dark:border-none"
+                    placeholder="Pesquisar Cliente">
+
+                <button wire:click.prevent="pesquisaClientes()"
+                    class="text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 cursor-pointer dark:border-none">
+                    <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                    </svg>
+                </button>
+            </div>
+
             @if ($clientes)
                 <div class="flex justify-center flex-wrap m-3 overflow-auto h-auto max-h-60">
                     @foreach ($clientes as $cliente)
@@ -210,5 +241,5 @@
                 </div>
             @endif
         @endslot
-    </x-clientes>
+    </x-modal-detalhes>
 </div>

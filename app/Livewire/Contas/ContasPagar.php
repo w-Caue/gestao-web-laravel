@@ -27,6 +27,7 @@ class ContasPagar extends Component
     public $documento;
 
     public $status = 'Ativo';
+    public $tipo = 'Cliente';
 
     protected $listeners = [
         'deleteRetorno'
@@ -46,6 +47,7 @@ class ContasPagar extends Component
 
     public function openModal(){
         $this->modal = true;
+        $this->form->dataLancamento = date('Y-m-d');
     }
 
     public function closeModal(){
@@ -61,9 +63,12 @@ class ContasPagar extends Component
             'clientes.whatsapp',
             'clientes.status',
             'clientes.tipo',
-        ])->get();
+        ])->when($this->tipo, function($query){
+            return $query->where('tipo', '=', $this->tipo);
+        });
 
-        $this->clientes = $clientes;
+
+        $this->clientes = $clientes->get();
     }
 
     public function selecioneCliente($cliente)
@@ -75,6 +80,7 @@ class ContasPagar extends Component
 
     public function criarDocumento()
     {
+
         $this->form->save();
 
         $this->closeModal();
