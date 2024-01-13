@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('clientes', function (Blueprint $table) {
-            $table->string('tipo')->default('Cliente')->after('status');
+        Schema::table('pessoas', function (Blueprint $table) {
+            $table->unsignedBigInteger('endereco_id')->after('tipo');
         });
     }
 
@@ -21,8 +21,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('clientes', function (Blueprint $table) {
-            $table->dropColumn('tipo');
+        Schema::table('pessoas', function(Blueprint $table){
+            $table->dropForeign('pessoas_endereco_id_foreign');
+
+            $table->dropColumn('endereco_id');
         });
     }
 };

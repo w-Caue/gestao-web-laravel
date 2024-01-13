@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('cliente_id');
+            $table->unsignedBigInteger('pessoa_id');
             $table->timestamps();
 
-            $table->foreign('cliente_id')->references('id')->on('clientes');
+            $table->foreign('pessoa_id')->references('id')->on('pessoas');
         });
 
         Schema::create('pedidos_itens', function (Blueprint $table) {

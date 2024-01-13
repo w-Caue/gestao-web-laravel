@@ -2,11 +2,11 @@
 
 namespace App\Livewire\Forms;
 
-use App\Models\Cliente;
+use App\Models\Pessoa;
 use Livewire\Attributes\Rule;
 use Livewire\Form;
 
-class ClienteForm extends Form
+class PessoaForm extends Form
 {
 
     public $codigoCliente = '';
@@ -31,7 +31,7 @@ class ClienteForm extends Form
 
         $this->validate();
 
-        Cliente::create([
+        Pessoa::create([
             'nome' => $this->nome,
             'email' => $this->email,
             'whatsapp' => $this->whatsapp,
@@ -39,7 +39,7 @@ class ClienteForm extends Form
         ]);
     }
 
-    public function pesquisaCliente(Cliente $cliente)
+    public function pesquisaCliente(Pessoa $cliente)
     {
 
         $this->codigoCliente = $cliente->id;
@@ -66,7 +66,7 @@ class ClienteForm extends Form
             $this->tipo = 'Cliente';
         }
 
-        Cliente::findOrFail($this->codigoCliente)->update([
+        Pessoa::findOrFail($this->codigoCliente)->update([
             'nome' => $this->nome,
             'email' => $this->email,
             'whatsapp' => $this->whatsapp,

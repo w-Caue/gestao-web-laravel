@@ -36,9 +36,9 @@ Route::middleware([
         return view('pages.produto.index');
     })->name('produtos');
 
-    Route::get('/clientes', function () {
-        return view('pages.cliente.index');
-    })->name('clientes');
+    Route::get('/pessoal', function () {
+        return view('pages.pessoal.index');
+    })->name('pessoal');
 
     Route::get('/pedidos', function () {
         return view('pages.pedido.index');

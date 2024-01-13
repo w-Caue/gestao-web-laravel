@@ -1,26 +1,27 @@
 <?php
 
-namespace App\Livewire\Cliente;
+namespace App\Livewire\Pessoal;
 
-use App\Livewire\Forms\ClienteForm;
-use App\Models\Cliente;
+use App\Livewire\Forms\PessoaForm;
+use App\Models\Pessoa;
 use App\Traits\WithModal;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class Clientes extends Component
+class Pessoas extends Component
 {
     use LivewireAlert;
 
     use WithPagination;
 
-    public ClienteForm $form;
+    public PessoaForm $form;
 
     public $search = '';
     public $modal = false;
 
     public $cliente;
+    public $pessoal;
 
     public $codigoCliente;
     public $tipo = 'Cliente';
@@ -29,13 +30,23 @@ class Clientes extends Component
         'delete'
     ];
 
-    public function show(Cliente $cliente)
+    protected $rules = [
+        'cliente.nome',
+        'cliente.email',
+        'cliente.whatsapp',
+    ];
+
+    public function show(Pessoa $cliente)
     {
         $this->codigoCliente = $cliente->id;
-        $this->form->pesquisaCliente($cliente);
-        $this->modal = true;
+        $this->pesquisaCliente($cliente);
     }
 
+    public function pesquisaCliente($cliente){
+        $this->cliente = Pessoa::where('id', '=', $cliente->id)->get()->first();
+    }
+
+    
     public function closeModal()
     {
         $this->resetValidation();
@@ -90,7 +101,7 @@ class Clientes extends Component
     public function delete()
     {
 
-        Cliente::where('id', $this->codigoCliente)->update([
+        Pessoa::where('id', $this->codigoCliente)->update([
             'status' => 'Deletado'
         ]);
 
@@ -105,7 +116,7 @@ class Clientes extends Component
 
     public function render()
     {
-        $clientes = Cliente::where('nome', 'like', '%' . $this->search . '%')
+        $clientes = Pessoa::where('nome', 'like', '%' . $this->search . '%')
             ->where('status', 'Ativo')
             ->where('tipo', $this->tipo)->paginate(5);
 

@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('contas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('cliente_id');
+            $table->unsignedBigInteger('pessoas_id');
             $table->string('descricao', 120)->nullable();
             $table->dateTime('data_lancamento');
             $table->dateTime('data_vencimento');
             $table->float('valor_documento', 9, 2);
             $table->timestamps();
 
-            $table->foreign('cliente_id')->references('id')->on('clientes');
+            $table->foreign('pessoas_id')->references('id')->on('pessoas');
         });
     }
 
@@ -30,8 +30,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('contas', function(Blueprint $table){
-            $table->dropForeign('contas_cliente_id_foreign');
-            $table->dropColumn('cliente_id');
+            $table->dropForeign('contas_pessoa_id_foreign');
+            $table->dropColumn('pessoa_id');
         });
 
         Schema::dropIfExists('contas');
