@@ -1,40 +1,75 @@
 <?php
 
 namespace App\Livewire\Pessoal;
-
 use App\Models\Pessoa;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class ListagemPessoas extends Component
 {
-    public $load = false;
+    use LivewireAlert;
 
-    public function load()
-    {
-        $this->load = true;
-    }
+    public $pessoa;
+
+    protected $listeners = [
+        'delete'
+    ];
 
     public function dados()
     {
-        $clientes = Pessoa::select(
+        $pessoas = Pessoa::select(
             [
-                'clientes.id',
-                'clientes.nome',
-                'clientes.email',
-                'clientes.whatsapp',
-                'clientes.tipo',
+                'pessoas.id',
+                'pessoas.nome',
+                'pessoas.email',
+                'pessoas.whatsapp',
+                'pessoas.status',
+                'pessoas.tipo',
+                'pessoas.created_at',
             ]
         )->paginate(5);
 
         
-        return $clientes;
+        return $pessoas;
+    }
+
+    public function remover(Pessoa $pessoa)
+    {
+        $this->pessoa = $pessoa;
+        $this->alert('info', 'Deletar esse Cadastro?', [
+            'position' => 'center',
+            'timer' => 5000,
+            'toast' => false,
+            'showConfirmButton' => true,
+            'confirmButtonColor' => '#d33',
+            'onConfirmed' => 'delete',
+            'showCancelButton' => true,
+            'cancelButtonColor' => '#3085d6',
+            'onDismissed' => '',
+            'cancelButtonText' => 'Cancelar',
+            'confirmButtonText' => 'Deletar',
+        ]);
+    }
+
+    public function delete()
+    {
+
+        Pessoa::where('id', $this->pessoa->id)->update([
+            'status' => 'Deletado'
+        ]);
+
+        $this->alert('success', 'Cliente Deletado!', [
+            'position' => 'center',
+            'timer' => '1000',
+            'toast' => false,
+        ]);
     }
 
     public function render()
     {
         
-        return view('livewire.cliente.listagem-clientes',[
-            'clientes' => $this->dados(),
+        return view('livewire.pessoal.listagem-pessoas',[
+            'pessoas' => $this->dados(),
         ]);
     }
 }

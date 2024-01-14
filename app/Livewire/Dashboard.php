@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Cliente;
 use App\Models\Conta;
 use App\Models\Pedido;
+use App\Models\Pessoa;
 use Livewire\Component;
 
 class Dashboard extends Component
@@ -14,7 +15,7 @@ class Dashboard extends Component
     public $contas;
 
     public function mount(){
-        $clientes = Cliente::all()->count();
+        $clientes = Pessoa::all()->count();
         $this->clientes = $clientes;
 
         $pedidos = Pedido::where('status', 'Aberto')->get()->count();

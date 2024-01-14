@@ -1,7 +1,7 @@
 <div>
     <div class="flex gap-3">
         {{-- Card --}}
-        <a href="{{ route('pessoal') }}"
+        <a href="{{ route('pessoal.index') }}"
             class="flex p-3 items-center w-56 bg-white rounded-lg shadow md:flex-row cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700">
             <div class="border p-2 rounded-full bg-purple-500 dark:border-none">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7 text-white">

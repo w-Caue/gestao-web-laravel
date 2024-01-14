@@ -28,7 +28,7 @@
 <body class="font-sans antialiased">
     <x-banner />
 
-    <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
+    <div class="flex h-screen bg-gray-200 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
         @include('layouts.sidebar')
 
         <div class="flex flex-col flex-1 w-full">

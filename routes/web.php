@@ -32,13 +32,21 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
+    Route::prefix('/pessoal')->name('pessoal.')->group(function () {
+        Route::get('/', function () {
+            return view('pages.pessoal.index');
+        })->name('index');
+
+        Route::get('/{codigo}', function () {
+            return view('pages.pessoal.show');
+        })->name('show');
+
+    });
+
+
     Route::get('/produtos', function () {
         return view('pages.produto.index');
     })->name('produtos');
-
-    Route::get('/pessoal', function () {
-        return view('pages.pessoal.index');
-    })->name('pessoal');
 
     Route::get('/pedidos', function () {
         return view('pages.pedido.index');
@@ -53,7 +61,6 @@ Route::middleware([
         Route::get('/contas-pagar', function () {
             return view('pages.contas.contas-pagar');
         })->name('contas-pagar');
-
     });
 
     Route::get('/relatorios', function () {
@@ -69,7 +76,6 @@ Route::middleware([
         Route::get('/contas-pagar', function () {
             return view('pages.relatorios.relatorio-contas-pagar');
         })->name('relatorio-contas-pagar');
-
     });
 
     Route::get('/configuracao', function () {

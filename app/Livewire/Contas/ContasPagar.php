@@ -8,6 +8,7 @@ use App\Models\AgenteCobrador;
 use App\Models\Cliente;
 use App\Models\Conta;
 use App\Models\FormaPagamento;
+use App\Models\Pessoa;
 use Faker\Core\Number;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -57,12 +58,12 @@ class ContasPagar extends Component
 
     public function pesquisaClientes()
     {
-        $clientes = Cliente::select([
-            'clientes.id',
-            'clientes.nome',
-            'clientes.whatsapp',
-            'clientes.status',
-            'clientes.tipo',
+        $clientes = Pessoa::select([
+            'pessoas.id',
+            'pessoas.nome',
+            'pessoas.whatsapp',
+            'pessoas.status',
+            'pessoas.tipo',
         ])->when($this->tipo, function($query){
             return $query->where('tipo', '=', $this->tipo);
         });
@@ -73,7 +74,7 @@ class ContasPagar extends Component
 
     public function selecioneCliente($cliente)
     {
-        $this->form->clienteDocumento = Cliente::where('id', $cliente)->get()->first();
+        $this->form->clienteDocumento = Pessoa::where('id', $cliente)->get()->first();
 
         $this->dispatch('close-detalhes');
     }

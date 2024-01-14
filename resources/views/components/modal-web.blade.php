@@ -1,5 +1,5 @@
 @props(['title'])
-<div x-data="{ show: true }" x-show="show" x-on:open-modal.window="show = true" x-on:close-modal.window="show = false"
+<div x-data="{ show: false }" x-show="show" x-on:open-modal.window="show = true" x-on:close-modal.window="show = false"
     class="fixed z-50 inset-0" x-transition.duration.400ms style="display: none">
     <div class="fixed inset-0 bg-gray-900 opacity-40">
     </div>

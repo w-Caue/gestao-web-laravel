@@ -57,9 +57,9 @@ class Pessoas extends Component
     {
         $this->form->save();
 
-        $this->modal = false;
+        $this->dispatch('close-modal');
 
-        $this->alert('success', 'Cliente Cadastrado', [
+        $this->alert('success', 'Cadastro Realizado', [
             'position' => 'center',
             'timer' => 2000,
             'toast' => false,
@@ -81,47 +81,8 @@ class Pessoas extends Component
         ]);
     }
 
-    public function remover()
-    {
-        $this->alert('info', 'Deletar o Cadastro Desse Cliente?', [
-            'position' => 'center',
-            'timer' => 5000,
-            'toast' => false,
-            'showConfirmButton' => true,
-            'confirmButtonColor' => '#d33',
-            'onConfirmed' => 'delete',
-            'showCancelButton' => true,
-            'cancelButtonColor' => '#3085d6',
-            'onDismissed' => '',
-            'cancelButtonText' => 'Cancelar',
-            'confirmButtonText' => 'Deletar',
-        ]);
-    }
-
-    public function delete()
-    {
-
-        Pessoa::where('id', $this->codigoCliente)->update([
-            'status' => 'Deletado'
-        ]);
-
-        $this->modal = false;
-
-        $this->alert('success', 'Cliente Deletado!', [
-            'position' => 'center',
-            'timer' => '1000',
-            'toast' => false,
-        ]);
-    }
-
     public function render()
     {
-        $clientes = Pessoa::where('nome', 'like', '%' . $this->search . '%')
-            ->where('status', 'Ativo')
-            ->where('tipo', $this->tipo)->paginate(5);
-
-        return view('livewire.cliente.clientes', [
-            'clientes' => $clientes
-        ]);
+        return view('livewire.pessoal.pessoal');
     }
 }

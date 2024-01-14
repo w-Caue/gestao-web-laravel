@@ -11,31 +11,28 @@ class PessoaForm extends Form
 
     public $codigoCliente = '';
 
-    #[Rule('required', message: 'O campo nome tem que ser preenchido!')]
-    #[Rule('min:3', message: 'O campo nome tem que ter mais de 3 caracteres!')]
+    // #[Rule('required', message: 'O campo nome tem que ser preenchido!')]
+    // #[Rule('min:3', message: 'O campo nome tem que ter mais de 3 caracteres!')]
     public $nome = '';
 
     public $email = '';
 
     public $whatsapp = '';
 
-    public $tipo;
+    public $tipo = [];
 
     public function save()
     {
-        if($this->tipo == true){
-            $this->tipo = 'Empresa';
-        } else {
-            $this->tipo = 'Cliente';
-        }
+        // $this->validate();
 
-        $this->validate();
+        $this->tipo = implode(',', $this->tipo);
 
         Pessoa::create([
             'nome' => $this->nome,
             'email' => $this->email,
             'whatsapp' => $this->whatsapp,
             'tipo' => $this->tipo,
+            'endereco_id' => 1,
         ]);
     }
 

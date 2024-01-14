@@ -4,6 +4,7 @@ namespace App\Livewire\Forms;
 
 use App\Models\Cliente;
 use App\Models\Conta;
+use App\Models\Pessoa;
 use Livewire\Attributes\Rule;
 use Livewire\Form;
 
@@ -43,7 +44,7 @@ class ContasPagarForm extends Form
 
         $this->codigoDocumento = $documento->id;
 
-        $this->clienteDocumento = Cliente::where('id', $documento->cliente_id)->get()->first();
+        $this->clienteDocumento = Pessoa::where('id', $documento->cliente_id)->get()->first();
         $this->descricao = $documento->descricao;
         $this->dataLancamento = date('Y-m-d', strtotime($documento->data_lancamento));
         $this->agenteCobrador = $documento->ag_cobrador_id;

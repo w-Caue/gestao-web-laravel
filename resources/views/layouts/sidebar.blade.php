@@ -26,11 +26,11 @@
         <ul>
             <li class="relative px-6 py-3">
                 <!-- Active items have the snippet below -->
-                @if (request()->routeIs('pessoal'))
+                @if (request()->routeIs('pessoal.index'))
                     @include('includes.ative-sidebar')
                 @endif
 
-                <a href=" {{ route('pessoal') }}"
+                <a href="{{ route('pessoal.index') }}"
                     class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                     href="../forms.html">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -203,7 +203,7 @@
         </ul>
         <ul>
             <li class="relative px-6 py-3">
-                <a href=" {{ route('pessoal') }}"
+                <a href=" {{ route('pessoal.index') }}"
                     class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                     href="../forms.html">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
