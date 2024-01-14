@@ -32,7 +32,6 @@ class PessoaForm extends Form
             'email' => $this->email,
             'whatsapp' => $this->whatsapp,
             'tipo' => $this->tipo,
-            'endereco_id' => 1,
         ]);
     }
 

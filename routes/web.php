@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PessoalController;
+use App\Livewire\Pessoal\CadastroPessoas;
 use App\Mail\MensagemMail;
 use Illuminate\Support\Facades\Route;
 
@@ -37,9 +39,7 @@ Route::middleware([
             return view('pages.pessoal.index');
         })->name('index');
 
-        Route::get('/{codigo}', function () {
-            return view('pages.pessoal.show');
-        })->name('show');
+        Route::get('/{codigo}', [PessoalController::class, 'show'])->name('show');
 
     });
 

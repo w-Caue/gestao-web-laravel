@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('contas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('pessoas_id');
+            $table->unsignedBigInteger('pessoa_id');
             $table->string('descricao', 120)->nullable();
             $table->dateTime('data_lancamento');
             $table->dateTime('data_vencimento');
             $table->float('valor_documento', 9, 2);
             $table->timestamps();
 
-            $table->foreign('pessoas_id')->references('id')->on('pessoas');
+            $table->foreign('pessoa_id')->references('id')->on('pessoas');
         });
     }
 
