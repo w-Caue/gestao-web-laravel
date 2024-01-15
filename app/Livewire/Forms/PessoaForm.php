@@ -25,13 +25,13 @@ class PessoaForm extends Form
     {
         // $this->validate();
 
-        $this->tipo = implode(',', $this->tipo);
+        $tipo = implode(',', $this->tipo);
 
         Pessoa::create([
             'nome' => $this->nome,
             'email' => $this->email,
             'whatsapp' => $this->whatsapp,
-            'tipo' => $this->tipo,
+            'tipo' => $tipo,
         ]);
     }
 

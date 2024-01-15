@@ -35,19 +35,19 @@
                                 <label for="">
                                     <input wire:model.live="form.tipo"
                                         class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] bg-gray-200 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-['']"
-                                        type="checkbox" value="C" id="checkboxChecked" />
+                                        type="checkbox" value="Cliente" id="checkboxChecked" />
                                     <span class="text-gray-600 dark:text-gray-300">Cliente</span>
                                 </label>
                                 <label for="">
                                     <input wire:model.live="form.tipo"
                                         class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] bg-gray-200 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-['']"
-                                        type="checkbox" value="F" id="checkboxChecked" />
+                                        type="checkbox" value="Funcionario" id="checkboxChecked" />
                                     <span class="text-gray-600 dark:text-gray-300">Funcionario</span>
                                 </label>
                                 <label for="">
                                     <input wire:model.live="form.tipo"
                                         class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] bg-gray-200 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-['']"
-                                        type="checkbox" value="E" id="checkboxChecked" />
+                                        type="checkbox" value="Empresa" id="checkboxChecked" />
                                     <span class="text-gray-600 dark:text-gray-300">Empresa</span>
                                 </label>
                             </div>

@@ -27,10 +27,10 @@ class ListagemPessoas extends Component
                 'pessoas.tipo',
                 'pessoas.created_at',
             ]
-        )->paginate(5);
+        );
 
         
-        return $pessoas;
+        return $pessoas->paginate(5);
     }
 
     public function remover(Pessoa $pessoa)

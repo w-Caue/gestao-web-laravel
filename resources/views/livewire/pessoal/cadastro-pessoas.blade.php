@@ -1,11 +1,8 @@
 <div x-cloak x-data="{ form: 'cadastro' }">
 
-    <div class="flex gap-2 mx-2 text-lg text-white">
-        <button :class="{ 'active font-bold text-purple-500 rounded-t bg-white dark:bg-gray-700': form === 'cadastro' }"
+    <div class="flex gap-2 mx-2 text-lg text-gray-700 dark:text-white">
+        <button :class="{ 'active font-bold rounded-t bg-white dark:bg-gray-700': form === 'cadastro' }"
             class="p-1 font-semibold" x-on:click="form = 'cadastro'">Cadastro</button>
-
-        <button :class="{ 'active font-bold text-purple-500 rounded-t bg-white dark:bg-gray-700': form === 'informacoes' }"
-            class="p-1 font-semibold" x-on:click="form = 'informacoes'">Mais Info.</button>
 
     </div>
 
@@ -31,19 +28,19 @@
                             <label for="">
                                 <input wire:model.live="form.tipo"
                                     class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-['']"
-                                    type="checkbox" value="C" id="checkboxChecked" />
+                                    type="checkbox" value="Cliente" id="checkboxChecked" />
                                 <span class="text-gray-600 dark:text-gray-300">Cliente</span>
                             </label>
                             <label for="">
-                                <input wire:model.live="form.tipo"
+                                <input wire:model="form.tipo"
                                     class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-['']"
-                                    type="checkbox" value="F" id="checkboxChecked" />
+                                    type="checkbox" value="Funcionario" id="checkboxChecked" />
                                 <span class="text-gray-600 dark:text-gray-300">Funcionario</span>
                             </label>
                             <label for="">
-                                <input wire:model.live="form.tipo"
+                                <input wire:model="form.tipo"
                                     class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-['']"
-                                    type="checkbox" value="E" id="checkboxChecked" />
+                                    type="checkbox" value="Empresa" id="checkboxChecked" />
                                 <span class="text-gray-600 dark:text-gray-300">Empresa</span>
                             </label>
                         </div>
@@ -101,7 +98,7 @@
                             class="appearance-none w-full sm:w-44 text-gray-700 bg-white border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:bg-gray-300"
                             id="grid-first-name" type="date">
 
-                        @error('form.dataNasc')
+                        @error('form.dataNascimento')
                             <span class="error dark:text-red-500">{{ $message }}</span>
                         @enderror
                     </label>
@@ -109,11 +106,11 @@
                     <label class="flex flex-col uppercase tracking-wide font-bold mb-2" for="grid-first-name">
                         <span>Data do Cadastro</span>
 
-                        <input wire:model="form.dataNasc"
+                        <input wire:model="form.dataCadastro"
                             class="appearance-none w-full sm:w-44 text-gray-700 bg-white border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:bg-gray-300"
-                            id="grid-first-name" type="date">
+                            id="grid-first-name" type="date" disabled>
 
-                        @error('form.dataNasc')
+                        @error('form.dataCadastro')
                             <span class="error dark:text-red-500">{{ $message }}</span>
                         @enderror
                     </label>
@@ -136,10 +133,8 @@
                     </div>
 
                 </div>
-            </div>
 
-            <div x-show=" form === 'informacoes'">
-                <div class="flex flex-wrap gap-4 mx-2">
+                <div class="flex flex-wrap gap-4 border-t border-gray-300 p-2 mx-2 dark:border-white">
                     <label class="my-2">
                         <span for="cep" class="font-semibold">CEP</span>
                         <div class="flex items-center">
