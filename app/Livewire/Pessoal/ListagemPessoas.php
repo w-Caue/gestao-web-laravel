@@ -4,12 +4,17 @@ namespace App\Livewire\Pessoal;
 use App\Models\Pessoa;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ListagemPessoas extends Component
 {
     use LivewireAlert;
 
+    use WithPagination;
+
     public $pessoa;
+
+    public $pesquisa;
 
     protected $listeners = [
         'delete'
@@ -27,7 +32,10 @@ class ListagemPessoas extends Component
                 'pessoas.tipo',
                 'pessoas.created_at',
             ]
-        );
+        ) #Filtros
+        ->when($this->pesquisa, function ($query) {
+            return $query->where('nome', 'LIKE', "%".$this->pesquisa);
+        });
 
         
         return $pessoas->paginate(5);
