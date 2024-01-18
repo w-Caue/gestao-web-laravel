@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string('email', 120)->nullable();
             $table->string('whatsapp', 12)->nullable();
             $table->string('status')->default('Ativo');
-            $table->string('tipo')->default('Cliente');
+            $table->string('tipo_cliente')->nullable();
+            $table->string('tipo_funcionario')->nullable();
+            $table->string('tipo_empresa')->nullable();
             $table->dateTime('data_nascimento')->nullable();
             $table->dateTime('data_cadatro')->nullable();
             $table->timestamps();

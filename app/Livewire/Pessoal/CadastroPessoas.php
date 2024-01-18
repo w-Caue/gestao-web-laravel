@@ -10,11 +10,21 @@ class CadastroPessoas extends Component
 {
     public CadastroPessoasForm $form;
 
-    public Pessoa $pessoa;
+    public $pessoa;
+    public $tipo = 'true';
 
+    public function rules() 
+    {
+        return [
+            'pessoa.nome' => 'required|min:3',
+        ];
+    }
     
     public function mount(Pessoa $codigo){
         $this->form->pessoa($codigo);
+
+        // $this->pessoa = Pessoa::where('id','=', $codigo->id)->get()->first();
+        
         // dd($this->pessoa);
     }
 

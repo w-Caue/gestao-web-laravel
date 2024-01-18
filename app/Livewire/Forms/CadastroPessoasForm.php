@@ -16,12 +16,12 @@ class CadastroPessoasForm extends Form
     public $whatsapp;
     public $dataNascimento;
     public $dataCadastro;
-    public $tipo = 'Cliente';
+    public $tipoCliente;
+    public $tipoFuncionario;
+    public $tipoEmpresa;
 
     public function pessoa(Pessoa $pessoa){
         $pessoa = Pessoa::where('id', '=', $pessoa->id)->get()->first();
-
-        
 
         $this->codigo = $pessoa->id;
         $this->nome = $pessoa->nome;
@@ -30,7 +30,8 @@ class CadastroPessoasForm extends Form
         $this->whatsapp = $pessoa->whatsapp;
         $this->dataNascimento = date('Y-m-d', strtotime($pessoa->data_nascimento));
         $this->dataCadastro = date('Y-m-d', strtotime($pessoa->created_at));
-        $this->tipo = $pessoa->tipo;
-        // dd($this->tipo);
+        $this->tipoCliente = $pessoa->tipo_cliente;
+        $this->tipoFuncionario = $pessoa->funcionario;
+        $this->tipoEmpresa = $pessoa->tipo_empresa;
     }
 }

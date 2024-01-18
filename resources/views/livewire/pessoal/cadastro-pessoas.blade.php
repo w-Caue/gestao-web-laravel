@@ -25,22 +25,22 @@
                         <span>Tipo</span>
 
                         <div class="sm:w-56 flex flex-wrap gap-3">
-                            <label for="">
-                                <input wire:model.live="form.tipo"
+                            <label for="cliente">
+                                <input wire:model="form.tipoCliente"
                                     class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-['']"
-                                    type="checkbox" value="Cliente" id="checkboxChecked" />
+                                    type="checkbox" value="Cliente" id="checkboxChecked" @if ($form->tipoCliente == 1) checked @endif />
                                 <span class="text-gray-600 dark:text-gray-300">Cliente</span>
                             </label>
                             <label for="">
                                 <input wire:model="form.tipo"
                                     class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-['']"
-                                    type="checkbox" value="Funcionario" id="checkboxChecked" />
+                                    type="checkbox" value="Funcionario" id="checkboxChecked" @if ($form->tipoFuncionario == 1) checked @endif />
                                 <span class="text-gray-600 dark:text-gray-300">Funcionario</span>
                             </label>
                             <label for="">
                                 <input wire:model="form.tipo"
                                     class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-['']"
-                                    type="checkbox" value="Empresa" id="checkboxChecked" />
+                                    type="checkbox" value="Empresa" id="checkboxChecked" @if ($form->tipoEmpresa == 1) checked @endif />
                                 <span class="text-gray-600 dark:text-gray-300">Empresa</span>
                             </label>
                         </div>
@@ -55,7 +55,7 @@
                     <label class="flex flex-col uppercase tracking-wide font-bold mb-2" for="grid-first-name">
                         <span>Nome</span>
 
-                        <input wire:model.defer="form.nome"
+                        <input wire:model.live="form.nome"
                             class="appearance-none w-full sm:w-96 text-gray-700 bg-white border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:bg-gray-300"
                             id="grid-first-name" type="text">
 

@@ -24,16 +24,9 @@ class Pessoas extends Component
     public $pessoal;
 
     public $codigoCliente;
-    public $tipo = 'Cliente';
 
     protected $listeners = [
         'delete'
-    ];
-
-    protected $rules = [
-        'cliente.nome',
-        'cliente.email',
-        'cliente.whatsapp',
     ];
 
     public function show(Pessoa $cliente)
@@ -60,20 +53,6 @@ class Pessoas extends Component
         $this->dispatch('close-modal');
 
         $this->alert('success', 'Cadastro Realizado', [
-            'position' => 'center',
-            'timer' => 2000,
-            'toast' => false,
-            'text' => 'com sucesso',
-        ]);
-    }
-
-    public function update()
-    {
-        $this->form->update();
-
-        $this->modal = false;
-
-        $this->alert('success', 'Cliente Atualizado', [
             'position' => 'center',
             'timer' => 2000,
             'toast' => false,

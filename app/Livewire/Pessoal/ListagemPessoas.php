@@ -29,7 +29,9 @@ class ListagemPessoas extends Component
                 'pessoas.email',
                 'pessoas.whatsapp',
                 'pessoas.status',
-                'pessoas.tipo',
+                'pessoas.tipo_cliente',
+                'pessoas.tipo_funcionario',
+                'pessoas.tipo_empresa',
                 'pessoas.created_at',
             ]
         ) #Filtros

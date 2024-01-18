@@ -62,7 +62,7 @@
                                     <div>
                                         <p class="font-semibold">{{ $pessoa->nome }}</p>
                                         <p class="text-xs text-gray-600 dark:text-gray-400">
-                                            {{ $pessoa->tipo }}
+                                            {{ $pessoa->tipo_cliente ? 'Cliente' : ''}} {{ $pessoa->tipo_funcionario ? 'Funcionario' : ''}} {{ $pessoa->tipo_empresa ? 'Empresa' : ''}}
                                         </p>
                                     </div>
                                 </div>

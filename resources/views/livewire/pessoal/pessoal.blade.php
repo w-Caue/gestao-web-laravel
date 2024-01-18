@@ -33,21 +33,21 @@
 
                             <div class="w-56 flex flex-wrap gap-3">
                                 <label for="">
-                                    <input wire:model.live="form.tipo"
+                                    <input wire:model.live="form.tipoCliente"
                                         class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] bg-gray-200 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-['']"
-                                        type="checkbox" value="Cliente" id="checkboxChecked" />
+                                        type="checkbox" value="S" id="checkboxChecked" />
                                     <span class="text-gray-600 dark:text-gray-300">Cliente</span>
                                 </label>
                                 <label for="">
-                                    <input wire:model.live="form.tipo"
+                                    <input wire:model.live="form.tipoFuncionario"
                                         class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] bg-gray-200 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-['']"
-                                        type="checkbox" value="Funcionario" id="checkboxChecked" />
+                                        type="checkbox" value="S" id="checkboxChecked" />
                                     <span class="text-gray-600 dark:text-gray-300">Funcionario</span>
                                 </label>
                                 <label for="">
-                                    <input wire:model.live="form.tipo"
+                                    <input wire:model.live="form.tipoEmpresa"
                                         class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] bg-gray-200 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-['']"
-                                        type="checkbox" value="Empresa" id="checkboxChecked" />
+                                        type="checkbox" value="S" id="checkboxChecked" />
                                     <span class="text-gray-600 dark:text-gray-300">Empresa</span>
                                 </label>
                             </div>
@@ -102,7 +102,7 @@
 
                     </div>
                     <div class="flex justify-center mt-3">
-                        <button wire:click="save()"
+                        <button
                             class="text-white text-lg font-semibold border p-2 my-2 rounded-md bg-green-600 transition-all duration-300 hover:scale-95 hover:bg-green-700 dark:border-none">
                             Cadastrar
                         </button>
