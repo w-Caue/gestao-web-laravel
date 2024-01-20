@@ -43,10 +43,15 @@ Route::middleware([
 
     });
 
+    Route::prefix('/produto')->name('produto.')->group(function () {
+        Route::get('/', function () {
+            return view('pages.produto.index');
+        })->name('index');
 
-    Route::get('/produtos', function () {
-        return view('pages.produto.index');
-    })->name('produtos');
+        // Route::get('/{codigo}', [PessoalController::class, 'show'])->name('show');
+
+    });
+
 
     Route::get('/pedidos', function () {
         return view('pages.pedido.index');

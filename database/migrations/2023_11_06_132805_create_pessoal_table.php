@@ -18,11 +18,11 @@ return new class extends Migration
             $table->string('email', 120)->nullable();
             $table->string('whatsapp', 12)->nullable();
             $table->string('status')->default('Ativo');
-            $table->string('tipo_cliente')->nullable();
-            $table->string('tipo_funcionario')->nullable();
-            $table->string('tipo_empresa')->nullable();
+            $table->string('tipo_cliente')->default('N')->nullable();
+            $table->string('tipo_funcionario')->default('N')->nullable();
+            $table->string('tipo_fornecedor')->default('N')->nullable();
+            $table->string('cliente_ecommerce')->default('N')->nullable();
             $table->dateTime('data_nascimento')->nullable();
-            $table->dateTime('data_cadatro')->nullable();
             $table->timestamps();
         });
     }

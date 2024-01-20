@@ -1,14 +1,27 @@
 <div x-cloak x-data="{ form: 'cadastro' }">
 
     <div class="flex gap-2 mx-2 text-lg text-gray-700 dark:text-white">
-        <button :class="{ 'active font-bold rounded-t bg-white dark:bg-gray-700': form === 'cadastro' }"
-            class="p-1 font-semibold" x-on:click="form = 'cadastro'">Cadastro</button>
+        <button :class="{ 'active font-bold rounded-t bg-white dark:bg-gray-800': form === 'cadastro' }"
+            class="p-1 font-semibold" x-on:click="form = 'cadastro'">
+            Cadastro
+        </button>
+
+        <button :class="{ 'active font-bold rounded-t bg-white dark:bg-gray-800': form === 'endereco' }"
+            class="p-1 font-semibold" x-on:click="form = 'endereco'">
+            Endereço
+        </button>
 
     </div>
 
     <div class="mx-2">
-        <form wire:submit.prevent="save()"
-            class="w-full font-semibold rounded-b-lg rounded-tr-lg text-sm text-gray-700 bg-white dark:text-white dark:bg-gray-700">
+        <div class=" rounded-tr-lg bg-white dark:bg-gray-800">
+            <button wire:click="update()"
+                class="m-2 w-20 gap-2 text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-purple-600 dark:border-none">
+                Salvar
+            </button>
+        </div>
+        <form
+            class="w-full font-semibold rounded-b-lg  text-sm text-gray-700 bg-white dark:text-white dark:bg-gray-800">
             <div x-show=" form === 'cadastro'">
                 <div class="flex justify-between flex-wrap gap-4 px-3 py-3">
 
@@ -28,20 +41,23 @@
                             <label for="cliente">
                                 <input wire:model="form.tipoCliente"
                                     class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-['']"
-                                    type="checkbox" value="Cliente" id="checkboxChecked" @if ($form->tipoCliente == 1) checked @endif />
+                                    type="checkbox" id="checkboxChecked"
+                                    @if ($form->tipoCliente == 'S') checked @endif />
                                 <span class="text-gray-600 dark:text-gray-300">Cliente</span>
                             </label>
                             <label for="">
-                                <input wire:model="form.tipo"
+                                <input wire:model="form.tipoFuncionario"
                                     class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-['']"
-                                    type="checkbox" value="Funcionario" id="checkboxChecked" @if ($form->tipoFuncionario == 1) checked @endif />
+                                    type="checkbox" id="checkboxChecked"
+                                    @if ($form->tipoFuncionario == 'S') checked @endif />
                                 <span class="text-gray-600 dark:text-gray-300">Funcionario</span>
                             </label>
                             <label for="">
-                                <input wire:model="form.tipo"
+                                <input wire:model="form.tipoFornecedor"
                                     class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-['']"
-                                    type="checkbox" value="Empresa" id="checkboxChecked" @if ($form->tipoEmpresa == 1) checked @endif />
-                                <span class="text-gray-600 dark:text-gray-300">Empresa</span>
+                                    type="checkbox" id="checkboxChecked"
+                                    @if ($form->tipoFornecedor == 'S') checked @endif />
+                                <span class="text-gray-600 dark:text-gray-300">Fornecedor</span>
                             </label>
                         </div>
 
@@ -94,7 +110,7 @@
                     <label class="flex flex-col uppercase tracking-wide font-bold mb-2" for="grid-first-name">
                         <span>Data Nascimento</span>
 
-                        <input wire:model="form.dataNasc"
+                        <input wire:model="form.dataNascimento"
                             class="appearance-none w-full sm:w-44 text-gray-700 bg-white border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:bg-gray-300"
                             id="grid-first-name" type="date">
 
@@ -133,8 +149,9 @@
                     </div>
 
                 </div>
-
-                <div class="flex flex-wrap gap-4 border-t border-gray-300 p-2 mx-2 dark:border-white">
+            </div>
+            <div x-show=" form === 'endereco'">
+                <div class="flex flex-wrap gap-4 border-gray-300 p-2 mx-2 dark:border-white">
                     <label class="my-2">
                         <span for="cep" class="font-semibold">CEP</span>
                         <div class="flex items-center">

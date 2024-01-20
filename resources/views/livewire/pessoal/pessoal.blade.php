@@ -45,10 +45,10 @@
                                     <span class="text-gray-600 dark:text-gray-300">Funcionario</span>
                                 </label>
                                 <label for="">
-                                    <input wire:model.live="form.tipoEmpresa"
+                                    <input wire:model.live="form.tipoFornecedor"
                                         class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] bg-gray-200 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-['']"
                                         type="checkbox" value="S" id="checkboxChecked" />
-                                    <span class="text-gray-600 dark:text-gray-300">Empresa</span>
+                                    <span class="text-gray-600 dark:text-gray-300">Fornecedor</span>
                                 </label>
                             </div>
 

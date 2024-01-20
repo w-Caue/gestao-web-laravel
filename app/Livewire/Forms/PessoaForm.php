@@ -18,13 +18,31 @@ class PessoaForm extends Form
 
     public $whatsapp = '';
 
-    public $tipoCliente = '';
-    public $tipoFuncionario = '';
-    public $tipoEmpresa = '';
+    public $tipoCliente;
+    public $tipoFuncionario;
+    public $tipoFornecedor;
 
     public function save()
     {
         // $this->validate();
+
+        if ($this->tipoCliente == true) {
+            $this->tipoCliente = 'S';
+        } else {
+            $this->tipoCliente = 'N';
+        }
+        
+        if ($this->tipoFuncionario == true) {
+            $this->tipoFuncionario = 'S';
+        } else {
+            $this->tipoFuncionario = 'N';
+        }
+
+        if ($this->tipoFornecedor == true) {
+            $this->tipoFornecedor = 'S';
+        } else {
+            $this->tipoFornecedor = 'N';
+        }
 
         Pessoa::create([
             'nome' => $this->nome,
@@ -32,7 +50,7 @@ class PessoaForm extends Form
             'whatsapp' => $this->whatsapp,
             'tipo_cliente' => $this->tipoCliente,
             'tipo_funcionario' => $this->tipoFuncionario,
-            'tipo_empresa' => $this->tipoEmpresa,
-        ]);   
+            'tipo_fornecedor' => $this->tipoFornecedor,
+        ]);
     }
 }

@@ -24,5 +24,6 @@ class DatabaseSeeder extends Seeder
         $this->call(FormaPagamentoSeeder::class);
         $this->call(StatusSeeder::class);
         $this->call(AgenteCobradorSeeder::class);
+        $this->call(MarcaSeeder::class);
     }
 }

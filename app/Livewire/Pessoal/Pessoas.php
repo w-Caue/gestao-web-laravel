@@ -18,32 +18,30 @@ class Pessoas extends Component
     public PessoaForm $form;
 
     public $search = '';
-    public $modal = false;
 
-    public $cliente;
-    public $pessoal;
+    public $pessoa;
 
-    public $codigoCliente;
+    public $codigoPessoa;
 
     protected $listeners = [
         'delete'
     ];
 
-    public function show(Pessoa $cliente)
+    public function show(Pessoa $pessoa)
     {
-        $this->codigoCliente = $cliente->id;
-        $this->pesquisaCliente($cliente);
+        $this->codigoPessoa = $pessoa->id;
+        $this->pesquisaPessoa($pessoa);
     }
 
-    public function pesquisaCliente($cliente){
-        $this->cliente = Pessoa::where('id', '=', $cliente->id)->get()->first();
+    public function pesquisaPessoa($pessoa){
+        $this->pessoa = Pessoa::where('id', '=', $pessoa->id)->get()->first();
     }
 
     
     public function closeModal()
     {
         $this->resetValidation();
-        $this->modal = false;
+        $this->dispatch('close-modal');
     }
 
     public function save()

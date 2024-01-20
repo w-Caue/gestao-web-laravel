@@ -31,7 +31,7 @@ class ListagemPessoas extends Component
                 'pessoas.status',
                 'pessoas.tipo_cliente',
                 'pessoas.tipo_funcionario',
-                'pessoas.tipo_empresa',
+                'pessoas.tipo_fornecedor',
                 'pessoas.created_at',
             ]
         ) #Filtros
