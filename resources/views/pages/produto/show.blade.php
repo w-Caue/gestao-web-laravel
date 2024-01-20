@@ -26,7 +26,7 @@
                                 d="m1 9 4-4-4-4" />
                         </svg>
                         <a href="{{ route('produto.index') }}"
-                            class="ms-1 text-sm font-semibold text-purple-500 hover:text-purple-600 dark:text-gray-500">Produto</a>
+                            class="ms-1 text-sm font-semibold text-purple-500 hover:text-purple-600 dark:text-gray-500">Produtos</a>
                     </div>
                 </li>
                 <li aria-current="page">
@@ -36,13 +36,13 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="m1 9 4-4-4-4" />
                         </svg>
-                        <span class="ms-1 text-sm font-semibold text-purple-500 hover:text-purple-600 dark:text-gray-500">Cadastro</span>
+                        <span class="ms-1 text-sm font-semibold text-purple-500 hover:text-purple-600 dark:text-gray-500">Produto {{$codigo}}</span>
                     </div>
                 </li>
             </ol>
         </nav>
     </div>
 
-    {{-- @livewire('Pessoal.CadastroPessoas', ['codigo' => $codigo]) --}}
+    @livewire('Produto.CadastroProdutos', ['codigo' => $codigo])
 
 </x-app-layout>

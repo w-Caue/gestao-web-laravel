@@ -25,5 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call(StatusSeeder::class);
         $this->call(AgenteCobradorSeeder::class);
         $this->call(MarcaSeeder::class);
+        $this->call(GrupoSeeder::class);
+        $this->call(SubGrupoSeeder::class);
     }
 }
