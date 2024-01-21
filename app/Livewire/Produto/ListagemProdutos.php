@@ -10,15 +10,26 @@ class ListagemProdutos extends Component
 {
     use WithPagination;
 
+    public $readyLoad = false;
+
+    public $search;
+
+    public function load(){
+        $this->readyLoad = true;
+    }
+
     public function dados(){
         $produtos = Produto::select([
             'produtos.id',
             'produtos.nome',
             'produtos.descricao',
-            'produtos.marca',
+            'produtos.marca_id',
             'produtos.unidade_medida_id',
             'produtos.preco_1',
-        ]);
+        ]) #Filtros
+        ->when($this->search, function ($query) {
+            return $query->where('nome', 'like', "%".$this->search."%");
+        });
 
         return $produtos->paginate(5);
     }
@@ -26,7 +37,7 @@ class ListagemProdutos extends Component
     public function render()
     {
         return view('livewire.produto.listagem-produtos', [
-            'produtos' => $this->dados(),
+            'produtos' => $this->readyLoad ? $this->dados() : [],
         ]);
     }
 }

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('produtos', function(Blueprint $table){
-            $table->unsignedBigInteger('unidade_medida_id')->nullable()->after('marca');
+            $table->unsignedBigInteger('unidade_medida_id')->nullable()->after('descricao');
             $table->foreign('unidade_medida_id')->references('id')->on('unidade_medidas');
         });
     }

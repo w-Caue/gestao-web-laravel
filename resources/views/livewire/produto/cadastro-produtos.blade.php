@@ -164,13 +164,13 @@
             </div>
             <div x-show=" form === 'estoque'">
                 <div class="flex flex-wrap items-end">
-                    <div class="w-32 sm:w-44 px-3">
+                    <div class="w-32 px-3">
                         <label class="block uppercase tracking-wide font-bold mb-2" for="grid-first-name">
                             Estoque
                         </label>
                         <input wire:model="form.estoque"
-                            class="appearance-none block w-full text-gray-700 bg-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-300"
-                            id="grid-first-name" type="text" placeholder="">
+                            class="appearance-none block w-full text-gray-700 bg-gray-200 rounded py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-300"
+                            id="grid-first-name" type="text" disabled>
 
                         @error('form.codigoBarras')
                             <span class="error">{{ $message }}</span>
@@ -183,7 +183,7 @@
                         <label class="block uppercase tracking-wide font-bold mb-2" for="grid-first-name">
                             Vl. de Custo
                         </label>
-                        <input wire:model="form.vlCusto"
+                        <input wire:model="form.vlcusto"
                             class="appearance-none block w-full text-gray-700 bg-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-300"
                             id="grid-first-name" type="text" placeholder="">
 
@@ -196,7 +196,7 @@
                         <label class="block uppercase tracking-wide font-bold mb-2" for="grid-first-name">
                             Vl. de Custo Real
                         </label>
-                        <input wire:model="form.vlCustoReal"
+                        <input wire:model="form.vlcustoReal"
                             class="appearance-none block w-full text-gray-700 bg-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-300"
                             id="grid-first-name" type="text" placeholder="">
 

@@ -2,10 +2,11 @@
 
     <button x-data x-on:click="$dispatch('open-modal')"
         class="flex justify-center w-44 gap-2 text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 dark:border-none">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-            class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+        <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            viewBox="0 0 24 24" stroke="currentColor">
+            <path
+                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+            </path>
         </svg>
 
         Novo Produto
@@ -66,10 +67,10 @@
                                         id="grid-state">
                                         <option value=""></option>
 
-                                        @foreach ($unidadeMedidas as $medida)
+                                        {{-- @foreach ($unidadesMedidas as $medida)
                                             <option class="font-semibold" value="{{ $medida->id }}">
                                                 {{ $medida->nome }}</option>
-                                        @endforeach
+                                        @endforeach --}}
 
                                     </select>
                                 </div>
@@ -82,14 +83,14 @@
                                     Marca
                                 </label>
                                 <div class="relative">
-                                    <select wire:model="form.unidadeMedida"
+                                    <select wire:model="form.marca"
                                         class="appearance-none block w-full text-gray-700 bg-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-400"
                                         id="grid-state">
                                         <option value=""></option>
 
-                                        @foreach ($unidadeMedidas as $medida)
-                                            <option class="font-semibold" value="{{ $medida->id }}">
-                                                {{ $medida->nome }}</option>
+                                        @foreach ($marcas as $marca)
+                                            <option class="font-semibold" value="{{ $marca->id }}">
+                                                {{ $marca->nome }}</option>
                                         @endforeach
 
                                     </select>

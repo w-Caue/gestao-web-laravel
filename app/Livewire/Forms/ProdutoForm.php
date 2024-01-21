@@ -16,7 +16,6 @@ class ProdutoForm extends Form
     #[Rule('required|min:5')]
     public $descricao;
 
-    #[Rule('min:2')]
     public $marca;
 
     #[Rule('required')]
@@ -28,7 +27,7 @@ class ProdutoForm extends Form
 
     public function save()
     {
-        $this->validate();
+        // $this->validate();
 
         $this->preco1 = str_replace(',', '.', $this->preco1);
         $this->preco1 = floatval($this->preco1);
@@ -37,14 +36,16 @@ class ProdutoForm extends Form
         $this->vlcusto = str_replace(',', '.', $this->vlcusto);
         $this->vlcusto = floatval($this->vlcusto);
 
+
         Produto::create([
             'nome' => $this->nome,
             'descricao' => $this->descricao,
-            'marca' => $this->marca,
+            'marca_id' => $this->marca,
             'unidade_medida_id' => $this->unidadeMedida,
             'valor_custo' => $this->vlcusto,
             'preco_1' => $this->preco1,
             'preco_2' => $this->preco2,
+            'codigo_barras' => '1234567890123',
         ]);
     }
 

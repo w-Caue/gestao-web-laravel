@@ -4,6 +4,7 @@ namespace App\Livewire\Produto;
 
 use App\Livewire\Forms\ItemForm;
 use App\Livewire\Forms\ProdutoForm;
+use App\Models\Marca;
 use App\Models\Produto;
 use App\Models\UnidadeMedida;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -14,64 +15,52 @@ class Produtos extends Component
 {
     use LivewireAlert;
 
-    use WithPagination;
-
     public ProdutoForm $form;
 
-    public $search = '';
+    public $unidadesMedidas;
+    public $marcas;
 
-    public $modal = false;
-
-    public $codigoProduto;
+    public function mount()
+    {
+        $this->paramentros();
+    }
 
     public function show(Produto $produto)
     {
-        $this->codigoProduto = $produto->id;
 
         $this->form->pesquisarProduto($produto);
-        $this->modal = true;
     }
 
     public function closeModal()
     {
-        $this->modal = false;
+        $this->reset();
+        $this->dispatch('close-modal');
     }
 
     public function save()
     {
         $this->form->save();
 
-        $this->modal = false;
+        $this->closeModal();
 
-        $this->alert('success', 'Item Cadastrado!', [
+        $this->alert('success', 'Produto Cadastrado!', [
             'position' => 'center',
             'timer' => '1000',
             'toast' => false,
         ]);
+
+        header("Refresh: 0");
     }
 
-    public function update()
+    public function paramentros()
     {
-        $this->form->update();
+        $this->unidadesMedidas = UnidadeMedida::all();
 
-        $this->modal = false;
-
-        $this->alert('success', 'Cadastro Salvo!', [
-            'position' => 'center',
-            'timer' => '1000',
-            'toast' => false,
-        ]);
+        $this->marcas = Marca::all();
     }
 
     public function render()
     {
-        $produtos = Produto::where('nome', 'like', '%' . $this->search . '%')->paginate(5);
-
-        $unidadeMedidas = UnidadeMedida::all();
-
-        return view('livewire.produto.produtos', [
-            'produtos' => $produtos,
-            'unidadeMedidas' => $unidadeMedidas
-        ]);
+        return view('livewire.produto.produtos');
     }
 }

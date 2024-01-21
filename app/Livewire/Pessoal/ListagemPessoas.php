@@ -16,9 +16,15 @@ class ListagemPessoas extends Component
 
     public $pesquisa;
 
+    public $readyLoad = false;
+
     protected $listeners = [
         'delete'
     ];
+
+    public function load(){
+        $this->readyLoad = true;
+    }
 
     public function dados()
     {
@@ -79,7 +85,7 @@ class ListagemPessoas extends Component
     {
         
         return view('livewire.pessoal.listagem-pessoas',[
-            'pessoas' => $this->dados(),
+            'pessoas' => $this->readyLoad ? $this->dados() : [],
         ]);
     }
 }

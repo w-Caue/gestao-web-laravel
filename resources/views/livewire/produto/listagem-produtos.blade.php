@@ -1,4 +1,7 @@
-<div>
+<div wire:init="load">
+
+    @include('includes.loading')
+
     <div class="flex justify-normal sm:justify-between items-end gap-2 sm:gap-0 flex-wrap my-2 ">
         <div class="md:mb-0">
             <label for="table-search" class="sr-only">Pesquisa</label>
@@ -10,7 +13,7 @@
                             d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                     </svg>
                 </div>
-                <input wire:model.live="pesquisa" type="text" id="table-search"
+                <input wire:model.live="search" type="text" id="table-search"
                     class="p-2 pl-10 text-sm text-gray-600 font-semibold rounded-lg sm:w-80 bg-white dark:bg-gray-800 dark:text-white"
                     placeholder="Pesquisar">
             </div>
@@ -60,13 +63,13 @@
                                 </div>
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                {{ $produto->marca }}
+                                {{ $produto->marca->nome }}
                             </td>
                             <td class="px-4 py-3 text-xs">
                                 {{ $produto->unidadeMedida->nome }}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                {{ number_format($produto->preco_1, 2 ,','); }}
+                                {{ number_format($produto->preco_1, 2, ',', '.') }}
                             </td>
                             <td class="px-4 py-3">
                                 <div class="flex items-center space-x-2 text-sm">
@@ -107,6 +110,31 @@
                 </tbody>
             </table>
         </div>
-
     </div>
+
+    <x-modal-filter>
+        @slot('body')
+            <div class="md:mb-0">
+                <label for="table-search" class="sr-only">Pesquisa Descrição</label>
+                <div class="relative mt-2">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                        </svg>
+                    </div>
+                    <input wire:model.live="search" type="text" id="table-search"
+                        class="p-2 pl-10 text-sm text-gray-600 font-semibold rounded-lg sm:w-80 bg-white dark:bg-gray-800 dark:text-white"
+                        placeholder="Pesquisar pela Descrição">
+                </div>
+            </div>
+        @endslot
+        @slot('button')
+            <button
+                class="w-full px-2 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                Buscar
+            </button>
+        @endslot
+    </x-modal-filter>
 </div>

@@ -16,6 +16,12 @@ return new class extends Migration
             $table->string('nome', 20);
             $table->timestamps();
         });
+
+        Schema::table('produtos', function (Blueprint $table) {
+            $table->unsignedBigInteger('marca_id')->after('estoque')->nullable(); 
+
+            $table->foreign('marca_id')->references('id')->on('marcas');
+        });
     }
 
     /**
@@ -23,6 +29,12 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('produtos', function (Blueprint $table) {
+            $table->dropForeign('produtos_marca_id_foreign');
+
+            $table->dropColumn('marca_id'); 
+        });
+
         Schema::dropIfExists('marcas');
     }
 };

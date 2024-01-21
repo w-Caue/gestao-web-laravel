@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('nome', 30);
             $table->string('descricao', 100)->nullable();
-            $table->string('marca', 30);
             $table->float('valor_custo', 9, 2)->nullable();
+            $table->float('valor_custo_real', 9, 2)->nullable();
             $table->float('preco_1', 9, 2)->nullable();
             $table->float('preco_2', 9, 2)->nullable();
             $table->integer('estoque')->nullable();
+            $table->string('codigo_barras', 13);
             $table->timestamps();
         });
     }

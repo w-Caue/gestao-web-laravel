@@ -7,10 +7,13 @@ use App\Models\Grupo;
 use App\Models\Marca;
 use App\Models\SubGrupo;
 use App\Models\UnidadeMedida;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class CadastroProdutos extends Component
 {
+    use LivewireAlert;
+
     public CadastroProdutoForm $form;
 
     public $unidadeMedidas;
@@ -28,6 +31,16 @@ class CadastroProdutos extends Component
         $this->marcas = Marca::all();
         $this->grupos = Grupo::all();
         $this->subgrupos = SubGrupo::all();
+    }
+
+    public function update(){
+        $this->form->update();
+
+        $this->alert('success', 'Produto Atualizado!', [
+            'position' => 'center',
+            'timer' => '1000',
+            'toast' => false,
+        ]);
     }
 
     public function render()

@@ -17,8 +17,8 @@ class CadastroProdutoForm extends Form
     public $grupo;
     public $subgrupo;
 
-    public $vlCusto;
-    public $vlCustoReal;
+    public $vlcusto;
+    public $vlcustoReal;
     public $preco1;
     public $preco2;
 
@@ -31,14 +31,41 @@ class CadastroProdutoForm extends Form
         $this->nome = $produto->nome;
         $this->descricao = $produto->descricao;
         $this->unidadeMedida = $produto->unidade_medida_id;
-        // $this->codigoBarras = $produto->codigo_barras;
-        $this->marca = $produto->marca;
-        $this->grupo = $produto->grupo;
-        $this->subgrupo = $produto->subgrupo;
-        $this->vlCusto = number_format($produto->valor_custo, 2 ,',');
-        // $this->vlCustoReal = $produto->valor_custo_real;
+        $this->codigoBarras = $produto->codigo_barras;
+        $this->marca = $produto->marca_id;
+        $this->grupo = $produto->grupo_id;
+        $this->subgrupo = $produto->subgrupo_id;
+        $this->vlcusto = number_format($produto->valor_custo, 2 ,',');
+        $this->vlcustoReal = number_format($produto->valor_custo_real, 2 ,',');
         $this->preco1 = number_format($produto->preco_1, 2 ,',');
         $this->preco2 = number_format($produto->preco_2, 2 ,',');
 
+    }
+
+    public function update(){
+
+        $this->preco1 = str_replace(',', '.', $this->preco1);
+        $this->preco1 = floatval($this->preco1);
+        $this->preco2 = str_replace(',', '.', $this->preco2);
+        $this->preco2 = floatval($this->preco2);
+        $this->vlcusto = str_replace(',', '.', $this->vlcusto);
+        $this->vlcusto = floatval($this->vlcusto);
+        $this->vlcustoReal = str_replace(',', '.', $this->vlcustoReal);
+        $this->vlcustoReal = floatval($this->vlcustoReal);
+
+
+        Produto::findOrFail($this->codigoProduto)->update([
+            'nome' => $this->nome,
+            'descricao' => $this->descricao,
+            'unidade_medida_id' => $this->unidadeMedida,
+            'unidade_barras' => $this->codigoBarras,
+            'marca_id' => $this->marca,
+            'grupo_id' => $this->grupo,
+            'subgrupo_id' => $this->subgrupo,
+            'valor_custo' => $this->vlcusto,
+            'valor_custo_real' => $this->vlcustoReal,
+            'preco_1' => $this->preco1,
+            'preco_2' => $this->preco2,
+        ]);
     }
 }
