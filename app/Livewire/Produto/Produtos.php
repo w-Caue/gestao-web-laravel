@@ -17,8 +17,8 @@ class Produtos extends Component
 
     public ProdutoForm $form;
 
-    public $unidadesMedidas;
-    public $marcas;
+    public $unidadesMedidas = [];
+    public $marcas = [];
 
     public function mount()
     {
@@ -49,7 +49,7 @@ class Produtos extends Component
             'toast' => false,
         ]);
 
-        header("Refresh: 0");
+        $this->js('window.location.reload()');
     }
 
     public function paramentros()

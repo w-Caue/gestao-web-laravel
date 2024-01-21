@@ -65,7 +65,13 @@
                                     <div>
                                         <p class="font-semibold">{{ $pessoa->nome }}</p>
                                         <p class="text-xs text-gray-600 dark:text-gray-400">
-                                            @if ($pessoa->tipo_cliente == 'S') Cliente @endif  @if ($pessoa->tipo_funcionario == 'S') Funcionario @endif @if ($pessoa->tipo_fornecedor == 'S') Fornecedor @endif
+                                            @if ($pessoa->tipo_cliente == 'S')
+                                                Cliente
+                                                @endif @if ($pessoa->tipo_funcionario == 'S')
+                                                    Funcionario
+                                                    @endif @if ($pessoa->tipo_fornecedor == 'S')
+                                                        Fornecedor
+                                                    @endif
                                         </p>
                                     </div>
                                 </div>
@@ -184,7 +190,39 @@
 
     <x-modal-filter>
         @slot('body')
-            teste
+            <div class="flex gap-4">
+                <div>
+                    <span class="font-semibold text-gray-700 dark:text-gray-400">Status</span>
+                    <label class="flex">
+                        <input wire:model.live="status" type="radio" name="status" value="Ativo"
+                            class="shrink-0 mt-0.5 border-gray-200 rounded-full text-purple-600 focus:ring-purple-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-purple-500 dark:checked:border-purple-500 dark:focus:ring-offset-gray-800">
+                        <label for="status" class="text-sm text-gray-500 ms-2 dark:text-gray-400">Ativos</label>
+                    </label>
+                    <label class="flex">
+                        <input wire:model.live="status" type="radio" name="status" value="Deletado"
+                            class="shrink-0 mt-0.5 border-gray-200 rounded-full text-purple-600 focus:ring-purple-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-purple-500 dark:checked:border-purple-500 dark:focus:ring-offset-gray-800">
+                        <label for="status" class="text-sm text-gray-500 ms-2 dark:text-gray-400">Deletados</label>
+                    </label>
+                </div>
+                <div>
+                    <span class="font-semibold text-gray-700 dark:text-gray-400">Tipo</span>
+                    <label class="flex">
+                        <input wire:model.live="tipo" type="radio" name="tipo" value="Cliente"
+                            class="shrink-0 mt-0.5 border-gray-200 rounded-full text-purple-600 focus:ring-purple-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-purple-500 dark:checked:border-purple-500 dark:focus:ring-offset-gray-800">
+                        <label for="tipo" class="text-sm text-gray-500 ms-2 dark:text-gray-400">Cliente</label>
+                    </label>
+                    <label class="flex">
+                        <input wire:model.live="tipo" type="radio" name="tipo" value="Funcionario"
+                            class="shrink-0 mt-0.5 border-gray-200 rounded-full text-purple-600 focus:ring-purple-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-purple-500 dark:checked:border-purple-500 dark:focus:ring-offset-gray-800">
+                        <label for="tipo" class="text-sm text-gray-500 ms-2 dark:text-gray-400">Funcionario</label>
+                    </label>
+                    <label class="flex">
+                        <input wire:model.live="tipo" type="radio" name="tipo" value="Fornecedor"
+                            class="shrink-0 mt-0.5 border-gray-200 rounded-full text-purple-600 focus:ring-purple-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-purple-500 dark:checked:border-purple-500 dark:focus:ring-offset-gray-800">
+                        <label for="tipo" class="text-sm text-gray-500 ms-2 dark:text-gray-400">Fornecedor</label>
+                    </label>
+                </div>
+            </div>
         @endslot
         @slot('button')
             <button

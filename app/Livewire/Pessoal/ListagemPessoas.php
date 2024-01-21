@@ -16,6 +16,9 @@ class ListagemPessoas extends Component
 
     public $pesquisa;
 
+    #Filtros
+    public $status = 'Ativo';
+
     public $readyLoad = false;
 
     protected $listeners = [
@@ -42,7 +45,10 @@ class ListagemPessoas extends Component
             ]
         ) #Filtros
         ->when($this->pesquisa, function ($query) {
-            return $query->where('nome', 'LIKE', "%".$this->pesquisa);
+            return $query->where('nome', 'like', "%".$this->pesquisa);
+        })
+        ->when($this->status, function ($query) {
+            return $query->where('status', '=', $this->status);
         });
 
         
@@ -74,7 +80,7 @@ class ListagemPessoas extends Component
             'status' => 'Deletado'
         ]);
 
-        $this->alert('success', 'Cliente Deletado!', [
+        $this->alert('success', 'Cadastro Deletado!', [
             'position' => 'center',
             'timer' => '1000',
             'toast' => false,

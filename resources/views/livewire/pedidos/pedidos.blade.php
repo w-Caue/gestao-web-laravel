@@ -1,125 +1,115 @@
 <div>
-    <div class="flex justify-between items-center flex-col sm:flex-row my-2 mx-7">
-        <div class="">
-            <label for="table-search" class="sr-only">Pesquisa</label>
-            <div class="relative mt-1">
-                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                    <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 20 20">
+
+    <button x-data x-on:click="$dispatch('open-modal')"
+        class="flex justify-center w-full sm:w-44 gap-2 text-white font-semibold border p-3 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 dark:border-none">
+        <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 19 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M6 15a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0h8m-8 0-1-4m9 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm1-4H5m0 0L3 4m0 0h5.501M3 4l-.792-3H1m11 3h6m-3 3V1" />
+        </svg>
+        Novo Pedido
+    </button>
+
+    <x-modal-web :javaScript="false" title="Criar Pedido" wire:model="modal">
+
+        @slot('body')
+            <button x-on:click="$dispatch('close-modal')"
+                class=" absolute right-2 top-4 p-1 m-1 border rounded dark:text-white hover:bg-red-500 hover:border-red-500">
+                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                </svg>
+            </button>
+
+            <div class="mx-2">
+                <form wire:submit.prevent="save()"
+                    class="w-full max-w-2xl font-semibold rounded-lg text-md text-gray-700 bg-white dark:text-white dark:bg-gray-700">
+                    <div class="mx-3">
+                        <label for="pagamento" class="block mb-2 uppercase font-semibold text-gray-900 dark:text-white">
+                            Cliente
+                        </label>
+                        <div class="flex gap-1 my-2">
+                            <input
+                                class="appearance-none w-56 text-gray-700 bg-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-400"
+                                id="grid-first-name" type="text" value="{{ $clientePedido->nome ?? '' }}">
+                            <button x-data x-on:click.prevent="$dispatch('open-detalhes')"
+                                class=" text-white bg-blue-500 p-2 border-blue-500 rounded text-md font-semibold hover:shadow-xl hover:bg-blue-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mx-3">
+                        <label for="pagamento" class="block mb-2 uppercase font-semibold text-gray-900 dark:text-white">
+                            Forma de Pagamento
+                        </label>
+                        <select wire:model="formaDePagamento" id="pagamento"
+                            class="appearance-none block w-56 text-gray-700 bg-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-400">
+                            <option selected></option>
+
+                            @foreach ($formasPagamentos as $formaPagamento)
+                                <option value="{{ $formaPagamento->id }}"
+                                    class="font-semibold text-md text-gray-600 bg-white dark:bg-gray-300">
+                                    {{ $formaPagamento->nome }}</option>
+                            @endforeach
+
+                        </select>
+                    </div>
+
+                    <div class="m-3">
+                        <textarea wire:model="descricao" id="message" rows="4"
+                            class="block p-2.5 w-full font-semibold text-gray-600 bg-white rounded-lg border-2 border-gray-300 dark:bg-gray-300"
+                            placeholder="Adicione uma descrição..."></textarea>
+                    </div>
+
+                    <div class="flex justify-center m-4">
+                        <button type="submit"
+                            class="text-white text-lg font-semibold border p-2 my-2 rounded-md bg-green-600 transition-all duration-300 hover:scale-95 hover:bg-green-700 dark:border-none">
+                            Criar Pedido
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        @endslot
+    </x-modal-web>
+
+    <x-modal-detalhes name="clientes" title="Clientes">
+        @slot('body')
+            <div class="flex justify-center items-center m-4 gap-1">
+                <input wire:model.live="search" type="text" id="table-search"
+                    class="p-2 text-md font-semibold text-gray-900 border border-gray-200 rounded w-80 focus:ring-gray-100 focus:border-gray-100 dark:bg-gray-300 dark:border-none"
+                    placeholder="Pesquisar Cliente">
+
+                <button wire:click.prevent="pesquisaClientes()"
+                    class="text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 cursor-pointer dark:border-none">
+                    <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 20 20">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                     </svg>
+                </button>
+            </div>
+
+            {{-- @if ($clientes)
+                <div class="flex justify-center flex-wrap m-3 overflow-auto h-auto max-h-60">
+                    @foreach ($clientes as $cliente)
+                        <div wire:click="selecioneCliente({{ $cliente->id }})"
+                            class="m-2 p-2 text-gray-400 shadow border rounded w-44 h-24 hover:bg-gray-100 hover:shadow-xl hover:border-2 cursor-pointer dark:bg-gray-300 dark:hover:bg-gray-400 dark:border-none">
+                            <h1 class="text-sm  font-semibold dark:text-gray-600">#{{ $cliente->id }}</h1>
+                            <h1 class="text-lg font-semibold text-gray-500 dark:text-gray-700">
+                                {{ $cliente->nome }}</h1>
+                            <h1 class="text-sm  font-semibold dark:text-gray-600">{{ $cliente->whatsapp }}</h1>
+                        </div>
+                    @endforeach
                 </div>
-                <input wire:model.live="search" type="text" id="table-search"
-                    class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg md:w-80 bg-white dark:bg-gray-600 dark:text-white"
-                    placeholder="Pesquisar Pedido">
-            </div>
-        </div>
-
-
-        <div class="flex items-center my-2">
-            <div class="flex gap-1 items-start sm:m-1">
-                <label for="data" class="mb-2 text-lg font-semibold text-gray-600">
-                    <input wire:model.lazy="startDate" id="startData" type="date"
-                        class="border border-gray-300 text-gray-600 text-md font-semibold rounded w-36 p-1 dark:text-white dark:bg-gray-600 dark:border-none">
-                </label>
-            </div>
-
-            <span class="font-semibold text-gray-700 text-lg mx-2 dark:text-white">á</span>
-
-            <div class="flex gap-1 items-start m-1">
-                <label for="data" class="mb-2 text-lg font-semibold text-gray-600">
-                    <input wire:model.lazy="endDate" id="endData" type="date"
-                        class="border border-gray-300 text-gray-600 text-md font-semibold rounded w-36 p-1 dark:text-white dark:bg-gray-600 dark:border-none">
-                </label>
-            </div>
-        </div>
-
-
-        <button wire:click="openModal()"
-            class="flex justify-center w-full sm:w-44 gap-2 text-white font-semibold border p-3 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 dark:border-none">
-            <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                viewBox="0 0 19 20">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M6 15a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0h8m-8 0-1-4m9 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm1-4H5m0 0L3 4m0 0h5.501M3 4l-.792-3H1m11 3h6m-3 3V1" />
-            </svg>
-            Novo Pedido
-        </button>
-    </div>
-
-    <div class="mx-7 relative overflow-x-auto shadow-md rounded-lg">
-        <table class="w-full text-sm text-left text-gray-500 dark:text-white">
-            <thead class="text-xs font-semibold text-gray-700 uppercase bg-gray-50 dark:text-white dark:bg-gray-700">
-                <tr>
-                    <th scope="col" class="px-6 py-3 ">
-                        #
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Cliente
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Forma de Pagamento
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Status
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Total Itens
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Desconto
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Total Pedido
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Data do Pedido
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($pedidos as $pedido)
-                    <tr wire:key="{{ $pedido->id }}" wire:click.prevent="show({{ $pedido->id }})"
-                        class="bg-white border-b hover:bg-gray-50 dark:text-gray-100 dark:bg-gray-500 dark:hover:bg-gray-600 dark:border-gray-400 cursor-pointer">
-                        <th scope="row"
-                            class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $pedido->id }}
-                        </th>
-                        <th scope="row"
-                            class="px-6 py-3 text-center font-semibold  whitespace-nowrap dark:text-gray-100">
-                            <button x-data x-on:click="$dispatch('open-modal')"
-                                wire:click.prevent="detalheCliente({{ $pedido->id }})">
-                                {{ $pedido->cliente->nome }}
-                            </button>
-                        </th>
-                        <td class="px-6 py-3 text-center font-semibold">
-                            {{ $pedido->formaPagamento->nome }}
-                        </td>
-                        <td
-                            class="px-6 py-3 text-center font-semibold {{ $pedido->status == 'Concluido' ? 'text-green-600' : '' }} {{ $pedido->status == 'Finalizado' ? 'text-blue-500' : '' }} {{ $pedido->status == 'Autenticado' ? 'text-yellow-500' : '' }} {{ $pedido->status == 'Pendente Pagamento' ? 'text-red-400' : '' }} {{ $pedido->status == 'Encomenda' ? 'text-purple-500' : '' }}">
-                            {{ $pedido->status }}
-                        </td>
-                        <td class="px-6 py-3 text-center font-semibold">
-                            {{ number_format($pedido->total_itens, 2, ',') }}
-                        </td>
-                        <td class="px-6 py-3 text-center font-semibold">
-                            {{ number_format($pedido->desconto, 2, ',') }}
-                        </td>
-                        <td class="px-6 py-3 text-center font-semibold">
-                            {{ number_format($pedido->total_pedido, 2, ',') }}
-                        </td>
-                        <td class="px-6 py-3 text-center font-semibold">
-                            {{ date('d/m/Y', strtotime($pedido->created_at)) }}
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-
-    <div class="mx-7 mt-2">
-        {{ $pedidos->links('layouts.paginate') }}
-    </div>
+            @endif --}}
+        @endslot
+    </x-modal-detalhes>
 
     @if ($modal)
         <x-modal-web title="Novo Pedido" wire:model="modal">
@@ -144,8 +134,8 @@
                                 class="text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 cursor-pointer dark:border-none">
                                 <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                     fill="none" viewBox="0 0 20 20">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                                 </svg>
                             </button>
                         </div>
@@ -463,7 +453,8 @@
 
                             <div class="flex justify-center m-4 gap-3">
                                 @if ($telaPedido->status == 'Finalizado')
-                                    <button x-data x-on:click.prevent="$dispatch('open-detalhes', { name : 'autenticacao' })"
+                                    <button x-data
+                                        x-on:click.prevent="$dispatch('open-detalhes', { name : 'autenticacao' })"
                                         class="text-white font-semibold border p-2 rounded-md bg-indigo-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-600 cursor-pointer dark:border-none">
                                         Autenticar Pedido
                                     </button>
@@ -485,7 +476,7 @@
     @endif
 
     {{-- Detalhe do Cliente --}}
-    <div x-data="{ showDtCliente: false }" x-show="showDtCliente" x-cloak x-on:open-modal.window="showDtCliente = true"
+    {{-- <div x-data="{ showDtCliente: false }" x-show="showDtCliente" x-cloak x-on:open-modal.window="showDtCliente = true"
         x-on:close-modal.window="showDtCliente = false" x-on:keydown.escape.window="showDtCliente = false"
         x-transition.duration.200ms
         class="fixed top-11 left-14 bg-gray-50 border shadow-xl rounded-lg sm:top-40 sm:w-1/3">
@@ -526,6 +517,6 @@
                 {{ $informacoesCliente->email ?? '' }}
             </h1>
         </div>
-    </div>
+    </div> --}}
 
 </div>

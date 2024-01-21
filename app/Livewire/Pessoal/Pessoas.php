@@ -56,8 +56,10 @@ class Pessoas extends Component
             'toast' => false,
             'text' => 'com sucesso',
         ]);
-    }
 
+        $this->js('window.location.reload()');
+    }
+    
     public function render()
     {
         return view('livewire.pessoal.pessoal');

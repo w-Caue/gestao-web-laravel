@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Livewire\Pedido;
+namespace App\Livewire\Pedidos;
 
 use App\Models\Cliente;
 use App\Models\FormaPagamento;
 use App\Models\Item;
 use App\Models\Pedido;
 use App\Models\PedidoItem;
+use App\Models\Pessoa;
 use App\Models\Produto;
 use App\Models\Status;
 use Illuminate\Support\Facades\Date;
@@ -30,7 +31,7 @@ class Pedidos extends Component
 
     #detalhe do cliente
     public $clienteDetalhe;
-    public Cliente $informacoesCliente;
+    public Pessoa $informacoesCliente;
 
     #criar pedido
     public $formaDePagamento;
@@ -85,13 +86,13 @@ class Pedidos extends Component
     public function save()
     {
         Pedido::create([
-            'cliente_id' => $this->clientePedido->id,
+            'pessoa_id' => 1,
             'forma_pagamento_id' => $this->formaDePagamento,
             'descricao' => $this->descricao,
             'status' => 'Aberto'
         ]);
 
-        $this->modal = false;
+        $this->dispatch('close-modal');
 
         $this->alert('success', 'Pedido Criado!', [
             'position' => 'center',
@@ -277,7 +278,7 @@ class Pedidos extends Component
 
     public function pesquisaClientes()
     {
-        $clientes = Cliente::select([
+        $clientes = Pessoa::select([
             'clientes.id',
             'clientes.nome',
             'clientes.whatsapp',
@@ -289,14 +290,14 @@ class Pedidos extends Component
 
     public function selecioneCliente($cliente)
     {
-        $this->clientePedido = Cliente::where('id', $cliente)->get()->first();
+        $this->clientePedido = Pessoa::where('id', $cliente)->get()->first();
 
         $this->dispatch('close-clientes');
     }
 
     public function detalheCliente(Pedido $pedido)
     {
-        $this->informacoesCliente = Cliente::where('id', $pedido->cliente_id)->get()->first();
+        $this->informacoesCliente = Pessoa::where('id', $pedido->cliente_id)->get()->first();
     }
 
     public function fecharDetalheCliente()
@@ -321,7 +322,7 @@ class Pedidos extends Component
 
         $statusPedido = Status::all();
 
-        return view('livewire.pedido.pedidos', [
+        return view('livewire.pedidos.pedidos', [
             'pedidos' => $pedidos,
             'itens' => $itens,
             'formasPagamentos' => $formasPagamentos,

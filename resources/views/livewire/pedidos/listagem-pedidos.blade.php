@@ -38,53 +38,53 @@
                     <tr
                         class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                         <th class="px-4 py-3">#</th>
-                        <th class="px-4 py-3">Nome</th>
-                        <th class="px-4 py-3">Marca</th>
-                        <th class="px-4 py-3">Unidade de Medida</th>
-                        <th class="px-4 py-3">Preço</th>
+                        <th class="px-4 py-3">Cliente</th>
+                        <th class="px-4 py-3">Forma de Pagamento</th>
+                        <th class="px-4 py-3">Status</th>
+                        <th class="px-4 py-3">Total Itens</th>
+                        <th class="px-4 py-3">Desconto</th>
+                        <th class="px-4 py-3">Total Pedido</th>
                         <th class="px-4 py-3">Ações</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                    @foreach ($produtos as $produto)
+                    @foreach ($pedidos as $pedido)
                         <tr class="text-gray-700 dark:text-gray-400">
                             <td class="px-4 py-3 text-sm">
-                                {{ $produto->id }}
+                                {{ $pedido->id }}
                             </td>
                             <td class="px-4 py-3">
                                 <div class="flex items-center text-sm">
                                     <!-- Avatar with inset shadow -->
                                     <div>
-                                        <p class="font-semibold">{{ $produto->nome }}</p>
+                                        <p class="font-semibold">{{ $pedido->pessoa->nome }}</p>
                                         <p class="text-xs text-gray-600 dark:text-gray-400">
-                                            {{ $produto->descricao }}
+                                            {{ $pedido->descricao }}
                                         </p>
                                     </div>
                                 </div>
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                {{-- {{ $produto->marca->nome }} --}}
-                                @if ($produto->marca)
-                                    {{ $produto->marca->nome }}
-                                @else
-                                    Sem Marca
-                                @endif
+                                {{ $pedido->formaPagamento->nome }}
                             </td>
                             <td class="px-4 py-3 text-xs">
-                                {{-- {{ $produto->unidadeMedida->nome }} --}}
-                                @if ($produto->unidadeMedida)
-                                    {{ $produto->unidadeMedida->nome }}
-                                @else
-                                    Sem Unidade de Medida
-                                @endif
+                                <span
+                                    class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                    {{ $pedido->status }}
+                                </span>
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                {{ number_format($produto->preco_1, 2, ',', '.') }}
+                                {{ number_format($pedido->total_itens, 2, ',', '.') }}
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                {{ number_format($pedido->desconto, 2, ',', '.') }}
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                {{ number_format($pedido->total_pedido, 2, ',', '.') }}
                             </td>
                             <td class="px-4 py-3">
                                 <div class="flex items-center space-x-2 text-sm">
-                                    <a href="{{ route('produto.show', ['codigo' => $produto->id]) }}"
-                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg hover:scale-105 dark:hover:text-purple-600 dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                    <a class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg hover:scale-105 dark:hover:text-purple-600 dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                         aria-label="Edit">
                                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                                             <path
@@ -121,6 +121,10 @@
             </table>
         </div>
     </div>
+
+    {{-- <div class="mx-7 mt-2">
+        {{ $pedidos->links('layouts.paginate') }}
+    </div> --}}
 
     <x-modal-filter>
         @slot('body')
