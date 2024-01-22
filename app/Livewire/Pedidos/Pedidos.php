@@ -25,13 +25,9 @@ class Pedidos extends Component
     public $startDate;
     public $endDate;
 
-    #tela de clientes
-    public $clientes;
-    public $clientePedido;
-
-    #detalhe do cliente
-    public $clienteDetalhe;
-    public Pessoa $informacoesCliente;
+    #tela de pessoas
+    public $pessoas;
+    public $pessoaPedido;
 
     #criar pedido
     public $formaDePagamento;
@@ -85,8 +81,8 @@ class Pedidos extends Component
 
     public function save()
     {
-        Pedido::create([
-            'pessoa_id' => 1,
+        $pedido = Pedido::create([
+            'pessoa_id' => $this->pessoaPedido->id,
             'forma_pagamento_id' => $this->formaDePagamento,
             'descricao' => $this->descricao,
             'status' => 'Aberto'
@@ -94,11 +90,26 @@ class Pedidos extends Component
 
         $this->dispatch('close-modal');
 
-        $this->alert('success', 'Pedido Criado!', [
-            'position' => 'center',
-            'timer' => '2000',
-            'toast' => false,
-        ]);
+        $this->redirectRoute('pedidos.show', ['codigo'=> $pedido->id]);
+    }
+
+    public function pesquisaPessoa()
+    {
+        $pessoas = Pessoa::select([
+            'pessoas.id',
+            'pessoas.nome',
+            'pessoas.whatsapp',
+            'pessoas.status',
+        ])->where('status', 'Ativo')->get();
+
+        $this->pessoas = $pessoas;
+    }
+
+    public function pedidoPessoa($pessoa)
+    {
+        $this->pessoaPedido = Pessoa::where('id', $pessoa)->get()->first();
+
+        $this->dispatch('close-detalhes');
     }
 
     public function visualizarPedido(Pedido $pedido)
@@ -274,35 +285,6 @@ class Pedidos extends Component
             'timer' => '1000',
             'toast' => false,
         ]);
-    }
-
-    public function pesquisaClientes()
-    {
-        $clientes = Pessoa::select([
-            'clientes.id',
-            'clientes.nome',
-            'clientes.whatsapp',
-            'clientes.status',
-        ])->where('status', 'Ativo')->where('tipo', 'Cliente')->get();
-
-        $this->clientes = $clientes;
-    }
-
-    public function selecioneCliente($cliente)
-    {
-        $this->clientePedido = Pessoa::where('id', $cliente)->get()->first();
-
-        $this->dispatch('close-clientes');
-    }
-
-    public function detalheCliente(Pedido $pedido)
-    {
-        $this->informacoesCliente = Pessoa::where('id', $pedido->cliente_id)->get()->first();
-    }
-
-    public function fecharDetalheCliente()
-    {
-        $this->clienteDetalhe = false;
     }
 
     public function render()

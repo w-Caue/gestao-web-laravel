@@ -30,8 +30,8 @@
                         </label>
                         <div class="flex gap-1 my-2">
                             <input
-                                class="appearance-none w-56 text-gray-700 bg-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-400"
-                                id="grid-first-name" type="text" value="{{ $clientePedido->nome ?? '' }}">
+                                class="appearance-none w-56 text-gray-600 bg-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-400"
+                                id="grid-first-name" type="text" value="{{ $pessoaPedido->nome ?? '' }}">
                             <button x-data x-on:click.prevent="$dispatch('open-detalhes')"
                                 class=" text-white bg-blue-500 p-2 border-blue-500 rounded text-md font-semibold hover:shadow-xl hover:bg-blue-600">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -82,32 +82,32 @@
         @slot('body')
             <div class="flex justify-center items-center m-4 gap-1">
                 <input wire:model.live="search" type="text" id="table-search"
-                    class="p-2 text-md font-semibold text-gray-900 border border-gray-200 rounded w-80 focus:ring-gray-100 focus:border-gray-100 dark:bg-gray-300 dark:border-none"
+                    class="p-2 pl-10 text-sm text-gray-600 font-semibold rounded-lg sm:w-80 bg-white dark:bg-gray-800 dark:text-white"
                     placeholder="Pesquisar Cliente">
 
-                <button wire:click.prevent="pesquisaClientes()"
+                <button wire:click.prevent="pesquisaPessoa()"
                     class="text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 cursor-pointer dark:border-none">
-                    <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="none" viewBox="0 0 20 20">
+                    <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 20 20">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                     </svg>
                 </button>
             </div>
 
-            {{-- @if ($clientes)
+            @if ($pessoas)
                 <div class="flex justify-center flex-wrap m-3 overflow-auto h-auto max-h-60">
-                    @foreach ($clientes as $cliente)
-                        <div wire:click="selecioneCliente({{ $cliente->id }})"
-                            class="m-2 p-2 text-gray-400 shadow border rounded w-44 h-24 hover:bg-gray-100 hover:shadow-xl hover:border-2 cursor-pointer dark:bg-gray-300 dark:hover:bg-gray-400 dark:border-none">
-                            <h1 class="text-sm  font-semibold dark:text-gray-600">#{{ $cliente->id }}</h1>
-                            <h1 class="text-lg font-semibold text-gray-500 dark:text-gray-700">
-                                {{ $cliente->nome }}</h1>
-                            <h1 class="text-sm  font-semibold dark:text-gray-600">{{ $cliente->whatsapp }}</h1>
+                    @foreach ($pessoas as $pessoa)
+                        <div wire:click="pedidoPessoa({{ $pessoa->id }})"
+                            class="m-2 p-2 text-gray-700 shadow border rounded w-44 h-24 hover:bg-gray-100 hover:shadow-xl hover:border-2 cursor-pointer dark:text-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-none">
+                            <h1 class="text-sm  font-semibold">#{{ $pessoa->id }}</h1>
+                            <h1 class="text-lg font-semibold ">
+                                {{ $pessoa->nome }}</h1>
+                            <h1 class="text-sm  font-semibold ">{{ $pessoa->whatsapp }}</h1>
                         </div>
                     @endforeach
                 </div>
-            @endif --}}
+            @endif
         @endslot
     </x-modal-detalhes>
 
@@ -134,8 +134,8 @@
                                 class="text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 cursor-pointer dark:border-none">
                                 <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                     fill="none" viewBox="0 0 20 20">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                                 </svg>
                             </button>
                         </div>

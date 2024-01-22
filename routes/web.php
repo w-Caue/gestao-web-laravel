@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\PessoalController;
 use App\Http\Controllers\ProdutoController;
 use App\Mail\MensagemMail;
@@ -51,11 +52,15 @@ Route::middleware([
         Route::get('/{codigo}', [ProdutoController::class, 'show'])->name('show');
 
     });
+    
+    Route::prefix('/pedidos')->name('pedidos.')->group(function () {
+        Route::get('/', function () {
+            return view('pages.pedido.index');
+        })->name('index');
 
+        Route::get('/{codigo}', [PedidoController::class, 'show'])->name('show');
 
-    Route::get('/pedidos', function () {
-        return view('pages.pedido.index');
-    })->name('pedidos');
+    });
 
     Route::get('/contas', function () {
         return view('pages.contas.index');
