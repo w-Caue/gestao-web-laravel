@@ -40,7 +40,8 @@
                 </li>
             </ol>
         </nav>
-
     </div>
+
+    @livewire('Pedidos.DetalhePedidos', ['codigo' => $codigo])
 
 </x-app-layout>

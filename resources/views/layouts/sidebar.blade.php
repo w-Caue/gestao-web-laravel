@@ -67,10 +67,10 @@
 
                 <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                     href="{{ route('pedidos.index') }}">
-                    <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                        stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                        <path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
-                        <path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                        stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                     </svg>
                     <span class="ml-4">Pedidos</span>
                 </a>
@@ -251,13 +251,13 @@
                 @if (request()->routeIs('pedidos.*'))
                     @include('includes.ative-sidebar')
                 @endif
-                
+
                 <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                     href="{{ route('pedidos.index') }}">
-                    <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                        stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                        <path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
-                        <path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                        stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                     </svg>
                     <span class="ml-4">Pedidos</span>
                 </a>

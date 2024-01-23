@@ -8,7 +8,7 @@
         class="fixed inset-0 z-30 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
         <div x-on:click ="open = false" class="fixed">
         </div>
-        <div class="w-full px-6 py-4 overflow-hidden bg-white rounded-t-lg dark:bg-gray-800 sm:rounded-lg sm:m-4 sm:max-w-xl">
+        <div class="w-full px-6 py-4 overflow-hidden bg-white rounded-t-lg dark:bg-gray-800 sm:rounded-lg sm:m-4 sm:max-w-4xl">
             <div class="flex justify-between m-1 dark:text-white">
                 <h1 class="text-xl font-semibold text-center">{{ $title }}</h1>
                 <button
