@@ -16,82 +16,6 @@
 </head>
 
 <body class="max-w-screen-xl mx-auto px-5">
-    {{-- <div
-        class="relative sm:flex sm:justify-center sm:items-center  bg-dots-darker bg-center bg-white dark:bg-gray-900 selection:bg-red-500 selection:text-white">
-        @if (Route::has('login'))
-            <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
-                @auth
-                    <a href="{{ url('/dashboard') }}"
-                        class="font-semibold text-gray-800 hover:text-gray-600 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500 dark:text-white dark:hover:text-gray-300">Dashboard</a>
-                @else
-                    <a href="{{ route('login') }}"
-                        class="font-semibold text-gray-800 hover:text-gray-600 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500 dark:text-white dark:hover:text-gray-300">Entrar</a>
-
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}"
-                            class="ml-4 font-semibold text-gray-800 hover:text-gray-600 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500 dark:text-white dark:hover:text-gray-300">Cadastrar</a>
-                    @endif
-                @endauth
-            </div>
-        @endif
-
-
-        <section
-            class="bg-white mt-11 dark:bg-gray-900 bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/hero-pattern.svg')] dark:bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/hero-pattern-dark.svg')]">
-            <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 z-10 relative">
-                <a href="{{ url('/contas') }}"
-                    class="inline-flex justify-between items-center py-1 px-1 pe-4 mb-7 text-sm text-blue-700 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-800">
-                    <span class="text-xs bg-blue-600 rounded-full text-white px-4 py-1.5 me-3">New</span> <span
-                        class="text-sm font-medium">Tela de Contas a Pagar</span>
-                    <svg class="w-2.5 h-2.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="none" viewBox="0 0 6 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m1 9 4-4-4-4" />
-                    </svg>
-                </a>
-                <h1
-                    class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-                    Web Gestão Sistema
-                </h1>
-                <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-200">
-                    Sistema de gestão completo com cadastro de clientes, produtos e pedidos para vendas. Gerencie suas
-                    contas com o Web Gestão
-                </p>
-                <form class="w-full max-w-md mx-auto">
-                    <label for="default-email"
-                        class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Email</label>
-                    <div class="relative">
-                        <div
-                            class="absolute inset-y-0 rtl:inset-x-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
-                                <path
-                                    d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z" />
-                                <path
-                                    d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z" />
-                            </svg>
-                        </div>
-                        <input type="email" id="default-email"
-                            class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Adicione seu email aqui..." required>
-                        <button type="submit"
-                            class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                            Enviar
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <div
-                class="bg-gradient-to-b from-blue-50 to-transparent dark:from-blue-900 w-full h-full absolute top-0 left-0 z-0">
-            </div>
-        </section>
-    </div>
-    <p class="text-gray-300 font-semibold text-center">
-        Desenvolvido por
-        <a href="" class="text-sm text-indigo-500">Code Set7</a>
-    </p> --}}
-
     <header class="flex flex-col lg:flex-row justify-between items-center my-5" x-data="{ open: false }"
         x-init="$watch('open', value => console.log(value))">
         <div class="flex w-full lg:w-auto items-center justify-between">
@@ -173,7 +97,8 @@
 
     <main class="grid lg:grid-cols-2 place-items-center pt-16 pb-8 md:pt-8">
         <div class="py-6 md:order-1 hidden md:block">
-            <img src="https://private-user-images.githubusercontent.com/123313244/299048076-dd1c4271-0777-4c05-b4be-198ec5899800.png" alt="Astronaut in the air" loading="eager" format="avif" />
+            <img src="https://private-user-images.githubusercontent.com/123313244/299048076-dd1c4271-0777-4c05-b4be-198ec5899800.png"
+                alt="Astronaut in the air" loading="eager" format="avif" />
         </div>
         <div>
             <h1 class="text-5xl lg:text-6xl xl:text-7xl font-bold lg:tracking-tight">
