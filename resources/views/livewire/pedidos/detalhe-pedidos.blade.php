@@ -42,40 +42,40 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                        @foreach ($form->pedido->produtos as $produtos)
-                            <tr class="text-gray-700 dark:text-gray-400">
+                        @foreach ($form->pedido->produtos as $item)
+                            <tr wire:key="{{ $item->id }}" class="text-gray-700 dark:text-gray-400">
                                 <td class="px-4 py-3 text-sm">
-                                    {{ $produtos->id}}
+                                    {{ $item->id }}
                                 </td>
                                 <td class="px-4 py-3">
                                     <div class="flex items-center text-sm">
                                         <!-- Avatar with inset shadow -->
                                         <div>
-                                            <p class="font-semibold">{{ $produtos->nome }}</p>
+                                            <p class="font-semibold">{{ $item->nome }}</p>
                                             <p class="text-xs text-gray-600 dark:text-gray-400">
-                                                {{ $produtos->descricao }}
+                                                {{ $item->descricao }}
                                             </p>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="px-4 py-3 text-sm">
-                                    {{ $produtos->marca->nome }}
+                                    {{ $item->marca->nome ?? 'Sem' }}
                                 </td>
                                 <td class="px-4 py-3 text-xs">
                                     <span
                                         class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
-                                        {{ number_format($produtos->preco_1, 2, ',', '.') }}
+                                        {{ number_format($item->preco_1, 2, ',', '.') }}
                                     </span>
                                 </td>
                                 <td class="px-4 py-3 text-sm">
-                                    {{ $produtos->quantidade }}
+                                    {{ $item->pivot->quantidade }}
                                 </td>
-                                <td class="px-4 py-3 text-sm">
-                                    {{ number_format($produtos->total, 2, ',', '.') }}
+                                <td class="px-4 py-3 text-sm text-center">
+                                    {{ number_format($item->pivot->total, 2, ',', '.') }}
                                 </td>
                                 <td class="px-4 py-3">
                                     <div class="flex items-center space-x-2 text-sm">
-                                        <button
+                                        <button wire:click="removerProduto({{ $item->id }})"
                                             class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg hover:scale-95 dark:hover:text-purple-600
                                              dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                             aria-label="Delete">
@@ -122,16 +122,16 @@
                 </button>
             </div>
 
-            {{-- @if ($produtos)
+            @if ($produtos)
                 <div class="flex flex-wrap gap-4 justify-center">
                     @foreach ($produtos as $produto)
-                        <div wire:key="{{$produto->id}}" wire:click="produtoPedido({{ $produto->id }})"
+                        <div wire:key="{{ $produto->id }}" wire:click="produtoPedido({{ $produto->id }})"
                             class=" w-56 text-md font-semibold text-gray-700 p-2 my-1 bg-gray-100 border rounded-lg hover:scale-95 transition-all dark:border-gray-700 dark:text-white dark:bg-gray-700 cursor-pointer">
                             <span class="text-blue-500">#{{ $produto->id }}</span>
 
                             <div class="flex justify-between my-1">
                                 <p class="flex flex-wrap">{{ $produto->nome }}</p>
-                                <p class="text-gray-600 dark:text-gray-400">{{ $produto->marca->nome }}</p>
+                                <p class="text-gray-600 dark:text-gray-400">{{ $produto->marca->nome ?? '' }}</p>
                             </div>
 
                             <p class="flex flex-wrap text-sm text-gray-600 dark:text-gray-400">{{ $produto->descricao }}
@@ -158,7 +158,8 @@
                     </div>
 
                 </div>
-            @endif --}}
+            @endif
+
         @endslot
     </x-modal-detalhes>
 
@@ -195,7 +196,8 @@
 
                     </div>
                     <div class="flex flex-col gap-3 dark:text-white">
-                        <button x-on:click="open = false" class="flex justify-center w-56 gap-2 py-2 border rounded font-semibold text-purple-600 dark:text-white">
+                        <button x-on:click="open = false"
+                            class="flex justify-center w-56 gap-2 py-2 border rounded font-semibold text-purple-600 dark:text-white">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke-width="2" stroke="currentColor" class="w-5 h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -205,16 +207,18 @@
                         </button>
 
                         <h1 class="text-lg font-semibold">{{ $produtoDetalhe->nome ?? '' }}</h1>
-                        <p class="text-sm font-semibold text-gray-400">{{ $produtoDetalhe->descricao ?? ''}}</p>
+                        <p class="text-sm font-semibold text-gray-400">{{ $produtoDetalhe->descricao ?? '' }}</p>
                         {{-- <p class="text-lg text-green-400">R${{ number_format($produtoDetalhe->preco_1, 2, ',')}}</p> --}}
-                        <p class="text-lg text-green-400">R${{ $produtoDetalhe->preco_1 ?? ''}}</p>
+                        <p class="text-lg text-green-400">R${{ $produtoDetalhe->preco_1 ?? '' }}</p>
 
                         <div>
                             <p>Quant.</p>
-                            <input wire:model.live="quantidade" type="number" value="1" class="w-14 text-purple-600 font-semibold bg-gray-100 rounded-lg dark:text-gray-700">
+                            <input wire:model.live="quantidade" type="number" value="1"
+                                class="w-14 text-purple-600 font-semibold bg-gray-100 rounded-lg dark:text-gray-700">
                         </div>
 
-                        <button wire:click="adicionarItem()" class="flex justify-center w-56 gap-2 py-2 font-semibold text-purple-600 border rounded dark:text-white">
+                        <button wire:click="adicionarProduto()"
+                            class="flex justify-center w-56 gap-2 py-2 font-semibold text-purple-600 border rounded dark:text-white">
                             <span>Adicionar ao Pedido</span>
 
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"

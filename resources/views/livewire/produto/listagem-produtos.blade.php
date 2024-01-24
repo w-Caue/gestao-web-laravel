@@ -63,19 +63,17 @@
                                 </div>
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                {{-- {{ $produto->marca->nome }} --}}
                                 @if ($produto->marca)
                                     {{ $produto->marca->nome }}
                                 @else
-                                    Sem Marca
+                                    Sem
                                 @endif
                             </td>
                             <td class="px-4 py-3 text-xs">
-                                {{-- {{ $produto->unidadeMedida->nome }} --}}
                                 @if ($produto->unidadeMedida)
                                     {{ $produto->unidadeMedida->nome }}
                                 @else
-                                    Sem Unidade de Medida
+                                    Sem
                                 @endif
                             </td>
                             <td class="px-4 py-3 text-sm">
