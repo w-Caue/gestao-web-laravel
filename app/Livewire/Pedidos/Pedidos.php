@@ -29,7 +29,7 @@ class Pedidos extends Component
     public $pessoas;
     public $pessoaPedido;
 
-    #criar pedido
+    // #criar pedido
     public $formaDePagamento;
     public $descricao;
     public $status = 'Aberto';
@@ -93,39 +93,20 @@ class Pedidos extends Component
         $this->redirectRoute('pedidos.show', ['codigo'=> $pedido->id]);
     }
 
-    public function pesquisaPessoa()
-    {
-        $pessoas = Pessoa::select([
-            'pessoas.id',
-            'pessoas.nome',
-            'pessoas.whatsapp',
-            'pessoas.status',
-        ])->where('status', 'Ativo')->get();
+    // public function visualizarPedido(Pedido $pedido)
+    // {
+    //     $this->formStatus = 'visualizar';
 
-        $this->pessoas = $pessoas;
-    }
+    //     $this->telaPedido = Pedido::where('id', $pedido->id)->get()->first();
 
-    public function pedidoPessoa($pessoa)
-    {
-        $this->pessoaPedido = Pessoa::where('id', $pessoa)->get()->first();
-
-        $this->dispatch('close-detalhes');
-    }
-
-    public function visualizarPedido(Pedido $pedido)
-    {
-        $this->formStatus = 'visualizar';
-
-        $this->telaPedido = Pedido::where('id', $pedido->id)->get()->first();
-
-        $this->formaDePagamento = $this->telaPedido->forma_pagamento_id;
-        $this->totalPedido = $this->telaPedido->total_pedido;
-        $this->total = $this->telaPedido->total_pedido;
-        $this->desconto = $this->telaPedido->desconto;
-        $this->totalProdutos = $this->telaPedido->total_itens;
-        $this->status = $this->telaPedido->status;
-        $this->descricao = $this->telaPedido->descricao;
-    }
+    //     $this->formaDePagamento = $this->telaPedido->forma_pagamento_id;
+    //     $this->totalPedido = $this->telaPedido->total_pedido;
+    //     $this->total = $this->telaPedido->total_pedido;
+    //     $this->desconto = $this->telaPedido->desconto;
+    //     $this->totalProdutos = $this->telaPedido->total_itens;
+    //     $this->status = $this->telaPedido->status;
+    //     $this->descricao = $this->telaPedido->descricao;
+    // }
 
     public function finalizarPedido()
     {
@@ -214,34 +195,7 @@ class Pedidos extends Component
         $this->totalProdutos = $produto->preco_1;
     }
 
-    public function adicionarItem()
-    {
-
-        $this->totalProdutos = $this->totalProdutos * $this->quantidade;
-
-        PedidoItem::create([
-            'pedido_id' => $this->telaPedido->id,
-            'produto_id' => $this->codigoProduto->id,
-            'quantidade' => $this->quantidade,
-            'total' => $this->totalProdutos
-        ]);
-
-        $this->dispatch('close-detalhes');
-
-        $this->totalPedido = $this->totalProdutos + $this->totalPedido;
-        $this->totalProdutos = $this->totalProdutos + $this->telaPedido->total_itens;
-
-        Pedido::findOrFail($this->telaPedido->id)->update([
-            'total_pedido' => $this->totalPedido,
-            'total_itens' => $this->totalProdutos
-        ]);
-
-        $this->alert('success', 'Item Adicionado!', [
-            'position' => 'center',
-            'timer' => '1000',
-            'toast' => true,
-        ]);
-    }
+    
 
     public function removerItem(Produto $item)
     {
