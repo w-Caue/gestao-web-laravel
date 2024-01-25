@@ -9,24 +9,25 @@ use Livewire\Form;
 class DetalhePedidoForm extends Form
 {
     public $pedido;
-    public $pessoa;
+
+    public $pagamento;
     public $descricao;
-    public $formaDePagamento;
-    public $totalPedido;
-    public $total;
-    public $desconto;
-    public $totalProdutos;
-    
-    public function pedido($codigo){
+
+
+    public function pedido($codigo)
+    {
         $this->pedido = Pedido::where('id', $codigo)->get()->first();
 
-        // $this->codigoPedido = $pedido->id;
-        // $this->pessoa = $pedido->pessoa_id;
-        // $this->descricao = $pedido->descricao;
-        // $this->formaDePagamento = $pedido->forma_pagamento_id;
-        // $this->totalPedido = $pedido->total_pedido;
-        // $this->total = $pedido->total_pedido;
-        // $this->desconto = $pedido->desconto;
-        // $this->totalProdutos = $pedido->total_itens;
+        $this->pagamento = $this->pedido->forma_pagamento_id;
+        $this->descricao = $this->pedido->descricao;
+    }
+
+    public function finalizar()
+    {
+        Pedido::find($this->pedido->id)->update([
+            'forma_pagamento_id' => $this->pagamento,
+            'descricao' => $this->descricao,
+            'status' => 'Finalizado'
+        ]);
     }
 }

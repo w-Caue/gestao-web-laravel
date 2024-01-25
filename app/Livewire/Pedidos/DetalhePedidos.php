@@ -3,6 +3,7 @@
 namespace App\Livewire\Pedidos;
 
 use App\Livewire\Forms\DetalhePedidoForm;
+use App\Models\FormaPagamento;
 use App\Models\Pedido;
 use App\Models\PedidoItem;
 use App\Models\Produto;
@@ -24,6 +25,11 @@ class DetalhePedidos extends Component
     public $total;
     public $totalPedido;
 
+    public $formasPagamentos = [];
+
+    public $pagamento;
+    public $descricao;
+
     protected $listeners = [
         'deleteProduto'
     ];
@@ -31,6 +37,7 @@ class DetalhePedidos extends Component
     public function mount($codigo)
     {
         $this->form->pedido($codigo);
+        $this->formasPagamentos = FormaPagamento::all();
     }
 
     public function produtos()
@@ -57,7 +64,6 @@ class DetalhePedidos extends Component
 
     public function adicionarProduto()
     {
-
         if ($this->total <= 0) {
             return $this->alert('warning', 'Produto sem Preço!', [
                 'position' => 'center',
@@ -135,6 +141,27 @@ class DetalhePedidos extends Component
 
 
         $this->alert('success', 'Item Removido!', [
+            'position' => 'center',
+            'timer' => '1000',
+            'toast' => false,
+        ]);
+    }
+
+    public function finalizarPedido()
+    {
+        if($this->form->pedido->total_pedido <= 0){
+            return $this->alert('warning', 'Adicione Itens Ao Pedido!', [
+                'position' => 'center',
+                'timer' => '1500',
+                'toast' => false,
+            ]);
+        }
+
+        $this->form->finalizar();
+
+        $this->dispatch('close-finalizar');
+
+        $this->alert('success', 'Pedido Finalizado!', [
             'position' => 'center',
             'timer' => '1000',
             'toast' => false,

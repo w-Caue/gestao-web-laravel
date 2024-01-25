@@ -140,11 +140,11 @@
                     <label class="my-2">
                         <span for="cep" class="font-semibold">CEP</span>
 
-                        <div class="flex items-center">
+                        <div class="flex items-center gap-1">
                             
                             <x-input wire:model.lazy="cep" class="w-32" type="number" id="cep"></x-input>
 
-                            <button type="button" class="rounded py-2 px-1 text-white bg-blue-500">
+                            <button type="button" class="rounded py-3 px-2 text-white bg-blue-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"

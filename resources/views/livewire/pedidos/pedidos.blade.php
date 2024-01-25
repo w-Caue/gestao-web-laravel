@@ -33,7 +33,7 @@
                             <x-input class="w-60" value="{{ $pessoaPedido->nome ?? '' }}"
                                 placeholder="Selecionar Cliente"></x-input>
 
-                            <button x-data x-on:click.prevent="$dispatch('open-detalhes')"
+                            <button x-data x-on:click.prevent="$dispatch('open-detalhes', { name : 'clientes' })"
                                 class=" text-white bg-blue-500 p-2 border-blue-500 rounded text-md font-semibold hover:shadow-xl hover:bg-blue-600">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">

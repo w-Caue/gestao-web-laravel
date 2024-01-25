@@ -15,7 +15,7 @@ class Dashboard extends Component
     public $contas;
 
     public function mount(){
-        $clientes = Pessoa::all()->count();
+        $clientes = Pessoa::get('id')->count();
         $this->clientes = $clientes;
 
         $pedidos = Pedido::where('status', 'Aberto')->get()->count();

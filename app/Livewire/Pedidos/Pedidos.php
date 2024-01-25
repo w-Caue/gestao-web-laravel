@@ -91,23 +91,7 @@ class Pedidos extends Component
         $this->dispatch('close-detalhes');
     }
     
-    public function finalizarPedido()
-    {
-        Pedido::find($this->telaPedido->id)->update([
-            'forma_pagamento_id' => $this->formaDePagamento,
-            'descricao' => $this->descricao,
-            'total_itens' => $this->totalProdutos,
-            'total_pedido' => $this->totalPedido,
-            'status' => 'Finalizado'
-        ]);
-
-        $this->alert('success', 'Pedido Finalizado!', [
-            'position' => 'center',
-            'timer' => '1000',
-            'toast' => false,
-        ]);
-    }
-
+   
     public function autenticarPedido()
     {
         Pedido::findOrFail($this->telaPedido->id)->update([
