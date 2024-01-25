@@ -120,6 +120,10 @@
         </div>
     </div>
 
+    {{-- <div class="mx-2 mt-2">
+        {{ $produtos->links('layouts.paginate') }}
+    </div> --}}
+
     <x-modal-filter>
         @slot('body')
             <div class="md:mb-0">

@@ -29,9 +29,10 @@
                             Cliente
                         </label>
                         <div class="flex gap-1 my-2">
-                            <input
-                                class="appearance-none w-56 text-gray-600 bg-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-400"
-                                id="grid-first-name" type="text" value="{{ $pessoaPedido->nome ?? '' }}">
+
+                            <x-input class="w-60" value="{{ $pessoaPedido->nome ?? '' }}"
+                                placeholder="Selecionar Cliente"></x-input>
+
                             <button x-data x-on:click.prevent="$dispatch('open-detalhes')"
                                 class=" text-white bg-blue-500 p-2 border-blue-500 rounded text-md font-semibold hover:shadow-xl hover:bg-blue-600">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -48,12 +49,12 @@
                             Forma de Pagamento
                         </label>
                         <select wire:model="formaDePagamento" id="pagamento"
-                            class="appearance-none block w-56 text-gray-700 bg-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-400">
-                            <option selected></option>
+                            class="w-60 p-3 pl-5 text-sm text-gray-600 font-semibold rounded shadow-sm border-2 bg-white dark:bg-gray-700 dark:text-white">
+                            <option class="bg-white dark:bg-gray-700 dark:text-white" selected></option>
 
                             @foreach ($formasPagamentos as $formaPagamento)
                                 <option value="{{ $formaPagamento->id }}"
-                                    class="font-semibold text-md text-gray-600 bg-white dark:bg-gray-300">
+                                    class="text-gray-600 font-semibold bg-white dark:bg-gray-700 dark:text-white">
                                     {{ $formaPagamento->nome }}</option>
                             @endforeach
 
@@ -62,7 +63,7 @@
 
                     <div class="m-3">
                         <textarea wire:model="descricao" id="message" rows="4"
-                            class="block p-2.5 w-full font-semibold text-gray-600 bg-white rounded-lg border-2 border-gray-300 dark:bg-gray-300"
+                            class="w-full p-3 pl-5 text-sm text-gray-600 font-semibold rounded shadow-sm border-2 bg-white dark:bg-gray-700 dark:text-white"
                             placeholder="Adicione uma descrição..."></textarea>
                     </div>
 
@@ -324,7 +325,7 @@
 
                                                     </th>
                                                 @endif --}}
-                                            {{-- </tr>
+    {{-- </tr>
                                         </thead>
                                         <tbody class="">
                                             @foreach ($telaPedido->produtos as $produto)
@@ -354,8 +355,8 @@
                                                             </button>
                                                         </td>
                                                     @endif --}}
-                                                </tr>
-                                            {{-- @endforeach
+    </tr>
+    {{-- @endforeach
                                         </tbody>
                                         <tfoot>
                                             <tr
@@ -401,7 +402,7 @@
                     </div>
                 </div>
             @endslot
-        </x-modal-web> --}} 
-    {{-- @endif --}} 
+        </x-modal-web> --}}
+    {{-- @endif --}}
 
 </div>

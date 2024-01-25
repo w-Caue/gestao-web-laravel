@@ -77,6 +77,7 @@ class DetalhePedidos extends Component
 
         $this->dispatch('close-produto');
 
+        $this->totalPedido = $this->form->pedido->total_pedido;
         $this->totalPedido += $this->total;
         $this->total += $this->form->pedido->total_itens;
 

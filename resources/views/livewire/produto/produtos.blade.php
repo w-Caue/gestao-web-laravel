@@ -34,9 +34,11 @@
                                     for="grid-first-name">
                                     Nome
                                 </label>
-                                <input wire:model="form.nome"
+                                {{-- <input 
                                     class="appearance-none block w-full text-gray-700 bg-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-400"
-                                    id="grid-first-name" type="text" placeholder="">
+                                    id="grid-first-name" type="text" placeholder=""> --}}
+
+                                <x-input wire:model="form.nome" class="w-full" placeholder="Nome do Produto"></x-input>
 
                             </div>
 
@@ -48,9 +50,8 @@
                                     for="grid-first-name">
                                     Descrição
                                 </label>
-                                <input wire:model="form.descricao"
-                                    class="appearance-none block w-full text-gray-700 bg-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-400"
-                                    id="grid-first-name" type="text" placeholder="">
+
+                                <x-input wire:model="form.descricao" class="w-full" placeholder="Descrição do Produto"></x-input>
 
                             </div>
                         </div>
@@ -63,14 +64,14 @@
                                 </label>
                                 <div class="relative">
                                     <select wire:model="form.unidadeMedida"
-                                        class="appearance-none block w-full text-gray-700 bg-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-400"
+                                        class="w-full p-3 pl-5 text-sm text-gray-600 font-semibold rounded shadow-sm border-2 bg-white dark:bg-gray-700 dark:text-white"
                                         id="grid-state">
                                         <option value=""></option>
 
-                                        {{-- @foreach ($unidadesMedidas as $medida)
-                                            <option class="font-semibold" value="{{ $medida->id }}">
+                                        @foreach ($unidadesMedidas as $medida)
+                                            <option class="text-gray-600 font-semibold bg-white dark:bg-gray-700 dark:text-white" value="{{ $medida->id }}">
                                                 {{ $medida->nome }}</option>
-                                        @endforeach --}}
+                                        @endforeach
 
                                     </select>
                                 </div>
@@ -84,12 +85,12 @@
                                 </label>
                                 <div class="relative">
                                     <select wire:model="form.marca"
-                                        class="appearance-none block w-full text-gray-700 bg-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-400"
+                                        class="w-full p-3 pl-5 text-sm text-gray-600 font-semibold rounded shadow-sm border-2 bg-white dark:bg-gray-700 dark:text-white"
                                         id="grid-state">
                                         <option value=""></option>
 
                                         @foreach ($marcas as $marca)
-                                            <option class="font-semibold" value="{{ $marca->id }}">
+                                            <option class="text-gray-600 font-semibold bg-white dark:bg-gray-700 dark:text-white" value="{{ $marca->id }}">
                                                 {{ $marca->nome }}</option>
                                         @endforeach
 
@@ -104,9 +105,8 @@
                                     for="grid-city">
                                     Valor De Custo
                                 </label>
-                                <input wire:model.live="form.vlcusto"
-                                    class="appearance-none block w-full text-gray-700 bg-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-400"
-                                    id="grid-city" type="text" placeholder="">
+                                <x-input wire:model="form.vlcusto" class="w-full" placeholder="Valor Custo"></x-input>
+
                             </div>
 
                             <div class="w-44 px-3 md:mb-0">
@@ -115,9 +115,8 @@
                                     for="grid-city">
                                     Preço
                                 </label>
-                                <input wire:model.live="form.preco1"
-                                    class="appearance-none block w-full text-gray-700 bg-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-400"
-                                    id="grid-city" type="text" placeholder="">
+                                <x-input wire:model="form.preco1" class="w-full" placeholder="Preço"></x-input>
+
                             </div>
                         </div>
 

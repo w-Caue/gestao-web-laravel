@@ -58,7 +58,6 @@ class Pedidos extends Component
 
     }
 
-    
     public function save()
     {
         $pedido = Pedido::create([
@@ -73,6 +72,25 @@ class Pedidos extends Component
         $this->redirectRoute('pedidos.show', ['codigo'=> $pedido->id]);
     }
 
+    public function pesquisaPessoa()
+    {
+        $pessoas = Pessoa::select([
+            'pessoas.id',
+            'pessoas.nome',
+            'pessoas.whatsapp',
+            'pessoas.status',
+        ])->where('status', 'Ativo')->get();
+
+        $this->pessoas = $pessoas;
+    }
+
+    public function pedidoPessoa($pessoa)
+    {
+        $this->pessoaPedido = Pessoa::where('id', $pessoa)->get()->first();
+
+        $this->dispatch('close-detalhes');
+    }
+    
     public function finalizarPedido()
     {
         Pedido::find($this->telaPedido->id)->update([

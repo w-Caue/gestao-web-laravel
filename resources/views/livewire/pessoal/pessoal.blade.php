@@ -34,19 +34,19 @@
                             <div class="w-56 flex flex-wrap gap-3">
                                 <label for="">
                                     <input wire:model.live="form.tipoCliente"
-                                        class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] bg-gray-200 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-['']"
+                                        class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] bg-white outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] dark:bg-gray-700"
                                         type="checkbox" value="S" id="checkboxChecked" />
                                     <span class="text-gray-600 dark:text-gray-300">Cliente</span>
                                 </label>
                                 <label for="">
                                     <input wire:model.live="form.tipoFuncionario"
-                                        class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] bg-gray-200 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-['']"
+                                        class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] bg-white outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] dark:bg-gray-700"
                                         type="checkbox" value="S" id="checkboxChecked" />
                                     <span class="text-gray-600 dark:text-gray-300">Funcionario</span>
                                 </label>
                                 <label for="">
                                     <input wire:model.live="form.tipoFornecedor"
-                                        class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] bg-gray-200 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-['']"
+                                        class="h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] bg-white outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] dark:bg-gray-700"
                                         type="checkbox" value="S" id="checkboxChecked" />
                                     <span class="text-gray-600 dark:text-gray-300">Fornecedor</span>
                                 </label>
@@ -58,49 +58,41 @@
                         </label>
                     </div>
 
-                    <div class="w-full px-3">
+                    <div class="w-full px-3 mb-2">
                         <label class="block uppercase tracking-wide font-bold mb-2" for="grid-first-name">
                             Nome
                         </label>
-                        <input wire:model="form.nome"
-                            class="appearance-none block w-full text-gray-700 bg-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-400"
-                            id="grid-first-name" type="text">
+
+                        <x-input wire:model="form.nome" class="w-full" placeholder="Nome da Pessoa"></x-input>
 
                         @error('form.nome')
                             <span class="error dark:text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
 
-                    <div class="w-full px-3">
+                    <div class="w-full px-3 mb-2">
                         <label class="block uppercase tracking-wide font-bold mb-2" for="grid-first-name">
                             Email
                         </label>
-                        <input wire:model.defer="form.email"
-                            class="appearance-none block w-full text-gray-700 bg-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-400"
-                            id="grid-first-name" type="text" placeholder="">
+
+                        <x-input wire:model="form.email" class="w-full" placeholder="E-mail para Contato"></x-input>
 
                         @error('form.email')
                             <span class="error">{{ $message }}</span>
                         @enderror
                     </div>
 
-                    <div class="flex gap-7 items-center ml-3">
-                        <div class="flex flex-wrap -mx-3 m-4">
-                            <div class="w-full px-3">
-                                <label class="block uppercase tracking-wide font-bold mb-2" for="grid-first-name">
-                                    Whatsapp
-                                </label>
-                                <input wire:model="form.whatsapp"
-                                    class="appearance-none block w-full text-gray-700 bg-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-400"
-                                    id="grid-first-name" type="text" placeholder="">
+                    <div class="w-full px-3 mb-3">
+                        <label class="block uppercase tracking-wide font-bold mb-2" for="grid-first-name">
+                            Whatsapp
+                        </label>
+                        <x-input wire:model="form.whatsapp" class="w-60" placeholder="Whatsapp para Contato"></x-input>
 
-                                @error('form.whatsapp')
-                                    <span class="error">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-
+                        @error('form.whatsapp')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
                     </div>
+
                     <div class="flex justify-center mt-3">
                         <button
                             class="text-white text-lg font-semibold border p-2 my-2 rounded-md bg-green-600 transition-all duration-300 hover:scale-95 hover:bg-green-700 dark:border-none">
