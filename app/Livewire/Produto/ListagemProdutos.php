@@ -12,7 +12,19 @@ class ListagemProdutos extends Component
 
     public $readyLoad = false;
 
-    public $search;
+    public $pesquisa;
+
+    public $sortField;
+
+    public function sortFilter($field)
+    {
+        // if ($this->sortField === $field) {
+        //     $this->sortAsc = !$this->sortAsc;
+        // } else {
+        //     $this->sortAsc = true;
+        // }
+        $this->sortField = $field;
+    }
 
     public function load(){
         $this->readyLoad = true;
@@ -27,9 +39,12 @@ class ListagemProdutos extends Component
             'produtos.unidade_medida_id',
             'produtos.preco_1',
         ]) #Filtros
-        ->when($this->search, function ($query) {
-            return $query->where('nome', 'like', "%".$this->search."%");
+        ->when($this->pesquisa, function ($query) {
+            $filter = strtolower($this->sortField);
+            return $query->where($filter, 'like', "%". $this->pesquisa ."%");
         });
+
+        $this->dispatch('close-modalfilter');
 
         return $produtos->paginate(5);
     }

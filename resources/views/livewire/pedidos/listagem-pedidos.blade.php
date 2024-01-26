@@ -49,7 +49,7 @@
                 </thead>
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                     @foreach ($pedidos as $pedido)
-                        <tr class="text-gray-700 dark:text-gray-400">
+                        <tr wire:key="{{ $pedido->id }}" class="text-gray-700 dark:text-gray-400">
                             <td class="px-4 py-3 text-sm">
                                 {{ $pedido->id }}
                             </td>
@@ -68,10 +68,26 @@
                                 {{ $pedido->formaPagamento->nome }}
                             </td>
                             <td class="px-4 py-3 text-xs">
-                                <span
-                                    class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
-                                    {{ $pedido->status }}
-                                </span>
+                                @if ($pedido->status == 'Aberto')
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-gray-500 bg-gray-100 rounded-full dark:bg-gray-300 dark:text-gray-500">
+                                        {{ $pedido->status }}
+                                    </span>
+                                @endif
+
+                                @if ($pedido->status == 'Finalizado')
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-blue-300 bg-blue-400 rounded-full dark:bg-blue-500 dark:text-blue-100">
+                                        {{ $pedido->status }}
+                                    </span>
+                                @endif
+
+                                @if ($pedido->status == 'Autenticado')
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-yellow-300 bg-yellow-400 rounded-full dark:bg-yellow-500 dark:text-yellow-100">
+                                        {{ $pedido->status }}
+                                    </span>
+                                @endif
                             </td>
                             <td class="px-4 py-3 text-sm">
                                 {{ number_format($pedido->total_itens, 2, ',', '.') }}
@@ -84,7 +100,8 @@
                             </td>
                             <td class="px-4 py-3">
                                 <div class="flex items-center space-x-2 text-sm">
-                                    <a href="{{ route('pedidos.show', ['codigo' => $pedido->id]) }}" class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg hover:scale-105 dark:hover:text-purple-600 dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                    <a href="{{ route('pedidos.show', ['codigo' => $pedido->id]) }}"
+                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg hover:scale-105 dark:hover:text-purple-600 dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                         aria-label="Edit">
                                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                                             <path
@@ -122,9 +139,71 @@
         </div>
     </div>
 
-    {{-- <div class="mx-7 mt-2">
-        {{ $pedidos->links('layouts.paginate') }}
-    </div> --}}
+    {{-- Listagem Mobile --}}
+    <div class="w-full sm:hidden md:hidden lg:hidden">
+        <div class="flex flex-col justify-center">
+            @foreach ($pedidos as $pedido)
+                <div wire:key="{{ $pedido->id }}"
+                    class="text-md font-semibold text-gray-700 p-2 my-1 bg-gray-50 rounded-lg dark:text-white dark:bg-gray-800">
+                    <div class="flex justify-between items-center">
+                        <span class="text-blue-500">#{{ $pedido->id }}</span>
+
+                        <a href=" {{ route('pedidos.show', ['codigo' => $pedido->id]) }}"
+                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg hover:scale-105 dark:hover:text-purple-600 dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                            aria-label="Edit">
+                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                    d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
+                                </path>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="flex justify-between my-2">
+                        <p class="flex flex-wrap">{{ $pedido->pessoa->nome }}</p>
+                        {{-- <p class="text-gray-400">{{ $pedido->total_pedido }}</p> --}}
+                    </div>
+
+                    <p class="flex flex-wrap">{{ $pedido->descricao }}</p>
+
+                    <div class="flex justify-between items-center">
+                        <p class="text-gray-400">{{ $pedido->formaPagamento->nome }}</p>
+
+                        @if ($pedido->status == 'Aberto')
+                            <span
+                                class="px-2 py-1 font-semibold leading-tight text-gray-500 bg-gray-100 rounded-full dark:bg-gray-300 dark:text-gray-500">
+                                {{ $pedido->status }}
+                            </span>
+                        @endif
+
+                        @if ($pedido->status == 'Finalizado')
+                            <span
+                                class="px-2 py-1 font-semibold leading-tight text-blue-300 bg-blue-400 rounded-full dark:bg-blue-500 dark:text-blue-100">
+                                {{ $pedido->status }}
+                            </span>
+                        @endif
+
+                        @if ($pedido->status == 'Autenticado')
+                            <span
+                                class="px-2 py-1 font-semibold leading-tight text-yellow-300 bg-yellow-400 rounded-full dark:bg-yellow-500 dark:text-yellow-100">
+                                {{ $pedido->status }}
+                            </span>
+                        @endif
+                    </div>
+
+                    <div class="flex items-end gap-2 text-gray-200 font-semibold mt-1">
+                        <p class="">Total do Pedido:</p>
+                        <p class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">R$ {{ number_format($pedido->total_pedido, 2, ',', '') }}</p>
+                    </div>
+                </div>
+            @endforeach
+
+        </div>
+    </div>
+    {{-- /Listagem Mobile --}}
+
+    <div class="mx-7 mt-2">
+        {{ $this->dados()->links('layouts.paginate') }}
+    </div>
 
     <x-modal-filter>
         @slot('body')

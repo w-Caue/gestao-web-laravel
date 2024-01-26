@@ -1,4 +1,4 @@
-<div wire:init="load">
+<div>
 
     @include('includes.loading')
 
@@ -15,7 +15,7 @@
                 </div>
                 <input wire:model.live="pesquisa" type="text" id="table-search"
                     class="p-2 pl-10 text-sm text-gray-600 font-semibold rounded-lg sm:w-80 bg-white dark:bg-gray-800 dark:text-white"
-                    placeholder="Pesquisar">
+                    placeholder="Pesquisar {{ $sortField }}">
             </div>
         </div>
 
@@ -31,15 +31,30 @@
         </button>
     </div>
 
-    <div class="w-full overflow-hidden rounded-lg shadow-xs hidden sm:block">
+    <div wire:init="load" class="w-full overflow-hidden rounded-lg shadow-xs hidden sm:block">
         <div class="w-full overflow-x-auto">
             <table class="w-full whitespace-no-wrap">
                 <thead>
                     <tr
                         class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                        <th class="px-4 py-3">#</th>
-                        <th class="px-4 py-3">Nome</th>
-                        <th class="px-4 py-3">Whatsapp</th>
+                        <th class="px-2 py-3">
+                            <div class="flex items-center cursor-pointer" wire:click="sortFilter('id')">
+                                <button class="text-xs font-medium leading-4 tracking-wider uppercase">Cod</button>
+                                @include('includes.icon-filter', ['field' => 'id'])
+                            </div>
+                        </th>
+                        <th class="px-4 py-3">
+                            <div class="flex items-center cursor-pointer" wire:click="sortFilter('Nome')">
+                                <button class="text-xs font-medium leading-4 tracking-wider uppercase">Nome</button>
+                                @include('includes.icon-filter', ['field' => 'nome'])
+                            </div>
+                        </th>
+                        <th class="px-4 py-3">
+                            <div class="flex items-center cursor-pointer" wire:click="sortFilter('Whatsapp')">
+                                <button class="text-xs font-medium leading-4 tracking-wider uppercase">Whatsapp</button>
+                                @include('includes.icon-filter', ['field' => 'whatsapp'])
+                            </div>
+                        </th>
                         <th class="px-4 py-3">Status</th>
                         <th class="px-4 py-3">Data Cadastro</th>
                         <th class="px-4 py-3">Ações</th>
@@ -47,11 +62,11 @@
                 </thead>
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                     @foreach ($pessoas as $pessoa)
-                        <tr class="text-gray-700 dark:text-gray-400">
+                        <tr wire:key="{{ $pessoa->id }}" class="text-gray-700 dark:text-gray-400">
                             <td class="px-4 py-3 text-sm">
                                 {{ $pessoa->id }}
                             </td>
-                            <td class="px-4 py-3">
+                            <td class="px-2 py-3">
                                 <div class="flex items-center text-sm">
                                     <!-- Avatar with inset shadow -->
                                     <div class="relative hidden mx-2 md:block">
@@ -67,11 +82,13 @@
                                         <p class="text-xs text-gray-600 dark:text-gray-400">
                                             @if ($pessoa->tipo_cliente == 'S')
                                                 Cliente
-                                                @endif @if ($pessoa->tipo_funcionario == 'S')
-                                                    Funcionario
-                                                    @endif @if ($pessoa->tipo_fornecedor == 'S')
-                                                        Fornecedor
-                                                    @endif
+                                            @endif
+                                            @if ($pessoa->tipo_funcionario == 'S')
+                                                Funcionario
+                                            @endif
+                                            @if ($pessoa->tipo_fornecedor == 'S')
+                                                Fornecedor
+                                            @endif
                                         </p>
                                     </div>
                                 </div>
@@ -140,7 +157,7 @@
     <div class="w-full sm:hidden md:hidden lg:hidden">
         <div class="flex flex-col justify-center">
             @foreach ($pessoas as $pessoa)
-                <div
+                <div wire:key="{{ $pessoa->id }}"
                     class="text-md font-semibold text-gray-700 p-2 my-1 bg-gray-50 rounded-lg dark:text-white dark:bg-gray-800">
                     <div class="flex justify-between items-center">
                         <span class="text-blue-500">#{{ $pessoa->id }}</span>
@@ -184,9 +201,9 @@
     </div>
     {{-- /Listagem Mobile --}}
 
-    {{-- <div class="mx-2 mt-2">
-        {{ $pessoas->links('layouts.paginate') }}
-    </div> --}}
+    <div class="mx-2 mt-2">
+        {{ $this->dados()->links('layouts.paginate') }}
+    </div>
 
     <x-modal-filter>
         @slot('body')
@@ -194,12 +211,17 @@
                 <div>
                     <span class="font-semibold text-gray-700 dark:text-gray-400">Status</span>
                     <label class="flex">
-                        <input wire:model.live="status" type="radio" name="status" value="Ativo"
+                        <input wire:model="status" type="radio" name="status" value=""
+                            class="shrink-0 mt-0.5 border-gray-200 rounded-full text-purple-600 focus:ring-purple-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-purple-500 dark:checked:border-purple-500 dark:focus:ring-offset-gray-800">
+                        <label for="status" class="text-sm text-gray-500 ms-2 dark:text-gray-400">Todos</label>
+                    </label>
+                    <label class="flex">
+                        <input wire:model="status" type="radio" name="status" value="Ativo"
                             class="shrink-0 mt-0.5 border-gray-200 rounded-full text-purple-600 focus:ring-purple-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-purple-500 dark:checked:border-purple-500 dark:focus:ring-offset-gray-800">
                         <label for="status" class="text-sm text-gray-500 ms-2 dark:text-gray-400">Ativos</label>
                     </label>
                     <label class="flex">
-                        <input wire:model.live="status" type="radio" name="status" value="Deletado"
+                        <input wire:model="status" type="radio" name="status" value="Deletado"
                             class="shrink-0 mt-0.5 border-gray-200 rounded-full text-purple-600 focus:ring-purple-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-purple-500 dark:checked:border-purple-500 dark:focus:ring-offset-gray-800">
                         <label for="status" class="text-sm text-gray-500 ms-2 dark:text-gray-400">Deletados</label>
                     </label>
@@ -207,17 +229,17 @@
                 <div>
                     <span class="font-semibold text-gray-700 dark:text-gray-400">Tipo</span>
                     <label class="flex">
-                        <input wire:model.live="tipo" type="radio" name="tipo" value="Cliente"
+                        <input wire:model="tipoCli" type="checkbox" name="tipo"
                             class="shrink-0 mt-0.5 border-gray-200 rounded-full text-purple-600 focus:ring-purple-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-purple-500 dark:checked:border-purple-500 dark:focus:ring-offset-gray-800">
                         <label for="tipo" class="text-sm text-gray-500 ms-2 dark:text-gray-400">Cliente</label>
                     </label>
                     <label class="flex">
-                        <input wire:model.live="tipo" type="radio" name="tipo" value="Funcionario"
+                        <input wire:model="tipoFun" type="checkbox" name="tipo" value="Funcionario"
                             class="shrink-0 mt-0.5 border-gray-200 rounded-full text-purple-600 focus:ring-purple-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-purple-500 dark:checked:border-purple-500 dark:focus:ring-offset-gray-800">
                         <label for="tipo" class="text-sm text-gray-500 ms-2 dark:text-gray-400">Funcionario</label>
                     </label>
                     <label class="flex">
-                        <input wire:model.live="tipo" type="radio" name="tipo" value="Fornecedor"
+                        <input wire:model="tipoFor" type="checkbox" name="tipo" value="Fornecedor"
                             class="shrink-0 mt-0.5 border-gray-200 rounded-full text-purple-600 focus:ring-purple-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-purple-500 dark:checked:border-purple-500 dark:focus:ring-offset-gray-800">
                         <label for="tipo" class="text-sm text-gray-500 ms-2 dark:text-gray-400">Fornecedor</label>
                     </label>
@@ -225,7 +247,7 @@
             </div>
         @endslot
         @slot('button')
-            <button
+            <button wire:click="dados()"
                 class="w-full px-2 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                 Buscar
             </button>

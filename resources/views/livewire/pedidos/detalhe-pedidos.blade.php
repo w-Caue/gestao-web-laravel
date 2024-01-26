@@ -18,8 +18,19 @@
             </div>
         </div>
 
-        <div class="mt-1 mb-7">
+        <div class="flex gap-3 mt-1 mb-7">
             @if ($form->pedido->status == 'Aberto')
+                <button x-data x-on:click.prevent="$dispatch('open-detalhes', { name : 'produtos' })"
+                    class="flex justify-center w-full sm:w-32 gap-2 text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 dark:border-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                        stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+
+                    Itens
+                </button>
+
                 <button x-data x-on:click.prevent="$dispatch('open-finalizar')"
                     class="flex justify-center w-full sm:w-44 gap-2 text-white font-semibold border p-2 rounded-md bg-purple-600 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 dark:border-none">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
@@ -34,22 +45,22 @@
                 </button>
             @endif
 
-        </div>
-
-        <div class="my-3">
-            @if ($form->pedido->status == 'Aberto')
-                <button x-data x-on:click.prevent="$dispatch('open-detalhes', { name : 'produtos' })"
-                    class="flex justify-center w-full sm:w-32 gap-2 text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 dark:border-none">
+            @if ($form->pedido->status == 'Finalizado')
+                <button x-data x-on:click.prevent="$dispatch('open-autenticar')"
+                    class="flex justify-center w-full sm:w-44 gap-2 text-white font-semibold border p-2 rounded-md bg-indigo-600 transition-all duration-300 hover:scale-95 hover:bg-indigo-800 dark:border-none">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                        stroke="currentColor" class="w-6 h-6">
+                        stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                     </svg>
 
-                    Itens
+                    Autenticar
                 </button>
             @endif
+
         </div>
+
+        <span class="my-3 text-xl text-gray-700 font-semibold dark:text-white">Itens do Pedido</span>
 
         <div class="w-full mt-3 overflow-hidden rounded-lg shadow-xs hidden sm:block">
             <div class="w-full overflow-x-auto">
@@ -100,17 +111,19 @@
                                 </td>
                                 <td class="px-4 py-3">
                                     <div class="flex items-center space-x-2 text-sm">
-                                        <button wire:click="removerProduto({{ $item->id }})"
-                                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg hover:scale-95 dark:hover:text-purple-600
+                                        @if ($form->pedido->status == 'Aberto')
+                                            <button wire:click="removerProduto({{ $item->id }})"
+                                                class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg hover:scale-95 dark:hover:text-purple-600
                                              dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                            aria-label="Delete">
-                                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
-                                                viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd"
-                                                    d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                                    clip-rule="evenodd"></path>
-                                            </svg>
-                                        </button>
+                                                aria-label="Delete">
+                                                <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
+                                                    viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd"
+                                                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                        clip-rule="evenodd"></path>
+                                                </svg>
+                                            </button>
+                                        @endif
 
                                         <button
                                             class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"

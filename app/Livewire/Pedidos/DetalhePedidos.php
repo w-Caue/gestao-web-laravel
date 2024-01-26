@@ -166,6 +166,8 @@ class DetalhePedidos extends Component
             'timer' => '1000',
             'toast' => false,
         ]);
+
+        $this->js('window.location.reload()');
     }
 
     public function render()

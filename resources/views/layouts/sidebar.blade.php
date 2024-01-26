@@ -50,12 +50,12 @@
 
                 <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                     href="{{ route('produto.index') }}">
-                    <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
-                        stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                        <path
-                            d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
-                        </path>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
                     </svg>
+
                     <span class="ml-4">Produtos</span>
                 </a>
             </li>
@@ -76,6 +76,11 @@
                 </a>
             </li>
             <li class="relative px-6 py-3">
+                <!-- Active items have the snippet below -->
+                @if (request()->routeIs('contas'))
+                    @include('includes.ative-sidebar')
+                @endif
+
                 <button
                     class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                     x-on:click="togglePagesMenu" aria-haspopup="true">
@@ -108,7 +113,7 @@
                         </li>
                         <li
                             class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                            <a class="w-full" href="./create-account.html">
+                            <a class="w-full" href="{{ route('contas') }}">
                                 Contas A Pagar
                             </a>
                         </li>
@@ -208,7 +213,7 @@
             </li>
             <li class="relative px-6 py-3">
                 <!-- Active items have the snippet below -->
-                @if (request()->routeIs('produtos.*'))
+                @if (request()->routeIs('produto.*'))
                     @include('includes.ative-sidebar')
                 @endif
 
@@ -240,6 +245,11 @@
                 </a>
             </li>
             <li class="relative px-6 py-3">
+                <!-- Active items have the snippet below -->
+                @if (request()->routeIs('contas'))
+                    @include('includes.ative-sidebar')
+                @endif
+
                 <button
                     class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                     x-on:click="togglePagesMenu" aria-haspopup="true">
@@ -272,7 +282,7 @@
                         </li>
                         <li
                             class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                            <a class="w-full" href="./create-account.html">
+                            <a class="w-full" href="{{ route('contas') }}">
                                 Contas A Pagar
                             </a>
                         </li>

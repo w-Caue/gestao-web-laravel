@@ -1,125 +1,8 @@
 <div>
-    <div class="flex justify-between items-center flex-wrap my-2 mx-7">
-        <div class="">
-            <label for="table-search" class="sr-only">Pesquisa</label>
-            <div class="relative mt-1">
-                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                    <svg class="w-4 h-4 text-gray-500 dark:text-white" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                    </svg>
-                </div>
-                <input wire:model.live="search" type="text" id="table-search"
-                    class="block p-2 pl-10 text-sm font-semibold text-gray-900 border border-gray-300 rounded-lg md:w-80 bg-white focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-none"
-                    placeholder="Pesquisar Pedido">
-            </div>
-        </div>
+    
+   
 
-        <div class="flex gap-3 my-3 md:my-0">
-            <label for="">
-                <input wire:model.live='status' value="Ativo"
-                    class=" h-5 w-5 appearance-none rounded-full border-2 border-solid border-gray-300 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-blue-600 checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s]"
-                    type="radio" name="status" id="radioNoLabel01" />
-                <span class="text-md font-semibold text-gray-500 dark:text-white">Á Pagar</span>
-            </label>
-
-            {{-- <label for="">
-                    <input wire:model.live='' value="Pago"
-                        class=" h-5 w-5 appearance-none rounded-full border-2 border-solid border-gray-300 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-blue-600 checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s]"
-                        type="radio" name="" id="radioNoLabel01" />
-                    <span class="text-md font-semibold text-gray-500">Pagos</span>
-                </label> --}}
-
-            <label for="">
-                <input wire:model.live='status' value="Deletado"
-                    class=" h-5 w-5 appearance-none rounded-full border-2 border-solid border-gray-300 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-blue-600 checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s]"
-                    type="radio" name="status" id="radioNoLabel01" />
-                <span class="text-md font-semibold text-gray-500 dark:text-white">Deletados</span>
-            </label>
-        </div>
-
-        <button wire:click.prevent="openModal()"
-            class="flex justify-center gap-2 w-full sm:w-56 text-white font-semibold border p-3 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 dark:border-none">
-            <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                viewBox="0 0 20 20">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M7 19H1.933A.97.97 0 0 1 1 18V5.828a2 2 0 0 1 .586-1.414l2.828-2.828A2 2 0 0 1 5.828 1h8.239A.97.97 0 0 1 15 2v4M6 1v4a1 1 0 0 1-1 1H1m11 8h4m-2 2v-4m5 2a5 5 0 1 1-10 0 5 5 0 0 1 10 0Z" />
-            </svg>
-            Novo Documento
-        </button>
-    </div>
-
-
-    <div class="mx-7 relative overflow-x-auto shadow-md rounded-lg">
-        <table class="w-full text-sm text-left text-gray-500 dark:text-white">
-            <thead class="text-xs font-semibold text-gray-700 uppercase bg-gray-100 dark:text-white dark:bg-gray-700">
-                <tr>
-                    <th scope="col" class="px-4 py-3 ">
-                        #
-                    </th>
-                    <th scope="col" class="px-4 py-3 text-center">
-                        Empresa
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Descrição
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Data do Lançamento
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Data do Vencimento
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Valor do Documento
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Data do Pagamento
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Valor Pago
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($contas as $conta)
-                    <tr wire:key="{{ $conta->id }}" wire:click.prevent="show({{ $conta->id }})"
-                        class="border-b {{ $conta->status_documento == 'Pagar' ? 'text-gray-800 bg-white hover:bg-gray-50 dark:text-white dark:bg-gray-500 dark:hover:bg-gray-600' : '' }} {{ $conta->status == 'Deletado' ? 'text-white bg-red-400 hover:bg-red-500' : 'dark:text-white dark:bg-gray-500' }} cursor-pointer">
-                        <th scope="row" class="px-4 py-3 font-semibold whitespace-nowrap">
-                            {{ $conta->id }}
-                        </th>
-                        <td class="px-4 py-3 text-center font-semibold">
-                            {{ $conta->cliente->nome }}
-                        </td>
-                        <td class="px-6 py-3 text-center font-semibold">
-                            {{ $conta->descricao ? $conta->descricao : '-' }}
-                        </td>
-                        <td class="px-6 py-3 text-center font-semibold">
-                            {{ date('d/m/Y', strtotime($conta->data_lancamento)) }}
-                        </td>
-                        <td class="px-6 py-3 text-center font-semibold">
-                            {{ date('d/m/Y', strtotime($conta->data_vencimento)) }}
-                        </td>
-                        <td class="px-6 py-3 text-center font-semibold">
-                            {{ number_format($conta->valor_documento, 2, ',', '.') }}
-                        </td>
-                        <td class="px-6 py-3 text-center font-semibold">
-                            {{ $conta->data_pagamento ? date('d/m/Y', strtotime($conta->data_pagamento)) : '-' }}
-                        </td>
-                        <td class="px-6 py-3 text-center font-semibold">
-                            {{ $conta->valor_pago ? number_format($conta->valor_pago, 2, ',', '.') : '-' }}
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-
-    <div class="mx-7 mt-2">
-        {{ $contas->links('layouts.paginate') }}
-    </div>
-
-    @if ($modal)
+    {{-- @if ($modal)
         <x-modal-web title="Contas a Pagar" wire:model="modal">
             @slot('body')
                 <x-modal-detalhes name="clientes" title="Clientes">
@@ -407,5 +290,5 @@
                 </form>
             @endslot
         </x-modal-web>
-    @endif
+    @endif --}}
 </div>

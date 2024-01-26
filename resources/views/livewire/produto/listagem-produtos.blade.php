@@ -15,7 +15,7 @@
                 </div>
                 <input wire:model.live="search" type="text" id="table-search"
                     class="p-2 pl-10 text-sm text-gray-600 font-semibold rounded-lg sm:w-80 bg-white dark:bg-gray-800 dark:text-white"
-                    placeholder="Pesquisar">
+                    placeholder="Pesquisar {{$sortField}}">
             </div>
         </div>
 
@@ -37,8 +37,18 @@
                 <thead>
                     <tr
                         class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                        <th class="px-4 py-3">#</th>
-                        <th class="px-4 py-3">Nome</th>
+                        <th class="px-4 py-3">
+                            <div class="flex items-center cursor-pointer" wire:click="sortFilter('id')">
+                                <button class="text-xs font-medium leading-4 tracking-wider uppercase">Cod</button>
+                                @include('includes.icon-filter', ['field' => 'id'])
+                            </div>
+                        </th>
+                        <th class="px-4 py-3">
+                            <div class="flex items-center cursor-pointer" wire:click="sortFilter('Nome')">
+                                <button class="text-xs font-medium leading-4 tracking-wider uppercase">Nome</button>
+                                @include('includes.icon-filter', ['field' => 'Nome'])
+                            </div>
+                        </th>
                         <th class="px-4 py-3">Marca</th>
                         <th class="px-4 py-3">Unidade de Medida</th>
                         <th class="px-4 py-3">Preço</th>
@@ -47,7 +57,7 @@
                 </thead>
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                     @foreach ($produtos as $produto)
-                        <tr class="text-gray-700 dark:text-gray-400">
+                        <tr wire:key="{{ $produto->id }}" class="text-gray-700 dark:text-gray-400">
                             <td class="px-4 py-3 text-sm">
                                 {{ $produto->id }}
                             </td>
@@ -120,9 +130,59 @@
         </div>
     </div>
 
-    {{-- <div class="mx-2 mt-2">
-        {{ $produtos->links('layouts.paginate') }}
-    </div> --}}
+    {{-- Listagem Mobile --}}
+    <div class="w-full sm:hidden md:hidden lg:hidden">
+        <div class="flex flex-col justify-center">
+            @foreach ($produtos as $produto)
+                <div wire:key="{{ $produto->id }}"
+                    class="text-md font-semibold text-gray-700 p-2 my-1 bg-gray-50 rounded-lg dark:text-white dark:bg-gray-800">
+                    <div class="flex justify-between items-center">
+                        <span class="text-blue-500">#{{ $produto->id }}</span>
+
+                        <a href=" {{ route('produto.show', ['codigo' => $produto->id]) }}"
+                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg hover:scale-105 dark:hover:text-purple-600 dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                            aria-label="Edit">
+                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                    d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
+                                </path>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="flex justify-between my-2">
+                        <p class="flex flex-wrap">{{ $produto->nome }}</p>
+                        <p class="text-gray-400">{{ $produto->marca->nome }}</p>
+                    </div>
+
+                    <p class="flex flex-wrap text-gray-500">{{ $produto->descricao }}</p>
+
+                    <div class="flex justify-between items-center">
+                        <p class="text-gray-400">{{ $produto->unidadeMedida->nome ?? 'Sem Unidade' }}</p>
+
+                        @if ($produto->preco_1 <= 0)
+                            <span
+                                class="px-2 py-1 font-semibold leading-tight text-red-600 bg-green-100 rounded-full dark:bg-red-600 dark:text-green-100">
+                                R${{ number_format($produto->preco_1, 2, ',', '') }}
+                            </span>
+                        @else
+                            <span
+                                class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                R${{ number_format($produto->preco_1, 2, ',', '') }}
+                            </span>
+                        @endif
+
+
+                    </div>
+                </div>
+            @endforeach
+
+        </div>
+    </div>
+    {{-- /Listagem Mobile --}}
+
+    <div class="mx-2 mt-2">
+        {{ $this->dados()->links('layouts.paginate') }}
+    </div>
 
     <x-modal-filter>
         @slot('body')
@@ -136,7 +196,7 @@
                                 d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                         </svg>
                     </div>
-                    <input wire:model.live="search" type="text" id="table-search"
+                    <input wire:model.lazy="pesquisa" wire:click="sortFilter('Descricao')" type="text" id="table-search"
                         class="p-2 pl-10 text-sm text-gray-600 font-semibold rounded-lg sm:w-80 bg-white dark:bg-gray-800 dark:text-white"
                         placeholder="Pesquisar pela Descrição">
                 </div>

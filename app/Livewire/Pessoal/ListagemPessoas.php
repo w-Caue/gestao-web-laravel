@@ -15,15 +15,31 @@ class ListagemPessoas extends Component
     public $pessoa;
 
     public $pesquisa;
+    
+    public $readyLoad = false;
 
     #Filtros
-    public $status = 'Ativo';
+    public $status;
 
-    public $readyLoad = false;
+    public $tipoCli;
+    public $tipoFun;
+    public $tipoFor;
+
+    public $sortField = 'Nome';
 
     protected $listeners = [
         'delete'
     ];
+
+    public function sortFilter($field)
+    {
+        // if ($this->sortField === $field) {
+        //     $this->sortAsc = !$this->sortAsc;
+        // } else {
+        //     $this->sortAsc = true;
+        // }
+        $this->sortField = $field;
+    }
 
     public function load(){
         $this->readyLoad = true;
@@ -45,12 +61,27 @@ class ListagemPessoas extends Component
             ]
         ) #Filtros
         ->when($this->pesquisa, function ($query) {
-            return $query->where('nome', 'like', "%".$this->pesquisa);
+            $filter = strtolower($this->sortField);
+            return $query->where($filter, 'like', "%". $this->pesquisa ."%");
         })
         ->when($this->status, function ($query) {
             return $query->where('status', '=', $this->status);
+        })
+
+        ->when($this->tipoCli, function ($query) {
+            $tipo = 'S';
+            return $query->where('tipo_cliente', '=', $tipo);
+        })
+        ->when($this->tipoFun, function ($query) {
+            $tipo = 'S';
+            return $query->where('tipo_funcionario', '=', $tipo);
+        })
+        ->when($this->tipoFor, function ($query) {
+            $tipo = 'S';
+            return $query->where('tipo_fornecedor', '=', $tipo);
         });
 
+        $this->dispatch('close-modalfilter');
         
         return $pessoas->paginate(5);
     }

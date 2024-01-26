@@ -26,11 +26,9 @@
                 <div class="flex justify-between flex-wrap gap-4 px-3 py-2">
 
                     <label class="uppercase tracking-wide font-bold" for="grid-first-name">
-                        <span>Código</span>
+                        <p>Código</p>
 
-                        <input wire:model="form.codigoProduto"
-                            class="appearance-none block w-20 text-gray-700 bg-white border-2 border-gray-300 rounded py-1 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:bg-gray-300"
-                            id="grid-first-name" type="text" disabled>
+                        <x-input wire:model="form.codigoProduto" class="w-16" disabled></x-input>
 
                     </label>
                 </div>
@@ -39,9 +37,7 @@
                     <label class="flex flex-col uppercase tracking-wide font-bold mb-2" for="grid-first-name">
                         <span>Nome</span>
 
-                        <input wire:model.live="form.nome"
-                            class="block appearance-none w-full text-gray-700 bg-white border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:bg-gray-300"
-                            id="grid-first-name" type="text">
+                        <x-input wire:model="form.nome" class="w-full"></x-input>
 
                         @error('form.nome')
                             <span class="error dark:text-red-500">{{ $message }}</span>
@@ -53,9 +49,7 @@
                     <label class="flex flex-col uppercase tracking-wide font-bold mb-2" for="grid-first-name">
                         <span>Descrição</span>
 
-                        <input wire:model.defer="form.descricao"
-                            class="appearance-none block w-full  text-gray-700 bg-white border-2 border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:bg-gray-300"
-                            id="grid-first-name" type="text" placeholder="">
+                        <x-input wire:model="form.descricao" class="w-full"></x-input>
 
                         @error('form.email')
                             <span class="error">{{ $message }}</span>
@@ -63,173 +57,162 @@
                     </label>
                 </div>
 
-                <div class="flex flex-wrap items-end">
-                    <div class="w-32 sm:w-44 px-3">
-                        <label
-                            class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white"
-                            for="grid-state">
+                <div class="flex flex-wrap gap-2 items-end px-3">
+
+                    <label class="">
+                        <p class="uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white">
                             Unidade de Medida
-                        </label>
-                        <div class="relative">
-                            <select wire:model="form.unidadeMedida"
-                                class="appearance-none block w-full text-gray-700 bg-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-300"
-                                id="grid-state">
-                                <option value=""></option>
+                        </p>
 
-                                @foreach ($unidadeMedidas as $medida)
-                                    <option class="font-semibold" value="{{ $medida->id }}">
-                                        {{ $medida->nome }}</option>
-                                @endforeach
+                        <select wire:model="form.unidadeMedida"
+                            class="w-32 sm:w-44 p-3 pl-5 text-md text-gray-600 font-semibold rounded border shadow-sm bg-white dark:bg-gray-700 dark:text-white">
+                            <option value=""></option>
 
-                            </select>
-                        </div>
-                    </div>
+                            @foreach ($unidadeMedidas as $medida)
+                                <option
+                                    class="text-sm text-gray-600 font-semibold bg-white dark:bg-gray-700 dark:text-white"
+                                    value="{{ $medida->id }}">
+                                    {{ $medida->nome }}</option>
+                            @endforeach
 
-                    <div class="w-32 sm:w-44 px-3">
-                        <label
-                            class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white"
-                            for="grid-state">
+                        </select>
+                    </label>
+
+                    <label>
+                        <p class="uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white">
                             Marca
-                        </label>
-                        <div class="relative">
-                            <select wire:model="form.marca"
-                                class="appearance-none block w-full text-gray-700 bg-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-300"
-                                id="grid-state">
-                                <option value=""></option>
+                        </p>
 
-                                @foreach ($marcas as $marca)
-                                    <option class="font-semibold" value="{{ $marca->id }}">
-                                        {{ $marca->nome }}</option>
-                                @endforeach
+                        <select wire:model="form.marca"
+                            class="w-32 sm:w-44 p-3 pl-5 text-md text-gray-600 font-semibold rounded border shadow-sm bg-white dark:bg-gray-700 dark:text-white">
+                            <option value=""></option>
 
-                            </select>
-                        </div>
-                    </div>
-                    <div class="w-48 px-3">
-                        <label class="block uppercase tracking-wide font-bold mb-2" for="grid-first-name">
+                            @foreach ($marcas as $marca)
+                                <option
+                                    class="text-sm text-gray-600 font-semibold bg-white dark:bg-gray-700 dark:text-white"
+                                    value="{{ $marca->id }}">
+                                    {{ $marca->nome }}</option>
+                            @endforeach
+
+                        </select>
+                    </label>
+
+                    <label class="">
+                        <p class=" uppercase tracking-wide font-bold mb-2">
                             Código de Barras
-                        </label>
-                        <input wire:model="form.codigoBarras"
-                            class="appearance-none block w-full text-gray-700 bg-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-300"
-                            id="grid-first-name" type="text" placeholder="">
+                        </p>
+                        <x-input wire:model="form.codigoBarras" class="w-44"></x-input>
 
                         @error('form.codigoBarras')
                             <span class="error">{{ $message }}</span>
                         @enderror
-                    </div>
-                    <div class="flex flex-wrap items-end">
-                        <div class="w-32 sm:w-44 px-3">
-                            <label
-                                class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white"
-                                for="grid-state">
+                    </label>
+
+                    <div class="flex flex-wrap gap-4 items-end">
+                        <label class="">
+                            <p class="uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white">
                                 Grupo
-                            </label>
-                            <div class="relative">
-                                <select wire:model="form.grupo"
-                                    class="appearance-none block w-full text-gray-700 bg-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-300"
-                                    id="grid-state">
-                                    <option value=""></option>
+                            </p>
 
-                                    @foreach ($grupos as $grupo)
-                                        <option class="font-semibold" value="{{ $grupo->id }}">
-                                            {{ $grupo->nome }}</option>
-                                    @endforeach
+                            <select wire:model="form.grupo"
+                                class="w-32 sm:w-44 p-3 pl-5 text-md text-gray-600 font-semibold rounded border shadow-sm bg-white dark:bg-gray-700 dark:text-white">
+                                <option value=""></option>
 
-                                </select>
-                            </div>
-                        </div>
+                                @foreach ($grupos as $grupo)
+                                    <option
+                                        class="text-sm text-gray-600 font-semibold bg-white dark:bg-gray-700 dark:text-white"
+                                        value="{{ $grupo->id }}">
+                                        {{ $grupo->nome }}</option>
+                                @endforeach
 
-                        <div class="w-32 sm:w-44 px-3">
-                            <label
-                                class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white"
-                                for="grid-state">
+                            </select>
+                        </label>
+
+                        <label class="">
+                            <p class=" uppercase tracking-wide text-gray-700 text-sm font-bold mb-2 dark:text-white">
                                 Sub-Grupo
-                            </label>
-                            <div class="relative">
-                                <select wire:model="form.subgrupo"
-                                    class="appearance-none block w-full text-gray-700 bg-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-300"
-                                    id="grid-state">
-                                    <option value=""></option>
+                            </p>
+                            <select wire:model="form.subgrupo"
+                                class="w-32 sm:w-44 p-3 pl-5 text-md text-gray-600 font-semibold rounded border shadow-sm bg-white dark:bg-gray-700 dark:text-white">
+                                <option value=""></option>
 
-                                    @foreach ($subgrupos as $subgrupo)
-                                        <option class="font-semibold" value="{{ $subgrupo->id }}">
-                                            {{ $subgrupo->nome }}</option>
-                                    @endforeach
+                                @foreach ($subgrupos as $subgrupo)
+                                    <option
+                                        class="text-sm text-gray-600 font-semibold bg-white dark:bg-gray-700 dark:text-white"
+                                        value="{{ $subgrupo->id }}">
+                                        {{ $subgrupo->nome }}</option>
+                                @endforeach
 
-                                </select>
-                            </div>
-                        </div>
+                            </select>
+                        </label>
+
                     </div>
                 </div>
             </div>
             <div x-show=" form === 'estoque'">
-                <div class="flex flex-wrap items-end">
-                    <div class="w-32 px-3">
-                        <label class="block uppercase tracking-wide font-bold mb-2" for="grid-first-name">
+                <div class="flex flex-wrap items-end px-3">
+                    <label class=" ">
+                        <p class="uppercase tracking-wide font-bold mb-2" for="grid-first-name">
                             Estoque
-                        </label>
-                        <input wire:model="form.estoque"
-                            class="appearance-none block w-full text-gray-700 bg-gray-200 rounded py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-300"
-                            id="grid-first-name" type="text" disabled>
+                        </p>
+
+                        <x-input wire:model="form.estoque" class="w-32" disabled></x-input>
 
                         @error('form.codigoBarras')
                             <span class="error">{{ $message }}</span>
                         @enderror
-                    </div>
+                    </label>
                 </div>
 
-                <div class="flex flex-wrap items-end">
-                    <div class="w-32 sm:w-44 px-3">
-                        <label class="block uppercase tracking-wide font-bold mb-2" for="grid-first-name">
+                <div class="flex flex-wrap items-end gap-2 px-3">
+                    <label class="">
+                        <p class="uppercase tracking-wide font-bold mb-2">
                             Vl. de Custo
-                        </label>
-                        <input wire:model="form.vlcusto"
-                            class="appearance-none block w-full text-gray-700 bg-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-300"
-                            id="grid-first-name" type="text" placeholder="">
+                        </p>
+
+                        <x-input wire:model="form.vlcusto" class="w-32 sm:w-44"></x-input>
 
                         @error('form.codigoBarras')
                             <span class="error">{{ $message }}</span>
                         @enderror
-                    </div>
+                    </label>
 
-                    <div class="w-32 sm:w-44 px-3">
-                        <label class="block uppercase tracking-wide font-bold mb-2" for="grid-first-name">
+                    <label class="">
+                        <p class="uppercase tracking-wide font-bold mb-2">
                             Vl. de Custo Real
-                        </label>
-                        <input wire:model="form.vlcustoReal"
-                            class="appearance-none block w-full text-gray-700 bg-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-300"
-                            id="grid-first-name" type="text" placeholder="">
+                        </p>
 
-                        @error('form.codigoBarras')
+                        <x-input wire:model="form.vlcustoReal" class="w-32 sm:w-44"></x-input>
+
+                        @error('form.vlcustoReal')
                             <span class="error">{{ $message }}</span>
                         @enderror
-                    </div>
+                    </label>
 
-                    <div class="w-32 sm:w-44 px-3">
-                        <label class="block uppercase tracking-wide font-bold mb-2" for="grid-first-name">
+                    <label class="">
+                        <p class="uppercase tracking-wide font-bold mb-2">
                             Preço 1
-                        </label>
-                        <input wire:model="form.preco1"
-                            class="appearance-none block w-full text-gray-700 bg-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-300"
-                            id="grid-first-name" type="text" placeholder="">
+                        </p>
 
-                        @error('form.codigoBarras')
+                        <x-input wire:model="form.preco1" class="w-32 sm:w-44"></x-input>
+
+                        @error('form.preco1')
                             <span class="error">{{ $message }}</span>
                         @enderror
-                    </div>
+                    </label>
 
-                    <div class="w-32 sm:w-44 px-3">
-                        <label class="block uppercase tracking-wide font-bold mb-2" for="grid-first-name">
+                    <label class="">
+                        <p class="uppercase tracking-wide font-bold mb-2">
                             Preço 2
-                        </label>
-                        <input wire:model="form.preco2"
-                            class="appearance-none block w-full text-gray-700 bg-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-100 dark:bg-gray-300"
-                            id="grid-first-name" type="text" placeholder="">
+                        </p>
 
-                        @error('form.codigoBarras')
+                        <x-input wire:model="form.preco2" class="w-32 sm:w-44"></x-input>
+
+                        @error('form.preco2')
                             <span class="error">{{ $message }}</span>
                         @enderror
-                    </div>
+                    </label>
+
                 </div>
             </div>
         </form>
