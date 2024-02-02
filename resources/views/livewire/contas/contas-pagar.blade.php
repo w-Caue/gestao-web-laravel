@@ -1,8 +1,74 @@
 <div>
     
-   
+    <div class="mx-7 relative overflow-x-auto shadow-md rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-white">
+            <thead class="text-xs font-semibold text-gray-700 uppercase bg-gray-100 dark:text-white dark:bg-gray-700">
+                <tr>
+                    <th scope="col" class="px-4 py-3 ">
+                        #
+                    </th>
+                    <th scope="col" class="px-4 py-3 text-center">
+                        Empresa
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Descrição
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Data do Lançamento
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Data do Vencimento
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Valor do Documento
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Data do Pagamento
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Valor Pago
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($contas as $conta)
+                    <tr wire:key="{{ $conta->id }}" wire:click.prevent="show({{ $conta->id }})"
+                        class="border-b {{ $conta->status_documento == 'Pagar' ? 'text-gray-800 bg-white hover:bg-gray-50 dark:text-white dark:bg-gray-500 dark:hover:bg-gray-600' : '' }} {{ $conta->status == 'Deletado' ? 'text-white bg-red-400 hover:bg-red-500' : 'dark:text-white dark:bg-gray-500' }} cursor-pointer">
+                        <th scope="row" class="px-4 py-3 font-semibold whitespace-nowrap">
+                            {{ $conta->id }}
+                        </th>
+                        <td class="px-4 py-3 text-center font-semibold">
+                            {{ $conta->cliente->nome }}
+                        </td>
+                        <td class="px-6 py-3 text-center font-semibold">
+                            {{ $conta->descricao ? $conta->descricao : '-' }}
+                        </td>
+                        <td class="px-6 py-3 text-center font-semibold">
+                            {{ date('d/m/Y', strtotime($conta->data_lancamento)) }}
+                        </td>
+                        <td class="px-6 py-3 text-center font-semibold">
+                            {{ date('d/m/Y', strtotime($conta->data_vencimento)) }}
+                        </td>
+                        <td class="px-6 py-3 text-center font-semibold">
+                            {{ number_format($conta->valor_documento, 2, ',', '.') }}
+                        </td>
+                        <td class="px-6 py-3 text-center font-semibold">
+                            {{ $conta->data_pagamento ? date('d/m/Y', strtotime($conta->data_pagamento)) : '-' }}
+                        </td>
+                        <td class="px-6 py-3 text-center font-semibold">
+                            {{ $conta->valor_pago ? number_format($conta->valor_pago, 2, ',', '.') : '-' }}
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 
-    {{-- @if ($modal)
+    <div class="mx-7 mt-2">
+        {{ $contas->links('layouts.paginate') }}
+    </div>
+
+    @if ($modal)
         <x-modal-web title="Contas a Pagar" wire:model="modal">
             @slot('body')
                 <x-modal-detalhes name="clientes" title="Clientes">
@@ -290,5 +356,5 @@
                 </form>
             @endslot
         </x-modal-web>
-    @endif --}}
+    @endif
 </div>
