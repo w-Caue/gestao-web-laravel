@@ -29,11 +29,11 @@
     <x-banner />
 
     <div class="flex h-screen bg-gray-200 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
+        @include('layouts.navbar')
+
         @include('layouts.sidebar')
 
-        <div class="flex flex-col flex-1 w-full">
-            @include('layouts.navbar')
-
+        <div class="flex flex-col flex-1 w-full mt-16">
             <main class="h-full pb-16 overflow-y-auto">
                 <!-- Remove everything INSIDE this div to a really blank page -->
                 <div class="container px-6 mx-auto grid">
@@ -41,7 +41,6 @@
                 </div>
             </main>
         </div>
-
 
     </div>
 
@@ -55,7 +54,7 @@
     <x-livewire-alert::scripts />
 </body>
 
-<script>
+{{-- <script>
     function data() {
         function getThemeFromLocalStorage() {
             // if user already changed the theme, use it
@@ -117,6 +116,47 @@
                 this.isModalOpen = false
                 this.trapCleanup()
             },
+
+            sidebar: {
+                full: false,
+                navOpen: false
+            },
+            tooltip: {
+                show: false,
+                visibleClass: 'block sm:absolute  sm:border border-gray-500 left-16 sm:text-sm sm:bg-gray-800 sm:px-2 sm:py-1 sm:rounded'
+            },
+            dropdown: {
+                open: false,
+                toggle(tap) {
+                    this.open = !this.open;
+                },
+                expandedClass: 'border-gray-400 ml-4 pl-4',
+                shrinkedClass: 'sm:absolute top-0 left-20 sm:shadow-md sm:z-10 sm:bg-gray-800 sm:rounded-md sm:p-4 border-l sm:border-none border-gray-400 ml-4 pl-4 sm:ml-0 w-36'
+            }
+        }
+    }
+</script> --}}
+
+<script>
+    function data() {
+        return {
+            sidebar: {
+                full: false,
+                navOpen: false
+            },
+            tooltip: {
+                show: false,
+                visibleClass: 'block sm:absolute  sm:border border-gray-500 left-16 sm:text-sm sm:bg-gray-800 sm:px-2 sm:py-1 sm:rounded'
+            },
+            dropdown: {
+                open: false,
+                toggle(tap) {
+                    this.open = !this.open;
+                },
+                expandedClass: 'border-gray-400 ml-4 pl-4',
+                shrinkedClass: 'sm:absolute top-0 left-20 sm:shadow-md sm:z-10 sm:bg-gray-900 sm:rounded-md sm:p-4 border-l sm:border-none border-gray-400 ml-4 pl-4 sm:ml-0 w-28'
+            }
+
         }
     }
 </script>

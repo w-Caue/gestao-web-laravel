@@ -1,22 +1,29 @@
-<header class="z-10 py-2 bg-white shadow-md dark:bg-gray-800">
+<header class="z-40 w-full fixed py-2 bg-white shadow-md dark:bg-gray-800">
     <div class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
         <!-- Mobile hamburger -->
-        <button class="p-1 -ml-1 mr-5 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple"
-            x-on:click="toggleSideMenu" aria-label="Menu">
-            <template x-if="!isSideMenuOpen">
-                <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd"
-                        d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                        clip-rule="evenodd"></path>
-                </svg>
-            </template>
-            <template x-if="isSideMenuOpen">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
-                </svg>
-            </template>
+        <button x-on:click="sidebar.full = !sidebar.full" class="hidden sm:block focus:outline-none">
+            {{-- Menu Icon --}}
+            <svg class="w-6 h-6" x-bind:class="sidebar.full ? 'hidden' : ''" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 4H21V6H3V4ZM3 11H21V13H3V11ZM3 18H21V20H3V18Z"></path>
+            </svg>
+
+            {{-- Close Icon --}}
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6" x-bind:class="sidebar.full ? '' : 'hidden'">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+
+        </button>
+
+        <button x-on:click="sidebar.navOpen = !sidebar.navOpen"
+            class="block sm:hidden mr-5 focus:outline-none">
+            <!-- {{-- Menu Icon --}} -->
+            <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14" />
+            </svg>
+
         </button>
 
         <!-- Search input -->
