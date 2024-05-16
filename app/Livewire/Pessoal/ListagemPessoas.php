@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Livewire\Pessoal;
+
 use App\Models\Pessoa;
+use App\Models\User;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -15,7 +17,7 @@ class ListagemPessoas extends Component
     public $pessoa;
 
     public $pesquisa;
-    
+
     public $readyLoad = false;
 
     #Filtros
@@ -41,48 +43,25 @@ class ListagemPessoas extends Component
         $this->sortField = $field;
     }
 
-    public function load(){
+    public function load()
+    {
         $this->readyLoad = true;
     }
 
     public function dados()
     {
-        $pessoas = Pessoa::select(
+        $pessoas = User::select(
             [
-                'pessoas.id',
-                'pessoas.nome',
-                'pessoas.email',
-                'pessoas.whatsapp',
-                'pessoas.status',
-                'pessoas.tipo_cliente',
-                'pessoas.tipo_funcionario',
-                'pessoas.tipo_fornecedor',
-                'pessoas.created_at',
+                'users.*',
             ]
-        ) #Filtros
-        ->when($this->pesquisa, function ($query) {
-            $filter = strtolower($this->sortField);
-            return $query->where($filter, 'like', "%". $this->pesquisa ."%");
-        })
-        ->when($this->status, function ($query) {
-            return $query->where('status', '=', $this->status);
-        })
-
-        ->when($this->tipoCli, function ($query) {
-            $tipo = 'S';
-            return $query->where('tipo_cliente', '=', $tipo);
-        })
-        ->when($this->tipoFun, function ($query) {
-            $tipo = 'S';
-            return $query->where('tipo_funcionario', '=', $tipo);
-        })
-        ->when($this->tipoFor, function ($query) {
-            $tipo = 'S';
-            return $query->where('tipo_fornecedor', '=', $tipo);
-        });
+        ); #Filtros
+        // ->when($this->pesquisa, function ($query) {
+        //     $filter = strtolower($this->sortField);
+        //     return $query->where($filter, 'like', "%" . $this->pesquisa . "%");
+        // });
 
         $this->dispatch('close-modalfilter');
-        
+
         return $pessoas->paginate(5);
     }
 
@@ -120,8 +99,8 @@ class ListagemPessoas extends Component
 
     public function render()
     {
-        
-        return view('livewire.pessoal.listagem-pessoas',[
+
+        return view('livewire.pessoal.listagem-pessoas', [
             'pessoas' => $this->readyLoad ? $this->dados() : [],
         ]);
     }

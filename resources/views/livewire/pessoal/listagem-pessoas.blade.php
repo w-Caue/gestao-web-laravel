@@ -78,23 +78,15 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <p class="font-semibold">{{ $pessoa->nome }}</p>
+                                        <p class="font-semibold">{{ $pessoa->name }}</p>
                                         <p class="text-xs text-gray-600 dark:text-gray-400">
-                                            @if ($pessoa->tipo_cliente == 'S')
-                                                Cliente
-                                            @endif
-                                            @if ($pessoa->tipo_funcionario == 'S')
-                                                Funcionario
-                                            @endif
-                                            @if ($pessoa->tipo_fornecedor == 'S')
-                                                Fornecedor
-                                            @endif
+                                            {{ $pessoa->type }}
                                         </p>
                                     </div>
                                 </div>
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                {{ $pessoa->whatsapp }}
+                                {{ $pessoa->numero }}
                             </td>
                             <td class="px-4 py-3 text-xs">
                                 @if ($pessoa->status == 'Ativo')
