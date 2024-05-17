@@ -603,6 +603,41 @@
                     </div>
                 </a>
             </li>
+
+            <li class="relative px-6 py-3">
+                <!-- Active items have the snippet below -->
+                @if (request()->routeIs('configuracao'))
+                    @include('includes.ative-sidebar')
+                @endif
+
+                <a href="{{ route('configuracao') }}"
+                    class="relative flex justify-between items-center font-semibold space-x-2 rounded-md p-2 cursor-pointer {{ request()->routeIs('admin.dashboard') ? 'text-purple-500 border-2 border-purple-500' : 'text-gray-500 dark:text-gray-400' }}"
+                    x-bind:class="{
+                        'justify-start': sidebar.full,
+                        'sm:justify-center': !sidebar.full,
+                    }">
+                    <div class="flex items-center space-x-2">
+                        <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                            <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                        </svg>
+
+                        <h1 x-clock
+                            x-bind:class="!sidebar.full && tooltip.show ? visibleClass : '' || !sidebar.full && !tooltip.show ?
+                                'sm:hidden' : ''">
+                            Sair
+                        </h1>
+                    </div>
+
+                    <form method="POST" action="{{ route('logout') }}" x-data>
+                        @csrf
+
+                        <x-dropdown-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
+                            {{ __('Sair') }}
+                        </x-dropdown-link>
+                    </form>
+                </a>
+            </li>
         </ul>
         {{-- <div class="px-6 my-6">
                     <button
