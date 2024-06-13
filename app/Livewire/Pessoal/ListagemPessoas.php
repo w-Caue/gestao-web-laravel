@@ -50,9 +50,9 @@ class ListagemPessoas extends Component
 
     public function dados()
     {
-        $pessoas = User::select(
+        $pessoas = Pessoa::select(
             [
-                'users.*',
+                'pessoas.*',
             ]
         ); #Filtros
         // ->when($this->pesquisa, function ($query) {

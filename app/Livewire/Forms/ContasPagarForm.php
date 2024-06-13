@@ -16,25 +16,25 @@ class ContasPagarForm extends Form
     public $clienteDocumento;
     public $descricao;
 
-    #[Rule('required', message: 'O Agente Cobrador tem que ser Selecionado!')]
+    #[Rule('required', message: 'coloque o Agente Cobrador!')]
     public $agenteCobrador;
 
-    #[Rule('required', message: 'A Data de Lançamento tem que ser Preenchida!')]
+    #[Rule('required', message: 'Preencha a Data de Lançamento!')]
     public $dataLancamento;
 
-    #[Rule('required', message: 'A Data de Vencimento tem que ser Preenchida!')]
+    #[Rule('required', message: 'Preencha a Data de Vencimento!')]
     public $dataVencimento;
 
-    #[Rule('required', message: 'O Valor do Documento tem que ser Preenchido!')]
+    #[Rule('required', message: 'Preencha o campo Valor do Documento!')]
     public $valorDocumento;
 
-    #[Rule('required', message: 'O Valor a Pagar tem que ser Preenchido!')]
+    #[Rule('required', message: 'Preencha o campo Valor Pago!')]
     public $valorPago;
 
-    #[Rule('required', message: 'A Forma de Pagamento tem que ser Selecionada!')]
+    #[Rule('required', message: 'Coloque a Forma de Pagamento!')]
     public $formaPagamento;
 
-    #[Rule('required', message: 'A Data do Pagamento tem que ser Preenchida!')]
+    #[Rule('required', message: 'Preencha o campo Data do Pagamento!')]
     public $dataPagamento;
 
     public $statusDocumento = 'Pagar';
@@ -63,13 +63,13 @@ class ContasPagarForm extends Form
 
         // dd($this->clienteDocumento);
         Conta::create([
-            'cliente_id' => $this->clienteDocumento->id,
+            'pessoa_id' => $this->clienteDocumento->id,
             'descricao' => $this->descricao,
             'ag_cobrador_id' => $this->agenteCobrador,
             'data_lancamento' => $this->dataLancamento,
             'data_vencimento' => $this->dataVencimento,
             'valor_documento' => $this->valorDocumento,
-            'status_documento' => $this->statusDocumento,
+            'tipo' => 'P',
         ]);
     }
 

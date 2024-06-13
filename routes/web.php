@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContaController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\PessoalController;
 use App\Http\Controllers\ProdutoController;
@@ -41,7 +42,6 @@ Route::middleware([
         })->name('index');
 
         Route::get('/{codigo}', [PessoalController::class, 'show'])->name('show');
-
     });
 
     Route::prefix('/produto')->name('produto.')->group(function () {
@@ -50,27 +50,25 @@ Route::middleware([
         })->name('index');
 
         Route::get('/{codigo}', [ProdutoController::class, 'show'])->name('show');
-
     });
-    
+
     Route::prefix('/pedidos')->name('pedidos.')->group(function () {
         Route::get('/', function () {
             return view('pages.pedido.index');
         })->name('index');
 
         Route::get('/{codigo}', [PedidoController::class, 'show'])->name('show');
-
     });
 
-    Route::get('/contas', function () {
-        return view('pages.contas.index');
-    })->name('contas');
 
-    Route::prefix('/contas')->group(function () {
 
-        Route::get('/contas-pagar', function () {
-            return view('pages.contas.contas-pagar');
-        })->name('contas-pagar');
+    Route::prefix('/contas')->name('contas.')->group(function () {
+
+        Route::get('/', function () {
+            return view('pages.contas.index');
+        })->name('index');
+
+        Route::get('/{codigo}', [ContaController::class, 'show'])->name('show');
     });
 
     Route::get('/relatorios', function () {

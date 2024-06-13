@@ -9,14 +9,16 @@ use Livewire\Form;
 class PessoaForm extends Form
 {
 
-    public $codigoCliente = '';
+    public $codigo = '';
 
-    #[Rule('required', message: 'O campo nome tem que ser preenchido!')]
+    #[Rule('required', message: 'Preencha o campo Nome!')]
     public $nome = '';
 
+    #[Rule('required', message: 'Preencha o campo Email!')]
     public $email = '';
 
-    public $whatsapp = '';
+    #[Rule('required', message: 'Preencha o campo Telefone!')]
+    public $phone = '';
 
     public $tipoCliente;
     public $tipoFuncionario;
@@ -24,7 +26,7 @@ class PessoaForm extends Form
 
     public function save()
     {
-        // $this->validate();
+        $this->validate();
 
         if ($this->tipoCliente == true) {
             $this->tipoCliente = 'S';
@@ -44,13 +46,17 @@ class PessoaForm extends Form
             $this->tipoFornecedor = 'N';
         }
 
-        Pessoa::create([
+        $pessoa = Pessoa::create([
             'nome' => $this->nome,
             'email' => $this->email,
-            'whatsapp' => $this->whatsapp,
+            'phone' => $this->phone,
             'tipo_cliente' => $this->tipoCliente,
             'tipo_funcionario' => $this->tipoFuncionario,
             'tipo_fornecedor' => $this->tipoFornecedor,
         ]);
+
+        $this->codigo = $pessoa->id;
+
+        return;
     }
 }

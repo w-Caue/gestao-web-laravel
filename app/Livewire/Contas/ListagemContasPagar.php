@@ -18,6 +18,7 @@ class ListagemContasPagar extends Component
             'contas.data_lancamento',
             'contas.data_vencimento',
             'contas.valor_documento',
+            'contas.status',
         ])->paginate(5);
 
         return $contas;

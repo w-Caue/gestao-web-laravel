@@ -33,7 +33,6 @@
 
     </div>
 
-    @livewire('Contas.ContasPagar')
-    {{-- @livewire('Contas.ListagemContasPagar') --}}
+    @livewire('Contas.DetalheContas', ['codigo' => $codigo])
 
 </x-app-layout>

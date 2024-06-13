@@ -52,12 +52,12 @@ class Pessoas extends Component
 
         $this->alert('success', 'Cadastro Realizado', [
             'position' => 'center',
-            'timer' => 2000,
+            'timer' => 3000,
             'toast' => false,
             'text' => 'com sucesso',
         ]);
 
-        $this->js('window.location.reload()');
+        return redirect()->route('pessoal.show', ['codigo' => $this->form->codigo]);
     }
     
     public function render()

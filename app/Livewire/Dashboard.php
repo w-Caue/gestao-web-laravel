@@ -21,7 +21,7 @@ class Dashboard extends Component
         $pedidos = Pedido::where('status', 'Aberto')->get()->count();
         $this->pedidos = $pedidos;
 
-        $contas = Conta::where('status_documento', 'Vencida')->get()->count();
+        $contas = Conta::where('status', 'Vencida')->get()->count();
         $this->contas = $contas;
     }
 

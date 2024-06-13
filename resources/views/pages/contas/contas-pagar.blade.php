@@ -5,6 +5,6 @@
         </h2>
     </x-slot>
 
-    @livewire('Contas.ContasPagar')
+    {{-- @livewire('Contas.ContasPagar') --}}
     
 </x-app-layout>

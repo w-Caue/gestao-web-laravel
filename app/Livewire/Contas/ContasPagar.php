@@ -61,12 +61,9 @@ class ContasPagar extends Component
         $clientes = Pessoa::select([
             'pessoas.id',
             'pessoas.nome',
-            'pessoas.whatsapp',
+            'pessoas.phone',
             'pessoas.status',
-            'pessoas.tipo',
-        ])->when($this->tipo, function($query){
-            return $query->where('tipo', '=', $this->tipo);
-        });
+        ]);
 
 
         $this->clientes = $clientes->get();
@@ -88,7 +85,7 @@ class ContasPagar extends Component
 
         $this->alert('success', 'Documento criado!', [
             'position' => 'center',
-            'timer' => 2000,
+            'timer' => 3000,
             'toast' => false,
             'text' => 'com sucesso',
         ]);

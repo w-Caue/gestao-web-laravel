@@ -39,7 +39,7 @@
         {{-- /Card --}}
 
         {{-- Card --}}
-        <a href="{{ route('contas') }}"
+        <a href="{{ route('contas.index') }}"
             class="flex p-3 items-center w-56 bg-white rounded-lg shadow md:flex-row cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700">
             <div class="border p-2 rounded-full bg-red-500 dark:border-none">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::table('contas', function (Blueprint $table) {
             $table->string('tipo')->default('Pagar')->after('valor_documento');
-            $table->string('status_documento')->nullable()->after('tipo');
-            $table->string('status')->default('Ativo')->after('status_documento');
-
+            $table->string('status')->default('Aberto')->after('tipo');
+            $table->enum('deletado', ['S', 'N'])->default('N')->after('status');
             $table->unsignedBigInteger('forma_pagamento_id')->nullable()->after('ag_cobrador_id');
             $table->foreign('forma_pagamento_id')->references('id')->on('formas_pagamentos');
         });
@@ -28,8 +27,8 @@ return new class extends Migration
     {
         Schema::table('contas', function (Blueprint $table) {
             $table->dropColumn('tipo');
-            $table->dropColumn('status_documento');
             $table->dropColumn('status');
+            $table->dropColumn('deletado');
 
             $table->dropForeign('contas_forma_pagamento_id_foreign');
             $table->dropColumn('forma_pagamento_id');
