@@ -15,7 +15,7 @@ class CadastroPessoas extends Component
 
     public $pessoa;
     
-    public function mount(Pessoa $codigo){
+    public function mount($codigo){
         $this->form->pessoa($codigo);
         
         // dd($this->pessoa);

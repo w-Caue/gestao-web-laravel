@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Forms;
 
+use App\Models\Conta;
 use App\Models\Pessoa;
 use Livewire\Attributes\Rule;
 use Livewire\Form;
@@ -10,29 +11,44 @@ use Termwind\Components\Dd;
 class CadastroPessoasForm extends Form
 {
     public $codigo;
-    public $nome = '';
-    public $nomeContato;
+
+    public $nome;
     public $email;
     public $whatsapp;
+
     public $dataNascimento;
     public $dataCadastro;
+
     public $tipoCliente;
     public $tipoFuncionario;
     public $tipoFornecedor;
 
-    public function pessoa(Pessoa $pessoa)
+    public $contas;
+
+    public function pessoa($codigo)
     {
-        $pessoa = Pessoa::where('id', '=', $pessoa->id)->get()->first();
+        $pessoa = Pessoa::select([
+            'pessoas.*',
+        ])
+            ->where('pessoas.id', '=', $codigo)
+            ->get()->first();
 
         // dd($pessoa);
 
+        $this->contas = Conta::select([
+            'contas.*',
+        ])
+            ->where('pessoa_id', '=', $codigo)->get();
+
         $this->codigo = $pessoa->id;
         $this->nome = $pessoa->nome;
-        $this->nomeContato = $pessoa->nome_contato;
+
         $this->email = $pessoa->email;
         $this->whatsapp = $pessoa->whatsapp;
+
         $this->dataNascimento = date('Y-m-d', strtotime($pessoa->data_nascimento));
         $this->dataCadastro = date('Y-m-d', strtotime($pessoa->created_at));
+
         $this->tipoCliente = $pessoa->tipo_cliente;
         $this->tipoFuncionario = $pessoa->tipo_funcionario;
         $this->tipoFornecedor = $pessoa->tipo_fornecedor;
@@ -60,7 +76,6 @@ class CadastroPessoasForm extends Form
 
         Pessoa::findOrFail($this->codigo)->update([
             'nome' => $this->nome,
-            'nome_contato' => $this->nomeContato,
             'email' => $this->email,
             'whatsapp' => $this->whatsapp,
             'data_nascimento' => $this->dataNascimento,

@@ -9,8 +9,7 @@ class Conta extends Model
 {
     use HasFactory;
     protected $fillable = ['pessoa_id', 'descricao', 'ag_cobrador_id', 
-        'data_lancamento', 'data_vencimento', 'valor_documento', 'tipo', 'status',
-        'status_documento', 'forma_pagamento_id', 'data_pagamento', 'valor_pago'];
+        'data_lancamento', 'data_vencimento', 'valor_documento', 'tipo', 'status', 'forma_pagamento_id', 'data_pagamento', 'valor_pago'];
 
     protected $dates = ['data_lancamento', 'data_vencimento', 'data_pagamento'];
 
@@ -22,7 +21,7 @@ class Conta extends Model
         return $this->belongsTo('App\Models\AgenteCobrador', 'ag_cobrador_id');
     }
 
-    public function formaPagamento(){
+    public function pagamento(){
         return $this->belongsTo('App\Models\FormaPagamento', 'forma_pagamento_id');
     }
 }

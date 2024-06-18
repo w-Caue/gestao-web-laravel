@@ -43,49 +43,51 @@
                 <thead>
                     <tr
                         class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                        <th class="px-4 py-3">#</th>
-                        <th class="px-4 py-3">Cliente</th>
-                        <th class="px-4 py-3">Valor Documento</th>
-                        <th class="px-4 py-3">Status</th>
-                        <th class="px-4 py-3">Data Lançamento</th>
-                        <th class="px-4 py-3">Data Vencimento</th>
-                        <th class="px-4 py-3">Ações</th>
+                        <th class="px-4 py-3 text-center">#</th>
+                        <th class="px-4 py-3 text-center">Cliente</th>
+                        <th class="px-4 py-3 text-center">Valor Documento</th>
+                        <th class="px-4 py-3 text-center">Status</th>
+                        <th class="px-4 py-3 text-center">Data Lançamento</th>
+                        <th class="px-4 py-3 text-center">Data Vencimento</th>
+                        <th class="px-4 py-3 text-center">Ações</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                     @foreach ($contas as $conta)
                         <tr wire:key="{{ $conta->id }}" class="text-gray-700 dark:text-gray-400">
-                            <td class="px-4 py-3 text-sm">
+                            <td class="px-4 py-3 text-sm text-center">
                                 {{ $conta->id }}
                             </td>
-                            <td class="px-4 py-3">
+                            <td class="px-4 py-3 text-center">
                                 <p class="font-semibold">{{ $conta->pessoa->nome }}</p>
                             </td>
-                            <td class="px-4 py-3 text-sm">
+                            <td class="px-4 py-3 text-sm text-center">
                                 R${{ number_format($conta->valor_documento, 2, ',', '.') }}
                             </td>
-                            <td class="px-4 py-3 text-xs">
+                            <td class="px-4 py-3 text-xs text-center">
                                 @if ($conta->status == 'Aberto')
                                     <span
-                                        class="p-2 font-semibold uppercase leading-tight text-gray-100 bg-gray-400 rounded-full dark:bg-gray-200 dark:text-gray-500">
-                                        {{ $conta->status }}
-                                    </span>
-                                @else
-                                    <span
-                                        class="px-2 py-1 font-semibold leading-tight text-red-700 bg-green-100 rounded-full dark:bg-red-700 dark:text-green-100">
+                                        class="py-2 px-3 font-semibold uppercase leading-tight text-gray-100 bg-gray-400 rounded-full dark:bg-gray-200 dark:text-gray-500">
                                         {{ $conta->status }}
                                     </span>
                                 @endif
+
+                                @if ($conta->status == 'Paga')
+                                    <span
+                                        class="py-2 px-3 font-semibold uppercase leading-tight text-green-100 bg-green-400 rounded-full dark:bg-green-200 dark:text-green-600">
+                                        conta {{ $conta->status }}
+                                    </span>
+                                @endif
                             </td>
-                            <td class="px-4 py-3 text-sm">
+                            <td class="px-4 py-3 text-sm text-center">
                                 {{ date('d/m/Y', strtotime($conta->data_lancamento)) }}
                             </td>
-                            <td class="px-4 py-3 text-sm">
+                            <td class="px-4 py-3 text-sm text-center">
                                 {{ date('d/m/Y', strtotime($conta->data_vencimento)) }}
                             </td>
 
-                            <td class="px-4 py-3">
-                                <div class="flex items-center space-x-2 text-sm">
+                            <td class="px-4 py-3 text-center">
+                                <div class="flex items-center justify-center space-x-2 text-sm">
                                     {{-- <a href="{{ route('pedidos.show', ['codigo' => $pedido->id]) }}"
                                             class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg hover:scale-105 dark:hover:text-purple-600 dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                             aria-label="Edit">

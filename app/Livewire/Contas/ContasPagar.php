@@ -52,8 +52,7 @@ class ContasPagar extends Component
     }
 
     public function closeModal(){
-        $this->reset();
-        $this->modal = false;
+        $this->dispatch('close-modal');
     }
 
     public function pesquisaClientes()
@@ -83,7 +82,7 @@ class ContasPagar extends Component
 
         $this->closeModal();
 
-        $this->alert('success', 'Documento criado!', [
+        $this->alert('success', 'Conta criada!', [
             'position' => 'center',
             'timer' => 3000,
             'toast' => false,
