@@ -1,4 +1,6 @@
 <x-app-layout>
+    <title>Contas - Listagem</title>
+
     <div class="flex justify-between">
         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
             Contas

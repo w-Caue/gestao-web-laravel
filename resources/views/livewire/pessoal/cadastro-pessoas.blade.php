@@ -34,24 +34,17 @@
 
                             <div class="w-56 flex flex-wrap gap-3">
                                 <label class="flex items-center gap-1">
-                                    <x-checkbox.primary wire:model.live="form.tipoCliente" value="S"
-                                        id="checkboxChecked" check="{{ $form->tipoCliente }}" />
+                                    <x-radio.primary wire:model.live="form.tipo" value="Cliente" name="tipo"
+                                        id="checkboxChecked" />
 
                                     <x-inputs.label value="Cliente" />
                                 </label>
 
                                 <label class="flex items-center gap-1">
-                                    <x-checkbox.primary wire:model.live="form.tipoFuncionario" value="S"
-                                        id="checkboxChecked" check="{{ $form->tipoFuncionario }}" />
+                                    <x-radio.primary wire:model.live="form.tipo" value="Empresa" name="tipo"
+                                        id="checkboxChecked" />
 
-                                    <x-inputs.label value="Funcionario" />
-                                </label>
-
-                                <label class="flex items-center gap-1">
-                                    <x-checkbox.primary wire:model.live="form.tipoFornecedor" value="S"
-                                        id="checkboxChecked" check="{{ $form->tipoFornecedor }}" />
-
-                                    <x-inputs.label value="Fornecedor" />
+                                    <x-inputs.label value="Empresa" />
                                 </label>
                             </div>
 
@@ -86,7 +79,7 @@
                     <div class="w-40">
                         <x-inputs.label value="Telefone" />
 
-                        <x-inputs.text-dark wire:model="form.whatsapp" class="w-full"
+                        <x-inputs.text-dark wire:model="form.telefone" class="w-full"
                             placeholder="insira o whatsapp aqui" />
 
                         @error('form.whatsapp')
@@ -94,10 +87,10 @@
                         @enderror
                     </div>
 
-                    <div class="w-36">
+                    <div class="w-32">
                         <x-inputs.label value="Data Cadastro" />
 
-                        <x-inputs.text-dark type="date" wire:model="form.dataCadastro" class="w-full" />
+                        <x-inputs.text-dark disabled type="date" wire:model="form.dataCadastro" class="w-full" />
 
                         @error('form.dataCadastro')
                             <span class="error dark:text-red-500">{{ $message }}</span>
@@ -112,7 +105,7 @@
             </div>
 
             <div x-show=" show === 'contas'"
-                class="px-4 py-4 mb-8 bg-white rounded-b-lg rounded-tr-lg shadow-md dark:bg-gray-800">
+                class="px-4 py-4 bg-white rounded-b-lg rounded-tr-lg shadow-md dark:bg-gray-800">
 
                 <div class="">
                     <div
@@ -127,9 +120,9 @@
                             class="flex flex-col px-2 py-3 my-2 text-gray-700 tracking-widest border shadow-xl rounded-xl p-1 dark:text-gray-300 border-gray-100 dark:border-gray-500">
                             <div class="flex justify-between items-center w-full">
                                 <div class="flex flex-col">
-                                    <a href="{{ route('contas.show', ['codigo' => $conta->id]) }}" class="text-md font-bold text-blue-500 hover:underline cursor-pointer">#{{ $conta->id }}</a>
-                                    <span
-                                        class="text-xs">{{ date('d/m/Y', strtotime($conta->data_lancamento)) }}</span>
+                                    <a href="{{ route('contas.show', ['codigo' => $conta->id]) }}"
+                                        class="text-md font-bold text-blue-500 hover:underline cursor-pointer">#{{ $conta->id }}</a>
+                                    <span class="text-xs">{{ date('d/m/Y', strtotime($conta->data_lancamento)) }}</span>
                                 </div>
 
                                 <span
@@ -175,7 +168,7 @@
                                             </div>
 
                                             @if ($conta->status == 'Paga')
-                                            <div class="border my-2 dark:border-gray-700"></div>
+                                                <div class="border my-2 dark:border-gray-700"></div>
 
                                                 <div class="flex justify-between text-sm">
                                                     <p>Pagamento:</p>
@@ -204,7 +197,7 @@
 
                                             <div class="flex justify-between text-lg">
                                                 <p>Total:</p>
-                                                <span >R${{ number_format($conta->valor_pago, '2', ',') }}</span>
+                                                <span>R${{ number_format($conta->valor_pago, '2', ',') }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -225,7 +218,65 @@
         <div class="w-full col-span-2">
             <div x-show=" show === 'contas'" class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
 
-                <h1 class="text-sm font-semibold text-gray-400 uppercase tracking-widest">Totais</h1>
+                <h1 class="text-sm mb-4 text-center font-semibold text-gray-300 uppercase tracking-widest">Totais</h1>
+
+                <div class="flex justify-between text-gray-400">
+                    <div class="flex flex-col gap-2">
+                        <x-inputs.label-text value="Contas Abertas:" />
+
+                        <x-inputs.label-text value="Total:" />
+                    </div>
+                    <div class="flex flex-col items-end gap-2">
+                        <x-inputs.label-text value="{{ $form->contasAberto }}" />
+
+                        <x-inputs.label-text value="{{'R$'. number_format($form->totalAberto, 2, ',') }}" />
+                    </div>
+                </div>
+
+                <div class="border my-6 dark:border-gray-700"></div>
+
+                <div class="flex justify-between text-green-600">
+                    <div class="flex flex-col gap-2">
+                        <x-inputs.label-text value="Contas Pagas:" />
+
+                        <x-inputs.label-text value="Total:" />
+                    </div>
+                    <div class="flex flex-col items-end gap-2">
+                        <x-inputs.label-text value="{{ $form->contasPaga }}" />
+
+                        <x-inputs.label-text value="{{'R$'. number_format($form->totalPaga, 2, ',') }}" />
+                    </div>
+                </div>
+
+                <div class="border my-6 dark:border-gray-700"></div>
+
+                <div class="flex justify-between text-yellow-400">
+                    <div class="flex flex-col gap-2">
+                        <x-inputs.label-text value="Contas Atrasadas:" />
+
+                        <x-inputs.label-text value="Total:" />
+                    </div>
+                    <div class="flex flex-col items-end gap-2">
+                        <x-inputs.label-text value="{{ $form->contasAtrasada }}" />
+
+                        <x-inputs.label-text value="{{'R$'. number_format($form->totalAtrasada, 2, ',') }}" />
+                    </div>
+                </div>
+
+                <div class="border my-6 dark:border-gray-700"></div>
+
+                <div class="flex justify-between text-red-500">
+                    <div class="flex flex-col gap-2">
+                        <x-inputs.label-text value="Contas Vencidas:" />
+
+                        <x-inputs.label-text value="Total:" />
+                    </div>
+                    <div class="flex flex-col items-end gap-2">
+                        <x-inputs.label-text value="{{ $form->contasVencida }}" />
+
+                        <x-inputs.label-text value="{{'R$'. number_format($form->totalVencida, 2, ',') }}" />
+                    </div>
+                </div>
             </div>
         </div>
     </div>

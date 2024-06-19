@@ -18,10 +18,10 @@ class Dashboard extends Component
         $clientes = Pessoa::get('id')->count();
         $this->clientes = $clientes;
 
-        $pedidos = Pedido::where('status', 'Aberto')->get()->count();
-        $this->pedidos = $pedidos;
+        // $pedidos = Pedido::where('status', 'Aberto')->get()->count();
+        // $this->pedidos = $pedidos;
 
-        $contas = Conta::where('status', 'Vencida')->get()->count();
+        $contas = Conta::get('id')->count();
         $this->contas = $contas;
     }
 

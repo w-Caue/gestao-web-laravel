@@ -1,5 +1,9 @@
 <div class="">
+
+    @include('includes.loading')
+
     <div class="flex justify-normal sm:justify-between items-end gap-2 sm:gap-0 flex-wrap  ">
+
         <div class="mx-4">
             <div class="relative mt-2">
                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -10,7 +14,7 @@
                     </svg>
                 </div>
                 <input wire:model.live="search" type="text" id="table-search"
-                    class="p-2 pl-10 text-sm text-gray-600 font-semibold rounded sm:w-80 bg-white dark:bg-gray-800 dark:text-white"
+                    class="p-2 pl-10 text-sm text-gray-600 font-semibold rounded sm:w-72 bg-white dark:bg-gray-800 dark:text-white"
                     placeholder="Pesquisar">
             </div>
         </div>
@@ -22,22 +26,11 @@
             </svg>
             Nova Conta a pagar
         </x-button.danger>
-
-        {{-- <button x-data x-on:click="$dispatch('open-modalfilter')"
-                class="flex justify-center sm:w-44 gap-2 text-white font-semibold border p-2 rounded-md bg-indigo-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-600 dark:border-none">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
-                </svg>
-    
-                <p class="hidden sm:block">Busca Avançada</p>
-            </button> --}}
     </div>
 
     <div class="border my-6 mx-32 dark:border-gray-600"></div>
 
-    <div class="w-full overflow-hidden rounded-lg shadow-xs hidden sm:block">
+    <div wire:init="load" class="w-full overflow-hidden rounded-lg shadow-xs hidden sm:block">
         <div class="w-full overflow-x-auto">
             <table class="w-full whitespace-no-wrap">
                 <thead>
@@ -59,7 +52,7 @@
                                 {{ $conta->id }}
                             </td>
                             <td class="px-4 py-3 text-center">
-                                <p class="font-semibold">{{ $conta->pessoa->nome }}</p>
+                                <p class="font-semibold">{{ $conta->pessoa }}</p>
                             </td>
                             <td class="px-4 py-3 text-sm text-center">
                                 R${{ number_format($conta->valor_documento, 2, ',', '.') }}

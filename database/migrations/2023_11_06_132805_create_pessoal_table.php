@@ -15,12 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('nome', 80);
             $table->string('email', 120)->nullable();
-            $table->string('phone', 12)->nullable();
+            $table->string('telefone', 16)->nullable();
             $table->enum('status', ['Ativo', 'Deletado'])->default('Ativo');
-            $table->string('tipo_cliente')->default('N')->nullable();
-            $table->string('tipo_funcionario')->default('N')->nullable();
-            $table->string('tipo_fornecedor')->default('N')->nullable();
-            $table->dateTime('data_nascimento')->nullable();
+            $table->enum('tipo', ['Cliente', 'Empresa'])->default('Cliente');
             $table->timestamps();
         });
     }

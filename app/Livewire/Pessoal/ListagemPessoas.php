@@ -16,7 +16,7 @@ class ListagemPessoas extends Component
 
     public $pessoa;
 
-    public $pesquisa;
+    public $search;
 
     public $readyLoad = false;
 
@@ -54,13 +54,11 @@ class ListagemPessoas extends Component
             [
                 'pessoas.*',
             ]
-        ); #Filtros
-        // ->when($this->pesquisa, function ($query) {
-        //     $filter = strtolower($this->sortField);
-        //     return $query->where($filter, 'like', "%" . $this->pesquisa . "%");
-        // });
-
-        $this->dispatch('close-modalfilter');
+        )
+            #Filtros
+            ->when($this->search, function ($query) {
+                return $query->where($this->sortField, 'LIKE', "%" . $this->search . "%");
+            });
 
         return $pessoas->paginate(5);
     }

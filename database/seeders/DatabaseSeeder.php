@@ -20,12 +20,12 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $this->call(UnidadeMedidaSeeder::class);
+        // $this->call(UnidadeMedidaSeeder::class);
         $this->call(FormaPagamentoSeeder::class);
-        $this->call(StatusSeeder::class);
+        // $this->call(StatusSeeder::class);
         $this->call(AgenteCobradorSeeder::class);
-        $this->call(MarcaSeeder::class);
-        $this->call(GrupoSeeder::class);
-        $this->call(SubGrupoSeeder::class);
+        // $this->call(MarcaSeeder::class);
+        // $this->call(GrupoSeeder::class);
+        // $this->call(SubGrupoSeeder::class);
     }
 }

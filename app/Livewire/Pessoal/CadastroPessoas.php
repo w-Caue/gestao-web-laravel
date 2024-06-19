@@ -26,10 +26,8 @@ class CadastroPessoas extends Component
         $this->form->update();
 
         $this->alert('success', 'Cadastro Atualizado', [
-            'position' => 'center',
             'timer' => 2000,
-            'toast' => false,
-            'text' => 'com sucesso',
+            'toast' => true,
         ]);
     }
 

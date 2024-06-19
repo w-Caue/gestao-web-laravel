@@ -10,24 +10,40 @@ class ListagemContasPagar extends Component
 {
     use WithPagination;
 
-    public function dados(){
+    public $search;
+
+    public $readyLoad = false;
+
+    public function load()
+    {
+        $this->readyLoad = true;
+    }
+
+    public function dados()
+    {
         $contas = Conta::select([
             'contas.id',
-            'contas.pessoa_id',
+            'pessoas.id as codPessoa',
+            'pessoas.nome as pessoa',
             'contas.descricao',
             'contas.data_lancamento',
             'contas.data_vencimento',
             'contas.valor_documento',
             'contas.status',
-        ])->paginate(5);
+        ])
+            ->leftjoin('pessoas', 'pessoas.id', '=', 'contas.pessoa_id')
+            #Filtros
+            ->when($this->search, function ($query) {
+                return $query->where('pessoas.nome', 'LIKE', "%" . $this->search . "%");
+            });
 
-        return $contas;
+        return $contas->paginate(5);
     }
 
     public function render()
     {
         return view('livewire.contas.listagem-contas-pagar', [
-            'contas' => $this->dados()
+            'contas' => $this->readyLoad ? $this->dados() : []
         ]);
     }
 }

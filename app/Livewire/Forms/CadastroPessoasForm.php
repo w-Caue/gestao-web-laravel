@@ -14,16 +14,26 @@ class CadastroPessoasForm extends Form
 
     public $nome;
     public $email;
-    public $whatsapp;
+    public $telefone;
 
     public $dataNascimento;
     public $dataCadastro;
 
-    public $tipoCliente;
-    public $tipoFuncionario;
-    public $tipoFornecedor;
+    public $tipo;
 
     public $contas;
+
+    public $contasAberto;
+    public $totalAberto;
+
+    public $contasPaga;
+    public $totalPaga;
+
+    public $contasAtrasada;
+    public $totalAtrasada;
+
+    public $contasVencida;
+    public $totalVencida;
 
     public function pessoa($codigo)
     {
@@ -33,55 +43,80 @@ class CadastroPessoasForm extends Form
             ->where('pessoas.id', '=', $codigo)
             ->get()->first();
 
-        // dd($pessoa);
-
         $this->contas = Conta::select([
             'contas.*',
         ])
             ->where('pessoa_id', '=', $codigo)->get();
 
+            $this->parametros();
+
         $this->codigo = $pessoa->id;
         $this->nome = $pessoa->nome;
 
         $this->email = $pessoa->email;
-        $this->whatsapp = $pessoa->whatsapp;
+        $this->telefone = $pessoa->telefone;
 
-        $this->dataNascimento = date('Y-m-d', strtotime($pessoa->data_nascimento));
         $this->dataCadastro = date('Y-m-d', strtotime($pessoa->created_at));
 
-        $this->tipoCliente = $pessoa->tipo_cliente;
-        $this->tipoFuncionario = $pessoa->tipo_funcionario;
-        $this->tipoFornecedor = $pessoa->tipo_fornecedor;
+        $this->tipo = $pessoa->tipo;
+    }
+
+    public function parametros()
+    {
+        $contas = Conta::select([
+            'contas.*',
+        ])
+            ->where('pessoa_id', '=', 1)
+            ->get();
+            
+        $contaAbertas = $contas->where('status', 'Aberto');
+        $contaPagas = $contas->where('status', 'Paga');
+
+        $contaAtrasadas = $contas->where('status', 'Atraso');
+        $contaVencidas = $contas->where('status', 'Vencida');
+
+        $this->contasAberto = $contaAbertas->count();
+        $this->contasPaga = $contaPagas->count();
+
+        $this->contasAtrasada = $contaAtrasadas->count();
+        $this->contasVencida = $contaVencidas->count();
+
+        $total = 0;
+        foreach ($contaAbertas as $key => $value) {
+            $total += $value['valor_documento'];
+        }
+
+        $this->totalAberto = $total;
+
+        $total2 = 0;
+        foreach ($contaPagas as $key => $value) {
+            $total2 += $value['valor_documento'];
+        }
+
+        $this->totalPaga = $total2;
+
+        $total3 = 0;
+        foreach ($contaAtrasadas as $key => $value) {
+            $total3 += $value['valor_documento'];
+        }
+
+        $this->totalAtrasada = $total3;
+
+        $total4 = 0;
+        foreach ($contaVencidas as $key => $value) {
+            $total4 += $value['valor_documento'];
+        }
+
+        $this->totalVencida = $total4;
     }
 
     public function update()
     {
-        if ($this->tipoCliente == true) {
-            $this->tipoCliente = 'S';
-        } else {
-            $this->tipoCliente = 'N';
-        }
-
-        if ($this->tipoFuncionario == true) {
-            $this->tipoFuncionario = 'S';
-        } else {
-            $this->tipoFuncionario = 'N';
-        }
-
-        if ($this->tipoFornecedor == true) {
-            $this->tipoFornecedor = 'S';
-        } else {
-            $this->tipoFornecedor = 'N';
-        }
-
         Pessoa::findOrFail($this->codigo)->update([
             'nome' => $this->nome,
             'email' => $this->email,
-            'whatsapp' => $this->whatsapp,
-            'data_nascimento' => $this->dataNascimento,
-            'tipo_cliente' => $this->tipoCliente,
-            'tipo_funcionario' => $this->tipoFuncionario,
-            'tipo_fornecedor' => $this->tipoFornecedor,
+            'telefone' => $this->telefone,
+            'tipo' => $this->tipo,
         ]);
     }
 }
