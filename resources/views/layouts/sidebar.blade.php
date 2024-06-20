@@ -148,7 +148,7 @@
              </li> --}}
 
              <li
-                 class="relative px-1 py-3 {{ request()->routeIs('contas.*') ? 'bg-gray-900 ' : 'bg-gray-800' }} {{ request()->routeIs('pessoal.*') ? 'bg-gray-800 rounded-tr-lg' : '' }} {{ request()->routeIs('relatorios') ? 'bg-gray-800 rounded-br-lg' : '' }}">
+                 class="relative px-1 py-3 {{ request()->routeIs('contas.*') ? 'bg-gray-900 ' : 'bg-gray-800' }} {{ request()->routeIs('pessoal.*') ? 'bg-gray-800 rounded-tr-lg' : '' }} {{ request()->routeIs('relatorios.*') ? 'bg-gray-800 rounded-br-lg' : '' }}">
                  <!-- Active items have the snippet below -->
                  @if (request()->routeIs('contas.*'))
                      @include('includes.ative-sidebar')
@@ -178,14 +178,14 @@
              </li>
 
              <li
-                 class="relative px-1 py-3 {{ request()->routeIs('relatorios') ? 'bg-gray-900 ' : 'bg-gray-800' }} {{ request()->routeIs('contas.*') ? 'bg-gray-800 rounded-tr-lg' : '' }} {{ request()->routeIs('configuracao') ? 'bg-gray-800 rounded-br-lg' : '' }}">
+                 class="relative px-1 py-3 {{ request()->routeIs('relatorios.*') ? 'bg-gray-900 ' : 'bg-gray-800' }} {{ request()->routeIs('contas.*') ? 'bg-gray-800 rounded-tr-lg' : '' }} {{ request()->routeIs('configuracao') ? 'bg-gray-800 rounded-br-lg' : '' }}">
                  <!-- Active items have the snippet below -->
-                 @if (request()->routeIs('relatorios'))
+                 @if (request()->routeIs('relatorios.*'))
                      @include('includes.ative-sidebar')
                  @endif
 
-                 <a href="{{ route('relatorios') }}"
-                     class="relative flex justify-between items-center font-semibold space-x-2 rounded-md p-2 cursor-pointer {{ request()->routeIs('relatorios') ? 'text-purple-500' : 'text-gray-500 dark:text-gray-400' }}"
+                 <a href="{{ route('relatorios.index') }}"
+                     class="relative flex justify-between items-center font-semibold space-x-2 rounded-md p-2 cursor-pointer {{ request()->routeIs('relatorios.*') ? 'text-purple-500' : 'text-gray-500 dark:text-gray-400' }}"
                      x-bind:class="{
                          'justify-start': sidebar.full,
                          'sm:justify-center': !sidebar.full,
@@ -206,7 +206,7 @@
              </li>
 
              <li
-                 class="relative px-1 py-3 {{ request()->routeIs('configuracao') ? 'bg-gray-900 ' : 'bg-gray-800' }} {{ request()->routeIs('relatorios') ? 'bg-gray-800 rounded-tr-lg' : '' }}">
+                 class="relative px-1 py-3 {{ request()->routeIs('configuracao') ? 'bg-gray-900 ' : 'bg-gray-800' }} {{ request()->routeIs('relatorios.*') ? 'bg-gray-800 rounded-tr-lg' : '' }}">
                  <!-- Active items have the snippet below -->
                  @if (request()->routeIs('configuracao'))
                      @include('includes.ative-sidebar')

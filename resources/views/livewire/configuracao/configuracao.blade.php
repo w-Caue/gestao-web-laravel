@@ -1,125 +1,268 @@
 <div>
-    <div class="flex flex-wrap gap-4">
-        <button x-data x-on:click="$dispatch('open-modal')"
-            class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:w-1/3 hover:bg-gray-100 cursor-pointer m-5 dark:bg-gray-500 dark:border-none dark:hover:bg-gray-600">
-            <div class="border p-4 m-2 rounded-full text-white bg-orange-500 dark:border-none">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-9 h-9">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3" />
-                </svg>
+    @include('includes.loading')
 
+
+    <div class="grid gap-6 mb-16 md:grid-cols-2 items-start" wfd-id="87">
+
+        <div class="relative text-gray-500 bg-gray-800 rounded p-2">
+
+            <div x-data="{ open: false }"
+                class="flex justify-between items-center gap-3 mx-4 border-b pb-2 dark:border-gray-700">
+
+                <div class="flex items-center gap-2">
+                    <x-icons.wallet class="text-yellow-500" />
+                    <x-inputs.label-text value="Formas de Pagamentos"
+                        class=" text-xs font-semibold tracking-widest uppercase text-gray-600 dark:text-gray-400" />
+                </div>
+
+
+                <button x-ref="button" x-on:mouseover="open = true" x-on:mouseout="open = false"
+                    class="text-gray-600 dark:text-gray-500 dark:hover:text-gray-200">
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 9.5C12.8284 9.5 13.5 8.82843 13.5 8C13.5 7.17157 12.8284 6.5 12 6.5C11.1716 6.5 10.5 7.17157 10.5 8C10.5 8.82843 11.1716 9.5 12 9.5ZM14 15H13V10.5H10V12.5H11V15H10V17H14V15Z">
+                        </path>
+                    </svg>
+                </button>
+
+                <div class="absolute right-2 top-8 border rounded-md p-3 dark:bg-gray-800 dark:border-gray-500"
+                    x-show="open" x-anchor="$refs.button" x-transition x-transition.duration.300ms>
+                    <div class="flex items-center gap-1">
+                        <div class="h-3 w-3 rounded-full bg-red-500">
+                        </div>
+
+                        <span class="text-xs font-semibold tracking-widest uppercase text-red-500">deletado</span>
+                    </div>
+                </div>
             </div>
-            <div class="flex flex-col justify-between p-4 leading-normal">
-                <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Formas de Pagamentos
-                </h5>
-                <p class="mb-1 font-semibold text-gray-600 dark:text-gray-300">Crie as formas de pagamentos para seus
-                    clientes</p>
+
+            <div class="relative overflow-x-auto mt-5 mx-7">
+                <table wire:init="load"
+                    class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase border-b dark:text-gray-400 dark:border-gray-700">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                Código
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-center">
+                                Nome
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-center">
+                                Ação
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y font-semibold dark:divide-gray-700">
+                        @foreach ($pagamentos as $pagamento)
+                            <tr class=" border-gray-200  dark:border-gray-700">
+                                <td class="px-6 py-4">
+                                    #{{ $pagamento->id }}
+                                </td>
+
+                                <td scope="row"
+                                    class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                    {{ $pagamento->nome }}
+                                </td>
+                                <td class="px-4 py-3 flex justify-center">
+                                    <button wire:click="remover()"
+                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg hover:scale-95 dark:hover:text-red-600
+                                             dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                        aria-label="Delete">
+                                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd"
+                                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                clip-rule="evenodd"></path>
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+                        @endforeach
+
+                    </tbody>
+                </table>
             </div>
-        </button>
+
+            <div class="flex justify-between items-start mt-5">
+                <x-button.primary x-data x-on:click="$dispatch('open-modal', { name : 'pagamentos' })"
+                    class="flex items-center gap-1 mx-4">
+                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z"></path>
+                    </svg>
+                    incluir
+                </x-button.primary>
+
+                <label for="takePagamento">
+                    <x-radio.hidden wire:model.live="takePagamento" id="takePagamento" value="15"/>
+
+                    <span for="takePagamento"
+                        class="text-xs uppercase font-semibold hover:text-blue-500 hover:scale-95 transition-all cursor-pointer">ver
+                        todos</span>
+
+                </label>
+            </div>
+
+        </div>
+
+        <div class="relative text-gray-500 bg-gray-800 rounded p-2">
+
+            <div x-data="{ open: false }"
+                class="flex justify-between items-center gap-3 mx-4 border-b pb-2 dark:border-gray-700">
+
+                <div class="flex items-center gap-2">
+                    <x-icons.bank class="text-purple-500" />
+                    <x-inputs.label-text value="Agentes Cobradores"
+                        class=" text-xs font-semibold tracking-widest uppercase text-gray-600 dark:text-gray-400" />
+                </div>
+
+
+                <button x-ref="button" x-on:mouseover="open = true" x-on:mouseout="open = false"
+                    class="text-gray-600 dark:text-gray-500 dark:hover:text-gray-200">
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 9.5C12.8284 9.5 13.5 8.82843 13.5 8C13.5 7.17157 12.8284 6.5 12 6.5C11.1716 6.5 10.5 7.17157 10.5 8C10.5 8.82843 11.1716 9.5 12 9.5ZM14 15H13V10.5H10V12.5H11V15H10V17H14V15Z">
+                        </path>
+                    </svg>
+                </button>
+
+                <div class="absolute right-2 top-8 border rounded-md p-3 dark:bg-gray-800 dark:border-gray-500"
+                    x-show="open" x-anchor="$refs.button" x-transition x-transition.duration.300ms>
+                    <div class="flex items-center gap-1">
+                        <div class="h-3 w-3 rounded-full bg-red-500">
+                        </div>
+
+                        <span class="text-xs font-semibold tracking-widest uppercase text-red-500">deletado</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative overflow-x-auto mt-5 mx-7">
+                <table wire:init="load"
+                    class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase border-b dark:text-gray-400 dark:border-gray-700">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                Código
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-center">
+                                Nome
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-center">
+                                Ação
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y font-semibold dark:divide-gray-700">
+                        @foreach ($cobradores as $cobrador)
+                            <tr class=" border-gray-200  dark:border-gray-700">
+                                <td class="px-6 py-4">
+                                    #{{ $cobrador->id }}
+                                </td>
+
+                                <td scope="row"
+                                    class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                    {{ $cobrador->nome }}
+                                </td>
+                                <td class="px-4 py-3 flex justify-center">
+                                    <button wire:click="remover()"
+                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg hover:scale-95 dark:hover:text-purple-600
+                                             dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                        aria-label="Delete">
+                                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
+                                            viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd"
+                                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                clip-rule="evenodd"></path>
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+                        @endforeach
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="flex justify-between items-start mt-5">
+                <x-button.primary x-data x-on:click="$dispatch('open-modal', { name : 'cobradores' })"
+                    class="flex items-center gap-1 mx-4">
+                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z"></path>
+                    </svg>
+                    incluir
+                </x-button.primary>
+
+                <label for="takeCobrador">
+                    <x-radio.hidden wire:model.live="takeCobrador" id="takeCobrador" value="15"/>
+
+                    <span for="takeCobrador"
+                        class="text-xs uppercase font-semibold hover:text-blue-500 hover:scale-95 transition-all cursor-pointer">ver
+                        todos</span>
+
+                </label>
+            </div>
+
+        </div>
     </div>
 
-    @if ($modal)
-        <x-modal-web title="Formas de Pagamentos">
-            @slot('body')
-                <div class="mx-3 flex items-center gap-3">
+    <x-modal.modal-small title="Criar Pagamento" name="pagamentos">
+        @slot('body')
 
-                    <div class="">
-                        <button wire:click.prevent="mostrarForm()"
-                            class="flex flex-row gap-2 text-white font-semibold border p-2 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-blue-600 dark:border-none">
-                            <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 20 20">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="m7 10 2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                            </svg>
-                            Novo
-                        </button>
-                    </div>
+            <form wire:submit.prevent="savePagamento()">
+                <div class="w-full mb-2">
 
-                    {{-- <div>
-                    <button
-                        class="flex flex-row gap-2 text-white font-semibold border p-2 rounded-md bg-green-500 transition-all duration-300 hover:scale-95 hover:bg-green-600 dark:border-none">
-                        <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M11.905 1.316 15.633 6M18 10h-5a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h5m0-5a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1m0-5V7a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h15a1 1 0 0 0 1-1v-3m-6.367-9L7.905 1.316 2.352 6h9.281Z" />
-                        </svg>
-                        Baixar
-                    </button>
+                    <x-inputs.label-text class="text-gray-200" value="nome" />
+
+                    <x-inputs.text-dark wire:model="nomePagamento" class="w-full" placeholder="insira o nome aqui" />
+
+                    @error('nomePagamento')
+                        <span class="error text-xs uppercase font-semibold dark:text-red-500">{{ $message }}</span>
+                    @enderror
                 </div>
 
-                <div class="">
-                    <button
-                        class="flex flex-row gap-2 text-white font-semibold border p-2 rounded-md bg-purple-500 transition-all duration-300 hover:scale-95 hover:bg-purple-600 dark:border-none">
-                        <svg class="w-6 h-6 hover:animate-spin" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                            fill="none" viewBox="0 0 18 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M16 1v5h-5M2 19v-5h5m10-4a8 8 0 0 1-14.947 3.97M1 10a8 8 0 0 1 14.947-3.97" />
-                        </svg>
-                        Retornar
-                    </button>
-                </div> --}}
-
+                <div class="flex justify-center mt-5">
+                    <x-button.success type="submit">
+                        Salvar
+                    </x-button.success>
                 </div>
-                <div class="grid grid-cols-2">
-                    <div class="m-3 overflow-auto h-80 ">
-                        @foreach ($formasPagamentos as $formaPagamento)
-                            <div wire:key="{{ $formaPagamento->id }}"
-                                class="border-2 rounded p-2 my-2 {{ $formaPagamento->status == 'Deletado' ? 'border-red-500' : '' }}">
-                                <button wire:click.prevent="formaPG({{ $formaPagamento }})"
-                                    class="text-gray-800 font-semibold text-md rounded dark:text-gray-300 {{ $formaPagamento->status == 'Deletado' ? 'text-red-500 dark:text-red-500' : '' }}">{{ $formaPagamento->nome }}</button>
-                            </div>
-                        @endforeach
+            </form>
+        @endslot
+    </x-modal.modal-small>
+
+    <x-modal.modal-small title="Criar Agente Cobrador" name="cobradores">
+        @slot('body')
+
+            <form wire:submit.prevent="saveCobrador()">
+                <div class="flex gap-3">
+                    <div class="w-24 mb-2">
+
+                        <x-inputs.label-text class="text-gray-200" value="sigla" />
+
+                        <x-inputs.text-dark wire:model="siglaCobrador" class="w-full" placeholder="" />
+
+                        @error('siglaCobrador')
+                            <span class="error text-xs uppercase font-semibold dark:text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
 
-                    <div>
-                        @if ($newFormaPG)
-                            <div class=" p-2 mx-2">
-                                <span class="text-gray-600 text-2xl font-semibold dark:text-white">
-                                    Forma de Pagamento
-                                </span>
+                    <div class="w-full mb-2">
 
-                                <form wire:submit.prevent="{{ $formaDePagamento->id ? 'update()' : 'save()' }}"
-                                    class="flex flex-col">
-                                    <input wire:model.live="nome" type="text"
-                                        class="text-gray-600 font-semibold rounded bg-gray-200">
-                                    <div class="flex items-center gap-1">
-                                        <button
-                                            class="text-white font-semibold border p-2 my-2 w-72 rounded-md bg-blue-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-500 dark:border-none"
-                                            type="submit">
-                                            Salvar
-                                        </button>
+                        <x-inputs.label-text class="text-gray-200" value="nome" />
 
-                                        @if (isset($formaDePagamento->status) == 'Deletado')
-                                            <button wire:click.prevent="deleteRetorno()"
-                                                class="text-white font-semibold border p-2 my-2 rounded-md bg-indigo-500 transition-all duration-300 hover:scale-95 hover:bg-indigo-700 dark:border-none"
-                                                type="submit">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
-                                                </svg>
-                                            </button>
-                                        @else
-                                            <button wire:click.prevent="deleteRetorno()"
-                                                class="text-white font-semibold border p-2 my-2 rounded-md bg-red-500 transition-all duration-300 hover:scale-95 hover:bg-red-700 dark:border-none"
-                                                type="submit">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                                </svg>
+                        <x-inputs.text-dark wire:model="nomeCobrador" class="w-full" placeholder="insira o nome aqui" />
 
-                                            </button>
-                                        @endif
-
-                                    </div>
-                                </form>
-                            </div>
-                        @endif
+                        @error('nomeCobrador')
+                            <span class="error text-xs uppercase font-semibold dark:text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
-            @endslot
-        </x-modal-web>
-    @endif
+
+                <div class="flex justify-center mt-5">
+                    <x-button.success type="submit">
+                        Salvar
+                    </x-button.success>
+                </div>
+            </form>
+        @endslot
+    </x-modal.modal-small>
+
 </div>

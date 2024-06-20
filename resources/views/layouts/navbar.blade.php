@@ -1,14 +1,14 @@
 <header class="z-40 w-full fixed py-2 bg-white shadow-md dark:bg-gray-800">
-    <div class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
+    <div class="container flex items-center justify-between h-full px-6 text-purple-600 dark:text-purple-300">
         <!-- Mobile hamburger -->
         <button x-on:click="sidebar.full = !sidebar.full" class="hidden sm:block focus:outline-none">
-            {{-- Menu Icon --}}
+            <!-- Menu Icon -->
             <svg class="w-6 h-6" x-bind:class="sidebar.full ? 'hidden' : ''" xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24" fill="currentColor">
                 <path d="M3 4H21V6H3V4ZM3 11H21V13H3V11ZM3 18H21V20H3V18Z"></path>
             </svg>
 
-            {{-- Close Icon --}}
+            <!-- Close Icon -->
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="w-6 h-6" x-bind:class="sidebar.full ? '' : 'hidden'">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -16,15 +16,18 @@
 
         </button>
 
-        <button x-on:click="sidebar.navOpen = !sidebar.navOpen"
-            class="block sm:hidden mr-5 focus:outline-none">
-            <!-- {{-- Menu Icon --}} -->
+        <button x-on:click="sidebar.navOpen = !sidebar.navOpen" class="block sm:hidden mr-5 focus:outline-none">
+            <!-- Menu Icon -->
             <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                 viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14" />
             </svg>
 
         </button>
+
+        <a class="text-lg mx-4 tracking-widest"><span class="text-white">Gestão </span><span
+                class="text-purple-400">Web</span>
+        </a>
 
         <!-- Search input -->
         <div class="flex justify-center flex-1 lg:mr-32">
@@ -60,111 +63,81 @@
                     </template>
                 </button>
             </li>
-            <!-- Notifications menu -->
-            <li class="relative">
-                <button class="relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple"
-                    @click="toggleNotificationsMenu" @keydown.escape="closeNotificationsMenu" aria-label="Notifications"
-                    aria-haspopup="true">
-                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+
+            <!-- Profile menu -->
+            <li x-title="NavBar:ProfileMenu" x-data="{ isProfileMenuOpen: false }" class="relative" wfd-id="105">
+                <button class="flex items-center gap-1 align-middle focus:shadow-outline-blue text-gray-300"
+                    x-on:click="isProfileMenuOpen = !isProfileMenuOpen;" @keydown.escape="isProfileMenuOpen = false"
+                    @click.away="isProfileMenuOpen = false;" aria-label="Account" aria-haspopup="true" wfd-id="146">
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                         <path
-                            d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z">
+                            d="M20 22H4V20C4 17.2386 6.23858 15 9 15H15C17.7614 15 20 17.2386 20 20V22ZM12 13C8.68629 13 6 10.3137 6 7C6 3.68629 8.68629 1 12 1C15.3137 1 18 3.68629 18 7C18 10.3137 15.3137 13 12 13Z">
                         </path>
                     </svg>
-                    <!-- Notification badge -->
-                    <span aria-hidden="true"
-                        class="absolute top-0 right-0 inline-block w-3 h-3 transform translate-x-1 -translate-y-1 bg-red-600 border-2 border-white rounded-full dark:border-gray-800"></span>
-                </button>
-                <template x-if="isNotificationsMenuOpen">
-                    <ul x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"
-                        x-transition:leave-end="opacity-0" @click.away="closeNotificationsMenu"
-                        @keydown.escape="closeNotificationsMenu"
-                        class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:text-gray-300 dark:border-gray-700 dark:bg-gray-700"
-                        aria-label="submenu">
-                        <li class="flex">
-                            <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                href="#">
-                                <span>Messages</span>
-                                <span
-                                    class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-600 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-600">
-                                    13
-                                </span>
-                            </a>
-                        </li>
-                        <li class="flex">
-                            <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                href="#">
-                                <span>Sales</span>
-                                <span
-                                    class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-600 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-600">
-                                    2
-                                </span>
-                            </a>
-                        </li>
-                        <li class="flex">
-                            <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                href="#">
-                                <span>Alerts</span>
-                            </a>
-                        </li>
-                    </ul>
-                </template>
-            </li>
-            <!-- Profile menu -->
-            <li class="relative">
-                <button class="text-white align-middle rounded-full focus:shadow-outline-purple focus:outline-none"
-                    @click="toggleProfileMenu" @keydown.escape="closeProfileMenu" aria-label="Account"
-                    aria-haspopup="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="w-7 h-7">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                    </svg>
 
+                    <span class="text-xs font-semibold text-gray-300 tracking-widest uppercase">Olá,
+                        {{ auth()->user()->name }}</span>
                 </button>
+
                 <template x-if="isProfileMenuOpen">
                     <ul x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"
-                        x-transition:leave-end="opacity-0" @click.away="closeProfileMenu"
-                        @keydown.escape="closeProfileMenu"
-                        class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:border-gray-700 dark:text-gray-300 dark:bg-gray-700"
+                        x-transition:leave-end="opacity-0" @keydown.escape="isProfileMenuOpen = false; "
+                        class="absolute right-0 z-40 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:border-gray-700 dark:text-gray-300 dark:bg-gray-800"
                         aria-label="submenu">
-                        <li class="flex">
+                        {{-- <li class="flex">
                             <a class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                href="#">
-                                <svg class="w-4 h-4 mr-3" aria-hidden="true" fill="none" stroke-linecap="round"
-                                    stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z">
-                                    </path>
+                                href="">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
-                                <span>Profile</span>
+
+                                <span>Meus Dados</span>
                             </a>
-                        </li>
+                        </li> --}}
+
                         <li class="flex">
+                            {{-- <a
+                                class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                                href="{{ route('tenant.ecommerce.index', ['prefix' => \Request::route('prefix')]) }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                                <span>Loja</span>
+                            </a> --}}
+                        </li>
+
+                        {{-- <li class="flex">
                             <a class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
                                 href="#">
                                 <svg class="w-4 h-4 mr-3" aria-hidden="true" fill="none" stroke-linecap="round"
-                                    stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
-                                    stroke="currentColor">
+                                    stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                     <path
                                         d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
                                     </path>
                                     <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                 </svg>
-                                <span>Settings</span>
+                                <span>Configuracoes</span>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="flex">
-                            <a class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                href="#">
-                                <svg class="w-4 h-4 mr-3" aria-hidden="true" fill="none" stroke-linecap="round"
-                                    stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
-                                    stroke="currentColor">
+                            <a href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                class="inline-flex items-center w-full px-2 py-1 text-xs font-semibold uppercase transition-colors duration-150 rounded-md hover:bg-red-100 hover:text-gray-800 dark:hover:bg-red-800 dark:hover:text-gray-200">
+                                <svg class="w-5 h-5 mr-3" aria-hidden="true" fill="none" stroke-linecap="round"
+                                    stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                     <path
                                         d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1">
                                     </path>
                                 </svg>
-                                <span>Log out</span>
+                                <span>Sair</span>
                             </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
                         </li>
                     </ul>
                 </template>

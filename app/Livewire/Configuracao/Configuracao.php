@@ -2,54 +2,66 @@
 
 namespace App\Livewire\Configuracao;
 
+use App\Models\AgenteCobrador;
 use App\Models\FormaPagamento;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Attributes\Rule;
 use Livewire\Component;
 
 class Configuracao extends Component
 {
     use LivewireAlert;
 
-    public $nome;
+    #[Rule('required', message: 'Preencha o campo Nome!')]
+    public $nomePagamento;
+
+    #[Rule('required', message: 'Preencha o campo Nome!')]
+    public $nomeCobrador;
+    public $siglaCobrador;
+
+    public $takePagamento = 3;
+    public $takeCobrador = 3;
+
     public $formaDePagamento;
+    public $pagamentos;
+    public $cobradores;
 
-    public $newFormaPG;
-    public $modal;
+    public $readyLoad = false;
 
-    public function mostrarForm()
+    public function load()
     {
-        $this->newFormaPG = !$this->newFormaPG;
-
-        $this->reset('nome', 'formaDePagamento');
+        $this->readyLoad = true;
     }
 
-    public function formaPG(FormaPagamento $formaPagamento)
-    {
-        $this->mostrarForm();
+    // public function mount()
+    // {
+    //     $this->dados();
+    // }
 
-        $this->formaDePagamento = $formaPagamento;
-        $this->nome = $formaPagamento->nome;
-    }
-
-    public function save()
+    public function savePagamento()
     {
-        if ($this->nome == null or $this->nome == '') {
-            $this->alert('error', 'Informe o nome', [
-                'position' => 'center',
-                'timer' => 2000,
-                'toast' => true,
-            ]);
-            return;
-        }
+        $this->validate();
 
         FormaPagamento::create([
-            'nome' => $this->nome,
+            'nome' => $this->nomePagamento,
         ]);
 
-        $this->mostrarForm();
-
         $this->alert('success', 'Forma de Pagamento Criada!', [
-            'position' => 'center',
+            'timer' => 2000,
+            'toast' => true,
+        ]);
+    }
+
+    public function saveCobrador()
+    {
+        $this->validate();
+
+        AgenteCobrador::create([
+            'sigla' => $this->siglaCobrador,
+            'nome' => $this->nomeCobrador,
+        ]);
+
+        $this->alert('success', 'Agente Cobrador Criada!', [
             'timer' => 2000,
             'toast' => true,
         ]);
@@ -61,10 +73,7 @@ class Configuracao extends Component
             'nome' => $this->nome
         ]);
 
-        $this->mostrarForm();
-
         $this->alert('success', 'Forma de Pagamento Atualizada!', [
-            'position' => 'center',
             'timer' => 2000,
             'toast' => true,
         ]);
@@ -99,10 +108,17 @@ class Configuracao extends Component
         }
     }
 
+    public function dados()
+    {
+        $this->pagamentos = FormaPagamento::all()->take($this->takePagamento);
+        $this->cobradores = AgenteCobrador::all()->take($this->takeCobrador);
+
+        return;
+    }
+
     public function render()
     {
-        return view('livewire.configuracao.configuracao', [
-            'formasPagamentos' => FormaPagamento::all()
-        ]);
+        $this->dados();
+        return view('livewire.configuracao.configuracao');
     }
 }

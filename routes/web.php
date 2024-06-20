@@ -71,19 +71,21 @@ Route::middleware([
         Route::get('/{codigo}', [ContaController::class, 'show'])->name('show');
     });
 
-    Route::get('/relatorios', function () {
-        return view('pages.relatorios.index');
-    })->name('relatorios');
+    
 
-    Route::prefix('/relatorios')->group(function () {
+    Route::prefix('/relatorios')->name('relatorios.')->group(function () {
+
+        Route::get('/', function () {
+            return view('pages.relatorios.index');
+        })->name('index');
 
         Route::get('/pedidos', function () {
             return view('pages.relatorios.relatorio-pedidos');
         })->name('relatorio-pedidos');
 
-        Route::get('/contas-pagar', function () {
-            return view('pages.relatorios.relatorio-contas-pagar');
-        })->name('relatorio-contas-pagar');
+        Route::get('/contas', function () {
+            return view('pages.relatorios.relatorio-contas');
+        })->name('relatorio-contas');
     });
 
     Route::get('/configuracao', function () {

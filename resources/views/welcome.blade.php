@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Academia Web</title>
+    <title>Gestão Web</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -19,7 +19,7 @@
     <header class="flex flex-col lg:flex-row justify-between items-center mx-6 my-5" x-data="{ open: false }"
         x-init="$watch('open', value => console.log(value))">
         <div class="flex w-full lg:w-auto items-center justify-between">
-            <a href="/" class="text-lg"><span class="font-bold text-slate-800">Academia</span><span
+            <a href="/" class="text-lg"><span class="font-bold text-slate-800">Gestão</span><span
                     class="text-slate-500">Web</span>
             </a>
             <div class="block lg:hidden">
@@ -106,12 +106,12 @@
                 alt="Astronaut in the air" loading="eager" format="avif" />
         </div>
         <div>
-            <h1 class="text-lg"><span class="font-bold text-slate-800">Academia</span><span
+            <h1 class="text-lg"><span class="font-bold text-slate-800">Gestão</span><span
                     class="text-purple-500 font-semibold">Web</span>
             </h1>
             <h1
                 class="max-w-2xl mb-4 text-gray-800 text-4xl font-extrabold leading-none tracking-tight md:text-4xl xl:text-6xl">
-                Sistema para a sua Academia
+                Sistema para a sua Empresa ou uso Pessoal
             </h1>
             <p class="text-lg mt-4 text-slate-600 max-w-xl">
                 Transforme a maneira como você administra seu negócio com o nosso avançado Sistema de Gestão,

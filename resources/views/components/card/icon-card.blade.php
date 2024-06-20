@@ -2,7 +2,7 @@
 
 @props(['title', 'subtitle', 'color', 'url'])
 
-<div {{ $attributes->merge(['class' => 'flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800']) }}>
+<div {{ $attributes->merge(['class' => 'flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800 hover:scale-105 transition-all']) }}>
     <div
         class="p-3 mr-4 text-{{ $color ?? 'blue' }}-500 bg-{{ $color ?? 'blue' }}-100 rounded-full dark:text-{{ $color ?? 'blue' }}-100 dark:bg-{{ $color ?? 'blue' }}-500">
         {{ $slot }}
@@ -15,7 +15,7 @@
             </p>
         @endisset
         @isset($subtitle)
-            <p class="text-lg text-center font-semibold text-gray-700 dark:text-gray-200">
+            <p class="text-sm text-center font-semibold uppercase text-gray-700 dark:text-gray-200">
                 {{ $subtitle }}
             </p>
         @endisset

@@ -1,9 +1,9 @@
 <x-app-layout>
-    <title>Configuração</title>
+    <title>Relatórios - Contas</title>
 
     <div class="flex justify-between">
         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-            Configuração
+            Relatórios
         </h2>
 
         <nav class="flex" aria-label="Breadcrumb">
@@ -27,7 +27,7 @@
                                 d="m1 9 4-4-4-4" />
                         </svg>
                         <a href=""
-                            class="ms-1 text-sm font-semibold text-purple-500 hover:text-purple-600 dark:text-gray-500">Configuração</a>
+                            class="ms-1 text-sm font-semibold text-purple-500 hover:text-purple-600 dark:text-gray-500">Relatórios</a>
                     </div>
                 </li>
             </ol>
@@ -35,7 +35,6 @@
 
     </div>
 
-    @livewire('Configuracao.Configuracao')
-    
-    
+    @livewire('Relatorios.RelatorioContas')
+
 </x-app-layout>

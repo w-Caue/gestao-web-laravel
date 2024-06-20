@@ -20,11 +20,11 @@
 </head>
 
 <body class="">
-    <header class="flex flex-col lg:flex-row justify-between items-center mx-2 my-3" x-data="{ open: false }"
+    <header class="flex flex-col lg:flex-row justify-between items-center mx-6 my-5" x-data="{ open: false }"
         x-init="$watch('open', value => console.log(value))">
         <div class="flex w-full lg:w-auto items-center justify-between">
-            <a href="/" class="text-lg"><span class="font-bold text-slate-800">Code</span><span
-                    class="text-slate-500">gestão</span>
+            <a href="/" class="text-lg"><span class="font-bold text-slate-800">Gestão</span><span
+                    class="text-slate-500">Web</span>
             </a>
             <div class="block lg:hidden">
                 <button @click="open = !open" class="text-gray-800">
@@ -42,7 +42,12 @@
         </div>
         <nav class="hidden w-full lg:w-auto mt-2 lg:flex lg:mt-0" :class="{ 'block': open, 'hidden': !open }"
             x-transition>
-            {{-- <ul class="flex flex-col font-semibold lg:flex-row lg:gap-3">
+            <ul class="flex flex-col font-semibold lg:flex-row lg:gap-3">
+                <li class="">
+                    <a href="" class="flex lg:px-3 py-2 text-gray-600 hover:text-gray-900">
+                        Inicio
+                    </a>
+                </li>
                 <li class="">
                     <a href="" class="flex lg:px-3 py-2 text-gray-600 hover:text-gray-900">
                         Planos
@@ -55,11 +60,11 @@
                 </li>
                 <li class="">
                     <a href="" class="flex lg:px-3 py-2 text-gray-600 hover:text-gray-900">
-                        Sobre Nos
+                        Contato
                     </a>
                 </li>
 
-            </ul> --}}
+            </ul>
             <div class="lg:hidden flex items-center font-semibold mt-3 gap-4">
                 <div>
                     @auth
@@ -75,7 +80,7 @@
                         @endif
                     @endauth
                 </div>
-                {{-- <a href="#" class="text-white font-semibold bg-purple-500 p-2 rounded">Virar Membro</a> --}}
+                <a href="#" class="text-white font-semibold bg-purple-500 p-2 rounded">Virar Membro</a>
             </div>
         </nav>
         <div>
@@ -94,7 +99,7 @@
                         @endif
                     @endauth
                 </div>
-                {{-- <a href="#" class="text-white font-semibold bg-purple-500 p-2 rounded">Virar Membro</a> --}}
+                <a href="#" class="text-white font-semibold bg-purple-500 p-2 rounded">Virar Membro</a>
             </div>
         </div>
     </header>
