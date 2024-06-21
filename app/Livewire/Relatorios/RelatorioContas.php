@@ -5,6 +5,7 @@ namespace App\Livewire\Relatorios;
 use App\Models\AgenteCobrador;
 use App\Models\Cliente;
 use App\Models\Conta;
+use App\Models\Pessoa;
 use Livewire\Component;
 
 class RelatorioContas extends Component
@@ -13,7 +14,7 @@ class RelatorioContas extends Component
 
     public $clienteEmpresa;
     public $cobrador;
-    public $status;
+    public $status = '';
 
     public $inicioDataLancamento;
     public $finalDataLancamento;
@@ -23,10 +24,8 @@ class RelatorioContas extends Component
 
     public $visualizarDocumentos;
 
-    public $clientes;
-    public $tipo = 'Cliente';
-    public $mostrarClientes;
-    public $clienteRelatorio;
+    public $pessoas;
+    public $pessoaRelatorio;
 
     public $totais;
 
@@ -44,9 +43,6 @@ class RelatorioContas extends Component
 
     public function relatorio()
     {
-        // $this->visualizarDocumentos = true;
-        // $this->dispatch('open-modal');
-
         $documentos = Conta::select([
             'contas.id',
             'contas.pessoa_id',
@@ -60,12 +56,23 @@ class RelatorioContas extends Component
             'contas.valor_documento',
             'contas.valor_pago',
         ])    #Filtros
-            ->when($this->clienteEmpresa, function ($query) {
-                return $query->where('cliente_id', $this->clienteEmpresa);
+            ->when($this->pessoaRelatorio, function ($query) {
+                return $query->where('pessoa_id', $this->pessoaRelatorio->id);
+            })
+            ->when($this->status, function ($query) {
+                return $query->where('status', $this->status);
             })
             ->when($this->cobrador, function ($query) {
                 return $query->where('ag_cobrador_id', $this->cobrador);
             })
+
+            ->when($this->inicioDataLancamento, function ($query) {
+                return $query->whereDate('data_lancamento', '>=', $this->inicioDataLancamento);
+            })
+            ->when($this->inicioDataLancamento, function ($query) {
+                return $query->whereDate('data_lancamento', '<=', $this->inicioDataLancamento);
+            })
+
             ->when($this->inicioDataVencimento, function ($query) {
                 return $query->whereDate('data_vencimento', '>=', $this->inicioDataVencimento);
             })
@@ -81,32 +88,30 @@ class RelatorioContas extends Component
         }
 
         $this->totais = $total;
+
+        return;
     }
 
-    // public function pesquisaClientes()
-    // {
-    //     $clientes = Cliente::select([
-    //         'clientes.id',
-    //         'clientes.nome',
-    //         'clientes.whatsapp',
-    //         'clientes.status',
-    //         'clientes.tipo',
-    //     ])->when($this->tipo, function ($query) {
-    //         return $query->where('tipo', '=', $this->tipo);
-    //     });
+    public function pesquisaPessoas()
+    {
+        $pessoas = Pessoa::select([
+            'pessoas.id',
+            'pessoas.nome',
+            'pessoas.telefone',
+            'pessoas.status',
+            'pessoas.tipo',
+        ]);
 
 
-    //     $this->clientes = $clientes->get();
-    // }
+        $this->pessoas = $pessoas->get();
+    }
 
-    // public function selecioneCliente($cliente)
-    // {
-    //     $this->clienteRelatorio = Cliente::where('id', $cliente)->get()->first();
+    public function selecionePessoa($codigo)
+    {
+        $this->pessoaRelatorio = Pessoa::where('id', $codigo)->get()->first();
 
-    //     $this->clienteEmpresa = $this->clienteRelatorio->id;
-
-    //     $this->dispatch('close-detalhes');
-    // }
+        $this->dispatch('close-detalhes');
+    }
 
     public function render()
     {
