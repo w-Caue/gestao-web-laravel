@@ -1,22 +1,24 @@
 <div x-cloak x-data="{ show: 'cadastro' }">
 
     <div class="flex gap-2">
-        <button :class="{ 'active font-bold text-gray-800 bg-white dark:text-white dark:bg-gray-800': show === 'cadastro' }"
+        <button
+            :class="{ 'active font-bold text-gray-800 bg-white dark:text-white dark:bg-gray-800': show === 'cadastro' }"
             class="py-2 px-4 text-sm uppercase font-semibold border border-b-0 border-white rounded-t hover:text-gray-500 dark:border-gray-800 dark:text-gray-600 dark:hover:text-white"
             x-on:click="show = 'cadastro'">
             Cadastro
         </button>
 
-        <button :class="{ 'active font-bold text-gray-800 bg-white dark:text-white dark:bg-gray-800': show === 'contas' }"
+        <button
+            :class="{ 'active font-bold text-gray-800 bg-white dark:text-white dark:bg-gray-800': show === 'contas' }"
             class="py-2 px-4 text-sm uppercase font-semibold border border-b-0 border-white rounded-t hover:text-gray-500 dark:border-gray-800 dark:text-gray-600 dark:hover:text-white"
             x-on:click="show = 'contas'">
             Hist. de contas
         </button>
     </div>
 
-    <div class="grid grid-cols-5 items-start gap-2">
+    <div class="grid items-start gap-5 sm:grid-cols-5 sm:gap-2">
 
-        <div class="w-full col-span-3">
+        <div class="w-full sm:col-span-3">
             <div x-show=" show === 'cadastro'"
                 class="px-4 py-3 mb-8 bg-white rounded-b-lg rounded-tr-lg shadow-md dark:bg-gray-800">
 
@@ -32,7 +34,7 @@
                         <label for="types">
                             <x-inputs.label value="Tipo" />
 
-                            <div class="w-56 flex flex-wrap gap-3">
+                            <div class="sm:w-56 flex flex-wrap gap-3">
                                 <label class="flex items-center gap-1">
                                     <x-radio.primary wire:model.live="form.tipo" value="Cliente" name="tipo"
                                         id="checkboxChecked" />
@@ -75,7 +77,7 @@
                     @enderror
                 </div>
 
-                <div class="flex gap-3 my-2">
+                <div class="flex flex-wrap gap-3 my-2">
                     <div class="w-40">
                         <x-inputs.label value="Telefone" />
 
@@ -111,8 +113,8 @@
                     <div
                         class="flex justify-between px-2 text-sm uppercase font-semibold tracking-widest text-gray-800 dark:text-gray-300 my-1">
                         <h1>Documento</h1>
-                        <h1 class="ml-7">Status</h1>
-                        <h1>Valor Documento</h1>
+                        <h1 class="mr-10 ml-7 sm:mr-0">Status</h1>
+                        <h1 class="hidden sm:block">Valor Documento</h1>
                     </div>
 
                     @foreach ($form->contas as $conta)
@@ -125,12 +127,24 @@
                                     <span class="text-xs">{{ date('d/m/Y', strtotime($conta->data_lancamento)) }}</span>
                                 </div>
 
-                                <span
-                                    class="p-2 text-xs font-semibold uppercase border-2 rounded-full {{ $conta->status == 'Aberto' ? 'text-gray-400 border-gray-400' : '' }} {{ $conta->status == 'Paga' ? 'text-green-400 border-green-400' : '' }}">
-                                    Conta {{ $conta->status }}
-                                </span>
+                                <div class="flex items-center gap-2">
+                                    <span
+                                        class="p-2 text-xs font-semibold uppercase border-2 rounded-full {{ $conta->status == 'Aberto' ? 'text-gray-400 border-gray-400' : '' }} {{ $conta->status == 'Paga' ? 'text-green-400 border-green-400' : '' }}">
+                                        Conta {{ $conta->status }}
+                                    </span>
 
-                                <div class="flex gap-1 font-semibold">
+                                    <button x-on:click="conta = !conta" class="sm:hidden">
+                                        <svg class="w-6 h-6 transition-all duration-300 transform"
+                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                            x-bind:class="conta ? 'rotate-180' : '-rotate-50'" fill="currentColor">
+                                            <path
+                                                d="M11.9999 13.1714L16.9497 8.22168L18.3639 9.63589L11.9999 15.9999L5.63599 9.63589L7.0502 8.22168L11.9999 13.1714Z">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <div class="sm:flex gap-1 font-semibold hidden">
                                     <h1>R${{ number_format($conta->valor_documento, '2', ',') }}</h1>
 
                                     <button x-on:click="conta = !conta">
@@ -147,7 +161,7 @@
 
                             <div x-show="conta" class="">
 
-                                <div class="mt-10 grid grid-cols-2 gap-4">
+                                <div class="mt-10 grid sm:grid-cols-2 gap-4">
                                     <div class="">
                                         <h1
                                             class="text-xs uppercase tracking-widest font-bold text-gray-700 mb-2 dark:text-gray-300">
@@ -190,6 +204,11 @@
                                         <div
                                             class="flex flex-col gap-4 font-semibold border rounded-md p-2 mx-1 text-sm dark:border-gray-500">
 
+                                            <div class="flex justify-between sm:hidden">
+                                                <p>Valor Documento:</p>
+                                                <span>R${{ number_format($conta->valor_documento, '2', ',') }}</span>
+                                            </div>
+
                                             <div class="flex justify-between">
                                                 <p>Forma de Pagamento:</p>
                                                 <span class="">{{ $conta->pagamento->nome ?? '' }}</span>
@@ -211,14 +230,15 @@
             </div>
         </div>
 
-        <div x-show=" show === 'cadastro'" class="w-full col-span-2">
+        <div x-show=" show === 'cadastro'" class="w-full sm:col-span-2">
             {{-- @livewire('Ecommerce.Conta.Cadastro') --}}
         </div>
 
-        <div class="w-full col-span-2">
+        <div class="w-full sm:col-span-2">
             <div x-show=" show === 'contas'" class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
 
-                <h1 class="text-sm mb-4 text-center font-semibold uppercase tracking-widest dark:text-gray-300">Totais</h1>
+                <h1 class="text-sm mb-4 text-center font-semibold uppercase tracking-widest dark:text-gray-300">Totais
+                </h1>
 
                 <div class="flex justify-between text-gray-400">
                     <div class="flex flex-col gap-2">
@@ -229,7 +249,7 @@
                     <div class="flex flex-col items-end gap-2">
                         <x-inputs.label-text value="{{ $form->contasAberto }}" />
 
-                        <x-inputs.label-text value="{{'R$'. number_format($form->totalAberto, 2, ',') }}" />
+                        <x-inputs.label-text value="{{ 'R$' . number_format($form->totalAberto, 2, ',') }}" />
                     </div>
                 </div>
 
@@ -244,7 +264,7 @@
                     <div class="flex flex-col items-end gap-2">
                         <x-inputs.label-text value="{{ $form->contasPaga }}" />
 
-                        <x-inputs.label-text value="{{'R$'. number_format($form->totalPaga, 2, ',') }}" />
+                        <x-inputs.label-text value="{{ 'R$' . number_format($form->totalPaga, 2, ',') }}" />
                     </div>
                 </div>
 
@@ -259,7 +279,7 @@
                     <div class="flex flex-col items-end gap-2">
                         <x-inputs.label-text value="{{ $form->contasAtrasada }}" />
 
-                        <x-inputs.label-text value="{{'R$'. number_format($form->totalAtrasada, 2, ',') }}" />
+                        <x-inputs.label-text value="{{ 'R$' . number_format($form->totalAtrasada, 2, ',') }}" />
                     </div>
                 </div>
 
@@ -274,7 +294,7 @@
                     <div class="flex flex-col items-end gap-2">
                         <x-inputs.label-text value="{{ $form->contasVencida }}" />
 
-                        <x-inputs.label-text value="{{'R$'. number_format($form->totalVencida, 2, ',') }}" />
+                        <x-inputs.label-text value="{{ 'R$' . number_format($form->totalVencida, 2, ',') }}" />
                     </div>
                 </div>
             </div>

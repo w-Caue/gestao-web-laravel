@@ -1,8 +1,8 @@
 <div>
-    <div class="grid grid-cols-5 items-start gap-2">
+    <div class="grid sm:grid-cols-5 items-start gap-2">
 
-        <div class="w-full col-span-3">
-            <div class="px-4 py-3 mb-8 bg-white rounded-b-lg rounded-tr-lg shadow-md dark:bg-gray-800">
+        <div class="w-full sm:col-span-3">
+            <div class="px-4 py-3 mb-8 bg-white rounded-b-lg rounded-lg shadow-md dark:bg-gray-800">
 
                 <div class="flex justify-between items-start my-2 text-sm">
 
@@ -26,10 +26,10 @@
                     </div>
                 </div>
 
-                <div class="flex flex-col w-full mb-2">
+                <div class="flex flex-col mb-2">
                     <x-inputs.label value="Cliente / Empresa" />
 
-                    <x-inputs.text-dark disabled wire:model="form.pessoa" class="w-80"
+                    <x-inputs.text-dark disabled wire:model="form.pessoa" class="sm:w-80"
                         placeholder="insira o nome aqui" />
 
                     @error('form.pessoa')
@@ -77,13 +77,12 @@
             </div>
         </div>
 
-        <div class="w-full col-span-2">
+        <div class="w-full sm:col-span-2">
             <div class="items-center px-4 py-5 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
 
                 <div class="flex justify-between items-center mb-7">
                     <x-inputs.label value="Ag. Cobrador:" />
 
-                    {{-- <x-inputs.select wire:model="agenteCobrador" class="w-44"></x-inputs.select> --}}
                     <x-inputs.result value="{{ $form->agCobrador }}" />
                 </div>
 

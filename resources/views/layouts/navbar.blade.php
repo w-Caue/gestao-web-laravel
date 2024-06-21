@@ -1,4 +1,4 @@
-<header class="z-40 w-full fixed py-2 bg-white shadow-md dark:bg-gray-800">
+<header class="z-40 w-full fixed py-2 bg-white dark:bg-gray-800">
     <div class="container flex items-center justify-between h-full px-6 text-purple-600 dark:text-purple-300">
         <!-- Mobile hamburger -->
         <button x-on:click="sidebar.full = !sidebar.full" class="hidden sm:block focus:outline-none">
@@ -30,7 +30,7 @@
         </a>
 
         <!-- Search input -->
-        <div class="flex justify-center flex-1 lg:mr-32">
+        <div class="hidden sm:flex justify-center flex-1 lg:mr-32">
             <div class="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
                 <div class="absolute inset-y-0 flex items-center pl-2">
                     <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
@@ -44,6 +44,7 @@
                     type="text" placeholder="Search for projects" aria-label="Search" />
             </div>
         </div>
+
         <ul class="flex items-center flex-shrink-0 space-x-6">
             <!-- Theme toggler -->
             <li class="flex">

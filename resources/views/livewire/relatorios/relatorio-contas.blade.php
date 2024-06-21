@@ -1,5 +1,5 @@
 <div>
-    <div class="bg-gray-50 rounded-lg shadow-xl flex flex-col w-1/2 dark:bg-gray-800">
+    <div class="bg-gray-50 rounded-lg shadow-xl flex flex-col sm:w-1/2 dark:bg-gray-800">
 
         {{-- <div class="m-3 text-gray-700 flex justify-between items-center dark:text-white">
             <h1 class="font-bold text-xl">Relatório</h1>
@@ -8,10 +8,9 @@
 
         <form class="p-4">
             <div class="">
-
                 <x-inputs.label value="Cliente / Empresa" />
 
-                <div class="relative w-96">
+                <div class="relative sm:w-96">
                     <input value="{{ $pessoaRelatorio->nome ?? '' }}"
                         class="block p-3 w-full shadow-md font-semibold border-2 rounded-md text-sm tracking-widest focus:outline-none dark:text-gray-200 dark:bg-gray-800 dark:border-gray-600"
                         placeholder="Pesquisa Cliente / Empresa ">
@@ -27,7 +26,7 @@
                 </div>
             </div>
 
-            <div class="flex justify-between items-start my-4">
+            <div class="flex flex-wrap sm:justify-between items-start my-4">
                 <div class="">
                     <label for="cobrador" class="flex flex-col">
                         <x-inputs.label value="Ag. Cobrador" />
@@ -47,11 +46,11 @@
                     @enderror
                 </div>
 
-                <div class="flex">
+                <div class="mt-3 sm:mt-0">
                     <label for="types">
                         <x-inputs.label value="Status" />
 
-                        <div class="w-80 flex flex-wrap gap-3">
+                        <div class="sm:w-80 flex flex-wrap gap-3">
                             <label class="flex items-center gap-1">
                                 <x-radio.primary wire:model.live="status" value="" check="S" name="status"
                                     id="checkboxChecked" />
@@ -87,10 +86,6 @@
                                 <x-inputs.label value="Vencimento" />
                             </label>
                         </div>
-
-                        @error('form.tipo')
-                            <span class="error">{{ $message }}</span>
-                        @enderror
                     </label>
                 </div>
 
@@ -98,15 +93,15 @@
 
             <div class="border my-6 mx-5 dark:border-gray-600"></div>
 
-            <div class="flex flex-col my-4">
+            <div class="flex flex-wrap flex-col my-4">
                 <x-inputs.label value="Dt. Lançamento" />
 
-                <div class="flex items-center gap-4">
-                    <x-inputs.text-dark type="date" wire:model="inicioDataLancamento" class="w-36" />
+                <div class="flex items-center gap-1 sm:gap-4">
+                    <x-inputs.text-dark type="date" wire:model="inicioDataLancamento" class="sm:w-36" />
 
                     <span class="text-gray-500 font-semibold uppercase">á</span>
 
-                    <x-inputs.text-dark type="date" wire:model="finalDataLancamento" class="w-36" />
+                    <x-inputs.text-dark type="date" wire:model="finalDataLancamento" class="sm:w-36" />
                 </div>
 
                 @error('inicioDataLancamento')
@@ -117,12 +112,12 @@
             <div class="flex flex-col">
                 <x-inputs.label value="Dt. Vencimento" />
 
-                <div class="flex items-center gap-4">
-                    <x-inputs.text-dark type="date" wire:model="inicioDataVencimento" class="w-36" />
+                <div class="flex items-center gap-1 sm:gap-4">
+                    <x-inputs.text-dark type="date" wire:model="inicioDataVencimento" class="sm:w-36" />
 
                     <span class="text-gray-500 font-semibold uppercase">á</span>
 
-                    <x-inputs.text-dark type="date" wire:model="finalDataVencimento" class="w-36" />
+                    <x-inputs.text-dark type="date" wire:model="finalDataVencimento" class="sm:w-36" />
                 </div>
 
                 @error('form.dataLancamento')
@@ -141,7 +136,6 @@
 
     </div>
 
-    {{-- @if ($visualizarDocumentos) --}}
     <x-modal.modal-large title="Relatorio de Contas" name="relatorio">
         @slot('body')
             <div class="w-full overflow-hidden rounded-lg shadow-xs hidden sm:block">
@@ -197,9 +191,58 @@
                     </table>
                 </div>
             </div>
+
+            <!-- LISTAGEM MOBILE -->
+            <div class="w-full overflow-hidden rounded-lg shadow-xs block sm:hidden">
+                <div class="w-full overflow-x-auto">
+                    <table class="w-full whitespace-no-wrap">
+                        <thead>
+                            <tr
+                                class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 dark:text-gray-400">
+                                <th class="px-4 py-3 text-center">Cód</th>
+                                <th class="px-4 py-3 text-center">Cliente / Empresa</th>
+                                {{-- <th class="px-4 py-3 text-center">Agente Cobrador</th> --}}
+                                <th class="px-4 py-3 text-center">Valor</th>
+                                <th class="px-4 py-3 text-center">venc</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y dark:divide-gray-700">
+                            @if ($documentos)
+                                @foreach ($documentos as $documento)
+                                    <tr wire:key="{{ $documento->id }}" class="text-gray-700 dark:text-gray-400">
+                                        <td class="px-4 py-3 text-sm text-center">
+                                            {{ $documento->id }}
+                                        </td>
+                                        <td class="px-4 py-3 text-center">
+                                            <p class="font-semibold">{{ $documento->pessoa->nome }}</p>
+                                        </td>
+                                        
+                                        <td class="px-4 py-3 text-sm text-center">
+                                            R${{ number_format($documento->valor_documento, 2, ',', '.') }}
+                                        </td>
+
+                                        <td class="px-4 py-3 text-sm text-center">
+                                            {{ date('d/m/Y', strtotime($documento->data_vencimento)) }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
+
+                        </tbody>
+                        <tfoot>
+                            <tr class="font-semibold text-gray-500 dark:text-gray-400 border-t dark:border-gray-700">
+                                <th scope="row" class="px-6 py-3 text-base text-center">Total</th>
+                                <th colspan="5" class="px-6 py-3 text-center">
+                                    R$ {{ number_format($totais, 2, ',', '.') }}
+                                </th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <!-- /LISTAGEM MOBILE -->
         @endslot
     </x-modal.modal-large>
-    {{-- @endif --}}
 
     {{-- Clientes --}}
     <x-modal-detalhes name="clientes" title="Clientes">

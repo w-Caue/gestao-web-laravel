@@ -36,7 +36,7 @@
                 </div>
             </div>
 
-            <div class="relative overflow-x-auto mt-5 mx-7">
+            <div class="relative overflow-x-auto mt-5 sm:mx-7">
                 <table wire:init="load"
                     class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase border-b dark:text-gray-400 dark:border-gray-700">
@@ -55,15 +55,15 @@
                     <tbody class="divide-y font-semibold dark:divide-gray-700">
                         @foreach ($pagamentos as $pagamento)
                             <tr class=" border-gray-200  dark:border-gray-700">
-                                <td class="px-6 py-4 text-center">
+                                <td class="py-4 text-center">
                                     #{{ $pagamento->id }}
                                 </td>
 
                                 <td scope="row"
-                                    class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white">
+                                    class="py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $pagamento->nome }}
                                 </td>
-                                <td class="px-4 py-3 flex justify-center">
+                                <td class="py-3 flex justify-center">
                                     <button wire:click="remover()"
                                         class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-yellow-500 rounded-lg hover:scale-95 dark:hover:text-red-600
                                              dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
@@ -135,7 +135,7 @@
                 </div>
             </div>
 
-            <div class="relative overflow-x-auto mt-5 mx-7">
+            <div class="relative overflow-x-auto mt-5 sm:mx-7">
                 <table wire:init="load"
                     class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase border-b dark:text-gray-400 dark:border-gray-700">
@@ -154,15 +154,15 @@
                     <tbody class="divide-y font-semibold dark:divide-gray-700">
                         @foreach ($cobradores as $cobrador)
                             <tr class=" border-gray-200  dark:border-gray-700">
-                                <td class="px-6 py-4 text-center">
+                                <td class="py-4 text-center">
                                     #{{ $cobrador->id }}
                                 </td>
 
                                 <td scope="row"
-                                    class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white">
+                                    class="py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $cobrador->nome }}
                                 </td>
-                                <td class="px-4 py-3 flex justify-center">
+                                <td class="py-3 flex justify-center">
                                     <button wire:click="remover()"
                                         class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg hover:scale-95 dark:hover:text-purple-600
                                              dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"

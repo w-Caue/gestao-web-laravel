@@ -44,25 +44,25 @@
             x-transition>
             <ul class="flex flex-col font-semibold lg:flex-row lg:gap-3">
                 <li class="">
-                    <a href="" class="flex lg:px-3 py-2 text-gray-600 hover:text-gray-900">
+                    <a href="/" class="flex lg:px-3 py-2 text-gray-600 hover:text-gray-900">
                         Inicio
                     </a>
                 </li>
-                <li class="">
+                {{-- <li class="">
                     <a href="" class="flex lg:px-3 py-2 text-gray-600 hover:text-gray-900">
                         Planos
                     </a>
-                </li>
+                </li> --}}
                 <li class="">
-                    <a href="" class="flex lg:px-3 py-2 text-gray-600 hover:text-gray-900">
+                    <a href="/" class="flex lg:px-3 py-2 text-gray-600 hover:text-gray-900">
                         Funcionalidades
                     </a>
                 </li>
-                <li class="">
+                {{-- <li class="">
                     <a href="" class="flex lg:px-3 py-2 text-gray-600 hover:text-gray-900">
                         Contato
                     </a>
-                </li>
+                </li> --}}
 
             </ul>
             <div class="lg:hidden flex items-center font-semibold mt-3 gap-4">
@@ -76,11 +76,10 @@
 
                         @if (Route::has('register'))
                             <a href="{{ route('register') }}"
-                                class="ml-4 font-semibold text-gray-800 hover:text-gray-600 focus:outline focus:outline-2 focus:rounded-sm">Cadastrar</a>
+                                class="ml-2 text-white font-semibold bg-purple-500 p-2 rounded">Cadastrar</a>
                         @endif
                     @endauth
                 </div>
-                <a href="#" class="text-white font-semibold bg-purple-500 p-2 rounded">Virar Membro</a>
             </div>
         </nav>
         <div>
@@ -95,11 +94,10 @@
 
                         @if (Route::has('register'))
                             <a href="{{ route('register') }}"
-                                class="ml-4 font-semibold text-gray-800 hover:text-gray-600 focus:outline focus:outline-2 focus:rounded-sm">Cadastrar</a>
+                                class="ml-2 text-white font-semibold bg-purple-500 p-2 rounded">Cadastrar</a>
                         @endif
                     @endauth
                 </div>
-                <a href="#" class="text-white font-semibold bg-purple-500 p-2 rounded">Virar Membro</a>
             </div>
         </div>
     </header>
@@ -107,6 +105,8 @@
     <div class="font-sans antialiased">
         {{ $slot }}
     </div>
+
+    @include('layouts.footer')
 
     @livewireScripts
 

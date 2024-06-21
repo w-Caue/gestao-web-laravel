@@ -16,7 +16,7 @@
             </button>
         </div>
 
-        <div x-show="show === 'pagar'" class="w-full bg-white rounded-b-lg rounded-tr-lg dark:bg-gray-800">
+        <div x-show="show === 'pagar'">
             @livewire('Contas.ListagemContasPagar')
         </div>
     </div>
@@ -88,7 +88,7 @@
                         </div>
                     </div>
 
-                    <div class="flex gap-3">
+                    <div class="flex flex-wrap gap-3">
                         <div class="flex flex-col">
                             <x-inputs.label value="Dt. Lançamento" />
 

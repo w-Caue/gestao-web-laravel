@@ -33,21 +33,6 @@
                     name="password_confirmation" required autocomplete="new-password" />
             </div>
 
-            <div class="mt-4 flex items-center gap-5">
-                <div class="flex items-center">
-                    <input id="type-instrutor" type="radio" name="type" value="instrutor" name="default-radio"
-                        class="w-4 h-4 mr-1 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-
-                    <x-label for="type-instrutor" value="{{ __('Instrutor') }}" />
-                </div>
-                <div class="flex items-center">
-                    <input checked id="type-aluno" type="radio" name="type" value="aluno" name="default-radio"
-                        class="w-4 h-4 mr-1 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-
-                    <x-label for="type-aluno" value="{{ __('Aluno') }}" />
-                </div>
-            </div>
-
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                 <div class="mt-4">
                     <x-label for="terms">

@@ -3,9 +3,9 @@
     @include('includes.loading')
 
     <div class="w-full bg-white rounded-lg dark:bg-gray-800">
-        <div class="flex justify-normal sm:justify-between items-end gap-2 sm:gap-0 flex-wrap my-2 ">
-            <div class="md:mb-0 mx-4">
-                <label for="table-search" class="sr-only">Pesquisa</label>
+        <div class="flex justify-center sm:justify-between items-end gap-2 sm:gap-0 flex-wrap my-2 ">
+
+            <div class="mb-2 mx-4 w-full">
                 <div class="relative mt-2">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                         <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -15,7 +15,7 @@
                         </svg>
                     </div>
                     <input wire:model.live="search" type="text" id="table-search"
-                        class="p-2 pl-10 text-sm text-gray-600 font-semibold rounded sm:w-72 bg-white dark:bg-gray-800 dark:text-white"
+                        class="p-2 pl-10 text-sm text-gray-600 font-semibold rounded w-full sm:w-72 bg-white dark:bg-gray-800 dark:text-white"
                         placeholder="Pesquisar {{ $sortField }}">
                 </div>
             </div>
@@ -170,9 +170,10 @@
                         <a href=" {{ route('pessoal.show', ['codigo' => $pessoa->id]) }}"
                             class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg hover:scale-105 dark:hover:text-purple-600 dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                             aria-label="Edit">
-                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                fill="currentColor">
                                 <path
-                                    d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
+                                    d="M11 2C15.968 2 20 6.032 20 11C20 15.968 15.968 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2ZM11 18C14.8675 18 18 14.8675 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18ZM19.4853 18.0711L22.3137 20.8995L20.8995 22.3137L18.0711 19.4853L19.4853 18.0711Z">
                                 </path>
                             </svg>
                         </a>
@@ -205,5 +206,9 @@
         </div>
     </div>
     {{-- /Listagem Mobile --}}
+
+    <div class="mx-2 mt-2">
+        {{ $this->dados()->links('layouts.paginate') }}
+    </div>
 
 </div>

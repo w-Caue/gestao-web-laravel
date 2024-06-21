@@ -23,7 +23,7 @@
     </div>
     <!--./Cards-->
 
-    <div class="py-2 bg-white rounded-md w-1/2 px-4 dark:bg-gray-800">
+    <div class="py-2 bg-white rounded-md w-full sm:w-1/2 px-4 dark:bg-gray-800">
         <div x-data="{ open: false }"
             class="relative flex justify-between items-center border-b pb-2 dark:border-gray-700">
             <span class="text-sm font-semibold tracking-widest uppercase text-gray-600 dark:text-gray-400">
