@@ -22,18 +22,18 @@
                 Usuario
             </h1> --}}
 
-     <div class="mt-12 bg-white dark:bg-gray-900">
+     <div class="mt-12 bg-gray-200 dark:bg-gray-900">
 
          <ul>
              <li
-                 class="relative px-1 py-4 {{ request()->routeIs('dashboard') ? 'bg-gray-900' : 'bg-gray-800' }} {{ request()->routeIs('pessoal.*') ? 'bg-gray-800 rounded-br-lg' : '' }}">
+                 class="relative px-1 py-4 {{ request()->routeIs('dashboard') ? 'bg-gray-200 dark:bg-gray-900' : 'bg-white dark:bg-gray-800' }} {{ request()->routeIs('pessoal.*') ? 'rounded-br-lg bg-white dark:bg-gray-800' : '' }}">
                  <!-- Active items have the snippet below -->
                  @if (request()->routeIs('dashboard'))
                      @include('includes.ative-sidebar')
                  @endif
 
                  <a href="{{ route('dashboard') }}"
-                     class="relative flex justify-between items-center font-semibold space-x-2 rounded-md p-2 cursor-pointer {{ request()->routeIs('dashboard') ? 'text-purple-500' : 'text-gray-500 dark:text-gray-400' }}"
+                     class="relative flex justify-between items-center font-semibold space-x-2 rounded-md p-2 cursor-pointer {{ request()->routeIs('dashboard') ? 'text-purple-500' : 'text-gray-400' }}"
                      x-bind:class="{
                          'justify-start': sidebar.full,
                          'sm:justify-center': !sidebar.full,
@@ -57,14 +57,14 @@
              </li>
 
              <li
-                 class="relative px-1 py-3 {{ request()->routeIs('pessoal.*') ? 'bg-gray-900 ' : 'bg-gray-800' }} {{ request()->routeIs('dashboard') ? 'bg-gray-800 rounded-tr-lg' : '' }} {{ request()->routeIs('contas.*') ? 'bg-gray-800 rounded-br-lg' : '' }}">
+                 class="relative px-1 py-3 {{ request()->routeIs('pessoal.*') ? 'bg-gray-200 dark:bg-gray-900' : 'bg-white dark:bg-gray-800' }} {{ request()->routeIs('dashboard') ? 'rounded-tr-lg bg-white dark:bg-gray-800' : '' }} {{ request()->routeIs('contas.*') ? 'rounded-br-lg bg-white dark:bg-gray-800' : '' }}">
                  <!-- Active items have the snippet below -->
                  @if (request()->routeIs('pessoal.*'))
                      @include('includes.ative-sidebar')
                  @endif
 
                  <a href="{{ route('pessoal.index') }}"
-                     class="relative flex justify-between items-center font-semibold space-x-2 rounded-md p-2 cursor-pointer {{ request()->routeIs('pessoal.*') ? 'text-purple-500' : 'text-gray-500 dark:text-gray-400' }}"
+                     class="relative flex justify-between items-center font-semibold space-x-2 rounded-md p-2 cursor-pointer {{ request()->routeIs('pessoal.*') ? 'text-purple-500' : 'text-gray-400' }}"
                      x-bind:class="{
                          'justify-start': sidebar.full,
                          'sm:justify-center': !sidebar.full,
@@ -95,7 +95,7 @@
                  @endif
 
                  <a href="{{ route('produto.index') }}"
-                     class="relative flex justify-between items-center font-semibold space-x-2 rounded-md p-2 cursor-pointer {{ request()->routeIs('admin.dashboard') ? 'text-purple-500 border-2 border-purple-500' : 'text-gray-500 dark:text-gray-400' }}"
+                     class="relative flex justify-between items-center font-semibold space-x-2 rounded-md p-2 cursor-pointer {{ request()->routeIs('admin.dashboard') ? 'text-purple-500 border-2 border-purple-500' : 'text-gray-400' }}"
                      x-bind:class="{
                          'justify-start': sidebar.full,
                          'sm:justify-center': !sidebar.full,
@@ -126,7 +126,7 @@
                  @endif
 
                  <a href="{{ route('pedidos.index') }}"
-                     class="relative flex justify-between items-center font-semibold space-x-2 rounded-md p-2 cursor-pointer {{ request()->routeIs('admin.dashboard') ? 'text-purple-500 border-2 border-purple-500' : 'text-gray-500 dark:text-gray-400' }}"
+                     class="relative flex justify-between items-center font-semibold space-x-2 rounded-md p-2 cursor-pointer {{ request()->routeIs('admin.dashboard') ? 'text-purple-500 border-2 border-purple-500' : 'text-gray-400' }}"
                      x-bind:class="{
                          'justify-start': sidebar.full,
                          'sm:justify-center': !sidebar.full,
@@ -148,14 +148,14 @@
              </li> --}}
 
              <li
-                 class="relative px-1 py-3 {{ request()->routeIs('contas.*') ? 'bg-gray-900 ' : 'bg-gray-800' }} {{ request()->routeIs('pessoal.*') ? 'bg-gray-800 rounded-tr-lg' : '' }} {{ request()->routeIs('relatorios.*') ? 'bg-gray-800 rounded-br-lg' : '' }}">
+                 class="relative px-1 py-3 {{ request()->routeIs('contas.*') ? 'bg-gray-200 dark:bg-gray-900' : 'bg-white dark:bg-gray-800' }} {{ request()->routeIs('pessoal.*') ? 'bg-white rounded-tr-lg dark:bg-gray-800' : '' }} {{ request()->routeIs('relatorios.*') ? 'bg-gray-800 rounded-br-lg' : '' }}">
                  <!-- Active items have the snippet below -->
                  @if (request()->routeIs('contas.*'))
                      @include('includes.ative-sidebar')
                  @endif
 
                  <a href="{{ route('contas.index') }}"
-                     class="relative flex justify-between items-center font-semibold space-x-2 rounded-md p-2 cursor-pointer {{ request()->routeIs('contas.*') ? 'text-purple-500' : 'text-gray-500 dark:text-gray-400' }}"
+                     class="relative flex justify-between items-center font-semibold space-x-2 rounded-md p-2 cursor-pointer {{ request()->routeIs('contas.*') ? 'text-purple-500' : 'text-gray-400' }}"
                      x-bind:class="{
                          'justify-start': sidebar.full,
                          'sm:justify-center': !sidebar.full,
@@ -178,14 +178,14 @@
              </li>
 
              <li
-                 class="relative px-1 py-3 {{ request()->routeIs('relatorios.*') ? 'bg-gray-900 ' : 'bg-gray-800' }} {{ request()->routeIs('contas.*') ? 'bg-gray-800 rounded-tr-lg' : '' }} {{ request()->routeIs('configuracao') ? 'bg-gray-800 rounded-br-lg' : '' }}">
+                 class="relative px-1 py-3 {{ request()->routeIs('relatorios.*') ? 'bg-gray-200 dark:bg-gray-900' : 'bg-white dark:bg-gray-800' }} {{ request()->routeIs('contas.*') ? 'bg-gray-800 rounded-tr-lg' : '' }} {{ request()->routeIs('configuracao') ? 'bg-gray-800 rounded-br-lg' : '' }}">
                  <!-- Active items have the snippet below -->
                  @if (request()->routeIs('relatorios.*'))
                      @include('includes.ative-sidebar')
                  @endif
 
                  <a href="{{ route('relatorios.index') }}"
-                     class="relative flex justify-between items-center font-semibold space-x-2 rounded-md p-2 cursor-pointer {{ request()->routeIs('relatorios.*') ? 'text-purple-500' : 'text-gray-500 dark:text-gray-400' }}"
+                     class="relative flex justify-between items-center font-semibold space-x-2 rounded-md p-2 cursor-pointer {{ request()->routeIs('relatorios.*') ? 'text-purple-500' : 'text-gray-400' }}"
                      x-bind:class="{
                          'justify-start': sidebar.full,
                          'sm:justify-center': !sidebar.full,
@@ -206,14 +206,14 @@
              </li>
 
              <li
-                 class="relative px-1 py-3 {{ request()->routeIs('configuracao') ? 'bg-gray-900 ' : 'bg-gray-800' }} {{ request()->routeIs('relatorios.*') ? 'bg-gray-800 rounded-tr-lg' : '' }}">
+                 class="relative px-1 py-3 {{ request()->routeIs('configuracao') ? 'bg-gray-200 dark:bg-gray-900' : 'bg-white dark:bg-gray-800' }} {{ request()->routeIs('relatorios.*') ? 'bg-gray-800 rounded-tr-lg' : '' }}">
                  <!-- Active items have the snippet below -->
                  @if (request()->routeIs('configuracao'))
                      @include('includes.ative-sidebar')
                  @endif
 
                  <a href="{{ route('configuracao') }}"
-                     class="relative flex justify-between items-center font-semibold space-x-2 rounded-md p-2 cursor-pointer {{ request()->routeIs('configuracao') ? 'text-purple-500' : 'text-gray-500 dark:text-gray-400' }}"
+                     class="relative flex justify-between items-center font-semibold space-x-2 rounded-md p-2 cursor-pointer {{ request()->routeIs('configuracao') ? 'text-purple-500' : 'text-gray-400' }}"
                      x-bind:class="{
                          'justify-start': sidebar.full,
                          'sm:justify-center': !sidebar.full,
@@ -241,7 +241,7 @@
                  @endif
 
                  <a href="{{ route('configuracao') }}"
-                     class="relative flex justify-between items-center font-semibold space-x-2 rounded-md p-2 cursor-pointer {{ request()->routeIs('admin.dashboard') ? 'text-purple-500 border-2 border-purple-500' : 'text-gray-500 dark:text-gray-400' }}"
+                     class="relative flex justify-between items-center font-semibold space-x-2 rounded-md p-2 cursor-pointer {{ request()->routeIs('admin.dashboard') ? 'text-purple-500 border-2 border-purple-500' : 'text-gray-400' }}"
                      x-bind:class="{
                          'justify-start': sidebar.full,
                          'sm:justify-center': !sidebar.full,

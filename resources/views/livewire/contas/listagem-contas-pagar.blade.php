@@ -2,7 +2,7 @@
 
     @include('includes.loading')
 
-    <div class="flex justify-normal sm:justify-between items-end gap-2 sm:gap-0 flex-wrap  ">
+    <div class="flex justify-normal sm:justify-between items-end gap-2 sm:gap-0 flex-wrap">
 
         <div class="mx-4">
             <div class="relative mt-2">
@@ -35,7 +35,7 @@
             <table class="w-full whitespace-no-wrap">
                 <thead>
                     <tr
-                        class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                        class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 dark:text-gray-400">
                         <th class="px-4 py-3 text-center">#</th>
                         <th class="px-4 py-3 text-center">Cliente</th>
                         <th class="px-4 py-3 text-center">Valor Documento</th>
@@ -45,7 +45,7 @@
                         <th class="px-4 py-3 text-center">Ações</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                <tbody class="divide-y dark:divide-gray-700">
                     @foreach ($contas as $conta)
                         <tr wire:key="{{ $conta->id }}" class="text-gray-700 dark:text-gray-400">
                             <td class="px-4 py-3 text-sm text-center">

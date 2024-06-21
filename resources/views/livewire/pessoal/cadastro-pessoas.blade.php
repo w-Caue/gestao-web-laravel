@@ -1,14 +1,14 @@
 <div x-cloak x-data="{ show: 'cadastro' }">
 
     <div class="flex gap-2">
-        <button :class="{ 'active font-bold text-white bg-white dark:bg-gray-800': show === 'cadastro' }"
-            class="py-2 px-4 text-sm uppercase font-semibold text-gray-600 border border-b-0 rounded-t hover:text-white dark:border-gray-800"
+        <button :class="{ 'active font-bold text-gray-800 bg-white dark:text-white dark:bg-gray-800': show === 'cadastro' }"
+            class="py-2 px-4 text-sm uppercase font-semibold border border-b-0 border-white rounded-t hover:text-gray-500 dark:border-gray-800 dark:text-gray-600 dark:hover:text-white"
             x-on:click="show = 'cadastro'">
             Cadastro
         </button>
 
-        <button :class="{ 'active font-bold text-white bg-white dark:bg-gray-800': show === 'contas' }"
-            class="py-2 px-4 text-sm uppercase font-semibold text-gray-600 border border-b-0 rounded-t hover:text-white dark:border-gray-800"
+        <button :class="{ 'active font-bold text-gray-800 bg-white dark:text-white dark:bg-gray-800': show === 'contas' }"
+            class="py-2 px-4 text-sm uppercase font-semibold border border-b-0 border-white rounded-t hover:text-gray-500 dark:border-gray-800 dark:text-gray-600 dark:hover:text-white"
             x-on:click="show = 'contas'">
             Hist. de contas
         </button>
@@ -117,7 +117,7 @@
 
                     @foreach ($form->contas as $conta)
                         <div x-data="{ conta: false }" wire:key="{{ $conta->id }}"
-                            class="flex flex-col px-2 py-3 my-2 text-gray-700 tracking-widest border shadow-xl rounded-xl p-1 dark:text-gray-300 border-gray-100 dark:border-gray-500">
+                            class="flex flex-col px-2 py-3 my-4 text-gray-700 tracking-widest border shadow-md rounded-xl p-1 border-gray-100 dark:text-gray-300 dark:shadow-gray-700 dark:border-gray-500">
                             <div class="flex justify-between items-center w-full">
                                 <div class="flex flex-col">
                                     <a href="{{ route('contas.show', ['codigo' => $conta->id]) }}"
@@ -218,7 +218,7 @@
         <div class="w-full col-span-2">
             <div x-show=" show === 'contas'" class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
 
-                <h1 class="text-sm mb-4 text-center font-semibold text-gray-300 uppercase tracking-widest">Totais</h1>
+                <h1 class="text-sm mb-4 text-center font-semibold uppercase tracking-widest dark:text-gray-300">Totais</h1>
 
                 <div class="flex justify-between text-gray-400">
                     <div class="flex flex-col gap-2">

@@ -3,20 +3,20 @@
     <div x-cloak x-data="{ show: 'pagar' }">
 
         <div class="flex gap-2">
-            <button :class="{ 'active font-bold text-white bg-white dark:bg-gray-800': show === 'pagar' }"
-                class="py-2 px-4 text-sm uppercase font-semibold text-gray-600 border border-b-0 rounded-t hover:text-white dark:border-gray-800"
+            <button :class="{ 'active font-bold text-gray-800 bg-white dark:text-white dark:bg-gray-800': show === 'pagar' }"
+                class="py-2 px-4 text-sm uppercase font-semibold border border-b-0 border-white rounded-t hover:text-gray-500 dark:border-gray-800 dark:text-gray-600 dark:hover:text-white"
                 x-on:click="show = 'pagar'">
                 A pagar
             </button>
 
-            <button :class="{ 'active font-bold text-white bg-white dark:bg-gray-800': show === 'receber' }"
-                class="py-2 px-4 text-sm uppercase font-semibold text-gray-600 border border-b-0 rounded-t hover:text-white dark:border-gray-800"
+            <button :class="{ 'active font-bold text-gray-800 bg-white dark:text-white dark:bg-gray-800': show === 'receber' }"
+                class="py-2 px-4 text-sm uppercase font-semibold border border-b-0 border-white rounded-t hover:text-gray-500 dark:border-gray-800 dark:text-gray-600 dark:hover:text-white"
                 x-on:click="show = 'receber'">
                 A receber
             </button>
         </div>
 
-        <div x-show="show === 'pagar'" class="w-full bg-gray-50 rounded-b-lg rounded-tr-lg dark:bg-gray-800">
+        <div x-show="show === 'pagar'" class="w-full bg-white rounded-b-lg rounded-tr-lg dark:bg-gray-800">
             @livewire('Contas.ListagemContasPagar')
         </div>
     </div>

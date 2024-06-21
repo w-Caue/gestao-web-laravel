@@ -149,7 +149,7 @@
                     <table class="w-full whitespace-no-wrap">
                         <thead>
                             <tr
-                                class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 dark:text-gray-400">
                                 <th class="px-4 py-3 text-center">Código</th>
                                 <th class="px-4 py-3 text-center">Cliente / Empresa</th>
                                 <th class="px-4 py-3 text-center">Agente Cobrador</th>
@@ -158,7 +158,7 @@
                                 <th class="px-4 py-3 text-center">Data Vencimento</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                        <tbody class="divide-y dark:divide-gray-700">
                             @if ($documentos)
                                 @foreach ($documentos as $documento)
                                     <tr wire:key="{{ $documento->id }}" class="text-gray-700 dark:text-gray-400">

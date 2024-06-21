@@ -2,7 +2,7 @@
 
     @include('includes.loading')
 
-    <div class="w-full bg-gray-50 rounded-lg dark:bg-gray-800">
+    <div class="w-full bg-white rounded-lg dark:bg-gray-800">
         <div class="flex justify-normal sm:justify-between items-end gap-2 sm:gap-0 flex-wrap my-2 ">
             <div class="md:mb-0 mx-4">
                 <label for="table-search" class="sr-only">Pesquisa</label>
@@ -37,7 +37,7 @@
                 <table class="w-full whitespace-no-wrap">
                     <thead>
                         <tr
-                            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 dark:text-gray-400">
                             <th class="px-2 py-3">
                                 <div class="flex items-center justify-center cursor-pointer"
                                     wire:click="sortFilter('id')">
@@ -73,7 +73,7 @@
                             <th class="px-4 py-3 text-center">Ações</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y font-semibold dark:divide-gray-700 dark:bg-gray-800">
+                    <tbody class="divide-y font-semibold dark:divide-gray-700">
                         @foreach ($pessoas as $pessoa)
                             <tr wire:key="{{ $pessoa->id }}" class="text-gray-700 dark:text-gray-400">
                                 <td class="px-4 py-3 text-sm text-center">

@@ -4,7 +4,7 @@
 
     <div class="grid gap-6 mb-16 md:grid-cols-2 items-start" wfd-id="87">
 
-        <div class="relative text-gray-500 bg-gray-800 rounded p-2">
+        <div class="relative text-gray-500 bg-white rounded p-2 dark:bg-gray-800">
 
             <div x-data="{ open: false }"
                 class="flex justify-between items-center gap-3 mx-4 border-b pb-2 dark:border-gray-700">
@@ -25,7 +25,7 @@
                     </svg>
                 </button>
 
-                <div class="absolute right-2 top-8 border rounded-md p-3 dark:bg-gray-800 dark:border-gray-500"
+                <div class="absolute right-2 top-8 border bg-white rounded-md p-3 dark:bg-gray-800 dark:border-gray-500"
                     x-show="open" x-anchor="$refs.button" x-transition x-transition.duration.300ms>
                     <div class="flex items-center gap-1">
                         <div class="h-3 w-3 rounded-full bg-red-500">
@@ -41,7 +41,7 @@
                     class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase border-b dark:text-gray-400 dark:border-gray-700">
                         <tr>
-                            <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                            <th scope="col" class="px-6 py-3 text-center">
                                 Código
                             </th>
                             <th scope="col" class="px-6 py-3 text-center">
@@ -55,17 +55,17 @@
                     <tbody class="divide-y font-semibold dark:divide-gray-700">
                         @foreach ($pagamentos as $pagamento)
                             <tr class=" border-gray-200  dark:border-gray-700">
-                                <td class="px-6 py-4">
+                                <td class="px-6 py-4 text-center">
                                     #{{ $pagamento->id }}
                                 </td>
 
                                 <td scope="row"
-                                    class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                    class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $pagamento->nome }}
                                 </td>
                                 <td class="px-4 py-3 flex justify-center">
                                     <button wire:click="remover()"
-                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg hover:scale-95 dark:hover:text-red-600
+                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-yellow-500 rounded-lg hover:scale-95 dark:hover:text-red-600
                                              dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                         aria-label="Delete">
                                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
@@ -103,7 +103,7 @@
 
         </div>
 
-        <div class="relative text-gray-500 bg-gray-800 rounded p-2">
+        <div class="relative text-gray-500 bg-white rounded p-2 dark:bg-gray-800">
 
             <div x-data="{ open: false }"
                 class="flex justify-between items-center gap-3 mx-4 border-b pb-2 dark:border-gray-700">
@@ -124,7 +124,7 @@
                     </svg>
                 </button>
 
-                <div class="absolute right-2 top-8 border rounded-md p-3 dark:bg-gray-800 dark:border-gray-500"
+                <div class="absolute right-2 top-8 border bg-white rounded-md p-3 dark:bg-gray-800 dark:border-gray-500"
                     x-show="open" x-anchor="$refs.button" x-transition x-transition.duration.300ms>
                     <div class="flex items-center gap-1">
                         <div class="h-3 w-3 rounded-full bg-red-500">
@@ -140,7 +140,7 @@
                     class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase border-b dark:text-gray-400 dark:border-gray-700">
                         <tr>
-                            <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                            <th scope="col" class="px-6 py-3 text-center">
                                 Código
                             </th>
                             <th scope="col" class="px-6 py-3 text-center">
@@ -154,12 +154,12 @@
                     <tbody class="divide-y font-semibold dark:divide-gray-700">
                         @foreach ($cobradores as $cobrador)
                             <tr class=" border-gray-200  dark:border-gray-700">
-                                <td class="px-6 py-4">
+                                <td class="px-6 py-4 text-center">
                                     #{{ $cobrador->id }}
                                 </td>
 
                                 <td scope="row"
-                                    class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                    class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $cobrador->nome }}
                                 </td>
                                 <td class="px-4 py-3 flex justify-center">
@@ -210,7 +210,7 @@
             <form wire:submit.prevent="savePagamento()">
                 <div class="w-full mb-2">
 
-                    <x-inputs.label-text class="text-gray-200" value="nome" />
+                    <x-inputs.label-text class="dark:text-gray-200" value="nome" />
 
                     <x-inputs.text-dark wire:model="nomePagamento" class="w-full" placeholder="insira o nome aqui" />
 
@@ -235,7 +235,7 @@
                 <div class="flex gap-3">
                     <div class="w-24 mb-2">
 
-                        <x-inputs.label-text class="text-gray-200" value="sigla" />
+                        <x-inputs.label-text class="dark:text-gray-200" value="sigla" />
 
                         <x-inputs.text-dark wire:model="siglaCobrador" class="w-full" placeholder="" />
 
@@ -246,7 +246,7 @@
 
                     <div class="w-full mb-2">
 
-                        <x-inputs.label-text class="text-gray-200" value="nome" />
+                        <x-inputs.label-text class="dark:text-gray-200" value="nome" />
 
                         <x-inputs.text-dark wire:model="nomeCobrador" class="w-full" placeholder="insira o nome aqui" />
 

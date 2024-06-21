@@ -25,8 +25,8 @@
 
         </button>
 
-        <a class="text-lg mx-4 tracking-widest"><span class="text-white">Gestão </span><span
-                class="text-purple-400">Web</span>
+        <a class="text-lg mx-4 tracking-widest"><span class="text-gray-800 dark:text-white">Gestão </span><span
+                class="dark:text-purple-400">Web</span>
         </a>
 
         <!-- Search input -->
@@ -66,7 +66,7 @@
 
             <!-- Profile menu -->
             <li x-title="NavBar:ProfileMenu" x-data="{ isProfileMenuOpen: false }" class="relative" wfd-id="105">
-                <button class="flex items-center gap-1 align-middle focus:shadow-outline-blue text-gray-300"
+                <button class="flex items-center gap-1 align-middle focus:shadow-outline-blue"
                     x-on:click="isProfileMenuOpen = !isProfileMenuOpen;" @keydown.escape="isProfileMenuOpen = false"
                     @click.away="isProfileMenuOpen = false;" aria-label="Account" aria-haspopup="true" wfd-id="146">
                     <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -75,7 +75,7 @@
                         </path>
                     </svg>
 
-                    <span class="text-xs font-semibold text-gray-300 tracking-widest uppercase">Olá,
+                    <span class="text-xs font-semibold tracking-widest uppercase">Olá,
                         {{ auth()->user()->name }}</span>
                 </button>
 
