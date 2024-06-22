@@ -2,8 +2,8 @@
     <title>Relatórios - Contas</title>
 
     <div class="flex justify-between">
-        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-            Relatórios
+        <h2 class="my-6 text-xl uppercase font-semibold tracking-widest text-gray-700 dark:text-gray-200">
+            Relatório de <span class="text-blue-500">Contas</span>
         </h2>
 
         <nav class="flex" aria-label="Breadcrumb">

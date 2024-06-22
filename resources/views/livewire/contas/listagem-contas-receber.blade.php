@@ -20,13 +20,13 @@
                 </div>
             </div>
 
-            <x-button.danger x-data x-on:click="$dispatch('open-modal', { name : 'pagar' })"
+            <x-button.success x-data x-on:click="$dispatch('open-modal', { name : 'receber' })"
                 class="flex items-center gap-1 mx-4">
                 <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z"></path>
                 </svg>
-                Nova Conta a pagar
-            </x-button.danger>
+                Nova conta a receber
+            </x-button.success>
         </div>
 
         <div class="border my-6 mx-32 dark:border-gray-600"></div>
@@ -83,7 +83,7 @@
                                 <td class="px-4 py-3 text-center">
                                     <div class="flex items-center justify-center space-x-2 text-sm">
                                         <a href="{{ route('contas.show', ['codigo' => $conta->id]) }}"
-                                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-gray-500 rounded-lg hover:text-red-500 hover:scale-110 transition-all focus:outline-none focus:shadow-outline-gray"
+                                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-gray-500 rounded-lg hover:text-green-500 hover:scale-110 transition-all focus:outline-none focus:shadow-outline-gray"
                                             aria-label="">
                                             <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                                 fill="currentColor">
@@ -94,7 +94,7 @@
                                         </a>
 
                                         <button
-                                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-gray-500 rounded-lg hover:text-red-500 hover:scale-110 transition-all focus:outline-none focus:shadow-outline-gray"
+                                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-gray-500 rounded-lg hover:text-green-500 hover:scale-110 transition-all focus:outline-none focus:shadow-outline-gray"
                                             aria-label="Delete">
                                             <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                                 fill="currentColor">

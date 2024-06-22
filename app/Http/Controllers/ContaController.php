@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Conta;
 use Illuminate\Http\Request;
 
 class ContaController extends Controller
@@ -35,8 +36,9 @@ class ContaController extends Controller
      */
     public function show(Request $request)
     {
+        $conta = Conta::where('id', $request->codigo)->get('tipo')->first();
         $codigo = $request->codigo;
-        return view('pages.contas.show', compact(['codigo']));
+        return view('pages.contas.show', compact(['codigo', 'conta']));
     }
 
     /**

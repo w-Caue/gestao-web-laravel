@@ -48,9 +48,9 @@ class CadastroPessoasForm extends Form
         ])
             ->where('pessoa_id', '=', $codigo)->get();
 
-            $this->parametros();
-
         $this->codigo = $pessoa->id;
+        $this->parametros();
+
         $this->nome = $pessoa->nome;
 
         $this->email = $pessoa->email;
@@ -66,9 +66,9 @@ class CadastroPessoasForm extends Form
         $contas = Conta::select([
             'contas.*',
         ])
-            ->where('pessoa_id', '=', 1)
+            ->where('pessoa_id', '=', $this->codigo)
             ->get();
-            
+
         $contaAbertas = $contas->where('status', 'Aberto');
         $contaPagas = $contas->where('status', 'Paga');
 

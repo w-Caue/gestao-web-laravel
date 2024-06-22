@@ -2,8 +2,8 @@
     <title>Contas - Conta {{ $codigo }}</title>
 
     <div class="flex justify-between">
-        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-            Contas
+        <h2 class="my-6 text-xl uppercase font-semibold tracking-widest text-gray-700 dark:text-gray-200">
+            Conta a <span class="{{ $conta->tipo == 'P' ? 'text-red-500' : 'text-green-500' }}">{{ $conta->tipo == 'P' ? 'Pagar' : 'Receber' }}</span> 
         </h2>
 
         <nav class="flex" aria-label="Breadcrumb">

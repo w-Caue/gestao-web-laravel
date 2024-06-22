@@ -2,8 +2,8 @@
     <title>Pessoal - Cadastro {{ $codigo }}</title>
 
     <div class="flex justify-between">
-        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-            Cadastro <span class="hidden sm:block">Completo</span>
+        <h2 class="flex gap-1 my-6 text-xl uppercase font-semibold tracking-widest text-gray-700 dark:text-gray-200">
+            Cadastro <span class="hidden sm:block text-purple-500">{{ $pessoa->nome }}</span>
         </h2>
 
         <nav class="flex" aria-label="Breadcrumb">

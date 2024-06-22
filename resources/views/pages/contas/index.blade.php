@@ -2,7 +2,7 @@
     <title>Contas - Listagem</title>
 
     <div class="flex justify-between">
-        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+        <h2 class="my-6 text-xl uppercase font-semibold tracking-widest text-gray-700 dark:text-gray-200">
             Contas
         </h2>
 
@@ -35,7 +35,6 @@
 
     </div>
 
-    @livewire('Contas.ContasPagar')
-    {{-- @livewire('Contas.ListagemContasPagar') --}}
+    @livewire('Contas.Contas')
 
 </x-app-layout>

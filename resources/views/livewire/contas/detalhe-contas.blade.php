@@ -3,7 +3,6 @@
 
         <div class="w-full sm:col-span-3">
             <div class="px-4 py-3 mb-8 bg-white rounded-b-lg rounded-lg shadow-md dark:bg-gray-800">
-
                 <div class="flex justify-between items-start my-2 text-sm">
 
                     <div class="flex flex-col">
@@ -95,21 +94,21 @@
                 </div>
 
                 @if ($form->status == 'Paga')
-                <div class="flex justify-between items-center mb-7">
-                    <x-inputs.label value="Data do Pagamento" />
+                    <div class="flex justify-between items-center mb-7">
+                        <x-inputs.label value="Data do Pagamento" />
 
-                    <x-inputs.text-dark disabled type="date" wire:model="form.dataPagamento" class=" w-32" />
+                        <x-inputs.text-dark disabled type="date" wire:model="form.dataPagamento" class=" w-32" />
 
-                    @error('form.dataPagamento')
-                        <span class="error dark:text-red-500">{{ $message }}</span>
-                    @enderror
-                </div>
+                        @error('form.dataPagamento')
+                            <span class="error dark:text-red-500">{{ $message }}</span>
+                        @enderror
+                    </div>
 
-                <div class="flex justify-between items-center mb-7">
-                    <x-inputs.label value="Valor Pago:" />
+                    <div class="flex justify-between items-center mb-7">
+                        <x-inputs.label value="Valor Pago:" />
 
-                    <x-inputs.result value="{{ $form->valorPago }}" />
-                </div>
+                        <x-inputs.result value="{{ $form->valorPago }}" />
+                    </div>
                 @endif
 
                 <div class="border my-6 dark:border-gray-700"></div>

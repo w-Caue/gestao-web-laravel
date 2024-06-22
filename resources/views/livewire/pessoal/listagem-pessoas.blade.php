@@ -3,10 +3,10 @@
     @include('includes.loading')
 
     <div class="w-full bg-white rounded-lg dark:bg-gray-800">
-        <div class="flex justify-center sm:justify-between items-end gap-2 sm:gap-0 flex-wrap my-2 ">
+        <div class="flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-2 sm:gap-0 p-3">
 
-            <div class="mb-2 mx-4 w-full">
-                <div class="relative mt-2">
+            <div class="w-full sm:w-72">
+                <div class="relative">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                         <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                             fill="none" viewBox="0 0 20 20">
@@ -15,7 +15,7 @@
                         </svg>
                     </div>
                     <input wire:model.live="search" type="text" id="table-search"
-                        class="p-2 pl-10 text-sm text-gray-600 font-semibold rounded w-full sm:w-72 bg-white dark:bg-gray-800 dark:text-white"
+                        class="p-2 pl-10 text-sm text-gray-600 font-semibold rounded w-full bg-white dark:bg-gray-800 dark:text-white"
                         placeholder="Pesquisar {{ $sortField }}">
                 </div>
             </div>

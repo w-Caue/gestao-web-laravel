@@ -6,7 +6,7 @@ use App\Models\Conta;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class ListagemContasPagar extends Component
+class ListagemContasReceber extends Component
 {
     use WithPagination;
 
@@ -33,7 +33,7 @@ class ListagemContasPagar extends Component
             'contas.tipo',
         ])
             ->leftjoin('pessoas', 'pessoas.id', '=', 'contas.pessoa_id')
-            ->where('contas.tipo', '=', 'P')
+            ->where('contas.tipo', '=', 'R')
             #Filtros
             ->when($this->search, function ($query) {
                 return $query->where('pessoas.nome', 'LIKE', "%" . $this->search . "%");
@@ -44,7 +44,7 @@ class ListagemContasPagar extends Component
 
     public function render()
     {
-        return view('livewire.contas.listagem-contas-pagar', [
+        return view('livewire.contas.listagem-contas-receber', [
             'contas' => $this->readyLoad ? $this->dados() : []
         ]);
     }

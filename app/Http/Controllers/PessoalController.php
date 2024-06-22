@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pessoa;
 use Illuminate\Http\Request;
 
 class PessoalController extends Controller
@@ -35,8 +36,9 @@ class PessoalController extends Controller
      */
     public function show(Request $request)
     {
+        $pessoa = Pessoa::where('id', $request->codigo)->get('nome')->first();
         $codigo = $request->codigo;
-        return view('pages.pessoal.show', compact(['codigo']));
+        return view('pages.pessoal.show', compact(['codigo', 'pessoa']));
     }
 
     /**
