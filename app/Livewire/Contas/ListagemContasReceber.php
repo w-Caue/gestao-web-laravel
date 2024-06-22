@@ -34,6 +34,7 @@ class ListagemContasReceber extends Component
         ])
             ->leftjoin('pessoas', 'pessoas.id', '=', 'contas.pessoa_id')
             ->where('contas.tipo', '=', 'R')
+            
             #Filtros
             ->when($this->search, function ($query) {
                 return $query->where('pessoas.nome', 'LIKE', "%" . $this->search . "%");

@@ -95,8 +95,6 @@ class ContasForm extends Form
 
     public function update()
     {
-        // $this->validate();
-
         $this->valorDocumento = str_replace(',', '.', $this->valorDocumento);
         $this->valorDocumento = floatval($this->valorDocumento);
 

@@ -114,7 +114,6 @@
         </div>
     </div>
 
-
     {{-- Listagem Mobile --}}
     <div class="w-full sm:hidden md:hidden lg:hidden">
         <div class="flex flex-col justify-center">
