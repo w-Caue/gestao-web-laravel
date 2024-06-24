@@ -64,7 +64,7 @@ class ListagemPessoas extends Component
                 return $query->where($this->sortField, 'LIKE', "%" . $this->search . "%");
             });
 
-        return $pessoas->paginate(5);
+        return $pessoas->paginate(1);
     }
 
     public function remover(Pessoa $pessoa)

@@ -126,6 +126,10 @@
                 </table>
             </div>
         </div>
+
+        <div class="mx-5 py-4 hidden sm:block">
+            {{ $this->dados()->links('layouts.paginate') }}
+        </div>
     </div>
 
 
@@ -159,7 +163,8 @@
                     <p class="flex flex-wrap"></p>
 
                     <div class="flex justify-between items-center">
-                        <p class="text-gray-400 uppercase"><span class="text-xs">venc:</span> {{ date('d/m/Y', strtotime($conta->data_vencimento)) }}</p>
+                        <p class="text-gray-400 uppercase"><span class="text-xs">venc:</span>
+                            {{ date('d/m/Y', strtotime($conta->data_vencimento)) }}</p>
 
                         @if ($conta->status == 'Aberto')
                             <span
@@ -180,5 +185,12 @@
 
         </div>
     </div>
+
+    <div class="mx-5 py-4 block sm:hidden">
+        {{ $this->dados()->links('layouts.paginate') }}
+    </div>
+
     {{-- /Listagem Mobile --}}
+
+
 </div>

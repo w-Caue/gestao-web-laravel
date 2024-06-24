@@ -153,7 +153,7 @@
             </div>
         </div>
 
-        <div class="mx-2 mt-2">
+        <div class="mx-5 py-4 hidden sm:block">
             {{ $this->dados()->links('layouts.paginate') }}
         </div>
     </div>
@@ -205,10 +205,10 @@
 
         </div>
     </div>
-    {{-- /Listagem Mobile --}}
 
-    <div class="mx-2 mt-2">
+    <div class="mx-5 py-4 block sm:hidden">
         {{ $this->dados()->links('layouts.paginate') }}
     </div>
+    {{-- /Listagem Mobile --}}
 
 </div>

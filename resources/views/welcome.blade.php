@@ -128,7 +128,7 @@
 
     <section class="bg-white mt-20">
         <div class="max-w-screen-xl px-4 pb-8 mx-auto lg:pb-16">
-            <div class="grid grid-cols-2 gap-8 text-gray-500 sm:gap-12 sm:grid-cols-3 lg:grid-cols-6">
+            {{-- <div class="grid grid-cols-2 gap-8 text-gray-500 sm:gap-12 sm:grid-cols-3 lg:grid-cols-6">
                 <a href="#" class="flex items-center lg:justify-center">
                     <svg class="h-9 hover:text-gray-900" viewBox="0 0 125 35" fill="currentColor"
                         xmlns="http://www.w3.org/2000/svg">
@@ -255,7 +255,7 @@
                             fill="currentColor" />
                     </svg>
                 </a>
-            </div>
+            </div> --}}
         </div>
     </section>
 
@@ -264,43 +264,17 @@
         <div
             class="items-center max-w-screen-xl px-4 py-8 mx-auto lg:grid lg:grid-cols-4 lg:gap-16 xl:gap-24 lg:py-24 lg:px-6">
             <div class="col-span-2 mb-8">
-                <p class="text-lg font-medium text-purple-600 ">Trusted Worldwide</p>
+                <p class="text-lg font-medium text-purple-600 ">Office Flow</p>
                 <h2 class="mt-3 mb-4 text-3xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
-                    Com a confiança de mais de 2 mil de usuários e 1000 equipes
+                    Com a confiança de mais de 2 mil de usuários
                 </h2>
                 <p class="font-light text-gray-500 sm:text-xl">
                     Nossa rigorosa segurança e conformidade
                     os padrões estão no centro de tudo o que fazemos. Trabalhamos incansavelmente para proteger você e
                     seus clientes.
                 </p>
-                <div class="pt-6 mt-6 space-y-4 border-t border-gray-200">
-                    <div>
-                        <a href="#"
-                            class="inline-flex items-center text-base font-medium text-purple-600 hover:text-purple-800">
-                            Explore Legality Guide
-                            <svg class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="#"
-                            class="inline-flex items-center text-base font-medium text-purple-600 hover:text-purple-800">
-                            Visit the Trust Center
-                            <svg class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
             </div>
-            <div class="col-span-2 space-y-8 md:grid md:grid-cols-2 md:gap-12 md:space-y-0">
+            {{-- <div class="col-span-2 space-y-8 md:grid md:grid-cols-2 md:gap-12 md:space-y-0">
                 <div>
                     <svg class="w-10 h-10 mb-2 text-purple-600 md:w-12 md:h-12 " fill="currentColor"
                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -344,7 +318,7 @@
                     <h3 class="mb-2 text-2xl font-bold">5+ Million</h3>
                     <p class="font-light text-gray-500">Transactions per day</p>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </section>
     <!-- End block -->

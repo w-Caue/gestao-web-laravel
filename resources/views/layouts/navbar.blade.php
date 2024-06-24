@@ -1,48 +1,34 @@
 <header class="z-40 w-full fixed py-2 bg-white dark:bg-gray-800">
     <div class="container flex items-center justify-between h-full px-6 text-purple-600 dark:text-purple-300">
-        <!-- Mobile hamburger -->
-        <button x-on:click="sidebar.full = !sidebar.full" class="hidden sm:block focus:outline-none">
-            <!-- Menu Icon -->
-            <svg class="w-6 h-6" x-bind:class="sidebar.full ? 'hidden' : ''" xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24" fill="currentColor">
-                <path d="M3 4H21V6H3V4ZM3 11H21V13H3V11ZM3 18H21V20H3V18Z"></path>
-            </svg>
+        <div class="flex my-1">
+            <!-- Mobile hamburger -->
+            <button x-on:click="sidebar.full = !sidebar.full" class="hidden sm:block focus:outline-none">
+                <!-- Menu Icon -->
+                <svg class="w-6 h-6" x-bind:class="sidebar.full ? 'hidden' : ''" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M3 4H21V6H3V4ZM3 11H21V13H3V11ZM3 18H21V20H3V18Z"></path>
+                </svg>
 
-            <!-- Close Icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-6 h-6" x-bind:class="sidebar.full ? '' : 'hidden'">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
+                <!-- Close Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6" x-bind:class="sidebar.full ? '' : 'hidden'">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
 
-        </button>
+            </button>
 
-        <button x-on:click="sidebar.navOpen = !sidebar.navOpen" class="block sm:hidden mr-5 focus:outline-none">
-            <!-- Menu Icon -->
-            <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14" />
-            </svg>
+            <button x-on:click="sidebar.navOpen = !sidebar.navOpen" class="block sm:hidden mr-5 focus:outline-none">
+                <!-- Menu Icon -->
+                <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14" />
+                </svg>
 
-        </button>
+            </button>
 
-        <a class="text-lg mx-4 tracking-widest"><span class="text-gray-800 dark:text-white">Gestão </span><span
-                class="dark:text-purple-400">Web</span>
-        </a>
-
-        <!-- Search input -->
-        <div class="hidden sm:flex justify-center flex-1 lg:mr-32">
-            <div class="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
-                <div class="absolute inset-y-0 flex items-center pl-2">
-                    <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd"
-                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                </div>
-                <input
-                    class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
-                    type="text" placeholder="Search for projects" aria-label="Search" />
-            </div>
+            <a class="text-lg mx-4 tracking-widest"><span class="text-gray-800 dark:text-white">Office </span><span
+                    class="dark:text-purple-400">Flow</span>
+            </a>
         </div>
 
         <ul class="flex items-center flex-shrink-0 space-x-6">
@@ -76,7 +62,7 @@
                         </path>
                     </svg>
 
-                    <span class="text-xs font-semibold tracking-widest uppercase">Olá,
+                    <span class="text-xs font-semibold tracking-widest uppercase hidden sm:block">Olá,
                         {{ auth()->user()->name }}</span>
                 </button>
 

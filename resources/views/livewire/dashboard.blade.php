@@ -15,11 +15,11 @@
             </x-card.icon-card>
         </a>
 
-        <a href="" class="hover:shadow-lg" title="Total de pedidos autenticados realizados">
+        {{-- <a href="" class="hover:shadow-lg" title="Total de pedidos autenticados realizados">
             <x-card.icon-card title="Pedidos (Abertos)" subtitle="" color="blue">
                 <x-icons.pedidos class="w-12" />
             </x-card.icon-card>
-        </a>
+        </a> --}}
     </div>
     <!--./Cards-->
 

@@ -23,8 +23,8 @@
     <header class="flex flex-col lg:flex-row justify-between items-center mx-6 my-5" x-data="{ open: false }"
         x-init="$watch('open', value => console.log(value))">
         <div class="flex w-full lg:w-auto items-center justify-between">
-            <a href="/" class="text-lg"><span class="font-bold text-slate-800">Gestão</span><span
-                    class="text-slate-500">Web</span>
+            <a href="/" class="text-lg"><span class="font-bold text-slate-800">Office</span><span
+                    class="text-slate-500">Flow</span>
             </a>
             <div class="block lg:hidden">
                 <button @click="open = !open" class="text-gray-800">
