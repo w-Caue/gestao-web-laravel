@@ -16,6 +16,8 @@ class ListagemProdutos extends Component
 
     public $sortField;
 
+    public $user;
+
     public function sortFilter($field)
     {
         // if ($this->sortField === $field) {
@@ -31,14 +33,17 @@ class ListagemProdutos extends Component
     }
 
     public function dados(){
+        $this->user = auth()->user()->id;
+
         $produtos = Produto::select([
             'produtos.id',
             'produtos.nome',
             'produtos.descricao',
-            'produtos.marca_id',
-            'produtos.unidade_medida_id',
             'produtos.preco_1',
-        ]) #Filtros
+            'produtos.preco_1',
+            'produtos.user',
+        ])->where('user', $this->user)
+        #Filtros
         ->when($this->pesquisa, function ($query) {
             $filter = strtolower($this->sortField);
             return $query->where($filter, 'like', "%". $this->pesquisa ."%");

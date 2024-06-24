@@ -18,7 +18,10 @@ return new class extends Migration
             $table->string('telefone', 16)->nullable();
             $table->enum('status', ['Ativo', 'Deletado'])->default('Ativo');
             $table->enum('tipo', ['Cliente', 'Empresa'])->default('Cliente');
+            $table->foreignId('user');
             $table->timestamps();
+
+            $table->foreign('user')->on('users')->references('id');
         });
     }
 
@@ -27,6 +30,11 @@ return new class extends Migration
      */
     public function down(): void
     {
+
+        Schema::disableForeignKeyConstraints();
+
         Schema::dropIfExists('pessoas');
+
+        Schema::enableForeignKeyConstraints();
     }
 };

@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('formas_pagamentos', function (Blueprint $table) {
+        Schema::create('pagamentos', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->string('status')->default('Ativo');
+            $table->enum('status', ['Ativo', 'Deletado'])->default('Ativo');
+            $table->foreignId('user');
             $table->timestamps();
+
+            $table->foreign('user')->on('users')->references('id');
         });
     }
 
@@ -24,6 +27,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('formas_pagamentos');
+        Schema::disableForeignKeyConstraints();
+
+        Schema::dropIfExists('pagamentos');
+
+        Schema::enableForeignKeyConstraints();
     }
 };

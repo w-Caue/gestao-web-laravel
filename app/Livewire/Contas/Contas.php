@@ -4,7 +4,9 @@ namespace App\Livewire\Contas;
 
 use App\Livewire\Forms\ContasForm;
 use App\Models\AgenteCobrador;
+use App\Models\Cobrador;
 use App\Models\FormaPagamento;
+use App\Models\Pagamento;
 use App\Models\Pessoa;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -23,9 +25,13 @@ class Contas extends Component
 
     public $tipo = 'Cliente';
 
+    public $user;
+
     public function mount()
     {
         $this->form->dataLancamento = date('Y-m-d');
+
+        $this->user = auth()->user()->id;
     }
 
     public function pesquisaClientes()
@@ -36,7 +42,9 @@ class Contas extends Component
             'pessoas.telefone',
             'pessoas.status',
             'pessoas.tipo',
-        ])->where('status', '=', 'Ativo');
+            'pessoas.user',
+        ])->where('user', '=', $this->user)
+            ->where('status', '=', 'Ativo');
 
         $this->clientes = $clientes->get();
     }
@@ -99,8 +107,8 @@ class Contas extends Component
     public function render()
     {
         return view('livewire.contas.contas', [
-            'agenteCobradores' => AgenteCobrador::all(),
-            'formasPagamentos' => FormaPagamento::all()
+            'agenteCobradores' => Cobrador::where('user', '=', $this->user)->get(),
+            'formasPagamentos' => Pagamento::where('user', '=', $this->user)->get()
         ]);
     }
 }

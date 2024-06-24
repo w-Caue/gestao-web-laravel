@@ -27,23 +27,6 @@ class Pessoas extends Component
         'delete'
     ];
 
-    public function show(Pessoa $pessoa)
-    {
-        $this->codigoPessoa = $pessoa->id;
-        $this->pesquisaPessoa($pessoa);
-    }
-
-    public function pesquisaPessoa($pessoa){
-        $this->pessoa = Pessoa::where('id', '=', $pessoa->id)->get()->first();
-    }
-
-    
-    public function closeModal()
-    {
-        $this->resetValidation();
-        $this->dispatch('close-modal');
-    }
-
     public function save()
     {
         $this->form->save();

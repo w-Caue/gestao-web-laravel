@@ -5,6 +5,7 @@ namespace App\Livewire\Pedidos;
 use App\Models\Cliente;
 use App\Models\FormaPagamento;
 use App\Models\Item;
+use App\Models\Pagamento;
 use App\Models\Pedido;
 use App\Models\PedidoItem;
 use App\Models\Pessoa;
@@ -52,10 +53,16 @@ class Pedidos extends Component
     public $valorPago;
     public $troco;
 
+    public $user;
+
+    public function mount()
+    {
+        $this->user = auth()->user()->id;
+    }
+
     public function show(Pedido $pedido)
     {
         $this->visualizarPedido($pedido);
-
     }
 
     public function save()
@@ -64,12 +71,13 @@ class Pedidos extends Component
             'pessoa_id' => $this->pessoaPedido->id,
             'forma_pagamento_id' => $this->formaDePagamento,
             'descricao' => $this->descricao,
-            'status' => 'Aberto'
+            'status' => 'Aberto',
+            'user' => $this->user
         ]);
 
         $this->dispatch('close-modal');
 
-        $this->redirectRoute('pedidos.show', ['codigo'=> $pedido->id]);
+        $this->redirectRoute('pedidos.show', ['codigo' => $pedido->id]);
     }
 
     public function pesquisaPessoa()
@@ -79,7 +87,10 @@ class Pedidos extends Component
             'pessoas.nome',
             'pessoas.whatsapp',
             'pessoas.status',
-        ])->where('status', 'Ativo')->get();
+            'pessoas.user',
+        ])->where('user', $this->user)
+            ->where('status', 'Ativo')
+            ->get();
 
         $this->pessoas = $pessoas;
     }
@@ -90,8 +101,8 @@ class Pedidos extends Component
 
         $this->dispatch('close-detalhes');
     }
-    
-   
+
+
     public function autenticarPedido()
     {
         Pedido::findOrFail($this->telaPedido->id)->update([
@@ -108,7 +119,6 @@ class Pedidos extends Component
             'timer' => '1000',
             'toast' => false,
         ]);
-
     }
 
     public function editePedido()
@@ -144,13 +154,10 @@ class Pedidos extends Component
         }
 
 
-        $formasPagamentos = FormaPagamento::all();
-
-        $statusPedido = Status::all();
+        $formasPagamentos = Pagamento::all();
 
         return view('livewire.pedidos.pedidos', [
             'formasPagamentos' => $formasPagamentos,
-            'statusPedido' => $statusPedido
         ]);
     }
 }

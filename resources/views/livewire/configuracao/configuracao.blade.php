@@ -60,12 +60,12 @@
                                 </td>
 
                                 <td scope="row"
-                                    class="py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white">
+                                    class="py-4 font-medium uppercase text-center text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $pagamento->nome }}
                                 </td>
                                 <td class="py-3 flex justify-center">
                                     <button wire:click="remover()"
-                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-yellow-500 rounded-lg hover:scale-95 dark:hover:text-red-600
+                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-yellow-500 rounded-lg hover:scale-95 dark:hover:text-yellow-600
                                              dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                         aria-label="Delete">
                                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
@@ -77,7 +77,6 @@
                                 </td>
                             </tr>
                         @endforeach
-
                     </tbody>
                 </table>
             </div>
@@ -92,7 +91,7 @@
                 </x-button.primary>
 
                 <label for="takePagamento">
-                    <x-radio.hidden wire:model.live="takePagamento" id="takePagamento" value="15"/>
+                    <x-radio.hidden wire:model.live="takePagamento" id="takePagamento" value="15" />
 
                     <span for="takePagamento"
                         class="text-xs uppercase font-semibold hover:text-blue-500 hover:scale-95 transition-all cursor-pointer">ver
@@ -159,7 +158,7 @@
                                 </td>
 
                                 <td scope="row"
-                                    class="py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white">
+                                    class="py-4 font-medium uppercase text-center text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $cobrador->nome }}
                                 </td>
                                 <td class="py-3 flex justify-center">
@@ -177,7 +176,6 @@
                                 </td>
                             </tr>
                         @endforeach
-
                     </tbody>
                 </table>
             </div>
@@ -192,7 +190,7 @@
                 </x-button.primary>
 
                 <label for="takeCobrador">
-                    <x-radio.hidden wire:model.live="takeCobrador" id="takeCobrador" value="15"/>
+                    <x-radio.hidden wire:model.live="takeCobrador" id="takeCobrador" value="15" />
 
                     <span for="takeCobrador"
                         class="text-xs uppercase font-semibold hover:text-blue-500 hover:scale-95 transition-all cursor-pointer">ver

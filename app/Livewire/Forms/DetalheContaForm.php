@@ -35,11 +35,11 @@ class DetalheContaForm extends Form
             'contas.*',
             'pessoas.id as codigoPessoa',
             'pessoas.nome as pessoa',
-            'agentes_cobradores.nome as cobrador',
+            'cobradores.nome as cobrador',
         ])
             ->where('contas.id', '=', $codigo)
             ->leftjoin('pessoas', 'pessoas.id', '=', 'contas.pessoa_id')
-            ->leftjoin('agentes_cobradores', 'agentes_cobradores.id', '=', 'contas.ag_cobrador_id')
+            ->leftjoin('cobradores', 'cobradores.id', '=', 'contas.cobrador_id')
             ->get()->first();
 
         $this->codigo = $this->conta->id;

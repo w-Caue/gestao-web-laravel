@@ -13,14 +13,24 @@ return new class extends Migration
     {
         Schema::create('contas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('pessoa_id');
+            $table->foreignId('pessoa_id');
             $table->string('descricao', 120)->nullable();
             $table->dateTime('data_lancamento');
             $table->dateTime('data_vencimento');
+            $table->dateTime('data_pagamento')->nullable();
             $table->float('valor_documento', 9, 2);
+            $table->float('valor_pago', 9, 2)->nullable();
+            $table->string('tipo')->default('Pagar');
+            $table->string('status')->default('Aberto');
+            $table->enum('deletado', ['S', 'N'])->default('N');
+            $table->foreignId('pagamento_id')->nullable();
+            $table->foreignId('user');
             $table->timestamps();
 
-            $table->foreign('pessoa_id')->references('id')->on('pessoas');
+
+            $table->foreign('pessoa_id')->on('pessoas')->references('id');
+            $table->foreign('pagamento_id')->on('pagamentos')->references('id');
+            $table->foreign('user')->on('users')->references('id');
         });
     }
 
@@ -29,11 +39,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('contas', function(Blueprint $table){
-            $table->dropForeign('contas_pessoa_id_foreign');
-            $table->dropColumn('pessoa_id');
-        });
+        Schema::disableForeignKeyConstraints();
 
         Schema::dropIfExists('contas');
+
+        Schema::enableForeignKeyConstraints();
     }
 };

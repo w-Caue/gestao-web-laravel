@@ -22,15 +22,20 @@ class PessoaForm extends Form
 
     public $tipo = 'Cliente';
 
+    public $user;
+
     public function save()
     {
         $this->validate();
+        
+        $this->user = auth()->user()->id;
 
         $pessoa = Pessoa::create([
             'nome' => $this->nome,
             'email' => $this->email,
             'telefone' => $this->telefone,
             'tipo' => $this->tipo,
+            'user' => $this->user,
         ]);
 
         $this->codigo = $pessoa->id;

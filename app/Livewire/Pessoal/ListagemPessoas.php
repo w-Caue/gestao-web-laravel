@@ -14,6 +14,8 @@ class ListagemPessoas extends Component
 
     use WithPagination;
 
+    public $user;
+
     public $pessoa;
 
     public $search;
@@ -50,11 +52,13 @@ class ListagemPessoas extends Component
 
     public function dados()
     {
+        $this->user = auth()->user()->id;
+
         $pessoas = Pessoa::select(
             [
                 'pessoas.*',
             ]
-        )
+        )->where('user', $this->user)
             #Filtros
             ->when($this->search, function ($query) {
                 return $query->where($this->sortField, 'LIKE', "%" . $this->search . "%");

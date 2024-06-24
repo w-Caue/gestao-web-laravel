@@ -124,7 +124,13 @@
                                 <div class="flex flex-col">
                                     <a href="{{ route('contas.show', ['codigo' => $conta->id]) }}"
                                         class="text-md font-bold text-blue-500 hover:underline cursor-pointer">#{{ $conta->id }}</a>
-                                    <span class="text-xs">{{ date('d/m/Y', strtotime($conta->data_lancamento)) }}</span>
+                                    {{-- <span class="text-xs">{{ date('d/m/Y', strtotime($conta->data_lancamento)) }}</span>
+                                     --}}
+                                    <div
+                                        class="text-xs uppercase tracking-widest font-bold text-gray-700 mb-2 dark:text-gray-300">
+                                        conta a <span
+                                            class="{{ $conta->tipo == 'P' ? 'text-red-500' : 'text-green-500' }}">{{ $conta->tipo == 'P' ? 'Pagar' : 'Receber' }}</span>
+                                    </div>
                                 </div>
 
                                 <div class="flex items-center gap-2">
@@ -161,7 +167,7 @@
 
                             <div x-show="conta" class="">
 
-                                <div class="mt-10 grid sm:grid-cols-2 gap-4">
+                                <div class="mt-5 grid sm:grid-cols-2 gap-4">
                                     <div class="">
                                         <h1
                                             class="text-xs uppercase tracking-widest font-bold text-gray-700 mb-2 dark:text-gray-300">

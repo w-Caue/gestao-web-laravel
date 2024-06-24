@@ -25,9 +25,12 @@ class ProdutoForm extends Form
     public $preco1;
     public $preco2;
 
+    public $user;
+
     public function save()
     {
         // $this->validate();
+        $this->user = auth()->user()->id;
 
         $this->preco1 = str_replace(',', '.', $this->preco1);
         $this->preco1 = floatval($this->preco1);
@@ -40,12 +43,10 @@ class ProdutoForm extends Form
         Produto::create([
             'nome' => $this->nome,
             'descricao' => $this->descricao,
-            'marca_id' => $this->marca,
-            'unidade_medida_id' => $this->unidadeMedida,
             'valor_custo' => $this->vlcusto,
             'preco_1' => $this->preco1,
             'preco_2' => $this->preco2,
-            'codigo_barras' => '1234567890123',
+            'user' => $this->user,
         ]);
     }
 

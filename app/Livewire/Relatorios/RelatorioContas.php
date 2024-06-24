@@ -4,6 +4,7 @@ namespace App\Livewire\Relatorios;
 
 use App\Models\AgenteCobrador;
 use App\Models\Cliente;
+use App\Models\Cobrador;
 use App\Models\Conta;
 use App\Models\Pessoa;
 use Livewire\Component;
@@ -29,11 +30,13 @@ class RelatorioContas extends Component
 
     public $totais;
 
+    public $user;
 
     public function mount()
     {
         // $this->dataVencimentoInicio = date('m');
         // $this->dataVencimentoFinal = date('Y-m-d');
+        $this->user = auth()->user()->id;
     }
 
     public function fecharRelatorio()
@@ -48,14 +51,16 @@ class RelatorioContas extends Component
             'contas.pessoa_id',
             'contas.status',
             'contas.descricao',
-            'contas.ag_cobrador_id',
-            'contas.forma_pagamento_id',
+            'contas.cobrador_id',
+            'contas.pagamento_id',
             'contas.data_lancamento',
             'contas.data_vencimento',
             'contas.data_pagamento',
             'contas.valor_documento',
             'contas.valor_pago',
-        ])    #Filtros
+            'contas.user',
+        ])->where('contas.user', $this->user)
+            #Filtros
             ->when($this->pessoaRelatorio, function ($query) {
                 return $query->where('pessoa_id', $this->pessoaRelatorio->id);
             })
@@ -63,7 +68,7 @@ class RelatorioContas extends Component
                 return $query->where('status', $this->status);
             })
             ->when($this->cobrador, function ($query) {
-                return $query->where('ag_cobrador_id', $this->cobrador);
+                return $query->where('cobrador_id', $this->cobrador);
             })
 
             ->when($this->inicioDataLancamento, function ($query) {
@@ -100,8 +105,8 @@ class RelatorioContas extends Component
             'pessoas.telefone',
             'pessoas.status',
             'pessoas.tipo',
-        ]);
-
+            'pessoas.user',
+        ])->where('user', $this->user);
 
         $this->pessoas = $pessoas->get();
     }
@@ -116,7 +121,7 @@ class RelatorioContas extends Component
     public function render()
     {
         return view('livewire.relatorios.relatorio-contas', [
-            'cobradores' => AgenteCobrador::all(),
+            'cobradores' => Cobrador::where('user', '=', $this->user)->get(),
         ]);
     }
 }

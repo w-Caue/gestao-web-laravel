@@ -14,11 +14,17 @@ class ListagemPedidos extends Component
 
     public $search;
 
-    public function load(){
+    public $user;
+
+    public function load()
+    {
         $this->readyLoad = true;
     }
 
-    public function dados(){
+    public function dados()
+    {
+        $this->user = auth()->user()->id;
+
         $pedidos = Pedido::select([
             'pedidos.id',
             'pedidos.pessoa_id',
@@ -28,7 +34,9 @@ class ListagemPedidos extends Component
             'pedidos.total_itens',
             'pedidos.desconto',
             'pedidos.total_pedido',
-        ])->paginate(5);
+            'pedidos.user',
+        ])->where('user', $this->user)
+            ->paginate(5);
 
         return $pedidos;
     }

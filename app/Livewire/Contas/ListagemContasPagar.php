@@ -13,10 +13,14 @@ class ListagemContasPagar extends Component
     public $search;
 
     public $readyLoad = false;
+    
+    public $user;
 
     public function load()
     {
         $this->readyLoad = true;
+
+        $this->user = auth()->user()->id;
     }
 
     public function dados()
@@ -33,6 +37,7 @@ class ListagemContasPagar extends Component
             'contas.tipo',
         ])
             ->leftjoin('pessoas', 'pessoas.id', '=', 'contas.pessoa_id')
+            ->where('contas.user', '=', $this->user)
             ->where('contas.tipo', '=', 'P')
             #Filtros
             ->when($this->search, function ($query) {

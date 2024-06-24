@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('enderecos', function(Blueprint $table){
+        Schema::create('enderecos', function (Blueprint $table) {
             $table->id();
             $table->integer('cep')->nullable();
             $table->string('endereco', 100)->nullable();
@@ -20,7 +20,10 @@ return new class extends Migration
             $table->string('bairro', 20)->nullable();
             $table->string('estado', 30)->nullable();
             $table->string('referencia', 100)->nullable();
+            $table->foreignId('user');
             $table->timestamps();
+
+            $table->foreign('user')->on('users')->references('id');
         });
     }
 
@@ -29,6 +32,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::disableForeignKeyConstraints();
+
         Schema::dropIfExists('enderecos');
+
+        Schema::enableForeignKeyConstraints();
     }
 };

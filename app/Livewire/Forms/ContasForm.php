@@ -60,14 +60,17 @@ class ContasForm extends Form
         $this->valorDocumento = str_replace(',', '.', $this->valorDocumento);
         $this->valorDocumento = floatval($this->valorDocumento);
 
+        $user = auth()->user()->id;
+
         Conta::create([
             'pessoa_id' => $this->clienteDocumento->id,
             'descricao' => $this->descricao,
-            'ag_cobrador_id' => $this->agenteCobrador,
+            'cobrador_id' => $this->agenteCobrador,
             'data_lancamento' => $this->dataLancamento,
             'data_vencimento' => $this->dataVencimento,
             'valor_documento' => $this->valorDocumento,
             'tipo' => 'P',
+            'user' => $user,
         ]);
 
         return;
@@ -80,14 +83,17 @@ class ContasForm extends Form
         $this->valorDocumento = str_replace(',', '.', $this->valorDocumento);
         $this->valorDocumento = floatval($this->valorDocumento);
 
+        $user = auth()->user()->id;
+
         Conta::create([
             'pessoa_id' => $this->clienteDocumento->id,
             'descricao' => $this->descricao,
-            'ag_cobrador_id' => $this->agenteCobrador,
+            'cobrador_id' => $this->agenteCobrador,
             'data_lancamento' => $this->dataLancamento,
             'data_vencimento' => $this->dataVencimento,
             'valor_documento' => $this->valorDocumento,
             'tipo' => 'R',
+            'user' => $user,
         ]);
 
         return;
@@ -101,7 +107,7 @@ class ContasForm extends Form
         Conta::findOrFail($this->codigoDocumento)->update([
             'cliente_id' => $this->clienteDocumento->id,
             'descricao' => $this->descricao,
-            'ag_cobrador_id' => $this->agenteCobrador,
+            'cobrador_id' => $this->agenteCobrador,
             'data_lancamento' => $this->dataLancamento,
             'data_vencimento' => $this->dataVencimento,
             'valor_documento' => $this->valorDocumento,
@@ -118,7 +124,7 @@ class ContasForm extends Form
 
         Conta::findOrFail($this->codigoDocumento)->update([
             'status_documento' => 'Pago',
-            'forma_pagamento_id' => $this->formaPagamento,
+            'pagamento_id' => $this->formaPagamento,
             'data_pagamento' => $this->dataPagamento,
             'valor_pago' => $this->valorPago,
         ]);

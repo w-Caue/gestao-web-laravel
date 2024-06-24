@@ -14,9 +14,13 @@ class ListagemContasReceber extends Component
 
     public $readyLoad = false;
 
+    public $user = false;
+
     public function load()
     {
         $this->readyLoad = true;
+
+        $this->user = auth()->user()->id;
     }
 
     public function dados()
@@ -31,8 +35,10 @@ class ListagemContasReceber extends Component
             'contas.valor_documento',
             'contas.status',
             'contas.tipo',
+            'contas.user',
         ])
             ->leftjoin('pessoas', 'pessoas.id', '=', 'contas.pessoa_id')
+            ->where('contas.user', '=', $this->user)
             ->where('contas.tipo', '=', 'R')
             
             #Filtros

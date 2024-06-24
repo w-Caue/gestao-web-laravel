@@ -4,6 +4,7 @@ namespace App\Livewire\Contas;
 
 use App\Livewire\Forms\DetalheContaForm;
 use App\Models\FormaPagamento;
+use App\Models\Pagamento;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -32,8 +33,10 @@ class DetalheContas extends Component
 
     public function render()
     {
+        $user = auth()->user()->id;
+
         return view('livewire.contas.detalhe-contas', [
-            'pagamentos' => FormaPagamento::all(),
+            'pagamentos' => Pagamento::where('user', $user)->get(),
         ]);
     }
 }

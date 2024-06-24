@@ -12,10 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('pedidos', function(Blueprint $table){
-            $table->unsignedBigInteger('forma_pagamento_id')->nullable()->after('pessoa_id');
-            $table->text('descricao',200)->nullable()->after('forma_pagamento_id');
-
-            $table->foreign('forma_pagamento_id')->references('id')->on('formas_pagamentos');
+            $table->foreignId('pagamento_id')->nullable()->after('pessoa_id');
+            $table->foreign('pagamento_id')->references('id')->on('pagamentos');
         });
     }
 
@@ -25,10 +23,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('pedidos', function(Blueprint $table){
-            $table->dropForeign('pedidos_forma_pagamento_id_foreign');
+            $table->dropForeign('pedidos_pagamento_id_foreign');
 
             $table->dropColumn('descricao');
-            $table->dropColumn('forma_pagamento_id');
+            $table->dropColumn('pagamento_id');
         });
     }
 };

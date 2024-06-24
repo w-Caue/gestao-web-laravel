@@ -11,11 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('agentes_cobradores', function (Blueprint $table) {
+        Schema::create('cobradores', function (Blueprint $table) {
             $table->id();
             $table->string('sigla', 4);
             $table->string('nome', 50);
+            $table->enum('status', ['Ativo', 'Deletado'])->default('Ativo');
+            $table->foreignId('user');
             $table->timestamps();
+
+            $table->foreign('user')->on('users')->references('id');
         });
     }
 
@@ -24,6 +28,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('agentes_cobradores');
+        Schema::disableForeignKeyConstraints();
+
+        Schema::dropIfExists('cobradores');
+
+        Schema::enableForeignKeyConstraints();
     }
 };

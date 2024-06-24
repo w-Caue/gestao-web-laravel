@@ -2,8 +2,9 @@
 
 namespace App\Livewire\Configuracao;
 
-use App\Models\AgenteCobrador;
+use App\Models\Cobrador;
 use App\Models\FormaPagamento;
+use App\Models\Pagamento;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
@@ -23,29 +24,33 @@ class Configuracao extends Component
     public $takeCobrador = 3;
 
     public $formaDePagamento;
-    public $pagamentos;
-    public $cobradores;
+    public $Fpagamentos;
+    public $Acobradores;
 
     public $readyLoad = false;
+    public $user;
 
     public function load()
     {
         $this->readyLoad = true;
     }
 
-    // public function mount()
-    // {
-    //     $this->dados();
-    // }
+    public function mount()
+    {
+        $this->user = auth()->user()->id;
+    }
 
     public function savePagamento()
     {
-        $this->validate();
+        // $this->validate();
 
-        FormaPagamento::create([
+        Pagamento::create([
             'nome' => $this->nomePagamento,
+            'user' => $this->user,
         ]);
 
+        $this->dispatch('close-modal');
+        
         $this->alert('success', 'Forma de Pagamento Criada!', [
             'timer' => 2000,
             'toast' => true,
@@ -54,12 +59,15 @@ class Configuracao extends Component
 
     public function saveCobrador()
     {
-        $this->validate();
+        // $this->validate();
 
-        AgenteCobrador::create([
+        Cobrador::create([
             'sigla' => $this->siglaCobrador,
             'nome' => $this->nomeCobrador,
+            'user' => $this->user,
         ]);
+
+        $this->dispatch('close-modal');
 
         $this->alert('success', 'Agente Cobrador Criada!', [
             'timer' => 2000,
@@ -69,7 +77,7 @@ class Configuracao extends Component
 
     public function update()
     {
-        FormaPagamento::findOrFail($this->formaDePagamento->id)->update([
+        Pagamento::findOrFail($this->formaDePagamento->id)->update([
             'nome' => $this->nome
         ]);
 
@@ -82,7 +90,7 @@ class Configuracao extends Component
     public function deleteRetorno()
     {
         if ($this->formaDePagamento->status == 'Deletado') {
-            FormaPagamento::findOrFail($this->formaDePagamento->id)->update([
+            Pagamento::findOrFail($this->formaDePagamento->id)->update([
                 'status' => 'Ativo'
             ]);
 
@@ -94,7 +102,7 @@ class Configuracao extends Component
                 'toast' => true,
             ]);
         } else {
-            FormaPagamento::findOrFail($this->formaDePagamento->id)->update([
+            Pagamento::findOrFail($this->formaDePagamento->id)->update([
                 'status' => 'Deletado'
             ]);
 
@@ -108,17 +116,15 @@ class Configuracao extends Component
         }
     }
 
-    public function dados()
-    {
-        $this->pagamentos = FormaPagamento::all()->take($this->takePagamento);
-        $this->cobradores = AgenteCobrador::all()->take($this->takeCobrador);
-
-        return;
-    }
-
     public function render()
     {
-        $this->dados();
-        return view('livewire.configuracao.configuracao');
+        $this->user = auth()->user()->id;
+        $pagamentos = Pagamento::where('user', '=', $this->user)->get()->take($this->takePagamento);
+        $cobradores = Cobrador::where('user', '=', $this->user)->get()->take($this->takeCobrador);
+
+        return view('livewire.configuracao.configuracao', [
+            'pagamentos' => $this->readyLoad ? $pagamentos : [],
+            'cobradores' => $this->readyLoad ? $cobradores : []
+        ]);
     }
 }

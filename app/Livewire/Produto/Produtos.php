@@ -17,12 +17,8 @@ class Produtos extends Component
 
     public ProdutoForm $form;
 
-    public $unidadesMedidas = [];
-    public $marcas = [];
-
     public function mount()
     {
-        $this->paramentros();
     }
 
     public function show(Produto $produto)
@@ -50,13 +46,6 @@ class Produtos extends Component
         ]);
 
         $this->js('window.location.reload()');
-    }
-
-    public function paramentros()
-    {
-        $this->unidadesMedidas = UnidadeMedida::all();
-
-        $this->marcas = Marca::all();
     }
 
     public function render()

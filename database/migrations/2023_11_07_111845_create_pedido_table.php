@@ -13,20 +13,29 @@ return new class extends Migration
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('pessoa_id');
+            $table->foreignId('pessoa_id');
+            $table->text('descricao',200)->nullable();
+            $table->string('status');
+            $table->float('total_itens', 9, 2)->nullable();
+            $table->float('desconto', 9, 2)->nullable();
+            $table->float('total_pedido', 9, 2)->nullable();
+            $table->foreignId('user');
             $table->timestamps();
 
-            $table->foreign('pessoa_id')->references('id')->on('pessoas');
+            $table->foreign('pessoa_id')->on('pessoas')->references('id');
+            $table->foreign('user')->on('users')->references('id');
         });
 
         Schema::create('pedidos_itens', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('pedido_id');
-            $table->unsignedBigInteger('produto_id');
+            $table->foreignId('pedido_id');
+            $table->foreignId('produto_id');
+            $table->integer('quantidade')->nullable();
+            $table->float('total', 9, 2)->nullable();
             $table->timestamps();
 
-            $table->foreign('pedido_id')->references('id')->on('pedidos');
-            $table->foreign('produto_id')->references('id')->on('produtos');
+            $table->foreign('pedido_id')->on('pedidos')->references('id');
+            $table->foreign('produto_id')->on('produtos')->references('id');
         });
     }
 

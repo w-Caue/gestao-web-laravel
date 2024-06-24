@@ -11,6 +11,8 @@ use Livewire\Component;
 
 class Dashboard extends Component
 {
+    public $user;
+
     public $clientesCard;
     public $pedidos;
     public $contasCard;
@@ -20,19 +22,21 @@ class Dashboard extends Component
 
     public function mount()
     {
+        $this->user = auth()->user()->id;
+
         $this->cards();
         $this->contas();
     }
 
     public function cards()
     {
-        $clientes = Pessoa::get('id')->count();
+        $clientes = Pessoa::where('user', $this->user)->get('id')->count();
         $this->clientesCard = $clientes;
 
         // $pedidos = Pedido::where('status', 'Aberto')->get()->count();
         // $this->pedidos = $pedidos;
 
-        $contas = Conta::get('id')->count();
+        $contas = Conta::where('user', $this->user)->get('id')->count();
         $this->contasCard = $contas;
     }
 
@@ -41,6 +45,7 @@ class Dashboard extends Component
         $mes = date('m');
 
         $this->contasMes = Conta::whereMonth('data_vencimento', $mes)
+            ->where('user', $this->user)
             ->where('status', 'Aberto')
             ->get()->take(5);
 

@@ -3,13 +3,13 @@
     <div class="grid gap-6 mb-16 md:grid-cols-2 xl:grid-cols-4" wfd-id="87">
 
         <!-- Card -->
-        <a href="" class="hover:shadow-lg" title="Total de clientes que você tem acesso">
+        <a href="{{ route('pessoal.index') }}" class="hover:shadow-lg" title="Total de clientes que você tem acesso">
             <x-card.icon-card title="Clientes" subtitle="{{ $clientesCard }}" color="yellow">
                 <x-icons.pessoas />
             </x-card.icon-card>
         </a>
 
-        <a href="" class="hover:shadow-lg" title="Total de produtos cadastrados">
+        <a href="{{ route('contas.index') }}" class="hover:shadow-lg" title="Total de produtos cadastrados">
             <x-card.icon-card title="Contas (mês atual)" subtitle="{{ $contasCard }}" color="gray">
                 <x-icons.contas />
             </x-card.icon-card>
