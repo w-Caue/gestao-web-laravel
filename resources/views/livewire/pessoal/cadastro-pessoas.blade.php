@@ -135,8 +135,8 @@
 
                                 <div class="flex items-center gap-2">
                                     <span
-                                        class="p-2 text-xs font-semibold uppercase border-2 rounded-full {{ $conta->status == 'Aberto' ? 'text-gray-400 border-gray-400' : '' }} {{ $conta->status == 'Paga' ? 'text-green-400 border-green-400' : '' }}">
-                                        Conta {{ $conta->status }}
+                                        class="p-2 text-xs font-semibold uppercase border-2 rounded-full {{ $conta->status == 'Aberto' ? 'text-gray-400 border-gray-400' : '' }} {{ $conta->status == 'Paga' ? 'text-yellow-400 border-yellow-400' : '' }} {{ $conta->status == 'Hoje' ? 'text-green-400 border-green-400' : '' }} {{ $conta->status == 'Vencida' ? 'text-red-400 border-red-400' : '' }}">
+                                        {{ $conta->status == 'Hoje' ? 'Vence' : 'Conta' }} {{ $conta->status }}
                                     </span>
 
                                     <button x-on:click="conta = !conta" class="sm:hidden">
@@ -166,6 +166,10 @@
                             </div>
 
                             <div x-show="conta" class="">
+                                <div
+                                    class="mt-5 text-xs uppercase tracking-widest font-bold text-gray-700 mb-2 dark:text-gray-300">
+                                    descrição: {{ $conta->descricao }}
+                                </div>
 
                                 <div class="mt-5 grid sm:grid-cols-2 gap-4">
                                     <div class="">
@@ -271,21 +275,6 @@
                         <x-inputs.label-text value="{{ $form->contasPaga }}" />
 
                         <x-inputs.label-text value="{{ 'R$' . number_format($form->totalPaga, 2, ',') }}" />
-                    </div>
-                </div>
-
-                <div class="border my-6 dark:border-gray-700"></div>
-
-                <div class="flex justify-between text-yellow-400">
-                    <div class="flex flex-col gap-2">
-                        <x-inputs.label-text value="Contas Atrasadas:" />
-
-                        <x-inputs.label-text value="Total:" />
-                    </div>
-                    <div class="flex flex-col items-end gap-2">
-                        <x-inputs.label-text value="{{ $form->contasAtrasada }}" />
-
-                        <x-inputs.label-text value="{{ 'R$' . number_format($form->totalAtrasada, 2, ',') }}" />
                     </div>
                 </div>
 

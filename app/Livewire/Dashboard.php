@@ -22,10 +22,6 @@ class Dashboard extends Component
 
     public function mount()
     {
-        $this->user = auth()->user()->id;
-
-        $this->cards();
-        $this->contas();
     }
 
     public function cards()
@@ -55,10 +51,32 @@ class Dashboard extends Component
         }
 
         $this->totalContasMes = $total;
+
+        $hoje = date('Y-m-d');
+        foreach ($this->contasMes as $contas) {
+
+            if (date('Y-m-d', strtotime($contas->data_vencimento)) == $hoje) {
+                Conta::findOrFail($contas->id)->update([
+                    'status' => 'Hoje',
+                ]);
+            };
+            // dd($hoje, date('Y-m-d', strtotime($contas->data_vencimento)));
+
+            if ($hoje > $contas->data_vencimento) {
+                Conta::findOrFail($contas->id)->update([
+                    'status' => 'Vencida',
+                ]);
+            };
+        }
     }
 
     public function render()
     {
+        $this->user = auth()->user()->id;
+
+        $this->cards();
+        $this->contas();
+        
         return view('livewire.dashboard');
     }
 }

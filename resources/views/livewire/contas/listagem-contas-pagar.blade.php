@@ -68,7 +68,21 @@
 
                                     @if ($conta->status == 'Paga')
                                         <span
+                                            class="py-2 px-3 font-semibold uppercase leading-tight text-yellow-100 bg-yellow-400 rounded-full dark:bg-yellow-200 dark:text-yellow-600">
+                                            conta {{ $conta->status }}
+                                        </span>
+                                    @endif
+
+                                    @if ($conta->status == 'Hoje')
+                                        <span
                                             class="py-2 px-3 font-semibold uppercase leading-tight text-green-100 bg-green-400 rounded-full dark:bg-green-200 dark:text-green-600">
+                                            vence {{ $conta->status }}
+                                        </span>
+                                    @endif
+
+                                    @if ($conta->status == 'Vencida')
+                                        <span
+                                            class="py-2 px-3 font-semibold uppercase leading-tight text-red-100 bg-red-400 rounded-full dark:bg-red-200 dark:text-red-600">
                                             conta {{ $conta->status }}
                                         </span>
                                     @endif

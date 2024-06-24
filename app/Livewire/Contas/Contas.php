@@ -5,6 +5,7 @@ namespace App\Livewire\Contas;
 use App\Livewire\Forms\ContasForm;
 use App\Models\AgenteCobrador;
 use App\Models\Cobrador;
+use App\Models\Conta;
 use App\Models\FormaPagamento;
 use App\Models\Pagamento;
 use App\Models\Pessoa;
@@ -30,8 +31,7 @@ class Contas extends Component
     public function mount()
     {
         $this->form->dataLancamento = date('Y-m-d');
-
-        $this->user = auth()->user()->id;
+        $this->status();
     }
 
     public function pesquisaClientes()
@@ -104,8 +104,37 @@ class Contas extends Component
         $this->js('window.location.reload()');
     }
 
+    public function status()
+    {
+        $mes = date('m');
+
+        $contasMes = Conta::whereMonth('data_vencimento', $mes)
+            ->where('user', $this->user)
+            ->where('status', 'Aberto')
+            ->get()->take(5);
+
+        $hoje = date('Y-m-d');
+        foreach ($contasMes as $contas) {
+
+            if (date('Y-m-d', strtotime($contas->data_vencimento)) == $hoje) {
+                Conta::findOrFail($contas->id)->update([
+                    'status' => 'Hoje',
+                ]);
+            };
+            // dd($hoje, date('Y-m-d', strtotime($contas->data_vencimento)));
+
+            if ($hoje > $contas->data_vencimento) {
+                Conta::findOrFail($contas->id)->update([
+                    'status' => 'Vencida',
+                ]);
+            };
+        }
+    }
+
     public function render()
     {
+        $this->user = auth()->user()->id;
+
         return view('livewire.contas.contas', [
             'agenteCobradores' => Cobrador::where('user', '=', $this->user)->get(),
             'formasPagamentos' => Pagamento::where('user', '=', $this->user)->get()
