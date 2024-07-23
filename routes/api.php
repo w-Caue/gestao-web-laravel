@@ -26,4 +26,5 @@ Route::prefix('v1')->group(function () {
     Route::get('/contas', [ContaController::class, 'index']);
     Route::get('/contas/{conta}', [ContaController::class, 'show']);
     Route::post('/contas', [ContaController::class, 'store']);
+    Route::put('/contas/{conta}', [ContaController::class, 'update']);
 });
